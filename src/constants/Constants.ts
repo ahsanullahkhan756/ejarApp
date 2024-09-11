@@ -53,6 +53,8 @@ export const theme = {
     messageColor: '#CCFFF0',
     callColor: '#9DE4F6',
     halfWhite: '#F9F9FC',
+    descColor:'#8C8C8C',
+    yellow:'#FBAE17'
   },
 };
 

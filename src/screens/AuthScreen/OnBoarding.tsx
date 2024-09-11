@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, Image, I18nManager, Button } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Image, I18nManager, Pressable } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES } from "../../constants";
+import { IMAGES, theme } from "../../constants";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useTranslation } from "react-i18next";
 import "../../i18n";
@@ -9,8 +9,10 @@ import { View, Text } from "react-native-ui-lib";
 
 const OnBoarding = () => {
   const { t, i18n } = useTranslation();
+  const [selectedLang, setSelectedLang] = useState<string>("");
 
   const changeLanguage = (lng: string) => {
+    setSelectedLang(lng); // Set selected language
     i18n?.changeLanguage(lng);
     if (lng === "ar") {
       I18nManager.forceRTL(true);
@@ -18,8 +20,6 @@ const OnBoarding = () => {
       I18nManager.forceRTL(false);
     }
   };
-
-  console.warn(I18nManager.isRTL);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -33,25 +33,34 @@ const OnBoarding = () => {
           resizeMode="contain"
         />
       </View>
-      <View backgroundColor="red">
-        <Text
-          marginV-10
-          bold
-          extraLarge
-          black
-          style={{ backgroundColor: "green" }}
-        >
-          {t("login")}
+      <View marginH-10>
+        <Text marginV-10 center bold extraLarge black>
+          {t("Select Language")}
+        </Text>
+
+        <Text marginV-10 small center color={theme.color.descColor}>
+          {t("Lang Des")}
         </Text>
       </View>
-
       <View style={styles.buttonContainer}>
-        <Button
-          title={t("english")}
-          style={{}}
+        <Pressable
+          style={[
+            styles.languageButton,
+            selectedLang === "en" && styles.selectedButton,
+          ]}
           onPress={() => changeLanguage("en")}
-        />
-        <Button title={t("arabic")} onPress={() => changeLanguage("ar")} />
+        >
+          <Text small>{t("English")}</Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.languageButton,
+            selectedLang === "ar" && styles.selectedButton,
+          ]}
+          onPress={() => changeLanguage("ar")}
+        >
+          <Text small>{t("Arabic")}</Text>
+        </Pressable>
       </View>
       <View center marginT-20>
         <Image
@@ -73,6 +82,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 20,
     marginTop: 20,
+  },
+  languageButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "transparent", 
+    borderRadius: 5,
+  },
+  selectedButton: {
+    borderColor: theme.color.yellow, 
+    borderWidth: 1,
+    borderRadius:10
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "black",
   },
 });
 

@@ -1,5 +1,6 @@
 {
     "welcome": "Welcome",
     "login": "Login",
-    "Select_Language":"Select Language"
+    "Select Language":"Select Language",
+    "Lang Des" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
 }
