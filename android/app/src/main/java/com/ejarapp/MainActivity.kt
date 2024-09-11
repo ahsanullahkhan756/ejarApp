@@ -4,11 +4,14 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.facebook.react.modules.i18nmanager.I18nUtil // Import I18nUtil
 
 class MainActivity : ReactActivity() {
   
  override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(null)
+
+    I18nUtil.getInstance().allowRTL(this, true)
   }
 
   /**
