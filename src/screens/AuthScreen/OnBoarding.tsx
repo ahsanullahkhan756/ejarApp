@@ -22,7 +22,7 @@ const OnBoarding = () => {
         Select Language
       </Text>
       <View marginH-20>
-        <Text marginV-10 bold extraLarge center>
+        <Text marginV-10 bold center>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. 
         </Text>
