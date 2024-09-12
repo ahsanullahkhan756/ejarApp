@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SCREENS } from "../constants";
 import Login from "../screens/AuthScreen/Login";
 import OnBoarding from "../screens/AuthScreen/OnBoarding";
+import SelectLanguage from "../screens/AuthScreen/SelectLanguage";
 
 
 const Stack = createNativeStackNavigator();
@@ -19,9 +20,10 @@ const screenOptionStyle = {
 
 export const AuthStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="OnBoarding" screenOptions={screenOptionStyle}>
+    <Stack.Navigator initialRouteName="SelectLanguage" screenOptions={screenOptionStyle}>
       <Stack.Screen name={SCREENS.LOGIN} component={Login} />
       <Stack.Screen name={SCREENS.ONBOARDING} component={OnBoarding} />
+      <Stack.Screen name={SCREENS.SELECT_LANGUAGE} component={SelectLanguage} />
       {/* <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
       <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotPassword} />
       <Stack.Screen name={SCREENS.RESET_PASS} component={ResetPassword} /> */}

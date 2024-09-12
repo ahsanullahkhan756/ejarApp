@@ -14,7 +14,7 @@ const MainNavigation = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoadings(false);
-    }, 5000);
+    }, 3000);
   }, []);
 
   return isloading ? (

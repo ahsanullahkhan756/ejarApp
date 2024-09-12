@@ -1,10 +1,13 @@
 export const SCREENS = {
   // AUTH SCREEN
   SPLASH: "Splash",
+  SELECT_LANGUAGE :'SelectLanguage',
+  ONBOARDING: "OnBoarding",
+
+
   LOGIN: "Login",
   VERIFICATION_CODE: "VerificationCode",
   REGISTER: "Register",
-  ONBOARDING: "OnBoarding",
   FORGOT_PASS: "ForgetPassword",
   VERIFY_EMAIL: "VerifyEmail",
   OTP: "OTP",
