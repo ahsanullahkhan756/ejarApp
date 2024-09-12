@@ -35,11 +35,11 @@ const SelectLanguage = () => {
         />
       </View>
       <View marginH-10>
-        <Typography textType='bold' size={theme.fontSize.large26}>
+        <Typography align="center" textType='bold' size={theme.fontSize.large26}>
         {t("Select Language")}
         </Typography>
 
-        <Typography color={theme.color.descColor}>
+        <Typography align="center" color={theme.color.descColor}>
           {t("Lang Des")}
           </Typography>
       </View>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedButton: {
-    borderColor: theme.color.yellow, 
+    borderColor: theme.color.primary, 
     borderWidth: 1,
     borderRadius:10
   },

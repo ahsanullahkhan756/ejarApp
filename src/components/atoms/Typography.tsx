@@ -7,7 +7,7 @@ export const Typography = (props: any) => {
     textType = "regular",
     size = theme.fontSize.medium,
     color = theme.color.black,
-    align = "center",
+    align = "left",
     style = {},
     numberOfLines = undefined,
   } = props;

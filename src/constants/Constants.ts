@@ -41,7 +41,7 @@ export const theme = {
     extraLarge: 28,
   },
   color: {
-    primary: '#FFA210',
+    primary: '#FBAE17',
     disable: '#FFE6BE',
     disableTextColor: '#E1AE5F',
     tgray: '#999B9F',
@@ -54,7 +54,6 @@ export const theme = {
     callColor: '#9DE4F6',
     halfWhite: '#F9F9FC',
     descColor:'#8C8C8C',
-    yellow:'#FBAE17'
   },
 };
 

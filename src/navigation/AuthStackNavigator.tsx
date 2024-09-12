@@ -20,7 +20,7 @@ const screenOptionStyle = {
 
 export const AuthStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="SelectLanguage" screenOptions={screenOptionStyle}>
+    <Stack.Navigator initialRouteName="OnBoarding" screenOptions={screenOptionStyle}>
       <Stack.Screen name={SCREENS.LOGIN} component={Login} />
       <Stack.Screen name={SCREENS.ONBOARDING} component={OnBoarding} />
       <Stack.Screen name={SCREENS.SELECT_LANGUAGE} component={SelectLanguage} />
