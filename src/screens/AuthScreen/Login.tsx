@@ -1,13 +1,15 @@
-import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import { Text } from 'react-native-ui-lib';
-import SafeAreaContainer from '../../containers/SafeAreaContainer';
+import React from "react";
+import { View, StyleSheet, Image } from "react-native";
+import { Text } from "react-native-ui-lib";
+import SafeAreaContainer from "../../containers/SafeAreaContainer";
+import { Header } from "../../components/atoms/Header";
+import { IMAGES } from "../../constants";
 
 const Login = () => {
   return (
     <SafeAreaContainer safeArea={false}>
       <View style={styles.container}>
-       <Text>Login</Text>
+        <Header />
       </View>
     </SafeAreaContainer>
   );
@@ -16,10 +18,6 @@ const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  video: {
-    width: "100%",
-    height: "100%",
   },
 });
 

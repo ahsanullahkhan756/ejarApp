@@ -10,7 +10,7 @@ export const OnBeardingBottomBtn = (props: any) => {
 
   return (
     <View margin-30 row spread>
-      <TouchableOpacity onPress={()=>navigate(SCREENS.HOME)}>
+      <TouchableOpacity onPress={()=>navigate(SCREENS.LOGIN)}>
         <View
           style={{
             borderBottomWidth: 2,
