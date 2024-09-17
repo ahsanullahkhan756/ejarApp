@@ -4,6 +4,7 @@ import { SCREENS } from "../constants";
 import Login from "../screens/AuthScreen/Login";
 import OnBoarding from "../screens/AuthScreen/OnBoarding";
 import SelectLanguage from "../screens/AuthScreen/SelectLanguage";
+import SignUp from "../screens/AuthScreen/SignUp";
 
 
 const Stack = createNativeStackNavigator();
@@ -20,11 +21,12 @@ const screenOptionStyle = {
 
 export const AuthStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={screenOptionStyle}>
+    <Stack.Navigator initialRouteName="SignUp" screenOptions={screenOptionStyle}>
       <Stack.Screen name={SCREENS.LOGIN} component={Login} />
       <Stack.Screen name={SCREENS.ONBOARDING} component={OnBoarding} />
       <Stack.Screen name={SCREENS.SELECT_LANGUAGE} component={SelectLanguage} />
-      {/* <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
+      <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
+      {/*
       <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotPassword} />
       <Stack.Screen name={SCREENS.RESET_PASS} component={ResetPassword} /> */}
     </Stack.Navigator>

@@ -3,7 +3,6 @@ import { View, StyleSheet, Image } from "react-native";
 import { Text } from "react-native-ui-lib";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Header } from "../../components/atoms/Header";
-import { IMAGES } from "../../constants";
 
 const Login = () => {
   return (

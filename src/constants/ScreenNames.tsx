@@ -3,7 +3,7 @@ export const SCREENS = {
   SPLASH: "Splash",
   SELECT_LANGUAGE :'SelectLanguage',
   ONBOARDING: "OnBoarding",
-
+  SIGNUP:'SignUp',
 
   LOGIN: "Login",
   VERIFICATION_CODE: "VerificationCode",

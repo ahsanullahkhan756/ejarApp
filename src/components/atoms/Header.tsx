@@ -17,7 +17,6 @@ export const Header = (props: any) => {
   const {
     onPressLeft = () => onBack(),
     onPressRight = onPressRight,
-
     leftIcon = IMAGES.leftIcon,
     rightIcon,
     rightIconColor = theme.color.primary,
@@ -39,11 +38,13 @@ export const Header = (props: any) => {
           </TouchableOpacity>
         )}
         {centerImg ? (
+          <View center> 
           <Image
             source={centerImg}
-            style={{ width: scale(180), height: verticalScale(45), top: 20 }}
+            style={{ width: scale(180), height: verticalScale(45), top: 20,}}
             resizeMode="contain"
           />
+          </View>
         ) : (
           <Typography
             size={theme.fontSize.medium}
