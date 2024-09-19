@@ -1,23 +1,16 @@
-import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { Text } from "react-native-ui-lib";
+import React, { useState } from "react";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { Header } from "../../components/atoms/Header";
+import { ScrollView } from "react-native";
+import LoginTamplet from "../../components/templates/LoginTamplet/index.tsx";
 
 const Login = () => {
   return (
     <SafeAreaContainer safeArea={false}>
-      <View style={styles.container}>
-        <Header />
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+      <LoginTamplet />
+      </ScrollView>
     </SafeAreaContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default Login;
