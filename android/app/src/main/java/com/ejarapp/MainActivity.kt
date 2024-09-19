@@ -5,6 +5,7 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import com.facebook.react.modules.i18nmanager.I18nUtil // Import I18nUtil
+import android.os.Bundle
 
 class MainActivity : ReactActivity() {
   
