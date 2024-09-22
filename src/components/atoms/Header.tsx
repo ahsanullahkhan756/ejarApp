@@ -48,7 +48,7 @@ export const Header = (props: any) => {
           </View>
         ) : (
 
-          <View>
+          <View center>
             <View style={commonStyles.lineBar}/>
             <Typography
             size={theme.fontSize.large20}

@@ -1,35 +1,25 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  StatusBar,
-  Platform,
-  TextInput,
-  Image,
-} from "react-native";
-import { navigate, onBack } from "../../navigation/RootNavigation";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext } from "react";
+import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
+import { navigate } from "../../navigation/RootNavigation";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
-import { Typography } from "./Typography";
-import { scale, verticalScale } from "react-native-size-matters";
+import { scale } from "react-native-size-matters";
 
 export const SearchBar = (props: any) => {
-  const navigation = useNavigation();
   const {
-    onPressLeft = () => onBack(),
-    leftIcon = IMAGES.leftIcon,
-    rightIcon,
-    rightIconColor = theme.color.primary,
-    titleText = "",
-    centerImg = IMAGES.logo,
-    leftIconColor = theme.color.primary,
-    titleColor = theme.color.primary,
-    onPress =()=>navigate(SCREENS.FILTER_SCREEN)
+    backgroundColor = theme.color.white,
+    widthContaner = scale(200),
+    onPress = () => navigate(SCREENS.FILTER_SCREEN),
   } = props;
   return (
     <View marginB-30 row gap-10 spread style={{ alignItems: "center" }}>
-      <View row style={[styles.container, { gap: 10 }]}>
+      <View
+        row
+        style={[
+          styles.container,
+          { gap: 10, backgroundColor: backgroundColor },
+        ]}
+      >
         <Image
           source={IMAGES.searchIcon}
           style={{ height: 30, width: 30 }}
@@ -38,10 +28,13 @@ export const SearchBar = (props: any) => {
         <TextInput
           placeholder="Search keywords.."
           placeholderTextColor={theme.color.white}
-          style={{ width: scale(200), color: theme.color.white }}
+          style={{ width: widthContaner, color: theme.color.white }}
         />
       </View>
-      <TouchableOpacity onPress={onPress} style={{ flex: 1, alignItems: "center" }}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={{ flex: 1, alignItems: "center" }}
+      >
         <Image
           source={IMAGES.filter}
           style={{ height: 50 }}

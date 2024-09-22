@@ -31,6 +31,7 @@ export const IMAGES = {
   automatic: require("../assets/images/automatic.png"),
   viewAll: require("../assets/images/viewAll.png"),
   compaines: require("../assets/images/compaines.png"),
+  searchCompanies: require("../assets/images/searchCompanies.png"),
   colun: require("../assets/images/colun.png"),
 
   homeIcon: require("../assets/images/homeIcon.png"),

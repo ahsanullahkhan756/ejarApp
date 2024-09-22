@@ -50,3 +50,17 @@ export const data = {
         { id: '1', name: 'Rolem Ipsum', rating: '4.9', review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }
     ]
 };
+
+export const NOTIFICATION_DATA = [
+    {
+      title: 'Today',
+      data: ['Suzuki', 'Hertz', 'SUVs'],
+      des:'Torem ipsum dolor sit amet, consectetur'
+    },
+    {
+      title: 'Yesterday',
+      data: ['Trucks', 'Sports Cars', 'Convertibles'],
+      des:'Torem ipsum dolor sit amet, consectetur'
+
+    },
+  ];
