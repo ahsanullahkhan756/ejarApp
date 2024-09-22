@@ -11,6 +11,7 @@ import { IMAGES, theme } from "../../constants";
 import { Image, View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
 import { scale, verticalScale } from "react-native-size-matters";
+import { commonStyles } from "../../containers/commStyles";
 
 export const Header = (props: any) => {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ export const Header = (props: any) => {
     titleText = "",
     centerImg = IMAGES.logo,
     leftIconColor = theme.color.primary,
-    titleColor = theme.color.primary,
+    titleColor = theme.color.black,
   } = props;
   return (
     <View style={[styles.container]}>
@@ -46,14 +47,18 @@ export const Header = (props: any) => {
           />
           </View>
         ) : (
-          <Typography
-            size={theme.fontSize.medium}
+
+          <View>
+            <View style={commonStyles.lineBar}/>
+            <Typography
+            size={theme.fontSize.large20}
             align="center"
             textType="semiBold"
             color={titleColor}
           >
             {titleText}
           </Typography>
+           </View> 
         )}
 
         <View flex>

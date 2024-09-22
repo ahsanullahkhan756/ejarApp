@@ -3,11 +3,14 @@ import { StyleSheet, Text, Image } from "react-native";
 import * as Progress from "react-native-progress";
 import { Button, View } from "react-native-ui-lib";
 import { theme } from "../../../constants";
-
+import { commonStyles } from "../../../containers/commStyles";
 
 const ProgressBarComp = ({currentStep, steps}:any) => {
   return (
       <View style={styles.container}>
+        <View style={[commonStyles.innerCircle,{position:'absolute',left:35,top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute',alignSelf:'center', top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute',right:35,top:18,backgroundColor:theme.color.primary}]} />
         <View style={styles.progressContainer}>
           <Progress.Bar
             progress={steps[currentStep].progress}

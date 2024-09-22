@@ -90,8 +90,11 @@ export const commonStyles = StyleSheet.create({
 
   // Header
   headerView: {
-    paddingVertical: 15,
-    borderColor: theme.color.primary,
+    // paddingVertical: 15,
+    borderColor: theme.color.blue,
+    borderWidth:20,
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20
   },
 
   // Footer

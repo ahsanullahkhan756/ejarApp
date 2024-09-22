@@ -17,5 +17,11 @@ export const SCREENS = {
 
   // Bottom Screen
   HOME: "Home",
+  DETAIL_SCREEN:"DetailScreen",
+  FILTER_SCREEN:"FilterScreen",
+  SEARCH_SCREEN:"SearchScreen",
+  NOTIFICATION:"Notification",
+  PROFILE:"Profile"
+
 
 };
