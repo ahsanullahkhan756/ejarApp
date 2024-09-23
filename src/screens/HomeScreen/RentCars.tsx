@@ -1,12 +1,13 @@
 import React from "react";
-import { FlatList, Image } from "react-native";
+import { FlatList, Image, TouchableOpacity } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREENS, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { data } from "../../containers/dummy";
 import { Card, View } from "react-native-ui-lib";
 import { Typography } from "../../components/atoms/Typography";
 import { commonStyles } from "../../containers/commStyles";
+import { navigate } from "../../navigation/RootNavigation";
 
 const RentCars = () => {
   return (
@@ -17,6 +18,9 @@ const RentCars = () => {
           data={data.carsForRent}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
+            <TouchableOpacity onPress={()=>navigate(SCREENS.DETAIL_SCREEN,{
+              item : item.img
+            })}>
             <Card
               style={{
                 marginVertical: 20,
@@ -103,6 +107,7 @@ const RentCars = () => {
                 <Typography>Jumeirah, Dubai</Typography>
               </View>
             </Card>
+            </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ marginHorizontal: 30 }}

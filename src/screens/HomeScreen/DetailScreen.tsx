@@ -1,124 +1,154 @@
-// import React from "react";
-// import { View, StyleSheet, Image } from "react-native";
-// import SafeAreaContainer from "../../containers/SafeAreaContainer";
-// import { IMAGES, theme } from "../../constants";
-// import { scale } from "react-native-size-matters";
-// import { SearchBar } from "../../components/atoms/SearchBar";
+import React, { useState } from "react";
+import { ScrollView, Image, FlatList } from "react-native";
+import { Carousel, Button, View } from "react-native-ui-lib";
+import { Calendar } from "react-native-calendars";
+import { IMAGES, SCREENS, theme } from "../../constants";
+import { Typography } from "../../components/atoms/Typography";
+import { commonStyles } from "../../containers/commStyles";
+import { Calender } from "../../components/atoms/Calender";
+import { navigate } from "../../navigation/RootNavigation";
+import SafeAreaContainer from "../../containers/SafeAreaContainer";
 
-// const Home = () => {
-//   return (
-//     <SafeAreaContainer safeArea={false}>
-//       <View style={styles.container}>
-//         <Image
-//           source={IMAGES.logo}
-//           style={{ width: scale(100), height: 60,tintColor:theme.color.white }}
-//           resizeMode="contain"
-//         />
-//         <SearchBar />
-//       </View>
-//     </SafeAreaContainer>
-//   );
-// };
+const DetailScreen = (props: any) => {
+  console.log("preops", props);
 
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingTop:20,
-//     paddingHorizontal:20,
-//     backgroundColor:theme.color.blue,
-//     borderBottomLeftRadius:30,
-//     borderBottomRightRadius:30
-//   },
-// });
+  const [selectedDate, setSelectedDate] = useState("");
 
-// export default Home;
+  const vehicleSpecs = [
+    { label: "Year", value: "2021" },
+    { label: "Body Type", value: "Truck" },
+    { label: "Engine Capacity", value: "2800cc" },
+    { label: "Color", value: "White" },
+    { label: "Fuel", value: "Diesel" },
+  ];
 
 
 
+  return (
+    <SafeAreaContainer safeArea={false}>
+    <ScrollView style={{ flex: 1 }}>
+      {/* Image Carousel */}
+      <Carousel loop>
+        <Image source={IMAGES.truck} style={{ width: "100%", height: 250 }} />
+        <Image source={IMAGES.car1} style={{ width: "100%", height: 250 }} />
+        <Image source={IMAGES.car5} style={{ width: "100%", height: 250 }} />
+      </Carousel>
 
-import React, { useState } from 'react';
-import { View, Text, ScrollView, Image, FlatList } from 'react-native';
-import { Carousel,  Button } from 'react-native-ui-lib';
-import { Calendar } from 'react-native-calendars';
-import { IMAGES } from '../../constants';
+      {/* Vehicle Details */}
+      <View style={{ padding: 20 }}>
+        <Typography textType="bold" size={theme.fontSize.large20}>
+          Ford Truck 2021
+        </Typography>
+        <Typography size={theme.fontSize.small} color={theme.color.descColor}>
+          Torem ipsum dolor sit amet, consectetur{" "}
+        </Typography>
+        <Typography
+          textType="bold"
+          size={theme.fontSize.large20}
+          color={theme.color.blue}
+        >
+          AED 7,200/day
+        </Typography>
+        {/* <Typography>Jumeirah, Dubai - Automatic - 60,000 km</Typography> */}
 
-const DetailScreen = () => {
-    const [selectedDate, setSelectedDate] = useState('');
-    
-    const vehicleSpecs = [
-        { label: 'Year', value: '2021' },
-        { label: 'Body Type', value: 'Truck' },
-        { label: 'Engine Capacity', value: '2800cc' },
-        { label: 'Color', value: 'White' },
-        { label: 'Fuel', value: 'Diesel' },
-    ];
-
-    const handleDayPress = (day:any) => {
-        setSelectedDate(day.dateString);
-    };
-
-    return (
-        <ScrollView style={{ flex: 1 }}>
-            
-            {/* Image Carousel */}
-            <Carousel loop>
-                <Image source={IMAGES.car1} style={{ width: '100%', height: 200 }} />
-            </Carousel>
-
-            {/* Vehicle Details */}
-            <View style={{ padding: 20 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold' }}>AED 7,200/day</Text>
-                <Text>Jumeirah, Dubai - Automatic - 60,000 km</Text>
-            </View>
-
-            {/* Vehicle Specifications */}
-            <FlatList
-                data={vehicleSpecs}
-                renderItem={({ item }) => (
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                        <Text>{item.label}</Text>
-                        <Text>{item.value}</Text>
-                    </View>
-                )}
-                keyExtractor={item => item.label}
+        <View row spread gap-10 paddingV-10>
+          <View row gap-5 style={{ alignItems: "center" }}>
+            <Image
+              source={IMAGES.mapPin}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
             />
+            <Typography>Jumeirah, Dubai</Typography>
+          </View>
 
-            {/* Description */}
-            <View style={{ padding: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Description</Text>
-                <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</Text>
-            </View>
-
-            {/* Calendar for Booking */}
-            <View style={{ padding: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Book Now</Text>
-                <Calendar
-                    onDayPress={handleDayPress}
-                    markedDates={{
-                        [selectedDate]: {
-                            selected: true,
-                            marked: true,
-                            selectedColor: 'blue',
-                        },
-                    }}
-                    style={{
-                        borderRadius: 10,
-                        elevation: 4,
-                        marginVertical: 10,
-                    }}
-                />
-                <Text style={{ fontSize: 16, paddingTop: 10 }}>
-                    Selected Date: {selectedDate || 'None'}
-                </Text>
-            </View>
-
-            {/* Rent Now Button */}
-            <Button 
-                label="Rent Now" 
-                onPress={() => console.log('Booked on:', selectedDate)} 
-                style={{ margin: 20 }}
+          <View row gap-5 style={{ alignItems: "center" }}>
+            <Image
+              source={IMAGES.automatic}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
             />
-        </ScrollView>
-    );
+            <Typography>Automatic</Typography>
+          </View>
+        </View>
+
+        <View row spread gap-10 paddingV-10>
+          <View row gap-5 style={{ alignItems: "center" }}>
+            <Image
+              source={IMAGES.calendarIcon}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
+            />
+            <Typography>2021</Typography>
+          </View>
+
+          <View row gap-5 style={{ alignItems: "center" }}>
+            <Image
+              source={IMAGES.speed}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
+            />
+            <Typography>60,000 km</Typography>
+          </View>
+        </View>
+      </View>
+
+      {/* Vehicle Specifications */}
+      <FlatList
+        data={vehicleSpecs}
+        renderItem={({ item, index }) => (
+          <View
+            row
+            spread
+            padding-20
+            style={{
+              backgroundColor:
+                index % 2 === 0 ? theme.color.divider : theme.color.white,
+            }}
+          >
+            <Typography>{item.label}</Typography>
+
+            <Typography>{item.value}</Typography>
+          </View>
+        )}
+        keyExtractor={(item) => item.label}
+      />
+
+      {/* Description */}
+      <View style={{ padding: 20 }}>
+        <View style={commonStyles.lineBar} />
+        <Typography textType="bold" size={theme.fontSize.large20}>
+          Description
+        </Typography>
+        <Typography color={theme.color.descColor}>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. Lorem Ipsum is simply dummy
+          text of the printing and typesetting industry.
+        </Typography>
+      </View>
+
+      {/* Calendar for Booking */}
+      <View style={{ padding: 20 }}>
+        <View style={commonStyles.lineBar} />
+        <Typography textType="bold" size={theme.fontSize.large20}>
+          Book Now
+        </Typography>
+        
+       <Calender />
+      </View>
+
+      {/* Rent Now Button */}
+      <Button
+        label="Rent Now"
+        backgroundColor={theme.color.primary}
+        borderRadius={30}
+        onPress={() => navigate(SCREENS.MY_BOOKING)}
+        style={{ height: 50, margin: 20,width:'50%',alignSelf:"center" }}
+      />
+    </ScrollView>
+    </SafeAreaContainer>
+  );
 };
 
 export default DetailScreen;

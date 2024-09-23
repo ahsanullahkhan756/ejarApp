@@ -26,6 +26,7 @@ export const SCREENS = {
   TOP_CARS:"TopCars",
   RENT_CARS:"RentCars",
   RENT_CARS_DETAIL:"RentCarsDetail",
+  MY_BOOKING :'MyBooking'
 
 
 };

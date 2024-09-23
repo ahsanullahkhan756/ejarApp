@@ -40,5 +40,6 @@ export const IMAGES = {
   notification: require("../assets/images/notification.png"),
   profileIcon: require("../assets/images/profileIcon.png"),
   mapPin: require("../assets/images/mapPin.png"),
+  speed: require("../assets/images/speed.png"),
 
 };

@@ -11,7 +11,7 @@ import Notification from "../screens/BottomScreen/Notification";
 import Profile from "../screens/BottomScreen/Profile";
 import TopCars from "../screens/BottomScreen/TopCars";
 import RentCars from "../screens/HomeScreen/RentCars";
-import RentCarsDetail from "../screens/HomeScreen/RentCarsDetail";
+import MyBooking from "../screens/HomeScreen/MyBooking";
 
 const Stack = createStackNavigator();
 
@@ -25,7 +25,7 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.DETAIL_SCREEN} component={DetailScreen} />
      <Stack.Screen name={SCREENS.FILTER_SCREEN} component={FilterScreen} />
      <Stack.Screen name={SCREENS.RENT_CARS} component={RentCars} />
-     <Stack.Screen name={SCREENS.RENT_CARS_DETAIL} component={RentCarsDetail} />
+     <Stack.Screen name={SCREENS.MY_BOOKING} component={MyBooking} />
      
     </Stack.Navigator>
 )}

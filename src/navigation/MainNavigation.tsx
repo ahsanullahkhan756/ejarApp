@@ -5,6 +5,7 @@ import Splash from '../containers/Splash';
 import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './AppNavigator';
 import { AuthStackNavigator } from './AuthStackNavigator';
+import MyBooking from '../screens/HomeScreen/MyBooking';
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const MainNavigation = () => {
     <>
       <NavigationContainer ref={navigationRef}>
         {/* {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />} */}
-        <AppNavigator />
+        <MyBooking />
       </NavigationContainer>
     </>
   );
