@@ -38,41 +38,41 @@ const SignUpOrg = () => {
   };
 
   const handleBottomData = () => {
-    return(
-    <>
-      <View row center marginH-20>
-        <View flex height={1} backgroundColor={theme.color.black} />
-        <View>
-          <Typography style={{ width: 100, textAlign: "center" }}>
-            Or with
+    return (
+      <>
+        <View row center marginH-20>
+          <View flex height={1} backgroundColor={theme.color.black} />
+          <View>
+            <Typography style={{ width: 100, textAlign: "center" }}>
+              Or with
+            </Typography>
+          </View>
+          <View flex height={1} backgroundColor={theme.color.black} />
+        </View>
+        <View row center margin-20>
+          {SOCIAL_LOGIN.map((i) => {
+            return (
+              <Image
+                source={i.image}
+                style={{ width: 110, height: 40, marginHorizontal: 5 }}
+                resizeMode="contain"
+              />
+            );
+          })}
+        </View>
+        <View center marginV-20>
+          <Typography>
+            Don’t have an account?{" "}
+            <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
+              <Typography semiBold small marginT-5 color={theme.color.primary}>
+                {" "}
+                Login
+              </Typography>
+            </TouchableOpacity>
           </Typography>
         </View>
-        <View flex height={1} backgroundColor={theme.color.black} />
-      </View>
-      <View row center margin-20>
-        {SOCIAL_LOGIN.map((i) => {
-          return (
-            <Image
-              source={i.image}
-              style={{ width: 110, height: 40, marginHorizontal: 5 }}
-              resizeMode="contain"
-            />
-          );
-        })}
-      </View>
-      <View center marginV-20>
-        <Typography>
-          Don’t have an account?{" "}
-          <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
-            <Typography semiBold small marginT-5 color={theme.color.primary}>
-              {" "}
-              Login
-            </Typography>
-          </TouchableOpacity>
-        </Typography>
-      </View>
-    </>
-    )
+      </>
+    );
   };
 
   return (

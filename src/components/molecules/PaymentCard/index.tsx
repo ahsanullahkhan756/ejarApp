@@ -8,19 +8,20 @@ import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 
 const PaymentCard = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(true);
+  const [name, setName] = useState("");
+  const [card, setCard] = useState("");
+  const [date, setDate] = useState(true);
+  const [cvv, setCvv] = useState(true);
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : null}
-      style={{flex:1}}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
       <ScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flex:1}}
+        contentContainerStyle={{ flex: 1 }}
       >
         <Typography
           textType="bold"
@@ -33,7 +34,7 @@ const PaymentCard = () => {
         <View marginV-10>
           <InputText
             label={"Name on card"}
-            value={email}
+            value={name}
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
                 let copy = [...prev];
@@ -42,14 +43,14 @@ const PaymentCard = () => {
               });
             }}
             placeholder="Enter your name"
-            validate={["email"]}
-            validationMessage={["Email is invalid"]}
-            onChangeText={(text: string) => setEmail(text)}
+            // validate={["name"]}
+            // validationMessage={["Name is invalid"]}
+            onChangeText={(text: string) => setName(text)}
           />
 
           <InputText
             label={"Card Number"}
-            value={email}
+            value={card}
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
                 let copy = [...prev];
@@ -58,14 +59,14 @@ const PaymentCard = () => {
               });
             }}
             placeholder="**** **** **** 1234"
-            validate={["email"]}
-            validationMessage={["Email is invalid"]}
-            onChangeText={(text: string) => setEmail(text)}
+            // validate={["Card"]}
+            // validationMessage={["Card is invalid"]}
+            onChangeText={(text: string) => setCard(text)}
           />
           <View row spread flex gap-10>
             <InputText
               label={"Expiration Date"}
-              value={email}
+              value={date}
               onValidationFailed={(isValid: boolean) => {
                 setValidated((prev) => {
                   let copy = [...prev];
@@ -74,16 +75,16 @@ const PaymentCard = () => {
                 });
               }}
               placeholder="01/22"
-              validate={["email"]}
-              validationMessage={["Email is invalid"]}
-              onChangeText={(text: string) => setEmail(text)}
+              // validate={["email"]}
+              // validationMessage={["Email is invalid"]}
+              onChangeText={(text: string) => setDate(text)}
               style={{ width: 170 }}
               keyboardType="number-pad"
             />
 
             <InputText
               label={"CVV"}
-              value={email}
+              value={cvv}
               onValidationFailed={(isValid: boolean) => {
                 setValidated((prev) => {
                   let copy = [...prev];
@@ -92,10 +93,12 @@ const PaymentCard = () => {
                 });
               }}
               placeholder="***"
-              validate={["email"]}
-              validationMessage={["Email is invalid"]}
-              onChangeText={(text: string) => setEmail(text)}
+              // validate={["email"]}
+              // validationMessage={["Email is invalid"]}
+              onChangeText={(text: string) => setCvv(text)}
               style={{ width: 170 }}
+              maxLength={3}
+              keyboardType="number-pad"
             />
           </View>
         </View>

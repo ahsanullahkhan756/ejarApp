@@ -41,5 +41,7 @@ export const IMAGES = {
   profileIcon: require("../assets/images/profileIcon.png"),
   mapPin: require("../assets/images/mapPin.png"),
   speed: require("../assets/images/speed.png"),
+  pencil: require("../assets/images/pencil.png"),
+  bookingImg: require("../assets/images/bookingImg.png"),
 
 };

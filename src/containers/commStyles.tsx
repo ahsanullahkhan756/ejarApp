@@ -72,7 +72,7 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
   },
   modalStyle: {
     alignItems: "center",
@@ -130,5 +130,6 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 12 / 2,
     borderWidth: 1,
     borderColor: theme.color.primary,
+    backgroundColor:theme.color.primary,
   },
 });

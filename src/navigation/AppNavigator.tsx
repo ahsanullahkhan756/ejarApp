@@ -12,6 +12,8 @@ import Profile from "../screens/BottomScreen/Profile";
 import TopCars from "../screens/BottomScreen/TopCars";
 import RentCars from "../screens/HomeScreen/RentCars";
 import MyBooking from "../screens/HomeScreen/MyBooking";
+import BookingConfirmation from "../screens/HomeScreen/BookingConfirm/BookingConfirmation";
+import Contract from "../screens/HomeScreen/Contract";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,8 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.FILTER_SCREEN} component={FilterScreen} />
      <Stack.Screen name={SCREENS.RENT_CARS} component={RentCars} />
      <Stack.Screen name={SCREENS.MY_BOOKING} component={MyBooking} />
+     <Stack.Screen name={SCREENS.BOOKING_CONFIRM} component={BookingConfirmation} />
+     <Stack.Screen name={SCREENS.CONTRACT} component={Contract} />
      
     </Stack.Navigator>
 )}

@@ -5,9 +5,10 @@ import { Calendar } from "react-native-calendars";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { Typography } from "../../components/atoms/Typography";
 import { commonStyles } from "../../containers/commStyles";
-import { Calender } from "../../components/atoms/Calender";
 import { navigate } from "../../navigation/RootNavigation";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
+import VechileStatusItoms from "../../components/molecules/MyBookingComp/VechileStatusItoms";
+import { CustomCalender } from "../../components/atoms/CustomCalender";
 
 const DetailScreen = (props: any) => {
   console.log("preops", props);
@@ -21,9 +22,6 @@ const DetailScreen = (props: any) => {
     { label: "Color", value: "White" },
     { label: "Fuel", value: "Diesel" },
   ];
-
-
-
   return (
     <SafeAreaContainer safeArea={false}>
     <ScrollView style={{ flex: 1 }}>
@@ -49,47 +47,8 @@ const DetailScreen = (props: any) => {
         >
           AED 7,200/day
         </Typography>
-        {/* <Typography>Jumeirah, Dubai - Automatic - 60,000 km</Typography> */}
 
-        <View row spread gap-10 paddingV-10>
-          <View row gap-5 style={{ alignItems: "center" }}>
-            <Image
-              source={IMAGES.mapPin}
-              style={{ width: 20, height: 20 }}
-              resizeMode="contain"
-            />
-            <Typography>Jumeirah, Dubai</Typography>
-          </View>
-
-          <View row gap-5 style={{ alignItems: "center" }}>
-            <Image
-              source={IMAGES.automatic}
-              style={{ width: 20, height: 20 }}
-              resizeMode="contain"
-            />
-            <Typography>Automatic</Typography>
-          </View>
-        </View>
-
-        <View row spread gap-10 paddingV-10>
-          <View row gap-5 style={{ alignItems: "center" }}>
-            <Image
-              source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20 }}
-              resizeMode="contain"
-            />
-            <Typography>2021</Typography>
-          </View>
-
-          <View row gap-5 style={{ alignItems: "center" }}>
-            <Image
-              source={IMAGES.speed}
-              style={{ width: 20, height: 20 }}
-              resizeMode="contain"
-            />
-            <Typography>60,000 km</Typography>
-          </View>
-        </View>
+        <VechileStatusItoms />
       </View>
 
       {/* Vehicle Specifications */}
@@ -135,7 +94,7 @@ const DetailScreen = (props: any) => {
           Book Now
         </Typography>
         
-       <Calender />
+       <CustomCalender />
       </View>
 
       {/* Rent Now Button */}
