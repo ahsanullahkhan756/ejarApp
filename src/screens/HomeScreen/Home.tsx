@@ -8,116 +8,21 @@ import {
   TouchableOpacity,
 } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREENS, theme } from "../../constants";
 import { scale } from "react-native-size-matters";
 import { SearchBar } from "../../components/atoms/SearchBar";
 import { data } from "../../containers/dummy";
 import { Typography } from "../../components/atoms/Typography";
 import { Button, Card, View } from "react-native-ui-lib";
 import { commonStyles } from "../../containers/commStyles";
+import { navigate } from "../../navigation/RootNavigation";
+import { TopCarsComp } from "../../components/atoms/TopCarsComp";
+import { RentCarsComp } from "../../components/atoms/RentCarsComp";
 
 const Home = () => {
-  const RENT_CAR = () => {
-    return (
-      <>
-        <FlatList
-          data={data.carsForRent}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <Card
-              style={{
-                // width: 220,
-                marginRight: 10,
-                flex: 1,
-                elevation: 4,
-              }}
-            >
-              <Image
-                source={item.img}
-                style={{
-                  width: "100%",
-                  height: 100,
-                  borderTopLeftRadius: 20,
-                  borderTopRightRadius: 20,
-                }}
-              />
-              <View row spread padding-10>
-                <Typography size={theme.fontSize.small} textType="semiBold">
-                  {item.name}
-                </Typography>
-                <Typography size={theme.fontSize.small} textType="semiBold">
-                  {item.price}
-                </Typography>
-              </View>
-              <View row spread gap-10 padding-10>
-                <View row gap-5 style={{ alignItems: "center" }}>
-                  <Image
-                    source={IMAGES.calendarIcon}
-                    style={{ width: 20, height: 20 }}
-                    resizeMode="contain"
-                  />
-                  <Typography>{item.date}</Typography>
-                </View>
-
-                <View row gap-5 style={{ alignItems: "center" }}>
-                  <Image
-                    source={IMAGES.colorIcon}
-                    style={{ width: 20, height: 20 }}
-                    resizeMode="contain"
-                  />
-                  <Typography>{item.color}</Typography>
-                </View>
-
-                <View row gap-5 style={{ alignItems: "center" }}>
-                  <Image
-                    source={IMAGES.automatic}
-                    style={{ width: 20, height: 20 }}
-                    resizeMode="contain"
-                  />
-                  <Typography>{item.status}</Typography>
-                </View>
-              </View>
-            </Card>
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ marginBottom: 16 }}
-        />
-      </>
-    );
-  };
-  const TopRated = () => {
-    return (
-      <FlatList
-        data={data.topRatedCars}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <Card
-            style={{
-              flex: 1,
-              margin: 8,
-              padding: 10,
-              borderRadius: 10,
-              // elevation: 4,
-            }}
-          >
-            <Image
-              source={item.img}
-              style={{ width: "100%", height: 100, borderRadius: 10 }}
-            />
-            <Typography size={theme.fontSize.small} textType="semiBold">
-              {item.name}
-            </Typography>
-            <Typography>⭐ {item.rating}</Typography>
-          </Card>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    );
-  };
   return (
     <SafeAreaContainer safeArea={false}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Image
             source={IMAGES.logo}
@@ -166,9 +71,9 @@ const Home = () => {
           >
             Car For Rent
           </Typography>
-          {RENT_CAR()}
-          {RENT_CAR()}
-          <TouchableOpacity>
+          <RentCarsComp />
+          <RentCarsComp />
+          <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}> 
             <Image
               source={IMAGES.viewAll}
               style={{
@@ -188,9 +93,12 @@ const Home = () => {
           >
             Top Rated Cars
           </Typography>
-          {TopRated()}
+          <TopCarsComp />
 
-          <TouchableOpacity style={{ marginVertical: 10 }}>
+          <TouchableOpacity
+            onPress={() => navigate(SCREENS.TOP_CARS)}
+            style={{ marginVertical: 10 }}
+          >
             <Image
               source={IMAGES.viewAll}
               style={{

@@ -7,7 +7,7 @@ import { scale } from "react-native-size-matters";
 
 export const SearchBar = (props: any) => {
   const {
-    backgroundColor = theme.color.white,
+    backgroundColor = theme.color.blue,
     widthContaner = scale(200),
     onPress = () => navigate(SCREENS.FILTER_SCREEN),
   } = props;
@@ -22,7 +22,7 @@ export const SearchBar = (props: any) => {
       >
         <Image
           source={IMAGES.searchIcon}
-          style={{ height: 30, width: 30 }}
+          style={{ height: 30, width: 30}}
           resizeMode="contain"
         />
         <TextInput

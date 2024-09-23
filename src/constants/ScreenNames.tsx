@@ -21,7 +21,11 @@ export const SCREENS = {
   FILTER_SCREEN:"FilterScreen",
   SEARCH_SCREEN:"SearchScreen",
   NOTIFICATION:"Notification",
-  PROFILE:"Profile"
+  PROFILE:"Profile",
+
+  TOP_CARS:"TopCars",
+  RENT_CARS:"RentCars",
+  RENT_CARS_DETAIL:"RentCarsDetail",
 
 
 };

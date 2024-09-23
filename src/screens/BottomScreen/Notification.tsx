@@ -13,12 +13,6 @@ const Notification = () => {
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText="Notifications" centerImg={false} />
-      <View marginH-10>
-        <SearchBar
-          backgroundColor={theme.color.blue}
-          widthContaner={scale(230)}
-        />
-      </View>
       <View margin-20>
         <SectionList
           sections={NOTIFICATION_DATA}

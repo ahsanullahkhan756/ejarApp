@@ -9,6 +9,9 @@ import FilterScreen from "../screens/HomeScreen/FilterScreen";
 import SearchScreen from "../screens/BottomScreen/SearchScreen";
 import Notification from "../screens/BottomScreen/Notification";
 import Profile from "../screens/BottomScreen/Profile";
+import TopCars from "../screens/BottomScreen/TopCars";
+import RentCars from "../screens/HomeScreen/RentCars";
+import RentCarsDetail from "../screens/HomeScreen/RentCarsDetail";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +24,8 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.HOME} component={BottomTabNavigation} />
      <Stack.Screen name={SCREENS.DETAIL_SCREEN} component={DetailScreen} />
      <Stack.Screen name={SCREENS.FILTER_SCREEN} component={FilterScreen} />
+     <Stack.Screen name={SCREENS.RENT_CARS} component={RentCars} />
+     <Stack.Screen name={SCREENS.RENT_CARS_DETAIL} component={RentCarsDetail} />
      
     </Stack.Navigator>
 )}
@@ -37,6 +42,9 @@ const BottomTabNavigation = (props: any) => {
       <Tab.Screen name={SCREENS.SEARCH_SCREEN} component={SearchScreen} />
       <Tab.Screen name={SCREENS.NOTIFICATION} component={Notification} />
       <Tab.Screen name={SCREENS.PROFILE} component={Profile} />
+      
+     <Stack.Screen name={SCREENS.TOP_CARS} component={TopCars} />
+
     </Tab.Navigator>
   );
 };

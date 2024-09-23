@@ -16,6 +16,7 @@ export const IMAGES = {
   car6: require("../assets/images/car6.png"),
   car7: require("../assets/images/car7.png"),
   car8: require("../assets/images/car8.png"),
+  truck: require("../assets/images/truck.png"),
   slider: require("../assets/images/slider.png"),
 
   google: require("../assets/images/google.png"),
@@ -38,5 +39,6 @@ export const IMAGES = {
   searchIcon: require("../assets/images/searchIcon.png"),
   notification: require("../assets/images/notification.png"),
   profileIcon: require("../assets/images/profileIcon.png"),
+  mapPin: require("../assets/images/mapPin.png"),
 
 };

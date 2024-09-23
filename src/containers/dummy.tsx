@@ -31,9 +31,11 @@ export const data = {
         // Add more categories here
     ],
     carsForRent: [
-        { id: '1', name: 'Ford Truck 2021', price: 'AED 7,200', img: IMAGES.car1, date:2021 ,color:'White',status:'Automatic' },
+        { id: '1', name: 'Ford Truck 2021', price: 'AED 7,200', img: IMAGES.truck, date:2021 ,color:'White',status:'Automatic' },
         { id: '2', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car2, date:2023 ,color:'Red',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car2,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car1,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car4,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car7,date:2022 ,color:'Black',status:'Automatic' },
     ],
     topRatedCars: [
         { id: '1', name: 'Car 1', img: IMAGES.car1, rating: '4.9' },
