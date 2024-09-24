@@ -30,5 +30,11 @@ export const SCREENS = {
   BOOKING_CONFIRM:'BookingConfirmation',
   CONTRACT :'Contract',
 
+  MY_INFORMATION :'MyInformation',
+  MY_ADDRESS :'MyAddress',
+  USER_BOOKING:'UserBooking',
+  RATING:'RatingScreen',
+  CHANGE_LANGUAGE:'ChangeLang'
+
 
 };

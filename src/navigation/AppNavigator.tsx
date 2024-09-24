@@ -14,6 +14,11 @@ import RentCars from "../screens/HomeScreen/RentCars";
 import MyBooking from "../screens/HomeScreen/MyBooking";
 import BookingConfirmation from "../screens/HomeScreen/BookingConfirm/BookingConfirmation";
 import Contract from "../screens/HomeScreen/Contract";
+import MyInformation from "../screens/HomeScreen/ProfileScreen/MyInformation";
+import MyAddress from "../screens/HomeScreen/ProfileScreen/MyAddress";
+import UserBooking from "../screens/HomeScreen/ProfileScreen/UserBooking";
+import RatingScreen from "../screens/HomeScreen/ProfileScreen/RatingScreen";
+import ChangeLang from "../screens/HomeScreen/ProfileScreen/ChangeLang";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +35,12 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.MY_BOOKING} component={MyBooking} />
      <Stack.Screen name={SCREENS.BOOKING_CONFIRM} component={BookingConfirmation} />
      <Stack.Screen name={SCREENS.CONTRACT} component={Contract} />
+
+     <Stack.Screen name={SCREENS.MY_INFORMATION} component={MyInformation} />
+     <Stack.Screen name={SCREENS.MY_ADDRESS} component={MyAddress} />
+     <Stack.Screen name={SCREENS.USER_BOOKING} component={UserBooking} />
+     <Stack.Screen name={SCREENS.RATING} component={RatingScreen} />
+     <Stack.Screen name={SCREENS.CHANGE_LANGUAGE} component={ChangeLang} />
      
     </Stack.Navigator>
 )}
@@ -46,7 +57,6 @@ const BottomTabNavigation = (props: any) => {
       <Tab.Screen name={SCREENS.SEARCH_SCREEN} component={SearchScreen} />
       <Tab.Screen name={SCREENS.NOTIFICATION} component={Notification} />
       <Tab.Screen name={SCREENS.PROFILE} component={Profile} />
-      
      <Stack.Screen name={SCREENS.TOP_CARS} component={TopCars} />
 
     </Tab.Navigator>

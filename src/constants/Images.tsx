@@ -44,4 +44,14 @@ export const IMAGES = {
   pencil: require("../assets/images/pencil.png"),
   bookingImg: require("../assets/images/bookingImg.png"),
 
+  camera: require("../assets/images/camera.png"),
+  
+  userProfile: require("../assets/images/userProfile.png"),
+  map: require("../assets/images/map.png"),
+  userBooking: require("../assets/images/userBooking.png"),
+
+  changeLang: require("../assets/images/changeLang.png"),
+  delete: require("../assets/images/delete.png"),
+  signOut: require("../assets/images/signOut.png"),
+
 };
