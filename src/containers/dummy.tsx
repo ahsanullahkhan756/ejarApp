@@ -66,3 +66,26 @@ export const NOTIFICATION_DATA = [
 
     },
   ];
+  export const spaceData = [
+    { label: "GCC", value: "1" },
+    { label: "GCC", value: "2" },
+    { label: "ACC", value: "3" },
+    { label: "BCC", value: "4" },
+  ];
+  export const fuekData = [
+    { label: "Diesel", value: "1" },
+    { label: "Petrol", value: "2" },
+    { label: "Diesel", value: "3" },
+  ];
+  export const munalData = [
+    { label: "Manual", value: "1" },
+    { label: "Automatic", value: "2" },
+  ];
+  export const userData = [
+    { label: "User", value: "1" },
+    { label: "UnUser", value: "2" },
+  ];
+  export const dealData = [
+    { label: "Fair Dea", value: "1" },
+    { label: "Fair Dea", value: "2" },
+  ];

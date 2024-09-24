@@ -27,6 +27,16 @@ export const commonStyles = StyleSheet.create({
     marginHorizontal: 5,
     padding: 10,
   },
+
+
+  inputView: {
+    padding: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: theme.color.descColor,
+    borderRadius: 10,
+  },
   // NOTIFICATON POP CARD
   popupCard: {
     width: "90%",

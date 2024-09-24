@@ -1,8 +1,9 @@
-import { Image, TextField, TouchableOpacity } from "react-native-ui-lib";
+import { Image, TextField, TouchableOpacity, Text } from "react-native-ui-lib";
 import { useState } from "react";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import { Keyboard, Platform } from "react-native";
+import { Platform } from "react-native";
 import { IMAGES, theme } from "../../constants";
+import { Typography } from "./Typography";
 
 export const InputText = (props: any) => {
   const {
@@ -13,7 +14,8 @@ export const InputText = (props: any) => {
     validationMessage = "Field is required",
     validate = "email",
     leftIcon = false,
-    rightIcon = false,
+    rightText = false,
+    rightTitle = 'AED',
     leftImage,
     rightImage = false,
     showCharCounter = false,
@@ -49,14 +51,14 @@ export const InputText = (props: any) => {
       multiline={multiline}
       keyboardType={keyboardType}
       fieldStyle={{
-        height: verticalScale(45),
-        marginVertical: 5,
+        // height: verticalScale(45),
+        // marginVertical: 5,
         paddingHorizontal: 10,
         paddingVertical: Platform.OS == "ios" ? 20 : 0,
         borderWidth: 0.2,
         borderRadius: 10,
         borderColor: theme.color.tgray,
-
+        width : 150,
         ...style,
       }}
       {...(leftIcon
@@ -74,19 +76,19 @@ export const InputText = (props: any) => {
             ),
           }
         : null)}
-      {...(rightImage
+      {...(rightText
         ? {
             trailingAccessory: (
               <TouchableOpacity onPress={onPressRight}>
-                <Image
-                  source={secureTextEntry ? IMAGES.eyeOff : IMAGES.eyeOn}
+                <Typography
                   style={{
-                    width: 20,
-                    height: 20,
-                    resizeMode: "contain",
-                    tintColor: theme.color.black,
+                    fontSize: moderateScale(14),
+                    color: theme.color.descColor,
+                    marginRight: 10,
                   }}
-                />
+                >
+                 {rightTitle}
+                </Typography>
               </TouchableOpacity>
             ),
           }
