@@ -4,8 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import Splash from '../containers/Splash';
 import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './AppNavigator';
-import BookingConfirmation from '../screens/HomeScreen/BookingConfirm/BookingConfirmation';
-import Contract from '../screens/HomeScreen/Contract';
 import { AuthStackNavigator } from './AuthStackNavigator';
 
 const MainNavigation = () => {
@@ -24,8 +22,7 @@ const MainNavigation = () => {
   ) : (
     <>
       <NavigationContainer ref={navigationRef}>
-        {/* {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />} */}
-        <AppNavigator />
+        {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
       </NavigationContainer>
     </>
   );

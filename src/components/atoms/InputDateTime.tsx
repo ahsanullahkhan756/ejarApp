@@ -33,15 +33,15 @@ export const InputDateTime = (props: any) => {
   // const SelectedDate = new Date(`${year}-${month}-${day}`);
   return (
     <View>
-      {/* {title && (
+      {title && (
       <Typography
         textType={'light'}
         size={14}
-        color={COLORS.WHITE}
+        color={theme.color.black}
         style={styles.label}>
         {title}
       </Typography>
-    )} */}
+    )}
       <View
         style={{
           marginVertical: 10,
@@ -63,7 +63,7 @@ export const InputDateTime = (props: any) => {
                 flex: 1,
                 fontSize: theme.fontSize.small,
                 padding: 10,
-                color:theme.color.black,
+                color:theme.color.descColor,
                 ...inputStyle,
               }}
             >
@@ -76,7 +76,7 @@ export const InputDateTime = (props: any) => {
                 flex: 1,
                 // fontSize: FONTSIZE.S,
                 // fontFamily: FONTS.PoppinsRegular,
-                padding: 15,
+                // padding: 15,
                 color: theme.color.black,
                 ...inputStyle,
               }}

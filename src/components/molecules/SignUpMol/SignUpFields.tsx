@@ -24,6 +24,7 @@ const SignUpFields = () => {
       <View marginV-20>
         <InputText
           label={"Email"}
+          width={350}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -40,6 +41,7 @@ const SignUpFields = () => {
 
         <InputText
           label={"Phone Number"}
+          width={350}
           value={phone}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -53,8 +55,9 @@ const SignUpFields = () => {
           onChangeText={(text: string) => setPhone(text)}
         />
 
-<InputText
+        <InputText
           label={"Password:"}
+          width={350}
           value={password}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -76,11 +79,8 @@ const SignUpFields = () => {
           ]}
           onChangeText={(text: string) => setPassword(text)}
         />
-    
       </View>
       <ForgotText />
-      
-      
     </View>
   );
 };

@@ -38,7 +38,7 @@ const SignUpOrg = () => {
       <SignUpFields />
 
       <Button
-        label="Sign Up"
+        label={currentStep == 0 ? "Sign Up" : currentStep == 1 ? "Next" : currentStep == 2 ? "Done" : ""}
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
         disabled={currentStep === steps.length - 1}

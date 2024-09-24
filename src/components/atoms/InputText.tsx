@@ -26,6 +26,7 @@ export const InputText = (props: any) => {
     label = true,
     multiline = false,
     onPressRight = () => {},
+    width= 150
   } = props;
 
   return (
@@ -58,7 +59,7 @@ export const InputText = (props: any) => {
         borderWidth: 0.2,
         borderRadius: 10,
         borderColor: theme.color.tgray,
-        width : 150,
+        width : width,
         ...style,
       }}
       {...(leftIcon

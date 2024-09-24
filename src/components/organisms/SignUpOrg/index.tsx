@@ -6,9 +6,11 @@ import ProgressBarComp from "../../molecules/ProgressBarComp.tsx";
 import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { theme } from "../../../constants/Constants.ts";
-import ForgotText from "../../molecules/SignUpMol/ForgotText.tsx";
 import { Typography } from "../../atoms/Typography.tsx";
 import { navigate } from "../../../navigation/RootNavigation.tsx";
+import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
+import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
+
 const steps = [
   { label: "Sign Up", progress: 0 },
   { label: "Upload License", progress: 0.5 },
@@ -19,21 +21,16 @@ const SignUpOrg = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },
-    { id: 1, image: IMAGES.facebook },
-    { id: 1, image: IMAGES.apple },
+    { id: 2, image: IMAGES.facebook },
+    { id: 3, image: IMAGES.apple },
   ];
+
   const handleNextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-  const handleNevigation = () => {
-    if (currentStep == 0) {
-      return <SignUpFields />;
-    } else if (currentStep == 1) {
-      return <Typography>sadawdsdasdsd</Typography>;
+    if (currentStep === steps.length - 1) {
+      // Navigate to the login screen when done
+      navigate(SCREENS.LOGIN);
     } else {
-      return <Typography>Finish</Typography>;
+      setCurrentStep(currentStep + 1);
     }
   };
 
@@ -50,22 +47,20 @@ const SignUpOrg = () => {
           <View flex height={1} backgroundColor={theme.color.black} />
         </View>
         <View row center margin-20>
-          {SOCIAL_LOGIN.map((i) => {
-            return (
-              <Image
-                source={i.image}
-                style={{ width: 110, height: 40, marginHorizontal: 5 }}
-                resizeMode="contain"
-              />
-            );
-          })}
+          {SOCIAL_LOGIN.map((i) => (
+            <Image
+              key={i.id}
+              source={i.image}
+              style={{ width: 110, height: 40, marginHorizontal: 5 }}
+              resizeMode="contain"
+            />
+          ))}
         </View>
         <View center marginV-20>
           <Typography>
             Don’t have an account?{" "}
             <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
               <Typography semiBold small marginT-5 color={theme.color.primary}>
-                {" "}
                 Login
               </Typography>
             </TouchableOpacity>
@@ -73,6 +68,20 @@ const SignUpOrg = () => {
         </View>
       </>
     );
+  };
+
+  const handleNavigation = () => {
+    if (currentStep === 0) {
+      return <SignUpFields />;
+    } else if (currentStep === 1) {
+      return <InformationIds />;
+    } else {
+      return <Uploads />;
+    }
+  };
+  
+  const getButtonLabel = () => {
+    return currentStep === 2 ? "Done" : currentStep  == 1 ? "Next" : currentStep == 0 ? "Sign Up" : "";
   };
 
   return (
@@ -90,13 +99,12 @@ const SignUpOrg = () => {
       </View>
       <ProgressBarComp currentStep={currentStep} steps={steps} />
 
-      {handleNevigation()}
+      {handleNavigation()}
 
       <Button
-        label="Sign Up"
+        label={getButtonLabel()}
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
-        disabled={currentStep === steps.length - 1}
         borderRadius={30}
         style={{ height: 50, margin: 20 }}
       />

@@ -4,8 +4,11 @@ import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
+import { useDispatch } from "react-redux";
+import { TouchableOpacity } from "react-native";
+import ForgotText from "./ForgotText";
 
-const LoginFields = () => {
+const Uploads = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -15,7 +18,7 @@ const LoginFields = () => {
     <View marginH-20>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
-        Hi, Welcome Back!
+      Uploads
       </Typography>
 
       <View marginV-20>
@@ -34,6 +37,22 @@ const LoginFields = () => {
           validate={["email"]}
           validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}
+        />
+
+        <InputText
+          label={"Phone Number"}
+          width={350}
+          value={phone}
+          onValidationFailed={(isValid: boolean) => {
+            setValidated((prev) => {
+              let copy = [...prev];
+              copy[0] = isValid;
+              return copy;
+            });
+          }}
+          placeholder="Please enter your number"
+          validate={["phone"]}
+          onChangeText={(text: string) => setPhone(text)}
         />
 
         <InputText
@@ -61,8 +80,9 @@ const LoginFields = () => {
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
+      <ForgotText />
     </View>
   );
 };
 
-export default LoginFields;
+export default Uploads;
