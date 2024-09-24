@@ -31,17 +31,17 @@ export const data = {
         // Add more categories here
     ],
     carsForRent: [
-        { id: '1', name: 'Ford Truck 2021', price: 'AED 7,200', img: IMAGES.truck, date:2021 ,color:'White',status:'Automatic' },
-        { id: '2', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car2, date:2023 ,color:'Red',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car1,date:2022 ,color:'Black',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car4,date:2022 ,color:'Black',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,200', img: IMAGES.car7,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '1', name: 'Ford Truck 2021', price: 'AED 7,200/day', img: IMAGES.truck, date:2021 ,color:'White',status:'Automatic' },
+        { id: '2', name: 'Mercedes Benz', price: 'AED 5,200/day', img: IMAGES.car2, date:2023 ,color:'Red',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 9,200/day', img: IMAGES.car1,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 7,100/day', img: IMAGES.car4,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 7,800/day', img: IMAGES.car7,date:2022 ,color:'Black',status:'Automatic' },
     ],
     topRatedCars: [
         { id: '1', name: 'Car 1', img: IMAGES.car1, rating: '4.9' },
         { id: '2', name: 'Car 2', img: IMAGES.car2, rating: '4.9' },
-        { id: '2', name: 'Car 2', img: IMAGES.car2, rating: '4.9' },
-        { id: '2', name: 'Car 2', img: IMAGES.car2, rating: '4.9' },
+        { id: '2', name: 'Car 3', img: IMAGES.car3, rating: '4.9' },
+        { id: '2', name: 'Car 4', img: IMAGES.car1, rating: '4.9' },
     ],
     companies: [
         { id: '1', name: 'Thrifty', logo: 'https://example.com/thrifty.png' },
@@ -88,4 +88,16 @@ export const NOTIFICATION_DATA = [
   export const dealData = [
     { label: "Fair Dea", value: "1" },
     { label: "Fair Dea", value: "2" },
+  ];
+  export const cityData = [
+    { label: "Dubai", value: "1" },
+    { label: "Abu Dhabi", value: "2" },
+    { label: "Sharjah", value: "2" },
+    { label: "Ras Al Khaimah", value: "2" },
+  ];
+  export const country = [
+    { label: "Dubai", value: "1" },
+    { label: "Saudia Arabia", value: "2" },
+    { label: "USA", value: "2" },
+    { label: "UK", value: "2" },
   ];

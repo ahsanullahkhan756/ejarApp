@@ -49,9 +49,11 @@ export const IMAGES = {
   userProfile: require("../assets/images/userProfile.png"),
   map: require("../assets/images/map.png"),
   userBooking: require("../assets/images/userBooking.png"),
-
   changeLang: require("../assets/images/changeLang.png"),
   delete: require("../assets/images/delete.png"),
   signOut: require("../assets/images/signOut.png"),
+  
+  addressIcon: require("../assets/images/addressIcon.png"),
+  editIcon: require("../assets/images/editIcon.png"),
 
 };

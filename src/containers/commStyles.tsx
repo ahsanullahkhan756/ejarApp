@@ -28,6 +28,15 @@ export const commonStyles = StyleSheet.create({
     padding: 10,
   },
 
+  fieldStyle: {
+    borderWidth: 0.5,
+    borderColor: theme.color.descColor,
+    borderRadius: 10,
+    height: 60,
+    justifyContent: "center",
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
 
   inputView: {
     padding: 5,
@@ -102,9 +111,9 @@ export const commonStyles = StyleSheet.create({
   headerView: {
     // paddingVertical: 15,
     borderColor: theme.color.blue,
-    borderWidth:20,
-    borderBottomLeftRadius:20,
-    borderBottomRightRadius:20
+    borderWidth: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   // Footer
@@ -140,6 +149,6 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 12 / 2,
     borderWidth: 1,
     borderColor: theme.color.primary,
-    backgroundColor:theme.color.primary,
+    backgroundColor: theme.color.primary,
   },
 });

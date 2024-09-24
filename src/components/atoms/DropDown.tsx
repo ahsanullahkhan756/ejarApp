@@ -6,20 +6,14 @@ import { IMAGES, theme } from "../../constants";
 import { Calendar } from "react-native-calendars";
 import { Dropdown } from "react-native-element-dropdown";
 export const DropDown = (props: any) => {
-  const { data, height = 50, width = 150 } = props;
+  const { data, height = 50, width = 150, placeholder = "Select item" } = props;
+
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   
   return (
     <Dropdown
-      style={[styles.dropdown,{ 
-          height: height,
-          width: width}]}
-      // isFocus && {
-      //   borderColor: "blue",
-      //   height: height,
-      //   width: width,
-      // },
+      style={[styles.dropdown,{height: height,width: width}]}
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
@@ -29,7 +23,8 @@ export const DropDown = (props: any) => {
       maxHeight={300}
       labelField="label"
       valueField="value"
-      placeholder={!isFocus ? "Select item" : "..."}
+      // placeholder={!isFocus ? "Select item" : "..."}
+      placeholder={placeholder}
       searchPlaceholder="Search..."
       value={value}
       onFocus={() => setIsFocus(true)}
@@ -48,10 +43,10 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   dropdown: {
-    borderColor: "gray",
+    borderColor: theme.color.descColor,
     borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+    borderRadius: 10,
+    paddingHorizontal: 10,
   },
   icon: {
     marginRight: 5,

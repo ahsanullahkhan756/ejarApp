@@ -34,7 +34,7 @@ export const SCREENS = {
   MY_ADDRESS :'MyAddress',
   USER_BOOKING:'UserBooking',
   RATING:'RatingScreen',
-  CHANGE_LANGUAGE:'ChangeLang'
-
+  CHANGE_LANGUAGE:'ChangeLang',
+  USER_BOOKING_DETAIL : 'UserBookingDetail',
 
 };
