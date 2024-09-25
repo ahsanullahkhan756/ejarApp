@@ -13,7 +13,7 @@ import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 
 const steps = [
   { label: "Sign Up", progress: 0 },
-  { label: "Upload License", progress: 0.5 },
+  { label: "Personal Information", progress: 0.5 },
   { label: "Finish", progress: 1.0 },
 ];
 
@@ -79,7 +79,7 @@ const SignUpOrg = () => {
       return <Uploads />;
     }
   };
-  
+
   const getButtonLabel = () => {
     return currentStep === 2 ? "Done" : currentStep  == 1 ? "Next" : currentStep == 0 ? "Sign Up" : "";
   };

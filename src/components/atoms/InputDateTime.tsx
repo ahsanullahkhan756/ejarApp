@@ -76,7 +76,7 @@ export const InputDateTime = (props: any) => {
                 flex: 1,
                 // fontSize: FONTSIZE.S,
                 // fontFamily: FONTS.PoppinsRegular,
-                // padding: 15,
+                padding: 10,
                 color: theme.color.black,
                 ...inputStyle,
               }}

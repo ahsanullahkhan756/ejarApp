@@ -4,6 +4,7 @@ import * as Progress from "react-native-progress";
 import { Button, View } from "react-native-ui-lib";
 import { theme } from "../../../constants";
 import { commonStyles } from "../../../containers/commStyles";
+import { Typography } from "../../atoms/Typography";
 
 const ProgressBarComp = ({currentStep, steps}:any) => {
   return (
@@ -15,6 +16,7 @@ const ProgressBarComp = ({currentStep, steps}:any) => {
           <Progress.Bar
             progress={steps[currentStep].progress}
             width={320}
+            height={5}
             color={theme.color.primary}
             borderWidth={1}
             borderColor={theme.color.tgray}
@@ -30,14 +32,14 @@ const ProgressBarComp = ({currentStep, steps}:any) => {
                 index <= currentStep && styles.activeStep,
               ]}
             >
-              <Text
-                style={[
-                  styles.stepLabel,
-                  index === currentStep && styles.activeStepText,
-                ]}
+              <Typography color={theme.color.tgray} size={theme.fontSize.extraSmall12}
+                // style={[
+                //   styles.stepLabel,
+                //   index === currentStep && styles.activeStepText,
+                // ]}
               >
                 {step.label}
-              </Text>
+              </Typography>
               {/* {index < steps.length - 1 && <View style={styles.separator} />} */}
             </View>
           ))}
@@ -66,9 +68,9 @@ const styles = StyleSheet.create({
   stepsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    // alignItems: "center",
     marginTop: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 0,
   },
   stepItem: {
     alignItems: "center",

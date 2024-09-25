@@ -55,5 +55,11 @@ export const IMAGES = {
   
   addressIcon: require("../assets/images/addressIcon.png"),
   editIcon: require("../assets/images/editIcon.png"),
+  cameraIcon: require("../assets/images/cameraIcon.png"),
+  upload: require("../assets/images/upload.png"),
+  uploadPdf: require("../assets/images/uploadPdf.png"),
 
+  uploadLicense1: require("../assets/images/uploadLicense1.png"),
+  uploadLicense2: require("../assets/images/uploadLicense2.png"),
+  cross: require("../assets/images/cross.png"),
 };

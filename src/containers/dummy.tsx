@@ -101,3 +101,7 @@ export const NOTIFICATION_DATA = [
     { label: "USA", value: "2" },
     { label: "UK", value: "2" },
   ];
+  export const gender = [
+    { label: "Male", value: "1" },
+    { label: "Female", value: "2" },
+  ];

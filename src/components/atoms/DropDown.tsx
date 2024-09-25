@@ -14,7 +14,7 @@ export const DropDown = (props: any) => {
   return (
     <Dropdown
       style={[styles.dropdown,{height: height,width: width}]}
-      placeholderStyle={styles.placeholderStyle}
+      // placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
@@ -25,12 +25,13 @@ export const DropDown = (props: any) => {
       valueField="value"
       // placeholder={!isFocus ? "Select item" : "..."}
       placeholder={placeholder}
+      
       searchPlaceholder="Search..."
       value={value}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
       onChange={(item) => {
-        setValue(item.value);
+        setValue(item?.value);
         setIsFocus(false);
       }}
     />

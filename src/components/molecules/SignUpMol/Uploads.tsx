@@ -3,84 +3,46 @@ import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, theme } from "../../../constants";
-import { InputText } from "../../atoms/InputText";
-import { useDispatch } from "react-redux";
-import { TouchableOpacity } from "react-native";
-import ForgotText from "./ForgotText";
+import { Image, ImageBackground, TouchableOpacity } from "react-native";
 
 const Uploads = () => {
-  const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(true);
+  // Array to manage the images
+  const [uploads, setUploads] = useState([IMAGES.uploadLicense1, IMAGES.uploadLicense2]);
+
+  // Function to handle removing an image
+  const removeImage = (index) => {
+    const newUploads = uploads.filter((_, i) => i !== index); // Filter out the image by index
+    setUploads(newUploads);
+  };
 
   return (
-    <View marginH-20>
+    <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
-      Uploads
+        Confirmed Uploads
       </Typography>
-
-      <View marginV-20>
-        <InputText
-          label={"Email"}
-          width={350}
-          value={email}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[0] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="Enter your email"
-          validate={["email"]}
-          validationMessage={["Email is invalid"]}
-          onChangeText={(text: string) => setEmail(text)}
-        />
-
-        <InputText
-          label={"Phone Number"}
-          width={350}
-          value={phone}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[0] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="Please enter your number"
-          validate={["phone"]}
-          onChangeText={(text: string) => setPhone(text)}
-        />
-
-        <InputText
-          label={"Password:"}
-          width={350}
-          value={password}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[1] = isValid;
-              return copy;
-            });
-          }}
-          onPressRight={() => setPassword(!password)}
-          secureTextEntry={password}
-          rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
-          placeholder="Enter your password"
-          validate={[
-            (v) =>
-              /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),
-          ]}
-          validationMessage={[
-            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-          ]}
-          onChangeText={(text: string) => setPassword(text)}
-        />
+      <View row gap-20 marginV-20>
+        {uploads.map((image, index) => (
+          <View key={index}>
+            <ImageBackground
+              source={image}
+              style={{ width: 160, height: 180 }}
+              resizeMode="contain"
+            >
+              <TouchableOpacity
+                style={{ position: "absolute", right: 0, top: -10 }}
+                onPress={() => removeImage(index)} // Remove image on click
+              >
+                <Image
+                  source={IMAGES.cross}
+                  style={{ width: 25, height: 25 }}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </ImageBackground>
+          </View>
+        ))}
       </View>
-      <ForgotText />
     </View>
   );
 };
