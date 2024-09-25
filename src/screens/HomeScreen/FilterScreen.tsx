@@ -19,6 +19,7 @@ import { navigate, onBack } from "../../navigation/RootNavigation";
 
 const FilterScreen = () => {
   const [date, setDate] = useState(null);
+  const [date2, setDate2] = useState(null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const hidePicker = () => {
     setDatePickerVisible(false);
@@ -68,7 +69,7 @@ const FilterScreen = () => {
           >
             Year
           </Typography>
-          <View marginV-10>
+          <View marginV-20>
             <Typography
               color={theme.color.descColor}
               size={theme.fontSize.small}
@@ -76,10 +77,10 @@ const FilterScreen = () => {
               Set your desired year range
             </Typography>
           </View>
-          <View gap-10 row style={{ alignItems: "center" }}>
+          <View gap-10 row marginV-10 style={{ alignItems: "center" }}>
             <InputDateTime
               title={"Select Date"}
-              placeholder={"Date of birth"}
+              placeholder={"Select Date"}
               mode={"date"}
               value={date}
               onChange={setDate}
@@ -94,10 +95,10 @@ const FilterScreen = () => {
             <Typography color={theme.color.descColor}>to</Typography>
             <InputDateTime
               title={"Select Date"}
-              placeholder={"Date of birth"}
+              placeholder={"Select Date"}
               mode={"date"}
-              value={date}
-              onChange={setDate}
+              value={date2}
+              onChange={setDate2}
               onConfirm={(selectedDate: any) => {
                 console.log("Selected Date:", selectedDate);
                 setDate(selectedDate);

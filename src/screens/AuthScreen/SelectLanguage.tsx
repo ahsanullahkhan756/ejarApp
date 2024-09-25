@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Image, I18nManager, Pressable } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREENS, theme } from "../../constants";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useTranslation } from "react-i18next";
 import "../../i18n";
 import { View, Text } from "react-native-ui-lib";
 import { Typography } from "../../components/atoms/Typography";
+import { navigate } from "../../navigation/RootNavigation";
 
 const SelectLanguage = () => {
   const { t, i18n } = useTranslation();
@@ -49,7 +50,10 @@ const SelectLanguage = () => {
             styles.languageButton,
             selectedLang === "en" && styles.selectedButton,
           ]}
-          onPress={() => changeLanguage("en")}
+          onPress={() => 
+            navigate(SCREENS.ONBOARDING)
+            // changeLanguage("en")
+          }
         >
           <Text small>{t("English")}</Text>
         </Pressable>
@@ -58,7 +62,10 @@ const SelectLanguage = () => {
             styles.languageButton,
             selectedLang === "ar" && styles.selectedButton,
           ]}
-          onPress={() => changeLanguage("ar")}
+          onPress={() => 
+            navigate(SCREENS.ONBOARDING)
+            // changeLanguage("ar")
+          }
         >
           <Text small>{t("Arabic")}</Text>
         </Pressable>

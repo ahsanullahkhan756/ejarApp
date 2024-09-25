@@ -8,12 +8,14 @@ export const SCREENS = {
   LOGIN: "Login",
   VERIFICATION_CODE: "VerificationCode",
   REGISTER: "Register",
-  FORGOT_PASS: "ForgetPassword",
+  FORGOT_PASS: "ForgotPass",
   VERIFY_EMAIL: "VerifyEmail",
-  OTP: "OTP",
+  OTP: "OTPScreen",
+  RESET_PASS:'ResetPassword',
   CONFIRM_PASSWORD: "ConfirmPassword",
   VERIFY_CONTACT: "VerifyContact",
   INFO: "PersonalInfo",
+  PRIVACY:'Privacy',
 
   // Bottom Screen
   HOME: "Home",

@@ -36,7 +36,7 @@ const ForgotText = () => {
         </View>
         <TouchableOpacity
           style={{ borderBottomWidth: 0.2, borderColor: theme.color.tgray }}
-          onPress={() => navigate(SCREENS.HOME)}
+          onPress={() => navigate(SCREENS.FORGOT_PASS)}
         >
           <Typography
             size={theme.fontSize.extraSmall12}
@@ -60,6 +60,7 @@ const ForgotText = () => {
             />
           )}
         </TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigate(SCREENS.PRIVACY)}>
         <Typography
           color={theme.color.black}
           size={theme.fontSize.extraSmall12}
@@ -67,6 +68,7 @@ const ForgotText = () => {
         >
           I agree with the Privacy Policy and{"\n"}Terms & Conditions
         </Typography>
+        </TouchableOpacity>
       </View>
     </>
   );
