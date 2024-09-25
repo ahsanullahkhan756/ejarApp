@@ -15,7 +15,7 @@ const UpcomingBooking = () => {
         <Image
           source={item.img}
           style={{ width: 160, height: 110, borderRadius: 20 }}
-          resizeMode="stretch"
+          resizeMode= 'cover'
         />
         <View>
           <Typography textType="bold" size={theme.fontSize.large20}>

@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, theme } from "../../../constants";
 import { Image, ImageBackground, TouchableOpacity } from "react-native";
 
-const Uploads = () => {
-  // Array to manage the images
+const Uploads = ({onValidate}:any) => {
   const [uploads, setUploads] = useState([IMAGES.uploadLicense1, IMAGES.uploadLicense2]);
 
-  // Function to handle removing an image
   const removeImage = (index) => {
-    const newUploads = uploads.filter((_, i) => i !== index); // Filter out the image by index
+    const newUploads = uploads.filter((_, i) => i !== index);
     setUploads(newUploads);
   };
+
+  // useEffect(() => {
+  //   if (!hasValidated.includes(false)) onValidate();
+  // }, [hasValidated]);
 
   return (
     <View marginH-20 center>
@@ -31,7 +33,7 @@ const Uploads = () => {
             >
               <TouchableOpacity
                 style={{ position: "absolute", right: 0, top: -10 }}
-                onPress={() => removeImage(index)} // Remove image on click
+                onPress={() => removeImage(index)}
               >
                 <Image
                   source={IMAGES.cross}

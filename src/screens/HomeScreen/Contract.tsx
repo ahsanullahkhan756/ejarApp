@@ -123,7 +123,7 @@ const Contract = () => {
               style={styles.button}
               onPress={() => {
                 setModalVisible(false)
-                navigate(SCREENS.MY_BOOKING)}
+                navigate(SCREENS.USER_BOOKING)}
               }
             />
             <Button

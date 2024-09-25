@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FlatList, Touchable, TouchableOpacity } from "react-native";
+import { FlatList, Image, Touchable, TouchableOpacity } from "react-native";
 import { IMAGES, SCREENS, theme } from "../../constants";
-import { Card, Image, View } from "react-native-ui-lib";
+import { Card, View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
 import { data } from "../../containers/dummy";
 import { navigate } from "../../navigation/RootNavigation";
@@ -26,10 +26,11 @@ export const RentCarsComp = () => {
               source={item.img}
               style={{
                 width: "100%",
-                height: 100,
+                height: 120,
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
               }}
+              resizeMode= 'cover'
             />
             <View row spread padding-10>
               <Typography size={theme.fontSize.small} textType="semiBold">

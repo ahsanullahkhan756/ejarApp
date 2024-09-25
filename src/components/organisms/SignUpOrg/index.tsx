@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
@@ -19,6 +19,8 @@ const steps = [
 
 const SignUpOrg = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [validate, setValidate] = useState(-1);
+
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },
     { id: 2, image: IMAGES.facebook },
@@ -72,16 +74,43 @@ const SignUpOrg = () => {
 
   const handleNavigation = () => {
     if (currentStep === 0) {
-      return <SignUpFields />;
+      return (
+        <SignUpFields
+          onValidate={(valid:any) => {
+            if (valid) setValidate(0);
+            else setValidate(-1);
+          }}
+        />
+      );
     } else if (currentStep === 1) {
-      return <InformationIds />;
+      return (
+        <InformationIds
+          onValidate={(valid:any) => {
+            if (valid) setValidate(1);
+            else setValidate(-1);
+          }}
+        />
+      );
     } else {
-      return <Uploads />;
+      return (
+        <Uploads
+          onValidate={(valid:any) => {
+            if (valid) setValidate(2);
+            else setValidate(-1);
+          }}
+        />
+      );
     }
   };
 
   const getButtonLabel = () => {
-    return currentStep === 2 ? "Done" : currentStep  == 1 ? "Next" : currentStep == 0 ? "Sign Up" : "";
+    return currentStep === 2
+      ? "Done"
+      : currentStep == 1
+      ? "Next"
+      : currentStep == 0
+      ? "Sign Up"
+      : "";
   };
 
   return (
@@ -105,6 +134,7 @@ const SignUpOrg = () => {
         label={getButtonLabel()}
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
+        // disabled={currentStep != validate}
         borderRadius={30}
         style={{ height: 50, margin: 20 }}
       />

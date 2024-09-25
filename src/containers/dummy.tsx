@@ -33,15 +33,13 @@ export const data = {
     carsForRent: [
         { id: '1', name: 'Ford Truck 2021', price: 'AED 7,200/day', img: IMAGES.truck, date:2021 ,color:'White',status:'Automatic' },
         { id: '2', name: 'Mercedes Benz', price: 'AED 5,200/day', img: IMAGES.car2, date:2023 ,color:'Red',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 9,200/day', img: IMAGES.car1,date:2022 ,color:'Black',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,100/day', img: IMAGES.car4,date:2022 ,color:'Black',status:'Automatic' },
-        { id: '3', name: 'Mercedes Benz', price: 'AED 7,800/day', img: IMAGES.car7,date:2022 ,color:'Black',status:'Automatic' },
+        { id: '3', name: 'Mercedes Benz', price: 'AED 9,200/day', img: IMAGES.car3,date:2022 ,color:'Black',status:'Automatic' },
     ],
     topRatedCars: [
-        { id: '1', name: 'Car 1', img: IMAGES.car1, rating: '4.9' },
+        { id: '1', name: 'Car 1', img: IMAGES.truck, rating: '4.9' },
         { id: '2', name: 'Car 2', img: IMAGES.car2, rating: '4.9' },
-        { id: '2', name: 'Car 3', img: IMAGES.car3, rating: '4.9' },
-        { id: '2', name: 'Car 4', img: IMAGES.car1, rating: '4.9' },
+        { id: '3', name: 'Car 3', img: IMAGES.car3, rating: '4.9' },
+        { id: '4', name: 'Car 4', img: IMAGES.car1, rating: '4.9' },
     ],
     companies: [
         { id: '1', name: 'Thrifty', logo: 'https://example.com/thrifty.png' },

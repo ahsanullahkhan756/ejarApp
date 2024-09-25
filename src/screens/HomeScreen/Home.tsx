@@ -4,8 +4,8 @@ import {
   Image,
   FlatList,
   ScrollView,
-  Touchable,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { IMAGES, SCREENS, theme } from "../../constants";
@@ -13,7 +13,7 @@ import { scale } from "react-native-size-matters";
 import { SearchBar } from "../../components/atoms/SearchBar";
 import { data } from "../../containers/dummy";
 import { Typography } from "../../components/atoms/Typography";
-import { Button, Card, View } from "react-native-ui-lib";
+import { Button, Card, Carousel, View } from "react-native-ui-lib";
 import { commonStyles } from "../../containers/commStyles";
 import { navigate } from "../../navigation/RootNavigation";
 import { TopCarsComp } from "../../components/atoms/TopCarsComp";
@@ -35,17 +35,17 @@ const Home = () => {
           />
           <SearchBar />
         </View>
-        <View marginV-20 paddingH-20>
+        <View padding-20>
           <FlatList
             data={data.categories}
             numColumns={4}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View marginR-20 style={{ alignItems: "center" }}>
+              <View marginH-15 style={{ alignItems: "center", marginLeft: -2 }}>
                 <Image
                   source={item.icon}
-                  style={{ width: 70, height: 70, borderRadius: 10 }}
-                  resizeMode="contain"
+                  style={{ width: 80, height: 80, borderRadius: 10 }}
+                  resizeMode="cover"
                 />
                 <Typography size={theme.fontSize.extraSmall12}>
                   {item.name}
@@ -73,11 +73,11 @@ const Home = () => {
           </Typography>
           <RentCarsComp />
           <RentCarsComp />
-          <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}> 
+          <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
             <Image
               source={IMAGES.viewAll}
               style={{
-                width: scale(100),
+                width: scale(60),
                 height: 30,
                 alignSelf: "center",
               }}
@@ -102,7 +102,7 @@ const Home = () => {
             <Image
               source={IMAGES.viewAll}
               style={{
-                width: scale(100),
+                width: scale(60),
                 height: 30,
                 alignSelf: "center",
               }}
@@ -119,6 +119,7 @@ const Home = () => {
             Top Rated Companies
           </Typography>
 
+          {/* 
           <Image
             source={IMAGES.compaines}
             style={{
@@ -127,7 +128,38 @@ const Home = () => {
               alignSelf: "center",
             }}
             resizeMode="contain"
-          />
+          /> */}
+
+          <Carousel loop>
+            <Image
+              source={IMAGES.compaines}
+              style={{
+                width: "100%",
+                height: 100,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
+            <Image
+              source={IMAGES.compaines}
+              style={{
+                width: "100%",
+                height: 100,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
+            <Image
+              source={IMAGES.compaines}
+              style={{
+                width: "100%",
+                height: 100,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
+          </Carousel>
+
           <Image
             source={IMAGES.slider}
             style={{ width: 70, height: 5, alignSelf: "center" }}
@@ -150,11 +182,31 @@ const Home = () => {
               resizeMode="contain"
             />
           </View>
-          <Typography>⭐ 4.9</Typography>
+          <View row>
+            <Image
+              source={IMAGES.starIcon}
+              style={{ width: 20, height: 20 }}
+              resizeMode="contain"
+            />
+            <Typography>4.9</Typography>
+          </View>
+
+
+          <Carousel loop>
+ 
+
           <Typography color={theme.color.descColor}>
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua”.
           </Typography>
+
+       
+          <Typography color={theme.color.descColor}>
+            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua”.
+          </Typography>
+      </Carousel>
+
           <Image
             source={IMAGES.slider}
             style={{ width: 70, height: 5, alignSelf: "center" }}
@@ -168,7 +220,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingTop: Platform.OS == "ios" ? 20 : 50,
     paddingHorizontal: 20,
     backgroundColor: theme.color.blue,
     borderBottomLeftRadius: 30,

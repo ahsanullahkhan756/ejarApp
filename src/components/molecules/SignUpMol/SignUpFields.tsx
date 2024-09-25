@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
@@ -8,11 +8,16 @@ import { useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native";
 import ForgotText from "./ForgotText";
 
-const SignUpFields = () => {
-  const [hasValidated, setValidated] = useState(new Array(2).fill(false));
+const SignUpFields = ({ onValidate }: any) => {
+  const [hasValidated, setValidated] = useState(new Array(3).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(true);
+
+  useEffect(() => {
+    console.warn(hasValidated);
+    onValidate(!hasValidated.includes(false));
+  }, [hasValidated]);
 
   return (
     <View marginH-20>
@@ -46,12 +51,12 @@ const SignUpFields = () => {
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[0] = isValid;
+              copy[1] = isValid;
               return copy;
             });
           }}
           placeholder="Please enter your number"
-          validate={["phone"]}
+          validate={[(v) => v.length > 10]}
           onChangeText={(text: string) => setPhone(text)}
         />
 
@@ -62,7 +67,7 @@ const SignUpFields = () => {
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[1] = isValid;
+              copy[2] = isValid;
               return copy;
             });
           }}

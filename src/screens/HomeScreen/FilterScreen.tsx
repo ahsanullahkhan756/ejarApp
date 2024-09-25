@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { Platform, ScrollView, StyleSheet, TextInput } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Header } from "../../components/atoms/Header";
 import { Typography } from "../../components/atoms/Typography";
@@ -158,7 +158,7 @@ const FilterScreen = () => {
               Apply
             </Typography>
           </View>
-          <DropDown data={spaceData} width={350} />
+          <DropDown height ={Platform.OS == 'ios' ? 50 : 60} data={spaceData} width={350} />
 
           {/* Fuel Type*/}
           <View marginV-20>

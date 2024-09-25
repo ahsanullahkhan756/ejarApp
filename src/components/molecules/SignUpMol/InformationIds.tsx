@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
@@ -12,8 +12,13 @@ import { DropDown } from "../../atoms/DropDown";
 import { country, gender } from "../../../containers/dummy";
 import ImagePicker from "react-native-image-crop-picker";
 
-const InformationIds = () => {
-  const [hasValidated, setValidated] = useState(new Array(2).fill(false));
+const InformationIds = ({onValidate}:any) => {
+  const [hasValidated, setValidated] = useState(new Array(3).fill(true));
+  const [selectImg, setSelectImg] = useState(""); // State for selected image/pdf
+  const [selectPdf, setSelectPdf] = useState(""); // State for selected PDF
+  const [visible, setVisible] = useState(false);
+
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [issueDate, setIssueDate] = useState(true);
   const [expiryDate, setExpiryDate] = useState(true);
@@ -22,57 +27,72 @@ const InformationIds = () => {
   const [expiryDate2, setExpiryDate2] = useState(true);
 
   const [dob, setDob] = useState(true);
-
-  const [selectImg, setSelectImg] = useState("");
-  const [visible, setVisible] = useState(false);
-
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [sliderModal, setSliderModal] = useState(false);
+
+  useEffect(() => {
+     onValidate(!hasValidated.includes(false));
+  }, [hasValidated]);
+
+
   const hidePicker = () => {
     setDatePickerVisible(false);
   };
 
+  // Open camera and set image
   const takePhotoFromCamera = () => {
-    console.log("image", selectImg);
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
     })
-      .then((images) => {
-        console.log("img", images);
+      .then((image) => {
         setSelectImg({
-          name: images.filename || `image_${new Date().getDate()}`,
-          type: images.mime,
-          uri: images.path,
+          name: image.filename || `image_${new Date().getTime()}`,
+          type: image.mime,
+          uri: image.path,
         });
         setVisible(false);
       })
       .catch((error) => {
-        console.log("error", error);
-        setVisible(false);
-      });
-  };
-  const choosePhotoFromLibrary = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-    })
-      .then((images) => {
-        console.log("gal", images);
-        setSelectImg({
-          name: images.filename || `image_${new Date().getDate()}`,
-          type: images.mime,
-          uri: images.path,
-        });
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("error", error);
+        console.log("Error opening camera: ", error);
         setVisible(false);
       });
   };
 
+  // Open gallery and only allow PDF selection
+  const choosePdfFromLibrary = () => {
+    ImagePicker.openPicker({
+      mediaType: "any", // To allow PDF selection
+      multiple: false,
+    })
+      .then((file) => {
+        if (file.mime === "application/pdf") {
+          setSelectPdf({
+            name: file.filename || `pdf_${new Date().getTime()}`,
+            type: file.mime,
+            uri: file.path,
+          });
+        } else {
+          alert("Please select a PDF file.");
+        }
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.log("Error selecting file: ", error);
+        setVisible(false);
+      });
+  };
+
+  // Remove selected image
+  const removeSelectedImage = () => {
+    setSelectImg(""); // Clear image state
+  };
+
+  // Remove selected PDF
+  const removeSelectedPdf = () => {
+    setSelectPdf(""); // Clear PDF state
+  };
 
   const dateFields = () => {
     return (
@@ -187,7 +207,7 @@ const InformationIds = () => {
         <InputText
           label={"ID Number"}
           width={350}
-          value={email}
+          value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
@@ -195,10 +215,10 @@ const InformationIds = () => {
               return copy;
             });
           }}
-          placeholder="**** *** *******    *****"
-          validate={["email"]}
-          validationMessage={["Email is invalid"]}
-          onChangeText={(text: string) => setEmail(text)}
+          placeholder="**** *** *******   *****"
+          // validate={[(v) => v.length > 10]}
+          // validationMessage={["Card Numver is "]}
+          onChangeText={(text: string) => setId(text)}
         />
 
         <View marginV-10>{dateFields()}</View>
@@ -209,16 +229,16 @@ const InformationIds = () => {
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[0] = isValid;
+              copy[1] = isValid;
               return copy;
             });
           }}
           placeholder="**** *** *******  *****"
-          validate={["email"]}
-          validationMessage={["Email is invalid"]}
+          // validate={["email"]}
+          // validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}
         />
-          <View marginV-10>{dateFields2()}</View>
+        <View marginV-10>{dateFields2()}</View>
         <View row gap-30 marginT-20 style={{ alignItems: "center" }}>
           <View style={{ top: -20 }}>
             <Typography size={theme.fontSize.small}>Nationality</Typography>
@@ -229,16 +249,16 @@ const InformationIds = () => {
             label={"Place Of Birth"}
             width={150}
             value={email}
-            onValidationFailed={(isValid: boolean) => {
-              setValidated((prev) => {
-                let copy = [...prev];
-                copy[0] = isValid;
-                return copy;
-              });
-            }}
+            // onValidationFailed={(isValid: boolean) => {
+            //   setValidated((prev) => {
+            //     let copy = [...prev];
+            //     copy[2] = isValid;
+            //     return copy;
+            //   });
+            // }}
             placeholder="Place Of Birth"
-            validate={["email"]}
-            validationMessage={["Email is invalid"]}
+            // validate={["email"]}
+            // validationMessage={["Email is invalid"]}
             onChangeText={(text: string) => setEmail(text)}
           />
         </View>
@@ -271,18 +291,41 @@ const InformationIds = () => {
             <DropDown data={gender} width={170} height={55} />
           </View>
         </View>
-        {/* Cmaera Icon */}
-        <View center marginV-0>
-          <TouchableOpacity>
-          <Image
-            source={IMAGES.cameraIcon}
-            style={{ width: 60, height: 60 }}
-            resizeMode="contain"
-          />
-          </TouchableOpacity>
+
+        {/* Image & PDF Upload Section */}
+        <View center marginV-20>
+          {/* Camera Icon for taking photos */}
+          {selectImg ? (
+            <View>
+              <Image
+                source={{ uri: selectImg.uri }}
+                style={{ width: 150, height: 150, borderRadius: 10 }}
+                resizeMode="cover"
+              />
+              <TouchableOpacity
+                style={styles.deleteIcon}
+                onPress={removeSelectedImage}
+              >
+                <Image
+                  source={IMAGES.cross}
+                  style={{ width: 20, height: 20 }}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity onPress={takePhotoFromCamera}>
+              <Image
+                source={IMAGES.cameraIcon}
+                style={{ width: 60, height: 60 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
+
           <Typography color={theme.color.descColor}>
             Scan your License & ID card
           </Typography>
+
           <View
             style={[
               commonStyles.lineBar,
@@ -302,42 +345,44 @@ const InformationIds = () => {
           >
             Or
           </Typography>
-          <TouchableOpacity>
 
-          <View style={commonStyles.cardWithShadow}>
-            <Image
-              source={IMAGES.upload}
-              style={{ width: 200, height: 180 }}
-              resizeMode="contain"
-            />
-          </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              borderWidth: 0.5,
-              borderRadius: 10,
-              borderColor: theme.color.descColor,
-              marginVertical: 20,
-            }}
-          >
-            <Image
-              source={IMAGES.uploadPdf}
-              style={{ width: 320, height: 50 }}
-              resizeMode="contain"
-            />
-          </View>
+          {/* PDF Upload Section */}
+          {selectPdf ? (
+            <View>
+              <Image
+                source={{ uri: selectPdf.uri }}
+                style={{ width: 320, height: 50 }}
+                resizeMode="contain"
+              />
+              <TouchableOpacity
+                style={styles.deleteIcon}
+                onPress={removeSelectedPdf}
+              >
+                <Image
+                  source={IMAGES.cross}
+                  style={{ width: 20, height: 20 }}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity onPress={choosePdfFromLibrary}>
+              <Image
+                source={IMAGES.upload}
+                style={{ width: 320, height: 200 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          )}
         </View>
+
+        
       </View>
-
-
+      {/* Modal for selecting image source */}
       <Modal animationType="slide" transparent={true} visible={visible}>
         <TouchableOpacity
-          onPress={() => {
-            setVisible(!visible);
-          }}
+          onPress={() => setVisible(false)}
           style={commonStyles.centerView}
         />
-
         <View style={{ position: "absolute", bottom: 20 }}>
           <View style={commonStyles.modalStyle}>
             <TouchableOpacity
@@ -349,19 +394,15 @@ const InformationIds = () => {
             <View style={styles.lineBar} />
             <TouchableOpacity
               style={styles.profileStyle}
-              onPress={choosePhotoFromLibrary}
+              onPress={choosePdfFromLibrary}
             >
               <Typography style={styles.textStyle}>
-                Choose from Gallery
+                Choose from Gallery (PDF)
               </Typography>
             </TouchableOpacity>
           </View>
           <View style={[styles.cancelStyle, { marginTop: 10 }]}>
-            <TouchableOpacity
-              onPress={() => {
-                setVisible(!visible);
-              }}
-            >
+            <TouchableOpacity onPress={() => setVisible(false)}>
               <Typography style={{ color: "#007bff" }}>Cancel</Typography>
             </TouchableOpacity>
           </View>
@@ -395,7 +436,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 50,
     borderRadius: 10,
-    backgroundColor:theme.color.white,
+    backgroundColor: theme.color.white,
     paddingVertical: 0,
     paddingHorizontal: 10,
     marginHorizontal: 10,
@@ -438,6 +479,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 5,
+  },
+  deleteIcon: {
+    position: "absolute",
+    top: -10,
+    right: -10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 5,
+    zIndex: 1,
   },
 });
 

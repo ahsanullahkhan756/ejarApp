@@ -26,13 +26,7 @@ const LoginOrg = () => {
       </View>
       <LoginFields />
 
-      <Button
-        label="Sign In"
-        backgroundColor={theme.color.primary}
-        borderRadius={30}
-        onPress={() => dispatch(setLoggedIn(true))}
-        style={{ height: 50, margin: 20 }}
-      />
+     
       <View row center marginH-20>
         <View flex height={1} backgroundColor={theme.color.black} />
         <View>

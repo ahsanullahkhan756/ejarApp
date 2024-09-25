@@ -3,6 +3,7 @@ import { Image, TouchableOpacity } from "react-native";
 import { View } from "react-native-ui-lib";
 import { IMAGES, theme } from "../../../constants";
 import { Typography } from "../../../components/atoms/Typography";
+import { onBack } from "../../../navigation/RootNavigation";
 
 const BookedDate = (props: any) => {
   const data = [
@@ -30,7 +31,7 @@ const BookedDate = (props: any) => {
         >
           Booked Dates
         </Typography>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{onBack()}}>
           <Image
             source={IMAGES.pencil}
             style={{ width: 20, height: 20 }}
@@ -42,7 +43,7 @@ const BookedDate = (props: any) => {
         {data.map((i) => {
           return (
             <View row spread padding-10> 
-              <Typography textType="semiBold">{i.title}</Typography>
+              <Typography >{i.title}</Typography>
               <Typography>{i.date}</Typography>
             </View>
           );

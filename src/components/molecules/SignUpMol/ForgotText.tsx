@@ -7,8 +7,8 @@ import { navigate } from "../../../navigation/RootNavigation";
 import { commonStyles } from "../../../containers/commStyles";
 
 const ForgotText = () => {
-  const [check, setCheck] = useState(true);
-  const [status, setStatus] = useState(true);
+  const [check, setCheck] = useState(false);
+  const [status, setStatus] = useState(false);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, TextInput, Image, Platform } from "react-native";
 import { navigate } from "../../navigation/RootNavigation";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    padding:   Platform.OS == 'ios'? 10 : 8,
     borderColor: theme.color.orange,
   },
   headerText: {

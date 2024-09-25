@@ -4,6 +4,7 @@ import { View } from "react-native-ui-lib";
 import { IMAGES, theme } from "../../../constants";
 import { Typography } from "../../../components/atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
+import { onBack } from "../../../navigation/RootNavigation";
 
 const BookedCondition = (props: any) => {
   const data = [
@@ -38,7 +39,7 @@ const BookedCondition = (props: any) => {
         >
           Booking Conditions
         </Typography>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{onBack()}}>
           <Image
             source={IMAGES.pencil}
             style={{ width: 20, height: 20 }}

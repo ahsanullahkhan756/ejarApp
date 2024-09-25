@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { IMAGES, SCREENS, theme } from "../../../constants";
@@ -9,40 +9,46 @@ import { navigate } from "../../../navigation/RootNavigation";
 const ActiveBooking = () => {
   const _renderItem = ({ item }: any) => {
     return (
-      <TouchableOpacity onPress={()=>{navigate(SCREENS.USER_BOOKING_DETAIL)}}>
-      <View gap-10 row marginV-20>
-        <Image
-          source={item.img}
-          style={{ width: 160, height: 110, borderRadius: 20 }}
-          resizeMode="stretch"
-        />
-        <View>
-          <Typography textType="bold" size={theme.fontSize.large20}>
-            {item.name}
-          </Typography>
-          <Typography
-            size={theme.fontSize.extraSmall12}
-            color={theme.color.descColor}
-          >
-            Torem ipsum dolor sit amet,{"\n"}consectetur
-          </Typography>
-          <Typography
-            textType="bold"
-            size={theme.fontSize.medium}
-            color={theme.color.blue}
-          >
-            {item.price}
-          </Typography>
+      <TouchableOpacity
+        onPress={() => {
+          navigate(SCREENS.USER_BOOKING_DETAIL);
+        }}
+      >
+        <View gap-10 row marginV-20>
+          <Image
+            source={item.img}
+            style={{ width: 160, height: 110, borderRadius: 20 }}
+            resizeMode="cover"
+          />
+          <View>
+            <Typography textType="bold" size={theme.fontSize.large20}>
+              {item.name}
+            </Typography>
+            <Typography
+              size={theme.fontSize.extraSmall12}
+              color={theme.color.descColor}
+            >
+              Torem ipsum dolor sit amet,{"\n"}consectetur
+            </Typography>
+            <Typography
+              textType="bold"
+              size={theme.fontSize.medium}
+              color={theme.color.blue}
+            >
+              {item.price}
+            </Typography>
+          </View>
         </View>
-      </View>
       </TouchableOpacity>
     );
   };
+  
   return (
     <FlatList
       data={data.carsForRent}
       renderItem={_renderItem}
       keyExtractor={(item) => item.id}
+      contentContainerStyle={{ paddingBottom: 100 }}  // Add padding to the bottom of the list
     />
   );
 };

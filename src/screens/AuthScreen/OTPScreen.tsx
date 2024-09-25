@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { TouchableOpacity } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from "react-native";
 import { Button, View } from "react-native-ui-lib";
 import { Header } from "../../components/atoms/Header.tsx";
 import { Typography } from "../../components/atoms/Typography.tsx";
@@ -36,7 +36,15 @@ const OTPScreen = () => {
   return (
     <SafeAreaContainer safeArea={false}>
       <Header />
-
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : null}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ flex: 1 }}
+      >
       <View spread flex margin-20>
         <View>
           <View style={commonStyles.lineBar} />
@@ -90,6 +98,8 @@ const OTPScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaContainer>
   );
 };

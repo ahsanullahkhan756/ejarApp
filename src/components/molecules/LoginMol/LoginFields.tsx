@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../../redux/slice/user";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(true);
-
+const dispatch = useDispatch();
   return (
     <View marginH-20>
       <View style={commonStyles.lineBar} />
@@ -61,6 +63,15 @@ const LoginFields = () => {
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
+
+      <Button
+        label="Sign In"
+        backgroundColor={theme.color.primary}
+        borderRadius={30}
+        disabled={hasValidated.includes(false)}
+        onPress={() => dispatch(setLoggedIn(true))}
+        style={{ height: 50, margin: 20 }}
+      />
     </View>
   );
 };

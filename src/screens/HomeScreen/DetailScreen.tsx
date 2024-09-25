@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, Image, FlatList } from "react-native";
+import { ScrollView, Image, FlatList, ImageBackground, TouchableOpacity } from "react-native";
 import { Carousel, Button, View } from "react-native-ui-lib";
 import { Calendar } from "react-native-calendars";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { Typography } from "../../components/atoms/Typography";
 import { commonStyles } from "../../containers/commStyles";
-import { navigate } from "../../navigation/RootNavigation";
+import { navigate, onBack } from "../../navigation/RootNavigation";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import VechileStatusItoms from "../../components/molecules/MyBookingComp/VechileStatusItoms";
 import { CustomCalender } from "../../components/atoms/CustomCalender";
@@ -27,9 +27,27 @@ const DetailScreen = (props: any) => {
     <ScrollView style={{ flex: 1 }}>
       {/* Image Carousel */}
       <Carousel loop>
-        <Image source={IMAGES.truck} style={{ width: "100%", height: 250 }} />
-        <Image source={IMAGES.car1} style={{ width: "100%", height: 250 }} />
-        <Image source={IMAGES.car5} style={{ width: "100%", height: 250 }} />
+        <ImageBackground source={IMAGES.truck} style={{ width: "100%", height: 250 }} >
+          <TouchableOpacity onPress={()=> onBack()} style={{position:'absolute',left:20,top:50}}>
+              <Image 
+              source={IMAGES.leftIcon}
+              style={{width:30,height:30}}
+              resizeMode="contain"
+              />
+          </TouchableOpacity>
+        </ImageBackground>
+       
+        <ImageBackground source={IMAGES.car2} style={{ width: "100%", height: 250 }} >
+          <TouchableOpacity onPress={()=> onBack()} style={{position:'absolute',left:20,top:50}}>
+              <Image 
+              source={IMAGES.leftIcon}
+              style={{width:30,height:30}}
+              resizeMode="contain"
+              />
+          </TouchableOpacity>
+        </ImageBackground>
+
+
       </Carousel>
 
       {/* Vehicle Details */}

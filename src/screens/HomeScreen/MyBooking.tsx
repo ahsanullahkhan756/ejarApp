@@ -45,6 +45,7 @@ const MyBooking = (props: any) => {
             <DropDown data={data} />
           </View>
           <PaymentCard />
+          
           <Button
             label="Next"
             backgroundColor={theme.color.primary}
@@ -55,6 +56,7 @@ const MyBooking = (props: any) => {
               margin: 20,
               width: "50%",
               alignSelf: "center",
+              marginVertical:50
             }}
           />
         </View>

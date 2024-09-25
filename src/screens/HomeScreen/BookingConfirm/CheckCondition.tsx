@@ -6,8 +6,8 @@ import { Typography } from "../../../components/atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 
 const CheckCondition = (props: any) => {
-  const [check, setCheck] = useState(true);
-  const [status, setStatus] = useState(true);
+  const [check, setCheck] = useState(false);
+  const [status, setStatus] = useState(false);
 
   return (
     <View gap-20>

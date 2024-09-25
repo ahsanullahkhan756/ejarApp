@@ -27,9 +27,15 @@ const UserBooking = () => {
 
       case 1:
         return (
-          <UpcomingBooking
+          // <UpcomingBooking
+          //   onSubmit={() => {
+          //     setActiveTab(2);
+          //   }}
+          // />
+
+          <ActiveBooking
             onSubmit={() => {
-              setActiveTab(2);
+              setActiveTab(1);
             }}
           />
         );

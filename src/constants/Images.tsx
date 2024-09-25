@@ -62,4 +62,5 @@ export const IMAGES = {
   uploadLicense1: require("../assets/images/uploadLicense1.png"),
   uploadLicense2: require("../assets/images/uploadLicense2.png"),
   cross: require("../assets/images/cross.png"),
+  starIcon: require("../assets/images/starIcon.png"),
 };

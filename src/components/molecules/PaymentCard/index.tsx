@@ -33,6 +33,7 @@ const PaymentCard = () => {
 
         <View marginV-10>
           <InputText
+            width={360}
             label={"Name on card"}
             value={name}
             onValidationFailed={(isValid: boolean) => {
@@ -49,6 +50,7 @@ const PaymentCard = () => {
           />
 
           <InputText
+             width={360}
             label={"Card Number"}
             value={card}
             onValidationFailed={(isValid: boolean) => {

@@ -11,12 +11,15 @@ import { OnBeardingBottomBtn } from "../../components/atoms/OnBeardingBottomBtn"
 import { View } from "react-native-ui-lib";
 import { navigate } from "../../navigation/RootNavigation";
 import { SCREENS } from "../../constants";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../redux/slice/user";
 
 const { width } = Dimensions.get("window");
 
 const OnBoarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList<any>>(null);
+  const dispatch = useDispatch();
 
   const renderItem = ({ item }: any) => {
     return (
@@ -36,6 +39,7 @@ const OnBoarding = () => {
     } else {
       const lastInd = currentIndex;
       if(lastInd == currentIndex){
+        // dispatch(setLoggedIn(true))
         navigate(SCREENS.LOGIN)
       }
     }

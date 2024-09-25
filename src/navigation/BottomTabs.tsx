@@ -77,7 +77,7 @@ export const BOTTOMTABS = [
   },
   {
     key: 1,
-    title: "Exercise",
+    title: "Search",
     navigateTo: SCREENS.SEARCH_SCREEN,
     image: IMAGES.searchIcon,
   },

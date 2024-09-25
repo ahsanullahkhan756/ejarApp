@@ -9,17 +9,17 @@ import { Typography } from "../../atoms/Typography";
 const ProgressBarComp = ({currentStep, steps}:any) => {
   return (
       <View style={styles.container}>
-        <View style={[commonStyles.innerCircle,{position:'absolute',left:35,top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute',left:20,top:18,backgroundColor:theme.color.primary}]} />
         <View style={[commonStyles.innerCircle,{position:'absolute',alignSelf:'center', top:18,backgroundColor:theme.color.primary}]} />
-        <View style={[commonStyles.innerCircle,{position:'absolute',right:35,top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute',right:20,top:18,backgroundColor:theme.color.primary}]} />
         <View style={styles.progressContainer}>
           <Progress.Bar
             progress={steps[currentStep].progress}
-            width={320}
+            width={350}
             height={5}
             color={theme.color.primary}
-            borderWidth={1}
-            borderColor={theme.color.tgray}
+            borderWidth={0.4}
+            borderColor={theme.color.descColor}
           />
         </View>
         <View style={styles.stepsContainer}>
