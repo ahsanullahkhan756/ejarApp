@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Image, Platform } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { Button, View } from "react-native-ui-lib";
+import { View } from "react-native-ui-lib";
 import { IMAGES } from "../../../constants/index.tsx";
 import { theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
 import LoginFields from "../../molecules/LoginMol/LoginFields.tsx";
-import { setLoggedIn } from "../../../redux/slice/user.tsx";
-import { useDispatch } from "react-redux";
 
 const LoginOrg = () => { 
-  const dispatch = useDispatch()
   return (
     <>
       <View center style={{marginTop:Platform.OS == 'ios' ? 0 : 20}}>

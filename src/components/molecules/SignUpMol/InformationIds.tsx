@@ -11,6 +11,8 @@ import { InputDateTime } from "../../atoms/InputDateTime";
 import { DropDown } from "../../atoms/DropDown";
 import { country, gender } from "../../../containers/dummy";
 import ImagePicker from "react-native-image-crop-picker";
+import { InputField } from "../../atoms/InputField";
+import { verticalScale } from "react-native-size-matters";
 
 const InformationIds = ({onValidate}:any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
@@ -110,11 +112,11 @@ const InformationIds = ({onValidate}:any) => {
             hidePicker();
           }}
           visible={datePickerVisible}
-          style={{ width: 160 }}
+          // style={{ width: 165 }}
           rightIcon={
             <Image
               source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20 ,tintColor:theme.color.tgray}}
               resizeMode="contain"
             />
           }
@@ -133,11 +135,11 @@ const InformationIds = ({onValidate}:any) => {
             hidePicker();
           }}
           visible={datePickerVisible}
-          style={{ width: 160 }}
+          // style={{ width: 165 }}
           rightIcon={
             <Image
               source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20,tintColor:theme.color.tgray }}
               resizeMode="contain"
             />
           }
@@ -161,11 +163,11 @@ const InformationIds = ({onValidate}:any) => {
             hidePicker();
           }}
           visible={datePickerVisible}
-          style={{ width: 160 }}
+          // style={{ width: 160 }}
           rightIcon={
             <Image
               source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20 ,tintColor:theme.color.tgray}}
               resizeMode="contain"
             />
           }
@@ -184,11 +186,11 @@ const InformationIds = ({onValidate}:any) => {
             hidePicker();
           }}
           visible={datePickerVisible}
-          style={{ width: 160 }}
+          // style={{ width: 160 }}
           rightIcon={
             <Image
               source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20 }}
+              style={{ width: 20, height: 20,tintColor:theme.color.tgray }}
               resizeMode="contain"
             />
           }
@@ -206,7 +208,7 @@ const InformationIds = ({onValidate}:any) => {
       <View paddingV-20>
         <InputText
           label={"ID Number"}
-          width={350}
+          // width={350}
           value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -224,7 +226,7 @@ const InformationIds = ({onValidate}:any) => {
         <View marginV-10>{dateFields()}</View>
         <InputText
           label={"Passport Number"}
-          width={350}
+          // width={350}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -239,15 +241,15 @@ const InformationIds = ({onValidate}:any) => {
           onChangeText={(text: string) => setEmail(text)}
         />
         <View marginV-10>{dateFields2()}</View>
-        <View row gap-30 marginT-20 style={{ alignItems: "center" }}>
-          <View style={{ top: -20 }}>
+        <View row gap-25 marginT-10 style={{ alignItems: "center" }}>
+          <View style={{ top: -20}}>
             <Typography size={theme.fontSize.small}>Nationality</Typography>
-            <DropDown data={country} width={170} height={55} />
+            <DropDown data={country} width={170} height={verticalScale(45)} />
           </View>
-          <InputText
+          <InputField
             style={{ marginBottom: 20 }}
             label={"Place Of Birth"}
-            width={150}
+            // width={150}
             value={email}
             // onValidationFailed={(isValid: boolean) => {
             //   setValidated((prev) => {
@@ -277,11 +279,11 @@ const InformationIds = ({onValidate}:any) => {
               hidePicker();
             }}
             visible={datePickerVisible}
-            style={{ width: 160 }}
+            // style={{ width: 165 }}
             rightIcon={
               <Image
                 source={IMAGES.calendarIcon}
-                style={{ width: 20, height: 20 }}
+                style={{ width: 20, height: 20,tintColor:theme.color.tgray }}
                 resizeMode="contain"
               />
             }

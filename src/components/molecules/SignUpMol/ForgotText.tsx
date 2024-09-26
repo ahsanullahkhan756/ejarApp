@@ -6,9 +6,11 @@ import { Typography } from "../../atoms/Typography";
 import { navigate } from "../../../navigation/RootNavigation";
 import { commonStyles } from "../../../containers/commStyles";
 
-const ForgotText = () => {
+const ForgotText = (props: any) => {
   const [check, setCheck] = useState(false);
   const [status, setStatus] = useState(false);
+
+  const { termsText = true } = props;
 
   return (
     <>
@@ -47,29 +49,31 @@ const ForgotText = () => {
         </TouchableOpacity>
       </View>
 
-      <View row marginV-20>
-        <TouchableOpacity
-          onPress={() => setStatus(!status)}
-          style={commonStyles.boxStyle}
-        >
-          {status && (
-            <Image
-              source={IMAGES.tick}
-              style={{ width: 10, height: 10 }}
-              resizeMode="contain"
-            />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigate(SCREENS.PRIVACY)}>
-        <Typography
-          color={theme.color.black}
-          size={theme.fontSize.extraSmall12}
-          style={{ marginLeft: 8 }}
-        >
-          I agree with the Privacy Policy and{"\n"}Terms & Conditions
-        </Typography>
-        </TouchableOpacity>
-      </View>
+      {termsText && (
+        <View row marginV-20>
+          <TouchableOpacity
+            onPress={() => setStatus(!status)}
+            style={commonStyles.boxStyle}
+          >
+            {status && (
+              <Image
+                source={IMAGES.tick}
+                style={{ width: 10, height: 10 }}
+                resizeMode="contain"
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate(SCREENS.PRIVACY)}>
+            <Typography
+              color={theme.color.black}
+              size={theme.fontSize.extraSmall12}
+              style={{ marginLeft: 8 }}
+            >
+              I agree with the Privacy Policy and{"\n"}Terms & Conditions
+            </Typography>
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };

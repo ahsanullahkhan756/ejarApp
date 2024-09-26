@@ -16,6 +16,7 @@ import {
   userData,
 } from "../../containers/dummy";
 import { navigate, onBack } from "../../navigation/RootNavigation";
+import { InputField } from "../../components/atoms/InputField";
 
 const FilterScreen = () => {
   const [date, setDate] = useState(null);
@@ -48,13 +49,13 @@ const FilterScreen = () => {
           </View>
 
           <View gap-10 row style={{ alignItems: "center" }}>
-            <InputText
+            <InputField
               placeholder="0"
               keyboardType="number-pad"
               rightText={true}
             />
             <Typography color={theme.color.descColor}>to</Typography>
-            <InputText
+            <InputField
               placeholder="Any"
               keyboardType="number-pad"
               rightText={true}
@@ -90,7 +91,7 @@ const FilterScreen = () => {
                 hidePicker();
               }}
               visible={datePickerVisible}
-              style={{ width: 150 }}
+              // style={{ width: 150 }}
             />
             <Typography color={theme.color.descColor}>to</Typography>
             <InputDateTime
@@ -105,7 +106,7 @@ const FilterScreen = () => {
                 hidePicker();
               }}
               visible={datePickerVisible}
-              style={{ width: 150 }}
+              // style={{ width: 150 }}
             />
           </View>
 
@@ -127,14 +128,14 @@ const FilterScreen = () => {
           </View>
 
           <View gap-10 row style={{ alignItems: "center" }}>
-            <InputText
+            <InputField
               placeholder="0"
               keyboardType="number-pad"
               rightText={true}
               rightTitle="km"
             />
             <Typography color={theme.color.descColor}>to</Typography>
-            <InputText
+            <InputField
               placeholder="Any"
               keyboardType="number-pad"
               rightText={true}
@@ -158,7 +159,7 @@ const FilterScreen = () => {
               Apply
             </Typography>
           </View>
-          <DropDown height ={Platform.OS == 'ios' ? 50 : 60} data={spaceData} width={350} />
+          <DropDown data={spaceData} height ={Platform.OS == 'ios' ? 50 : 60}  width={Platform.OS == 'ios' ? 350 : 370} />
 
           {/* Fuel Type*/}
           <View marginV-20>
@@ -177,7 +178,7 @@ const FilterScreen = () => {
                 Set your desired fuel type
               </Typography>
             </View>
-            <DropDown data={fuekData} width={350} />
+            <DropDown data={fuekData} height ={Platform.OS == 'ios' ? 50 : 60}  width={Platform.OS == 'ios' ? 350 : 370} />
           </View>
 
           {/* Transmission Type*/}
@@ -197,7 +198,7 @@ const FilterScreen = () => {
                 Set your desired transmission type
               </Typography>
             </View>
-            <DropDown data={munalData} width={350} />
+            <DropDown data={munalData} height ={Platform.OS == 'ios' ? 50 : 60}  width={Platform.OS == 'ios' ? 350 : 370} />
           </View>
 
           {/* User Type*/}
@@ -217,7 +218,7 @@ const FilterScreen = () => {
                 Set your desired User type
               </Typography>
             </View>
-            <DropDown data={userData} width={350} />
+            <DropDown data={userData} height ={Platform.OS == 'ios' ? 50 : 60}  width={Platform.OS == 'ios' ? 350 : 370} />
           </View>
 
           {/* Deal Type*/}
@@ -237,7 +238,7 @@ const FilterScreen = () => {
                 Set your desired Deal Type
               </Typography>
             </View>
-            <DropDown data={dealData} width={350} />
+            <DropDown data={dealData} height ={Platform.OS == 'ios' ? 50 : 60}  width={Platform.OS == 'ios' ? 350 : 370} />
           </View>
           <Button
             label="Apply"

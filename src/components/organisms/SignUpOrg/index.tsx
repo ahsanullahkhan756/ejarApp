@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, Platform, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
 import ProgressBarComp from "../../molecules/ProgressBarComp.tsx";
@@ -61,8 +61,12 @@ const SignUpOrg = () => {
         <View center marginV-20>
           <Typography>
             Don’t have an account?{" "}
-            <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
-              <Typography semiBold small marginT-5 color={theme.color.primary}>
+            <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}
+              style={{marginTop: Platform.OS == 'ios'? 5 : 0}}
+              >
+              <Typography semiBold small color={theme.color.primary} 
+       
+              >
                 Login
               </Typography>
             </TouchableOpacity>
@@ -135,6 +139,8 @@ const SignUpOrg = () => {
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
         // disabled={currentStep != validate}
+        disabled={currentStep === 0 && currentStep !== validate}
+
         borderRadius={30}
         style={{ height: 50, margin: 20 }}
       />

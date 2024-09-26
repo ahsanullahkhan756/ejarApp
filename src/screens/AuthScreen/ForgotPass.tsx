@@ -11,7 +11,7 @@ import { navigate, onBack } from "../../navigation/RootNavigation.tsx";
 import { SCREENS } from "../../constants/ScreenNames.tsx";
 
 const ForgotPass = () => {
-  const [hasValidated, setValidated] = useState(new Array(2).fill(false));
+  const [hasValidated, setValidated] = useState(new Array(1).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(true);
@@ -27,7 +27,7 @@ const ForgotPass = () => {
           <View marginV-20>
             <InputText
               label={"Enter your email"}
-              width={350}
+              // width={350}
               value={email}
               onValidationFailed={(isValid: boolean) => {
                 setValidated((prev) => {
@@ -46,6 +46,7 @@ const ForgotPass = () => {
               label="Send OTP"
               backgroundColor={theme.color.primary}
               borderRadius={30}
+              disabled={hasValidated.includes(false)}
               onPress={() => navigate(SCREENS.OTP)}
               style={{ height: 50, marginVertical: 20 }}
             />

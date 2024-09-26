@@ -30,13 +30,13 @@ const ResetPassword = () => {
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
                 let copy = [...prev];
-                copy[1] = isValid;
+                copy[0] = isValid;
                 return copy;
               });
             }}
             style={{ width: "100%" }}
             onPressRight={() => setPassword(!password)}
-            secureTextEntry={password}
+            secureTextEntry={true}
             rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
             validate={[
               (v) =>
@@ -60,7 +60,7 @@ const ResetPassword = () => {
             }}
             style={{ width: "100%" }}
             onPressRight={() => setPassword2(!password2)}
-            secureTextEntry={password2}
+            secureTextEntry={true}
             rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
             validate={[
               (v) =>
@@ -78,6 +78,7 @@ const ResetPassword = () => {
           label="Reset Password"
           backgroundColor={theme.color.primary}
           borderRadius={30}
+          disabled={hasValidated.includes(false)}
           onPress={() => navigate(SCREENS.LOGIN)}
           style={{ height: 50, marginVertical: 20 }}
         />

@@ -25,7 +25,7 @@ export const DropDown = (props: any) => {
       valueField="value"
       // placeholder={!isFocus ? "Select item" : "..."}
       placeholder={placeholder}
-      
+      placeholderStyle={{color:theme.color.tgray,fontSize:16}}
       searchPlaceholder="Search..."
       value={value}
       onFocus={() => setIsFocus(true)}

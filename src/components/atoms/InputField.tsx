@@ -2,10 +2,10 @@ import { Image, TextField, TouchableOpacity, Text } from "react-native-ui-lib";
 import { useState } from "react";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { Platform } from "react-native";
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREEN_WIDTH, theme } from "../../constants";
 import { Typography } from "./Typography";
 
-export const InputText = (props: any) => {
+export const InputField = (props: any) => {
   const {
     placeholder = "",
     placeholderTextColor = theme.color.tgray,
@@ -26,6 +26,7 @@ export const InputText = (props: any) => {
     label = true,
     multiline = false,
     onPressRight = () => {},
+    width=  170 
   } = props;
 
   return (
@@ -42,7 +43,7 @@ export const InputText = (props: any) => {
       onChangeText={onChangeText}
       secureTextInput={true} 
       enableErrors
-      validate={[(value: any) => value?.length > 6, ...validate]}
+      validate={[(value: any) => value.length > 6, ...validate]}
       validationMessage={["", ...validationMessage]}
       showCharCounter={showCharCounter}
       validateOnChange
@@ -53,14 +54,15 @@ export const InputText = (props: any) => {
       keyboardType={keyboardType}
       fieldStyle={{
         height: verticalScale(45),
-        marginVertical: 5,
+        // marginVertical: 5,
         paddingHorizontal: 10,
         // paddingVertical: 20,
         borderWidth: 0.4,
         borderRadius: 10,
-        borderColor: theme.color.tgray,
+        borderColor: theme.color.descColor,
+        width : width,
+        // paddingRight:65,
         
-        // width : width,
         ...style,
       }}
       {...(leftIcon
@@ -78,23 +80,23 @@ export const InputText = (props: any) => {
             ),
           }
         : null)}
-        {...(rightImage
-          ? {
-              trailingAccessory: (
-                <TouchableOpacity onPress={onPressRight}>
-                  <Image
-                    source={secureTextEntry ? IMAGES.eyeOn : IMAGES.eyeOff}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      resizeMode: "contain",
-                      tintColor: theme.color.black,
-                    }}
-                  />
-                </TouchableOpacity>
-              ),
-            }
-          : null)}
+      {...(rightText
+        ? {
+            trailingAccessory: (
+              <TouchableOpacity onPress={onPressRight}>
+                <Typography
+                  style={{
+                    fontSize: moderateScale(14),
+                    color: theme.color.descColor,
+                    marginRight: 10,
+                  }}
+                >
+                 {rightTitle}
+                </Typography>
+              </TouchableOpacity>
+            ),
+          }
+        : null)}
     />
   );
 };

@@ -6,13 +6,14 @@ import { IMAGES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../../redux/slice/user";
+import ForgotText from "../SignUpMol/ForgotText";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState(true);
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   return (
     <View marginH-20>
       <View style={commonStyles.lineBar} />
@@ -23,7 +24,7 @@ const dispatch = useDispatch();
       <View marginV-20>
         <InputText
           label={"Email"}
-          width={350}
+          // width={350}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -40,7 +41,7 @@ const dispatch = useDispatch();
 
         <InputText
           label={"Password:"}
-          width={350}
+          // width={350}
           value={password}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -50,7 +51,7 @@ const dispatch = useDispatch();
             });
           }}
           onPressRight={() => setPassword(!password)}
-          secureTextEntry={password}
+          secureTextEntry={true}
           rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
           placeholder="Enter your password"
           validate={[
@@ -63,7 +64,7 @@ const dispatch = useDispatch();
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
-
+      <ForgotText termsText={false} />
       <Button
         label="Sign In"
         backgroundColor={theme.color.primary}

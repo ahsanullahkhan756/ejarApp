@@ -29,7 +29,6 @@ const SignUpFields = ({ onValidate }: any) => {
       <View marginV-20>
         <InputText
           label={"Email"}
-          width={350}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -46,7 +45,6 @@ const SignUpFields = ({ onValidate }: any) => {
 
         <InputText
           label={"Phone Number"}
-          width={350}
           value={phone}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -55,14 +53,15 @@ const SignUpFields = ({ onValidate }: any) => {
               return copy;
             });
           }}
+          keyboardType="phone-pad"
           placeholder="Please enter your number"
           validate={[(v) => v.length > 10]}
+          validationMessage={["Phone number must be contain at least 11 chracter"]}
           onChangeText={(text: string) => setPhone(text)}
         />
 
         <InputText
           label={"Password:"}
-          width={350}
           value={password}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -72,7 +71,7 @@ const SignUpFields = ({ onValidate }: any) => {
             });
           }}
           onPressRight={() => setPassword(!password)}
-          secureTextEntry={password}
+          secureTextEntry={true}
           rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
           placeholder="Enter your password"
           validate={[

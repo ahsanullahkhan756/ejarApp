@@ -13,7 +13,7 @@ const RentCars = () => {
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText="Car For Rent" centerImg={false} />
-      <View>
+      <View flex>
         <FlatList
           data={data.carsForRent}
           showsHorizontalScrollIndicator={false}
@@ -110,7 +110,7 @@ const RentCars = () => {
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ marginHorizontal: 30 }}
+          contentContainerStyle={{ marginHorizontal: 20 }}
         />
       </View>
     </SafeAreaContainer>

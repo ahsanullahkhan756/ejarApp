@@ -23,7 +23,7 @@ const ChangePassword = (props: any) => {
         }}
         style={{width:'100%'}}
         onPressRight={() => setPassword(!password)}
-        secureTextEntry={password}
+        secureTextEntry={true}
         rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
@@ -46,7 +46,7 @@ const ChangePassword = (props: any) => {
         }}
         style={{width:'100%'}}
         onPressRight={() => setPassword(!password)}
-        secureTextEntry={password}
+        secureTextEntry={true}
         rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
@@ -68,7 +68,7 @@ const ChangePassword = (props: any) => {
         }}
         style={{width:'100%'}}
         onPressRight={() => setPassword2(!password2)}
-        secureTextEntry={password2}
+        secureTextEntry={true}
         rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
