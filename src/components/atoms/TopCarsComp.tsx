@@ -35,8 +35,8 @@ export const TopCarsComp = () => {
                 style={{ width: "100%", height: 160, borderRadius: 10 }}
                 resizeMode="cover"
               />
-
-              <Typography size={theme.fontSize.small} textType="semiBold">
+            </View>
+            <Typography size={theme.fontSize.small} textType="semiBold">
                 {item.name}
               </Typography>
 
@@ -48,7 +48,6 @@ export const TopCarsComp = () => {
                 />
                 <Typography>{item.rating}</Typography>
               </View>
-            </View>
           </TouchableOpacity>
         );
       }}

@@ -22,14 +22,14 @@ const AdressFields = (props: any) => {
           />
         </View>
       </View>
-      <DropDown data={cityData} width={355} height={60} placeholder={"City"} />
+      <DropDown data={cityData} width={355} height={50} placeholder={"City"} />
       <View row spread>
         <InputText
           placeholder={"Zip Code"}
           style={{ width: scale(320), borderWidth: 0.5 }}
         />
       </View>
-      <DropDown data={cityData} width={355} height={60} placeholder={"Country"} />
+      <DropDown data={cityData} width={355} height={50} placeholder={"Country"} />
 
     </>
   );

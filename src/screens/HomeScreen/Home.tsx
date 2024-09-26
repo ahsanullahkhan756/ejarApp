@@ -193,8 +193,6 @@ const Home = () => {
 
 
           <Carousel loop>
- 
-
           <Typography color={theme.color.descColor}>
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua”.
@@ -212,6 +210,18 @@ const Home = () => {
             style={{ width: 70, height: 5, alignSelf: "center" }}
             resizeMode="contain"
           />
+
+<TouchableOpacity style={{marginVertical:20}} onPress={() => navigate(SCREENS.VIEW_REVIEWS)}>
+            <Image
+              source={IMAGES.viewAll}
+              style={{
+                width: scale(60),
+                height: 30,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaContainer>

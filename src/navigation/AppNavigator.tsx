@@ -20,6 +20,7 @@ import UserBooking from "../screens/HomeScreen/ProfileScreen/UserBooking";
 import RatingScreen from "../screens/HomeScreen/ProfileScreen/RatingScreen";
 import ChangeLang from "../screens/HomeScreen/ProfileScreen/ChangeLang";
 import UserBookingDetail from "../screens/HomeScreen/ProfileScreen/UserBookingDetail";
+import ViewReviews from "../screens/HomeScreen/ViewReviews";
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,7 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.RATING} component={RatingScreen} />
      <Stack.Screen name={SCREENS.CHANGE_LANGUAGE} component={ChangeLang} />
      <Stack.Screen name={SCREENS.USER_BOOKING_DETAIL} component={UserBookingDetail} />
+     <Stack.Screen name={SCREENS.VIEW_REVIEWS} component={ViewReviews} />
      
     </Stack.Navigator>
 )}

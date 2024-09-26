@@ -38,5 +38,6 @@ export const SCREENS = {
   RATING:'RatingScreen',
   CHANGE_LANGUAGE:'ChangeLang',
   USER_BOOKING_DETAIL : 'UserBookingDetail',
+  VIEW_REVIEWS:"ViewReviews"
 
 };

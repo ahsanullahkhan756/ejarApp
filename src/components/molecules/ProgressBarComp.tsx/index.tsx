@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Image } from "react-native";
+import { StyleSheet, Text, Image, Platform } from "react-native";
 import * as Progress from "react-native-progress";
 import { Button, View } from "react-native-ui-lib";
 import { theme } from "../../../constants";
@@ -15,7 +15,7 @@ const ProgressBarComp = ({currentStep, steps}:any) => {
         <View style={styles.progressContainer}>
           <Progress.Bar
             progress={steps[currentStep].progress}
-            width={350}
+            width={Platform.OS == 'ios' ? 330 : 350 }
             height={5}
             color={theme.color.primary}
             borderWidth={0.4}

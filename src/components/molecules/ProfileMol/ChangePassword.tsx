@@ -6,8 +6,11 @@ import { InputText } from "../../atoms/InputText";
 
 const ChangePassword = (props: any) => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [password, setPassword] = useState(false);
-  const [password2, setPassword2] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [passwordVisible2, setPasswordVisible2] = useState(true);
+  const [passwordVisible3, setPasswordVisible3] = useState(true);
+
+  
   return (
 <>
     <Typography>Change Password</Typography>
@@ -22,9 +25,10 @@ const ChangePassword = (props: any) => {
           });
         }}
         style={{width:'100%'}}
-        onPressRight={() => setPassword(!password)}
-        secureTextEntry={true}
-        rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
+
+        onPressRight={() => setPasswordVisible(!passwordVisible)}
+        secureTextEntry={passwordVisible}
+        rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
             /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),
@@ -45,9 +49,9 @@ const ChangePassword = (props: any) => {
           });
         }}
         style={{width:'100%'}}
-        onPressRight={() => setPassword(!password)}
-        secureTextEntry={true}
-        rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
+        onPressRight={() => setPasswordVisible2(!passwordVisible2)}
+        secureTextEntry={passwordVisible2}
+        rightImage={!passwordVisible2 ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
             /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),
@@ -67,9 +71,9 @@ const ChangePassword = (props: any) => {
           });
         }}
         style={{width:'100%'}}
-        onPressRight={() => setPassword2(!password2)}
-        secureTextEntry={true}
-        rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
+        onPressRight={() => setPasswordVisible3(!passwordVisible3)}
+        secureTextEntry={passwordVisible3}
+        rightImage={!passwordVisible3 ? IMAGES.eyeOn : IMAGES.eyeOff}
         validate={[
           (v) =>
             /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),

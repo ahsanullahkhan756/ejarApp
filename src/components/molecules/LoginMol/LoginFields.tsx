@@ -12,7 +12,8 @@ const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(true);
+  const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   return (
     <View marginH-20>
@@ -33,14 +34,14 @@ const LoginFields = () => {
               return copy;
             });
           }}
-          placeholder="Enter your email"
+          placeholder="Please enter your email"
           validate={["email"]}
           validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}
         />
 
         <InputText
-          label={"Password:"}
+          label={"Password"}
           // width={350}
           value={password}
           onValidationFailed={(isValid: boolean) => {
@@ -50,10 +51,11 @@ const LoginFields = () => {
               return copy;
             });
           }}
-          onPressRight={() => setPassword(!password)}
-          secureTextEntry={true}
-          rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
-          placeholder="Enter your password"
+          onPressRight={() => setPasswordVisible(!passwordVisible)}
+          secureTextEntry={passwordVisible}
+          rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
+          // rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
+          placeholder="Please enter your password"
           validate={[
             (v) =>
               /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),

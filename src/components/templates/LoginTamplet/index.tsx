@@ -29,14 +29,24 @@ const LoginTamplet = () => {
           );
         })}
       </View>
-      <View center style={{marginTop:Platform.OS == 'ios' ? 200 : 150}}>
-        <Typography>
+      <View
+        center
+        style={{
+          marginTop: Platform.OS == "ios" ? 200 : 150,
+          alignItems: "center",
+        }}
+      >
+        <Typography size={theme.fontSize.medium}>
           Don’t have an account?{" "}
           <TouchableOpacity
-           style={{marginTop: Platform.OS == 'ios'? 5 : 0}}
-          onPress={() => navigate(SCREENS.SIGNUP)}>
-            <Typography semiBold small marginT-10 color={theme.color.primary}>
-              {" "}
+            style={{ marginTop: Platform.OS == "ios" ? 5 : 0 }}
+            onPress={() => navigate(SCREENS.SIGNUP)}
+          >
+            <Typography
+              textType="semiBold"
+              size={theme.fontSize.extraSmall}
+              color={theme.color.primary}
+            >
               Sign Up
             </Typography>
           </TouchableOpacity>

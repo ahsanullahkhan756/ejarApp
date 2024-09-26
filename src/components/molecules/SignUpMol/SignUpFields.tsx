@@ -12,7 +12,9 @@ const SignUpFields = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(false));
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(true);
+
+  const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
   useEffect(() => {
     console.warn(hasValidated);
@@ -70,9 +72,13 @@ const SignUpFields = ({ onValidate }: any) => {
               return copy;
             });
           }}
-          onPressRight={() => setPassword(!password)}
-          secureTextEntry={true}
-          rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
+
+          onPressRight={() => setPasswordVisible(!passwordVisible)}
+          secureTextEntry={passwordVisible}
+          rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
+          // onPressRight={() => setPassword(!password)}
+          // secureTextEntry={true}
+          // rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
           placeholder="Enter your password"
           validate={[
             (v) =>

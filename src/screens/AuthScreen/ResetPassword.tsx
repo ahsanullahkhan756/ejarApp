@@ -13,8 +13,9 @@ import { IMAGES } from "../../constants/Images.tsx";
 
 const ResetPassword = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [password, setPassword] = useState(false);
-  const [password2, setPassword2] = useState(false);
+  const [password2, setPassword2] = useState('');
+  const [passwordVisible2, setPasswordVisible2] = useState(true);
+  const [passwordVisible, setPasswordVisible] = useState(true);
   return (
     <SafeAreaContainer safeArea={false}>
       <Header />
@@ -35,9 +36,13 @@ const ResetPassword = () => {
               });
             }}
             style={{ width: "100%" }}
-            onPressRight={() => setPassword(!password)}
-            secureTextEntry={true}
-            rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
+            
+            onPressRight={() => setPasswordVisible(!passwordVisible)}
+            secureTextEntry={passwordVisible}
+            rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
+            // onPressRight={() => setPassword(!password)}
+            // secureTextEntry={true}
+            // rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
             validate={[
               (v) =>
                 /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
@@ -59,9 +64,9 @@ const ResetPassword = () => {
               });
             }}
             style={{ width: "100%" }}
-            onPressRight={() => setPassword2(!password2)}
-            secureTextEntry={true}
-            rightImage={!password2 ? IMAGES.eyeOn : IMAGES.eyeOff}
+            onPressRight={() => setPasswordVisible2(!passwordVisible2)}
+            secureTextEntry={passwordVisible2}
+            rightImage={!passwordVisible2 ? IMAGES.eyeOn : IMAGES.eyeOff}
             validate={[
               (v) =>
                 /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(

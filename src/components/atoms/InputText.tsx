@@ -3,7 +3,6 @@ import { useState } from "react";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { Platform } from "react-native";
 import { IMAGES, theme } from "../../constants";
-import { Typography } from "./Typography";
 
 export const InputText = (props: any) => {
   const {
