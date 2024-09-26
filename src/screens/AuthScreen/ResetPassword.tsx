@@ -78,7 +78,7 @@ const ResetPassword = () => {
           label="Reset Password"
           backgroundColor={theme.color.primary}
           borderRadius={30}
-          onPress={() => navigate(SCREENS.SIGNUP)}
+          onPress={() => navigate(SCREENS.LOGIN)}
           style={{ height: 50, marginVertical: 20 }}
         />
       </View>

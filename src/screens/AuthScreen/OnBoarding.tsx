@@ -10,7 +10,7 @@ import { ONBOARDING_DATA } from "../../containers/dummy";
 import { OnBeardingBottomBtn } from "../../components/atoms/OnBeardingBottomBtn";
 import { View } from "react-native-ui-lib";
 import { navigate } from "../../navigation/RootNavigation";
-import { SCREENS } from "../../constants";
+import { SCREENS, theme } from "../../constants";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../redux/slice/user";
 
@@ -72,6 +72,7 @@ const OnBoarding = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:theme.color.white
   },
 });
 
