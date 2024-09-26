@@ -35,7 +35,7 @@ const ViewReviews = (props: any) => {
     <SafeAreaContainer safeArea={false}>
       <Header titleText="Reviews" centerImg={false} />
       
-      <ScrollView>
+      <ScrollView style={{flex:1}}>
         <View paddingH-20>
           <Typography
             size={22}
@@ -52,9 +52,9 @@ const ViewReviews = (props: any) => {
               style={{
                 marginBottom: 0,
                 paddingVertical: 5,
-                backgroundColor: theme.color.background,
+                backgroundColor: theme.color.white,
                 borderRadius: 10,
-                shadowColor: "#000",
+                // shadowColor: "#000",
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.1,
                 shadowRadius: 3,
