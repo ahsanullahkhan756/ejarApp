@@ -40,7 +40,7 @@ const OnBoarding = () => {
       const lastInd = currentIndex;
       if(lastInd == currentIndex){
         // dispatch(setLoggedIn(true))
-        navigate(SCREENS.LOGIN)
+        navigate(SCREENS.SIGNUP)
       }
     }
   };

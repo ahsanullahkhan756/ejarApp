@@ -4,15 +4,15 @@ import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
-import { useDispatch } from "react-redux";
-import { TouchableOpacity } from "react-native";
 import ForgotText from "./ForgotText";
 
 const SignUpFields = ({ onValidate }: any) => {
-  const [hasValidated, setValidated] = useState(new Array(3).fill(false));
+  const [hasValidated, setValidated] = useState(new Array(5).fill(false));
+
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
 
@@ -29,13 +29,58 @@ const SignUpFields = ({ onValidate }: any) => {
       </Typography>
 
       <View marginV-20>
+        <View row flex gap-30>
+        <InputText
+          label={"First Name"}
+          value={firstname}
+          onValidationFailed={(isValid: boolean) => {
+            setValidated((prev) => {
+              let copy = [...prev];
+              copy[0] = isValid;
+              return copy;
+            });
+          }}
+          placeholder="Lorem"
+          validate={["name"]}
+          validationMessage={["Name field is invalid"]}
+          onChangeText={(text: string) => setFirstName(text)}
+          containerStyle={
+            {
+             flex:1
+            }
+          }
+          maxLength={20}
+        />
+          <InputText
+          label={"Last Name"}
+          value={lastname}
+          onValidationFailed={(isValid: boolean) => {
+            setValidated((prev) => {
+              let copy = [...prev];
+              copy[1] = isValid;
+              return copy;
+            });
+          }}
+          placeholder="Ipsum"
+          validate={["name"]}
+          validationMessage={["Name field is invalid"]}
+          onChangeText={(text: string) => setLastName(text)}
+          containerStyle={
+            {
+             flex:1
+            }
+          }
+          maxLength={20}
+
+        />
+        </View>
         <InputText
           label={"Email"}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[0] = isValid;
+              copy[2] = isValid;
               return copy;
             });
           }}
@@ -51,7 +96,7 @@ const SignUpFields = ({ onValidate }: any) => {
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[1] = isValid;
+              copy[3] = isValid;
               return copy;
             });
           }}
@@ -68,7 +113,7 @@ const SignUpFields = ({ onValidate }: any) => {
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
-              copy[2] = isValid;
+              copy[4] = isValid;
               return copy;
             });
           }}
@@ -76,9 +121,6 @@ const SignUpFields = ({ onValidate }: any) => {
           onPressRight={() => setPasswordVisible(!passwordVisible)}
           secureTextEntry={passwordVisible}
           rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
-          // onPressRight={() => setPassword(!password)}
-          // secureTextEntry={true}
-          // rightImage={!password ? IMAGES.eyeOn : IMAGES.eyeOff}
           placeholder="Enter your password"
           validate={[
             (v) =>

@@ -50,8 +50,8 @@ const ViewReviews = (props: any) => {
             <Card
               key={review.id}
               style={{
-                marginBottom: 0,
-                paddingVertical: 5,
+                marginBottom: 20,
+                padding: 10,
                 backgroundColor: theme.color.white,
                 borderRadius: 10,
                 // shadowColor: "#000",
@@ -71,7 +71,7 @@ const ViewReviews = (props: any) => {
                 color={theme.color.primary}
                 style={{ marginTop: 10 }}
               >
-                - {review.reviewer}
+                {review.reviewer}
               </Typography>
             </Card>
           ))}

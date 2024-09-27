@@ -12,9 +12,10 @@ const ChangePassword = (props: any) => {
 
   
   return (
-<>
-    <Typography>Change Password</Typography>
+<View>
     <View marginV-10>
+    <Typography>Change Password</Typography>
+
       <InputText
         // label={"Current password"}
         onValidationFailed={(isValid: boolean) => {
@@ -84,7 +85,7 @@ const ChangePassword = (props: any) => {
         placeholder="Confirm password"
       />
     </View>
-    </>
+    </View>
   );
 };
 

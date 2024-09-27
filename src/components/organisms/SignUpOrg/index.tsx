@@ -139,7 +139,7 @@ const SignUpOrg = () => {
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
         // disabled={currentStep != validate}
-        disabled={currentStep === 0 && currentStep !== validate}
+        // disabled={currentStep === 0 && currentStep !== validate}
 
         borderRadius={30}
         style={{ height: 50, margin: 20 }}

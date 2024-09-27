@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, SCREENS, theme } from "../../constants";
+import { IMAGES, SCREENS, SCREEN_WIDTH, theme } from "../../constants";
 import { scale } from "react-native-size-matters";
 import { SearchBar } from "../../components/atoms/SearchBar";
 import { data } from "../../containers/dummy";
@@ -44,7 +44,7 @@ const Home = () => {
               <View marginH-15 style={{ alignItems: "center", marginLeft: -2 }}>
                 <Image
                   source={item.icon}
-                  style={{ width: 80, height: 80, borderRadius: 10 }}
+                  style={{ width: SCREEN_WIDTH * 0.2, height: 80, borderRadius: 10 }}
                   resizeMode="cover"
                 />
                 <Typography size={theme.fontSize.extraSmall12}>
@@ -55,12 +55,12 @@ const Home = () => {
             keyExtractor={(item) => item.id}
             columnWrapperStyle={{ marginBottom: 10 }}
           />
-
+{/* 
           <Image
             source={IMAGES.slider}
             style={{ width: 70, height: 5, alignSelf: "center" }}
             resizeMode="contain"
-          />
+          /> */}
 
           {/* Cars for Rent Section */}
           <Typography
@@ -162,7 +162,7 @@ const Home = () => {
 
           <Image
             source={IMAGES.slider}
-            style={{ width: 70, height: 5, alignSelf: "center" }}
+            style={{ width: 70, height: 5, alignSelf: "center",marginVertical:10 }}
             resizeMode="contain"
           />
 
@@ -191,19 +191,17 @@ const Home = () => {
             <Typography>4.9</Typography>
           </View>
 
-
           <Carousel loop>
-          <Typography color={theme.color.descColor}>
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua”.
-          </Typography>
+            <Typography color={theme.color.descColor}>
+              “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua”.
+            </Typography>
 
-       
-          <Typography color={theme.color.descColor}>
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua”.
-          </Typography>
-      </Carousel>
+            <Typography color={theme.color.descColor}>
+              “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua”.
+            </Typography>
+          </Carousel>
 
           <Image
             source={IMAGES.slider}
@@ -211,7 +209,10 @@ const Home = () => {
             resizeMode="contain"
           />
 
-<TouchableOpacity style={{marginVertical:20}} onPress={() => navigate(SCREENS.VIEW_REVIEWS)}>
+          <TouchableOpacity
+            style={{ marginVertical: 20 }}
+            onPress={() => navigate(SCREENS.VIEW_REVIEWS)}
+          >
             <Image
               source={IMAGES.viewAll}
               style={{
@@ -239,3 +240,98 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
+
+
+
+
+// import React from "react";
+// import { StyleSheet, Image, FlatList, ScrollView, TouchableOpacity, Platform } from "react-native";
+// import SafeAreaContainer from "../../containers/SafeAreaContainer";
+// import { IMAGES, SCREENS, SCREEN_WIDTH, theme } from "../../constants";
+// import { scale } from "react-native-size-matters";
+// import { SearchBar } from "../../components/atoms/SearchBar";
+// import { data } from "../../containers/dummy";
+// import { Typography } from "../../components/atoms/Typography";
+// import { View, Carousel } from "react-native-ui-lib";
+// import { navigate } from "../../navigation/RootNavigation";
+// import { RentCarsComp } from "../../components/atoms/RentCarsComp";
+// import { TopCarsComp } from "../../components/atoms/TopCarsComp";
+// import { CategoriesList } from "../../components/atoms/CategoriesList";
+// import { CompaniesCarousel } from "../../components/atoms/CompaniesCarousel";
+// import { ReviewsSection } from "../../components/atoms/ReviewsSection";
+
+
+// const Home = () => {
+//   return (
+//     <SafeAreaContainer safeArea={false}>
+//       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+//         {/* Header Section */}
+//         <HeaderSection />
+
+//         {/* Categories */}
+//         <CategoriesList data={data.categories} />
+
+//         {/* Cars for Rent Section */}
+//         <CarSection title="Car For Rent" component={<RentCarsComp />} />
+//         <CarSection title="Car For Rent" component={<RentCarsComp />} />
+
+//         {/* Top Rated Cars Section */}
+//         <CarSection title="Top Rated Cars" component={<TopCarsComp />} />
+
+//         {/* Top Rated Companies */}
+//         <CompaniesCarousel />
+
+//         {/* Reviews Section */}
+//         <ReviewsSection />
+//       </ScrollView>
+//     </SafeAreaContainer>
+//   );
+// };
+
+// // Header Component
+// const HeaderSection = () => (
+//   <View style={styles.container}>
+//     <Image source={IMAGES.logo} style={styles.logo} resizeMode="contain" />
+//     <SearchBar />
+//   </View>
+// );
+
+// // Car Section Reusable Component
+// const CarSection = ({ title, component }) => (
+//   <>
+//     <Typography align="center" size={theme.fontSize.large} textType="bold" style={styles.sectionTitle}>
+//       {title}
+//     </Typography>
+//     {component}
+//     <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
+//       <Image source={IMAGES.viewAll} style={styles.viewAllImage} resizeMode="contain" />
+//     </TouchableOpacity>
+//   </>
+// );
+
+// // Styles for common elements
+// const styles = StyleSheet.create({
+//   container: {
+//     paddingTop: Platform.OS == "ios" ? 20 : 50,
+//     paddingHorizontal: 20,
+//     backgroundColor: theme.color.blue,
+//     borderBottomLeftRadius: 30,
+//     borderBottomRightRadius: 30,
+//   },
+//   logo: {
+//     width: scale(100),
+//     height: 60,
+//     tintColor: theme.color.white,
+//   },
+//   sectionTitle: {
+//     marginVertical: 20,
+//   },
+//   viewAllImage: {
+//     width: scale(60),
+//     height: 30,
+//     alignSelf: "center",
+//   },
+// });
+
+// export default Home;

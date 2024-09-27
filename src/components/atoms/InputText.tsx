@@ -8,7 +8,7 @@ export const InputText = (props: any) => {
   const {
     placeholder = "",
     placeholderTextColor = theme.color.tgray,
-    maxLength = 50,
+    maxLength = 30,
     onChangeText = () => {},
     validationMessage = "Field is required",
     validate = "email",
@@ -25,8 +25,9 @@ export const InputText = (props: any) => {
     label = true,
     multiline = false,
     onPressRight = () => {},
+    containerStyle
   } = props;
-
+  
   return (
     <TextField
       small
@@ -50,6 +51,7 @@ export const InputText = (props: any) => {
       secureTextEntry={secureTextEntry}
       multiline={multiline}
       keyboardType={keyboardType}
+     containerStyle={containerStyle}
       fieldStyle={{
         height: verticalScale(45),
         marginVertical: 5,
