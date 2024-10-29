@@ -12,10 +12,10 @@ import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
 
-const InformationIds = ({ onValidate }: any) => {
+const LicenseInfo = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
-  const [selectImg, setSelectImg] = useState(""); 
-  const [selectPdf, setSelectPdf] = useState(""); 
+  const [selectImg, setSelectImg] = useState("");
+  const [selectPdf, setSelectPdf] = useState("");
   const [visible, setVisible] = useState(false);
 
   const [id, setId] = useState("");
@@ -87,11 +87,6 @@ const InformationIds = ({ onValidate }: any) => {
     setSelectImg(""); // Clear image state
   };
 
-  // Remove selected PDF
-  const removeSelectedPdf = () => {
-    setSelectPdf(""); // Clear PDF state
-  };
-
   const dateFields = () => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
@@ -143,67 +138,16 @@ const InformationIds = ({ onValidate }: any) => {
       </View>
     );
   };
-  const dateFields2 = () => {
-    return (
-      <View row gap-30 style={{ alignItems: "center" }}>
-        <InputDateTime
-          title={"Issue Date"}
-          placeholder={"Issue Date"}
-          placeholderColor={theme.color.black}
-          mode={"date"}
-          value={issueDate2}
-          onChange={setIssueDate2}
-          onConfirm={(selectedDate: any) => {
-            console.log("Selected Date:", selectedDate);
-            setIssueDate2(selectedDate);
-            hidePicker();
-          }}
-          visible={datePickerVisible}
-          // style={{ width: 160 }}
-          rightIcon={
-            <Image
-              source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20, tintColor: theme.color.tgray }}
-              resizeMode="contain"
-            />
-          }
-        />
-
-        <InputDateTime
-          title={"Expiry Date"}
-          placeholder={"Expiry Date"}
-          placeholderColor={theme.color.black}
-          mode={"date"}
-          value={expiryDate2}
-          onChange={setExpiryDate2}
-          onConfirm={(selectedDate: any) => {
-            console.log("Selected Date:", selectedDate);
-            setExpiryDate2(selectedDate);
-            hidePicker();
-          }}
-          visible={datePickerVisible}
-          // style={{ width: 160 }}
-          rightIcon={
-            <Image
-              source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20, tintColor: theme.color.tgray }}
-              resizeMode="contain"
-            />
-          }
-        />
-      </View>
-    );
-  };
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
-        ID Card Information
+        License Information
       </Typography>
 
       <View paddingV-20>
         <InputText
-          label={"ID Number"}
+          label={"License Number"}
           value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -212,85 +156,15 @@ const InformationIds = ({ onValidate }: any) => {
               return copy;
             });
           }}
-          placeholder="**** *** *******   *****"
+          placeholder="123 456 7890"
           // validate={[(v) => v.length > 10]}
           // validationMessage={["Card Numver is "]}
           onChangeText={(text: string) => setId(text)}
         />
 
         <View marginV-10>{dateFields()}</View>
-        {/* <InputText
-          label={"Passport Number"}
-          // width={350}
-          value={email}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[1] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="**** *** *******  *****"
-          // validate={["email"]}
-          // validationMessage={["Email is invalid"]}
-          onChangeText={(text: string) => setEmail(text)}
-        /> */}
-        <View marginV-10>{dateFields2()}</View>
-        <View row gap-25 marginT-10 style={{ alignItems: "center" }}>
-          <View style={{ top: -20 }}>
-            <Typography size={theme.fontSize.small}>Nationality</Typography>
-            <DropDown data={country} width={170} height={verticalScale(45)} />
-          </View>
-          <InputField
-            style={{ marginBottom: 20 }}
-            label={"Place Of Birth"}
-            // width={150}
-            value={email}
-            // onValidationFailed={(isValid: boolean) => {
-            //   setValidated((prev) => {
-            //     let copy = [...prev];
-            //     copy[2] = isValid;
-            //     return copy;
-            //   });
-            // }}
-            placeholder="Place Of Birth"
-            // validate={["email"]}
-            // validationMessage={["Email is invalid"]}
-            onChangeText={(text: string) => setEmail(text)}
-          />
-        </View>
-
-        <View row gap-30 marginV-0 style={{ alignItems: "center" }}>
-          <InputDateTime
-            title={"Date of Birth"}
-            placeholder={"Date of Birth"}
-            placeholderColor={theme.color.black}
-            mode={"date"}
-            value={dob}
-            onChange={setDob}
-            onConfirm={(selectedDate: any) => {
-              console.log("Selected Date:", selectedDate);
-              setDob(selectedDate);
-              hidePicker();
-            }}
-            visible={datePickerVisible}
-            // style={{ width: 165 }}
-            rightIcon={
-              <Image
-                source={IMAGES.calendarIcon}
-                style={{ width: 20, height: 20, tintColor: theme.color.tgray }}
-                resizeMode="contain"
-              />
-            }
-          />
-          <View style={{ top: -10 }}>
-            <Typography size={theme.fontSize.small}>Sex</Typography>
-            <DropDown data={gender} width={170} height={55} />
-          </View>
-        </View>
 
         <View center marginV-20>
-          {/* Camera Icon for taking photos */}
           {selectImg ? (
             <View>
               <Image
@@ -309,7 +183,7 @@ const InformationIds = ({ onValidate }: any) => {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity onPress={takePhotoFromCamera}>
+            <TouchableOpacity onPress={choosePdfFromLibrary}>
               <View
                 row
                 style={{
@@ -318,8 +192,8 @@ const InformationIds = ({ onValidate }: any) => {
                   borderRadius: 10,
                   justifyContent: "center",
                   alignItems: "center",
-                  padding:10,
-                  gap:10
+                  padding: 10,
+                  gap: 10,
                 }}
               >
                 <Image
@@ -327,93 +201,13 @@ const InformationIds = ({ onValidate }: any) => {
                   style={{ width: 45, height: 45 }}
                   resizeMode="contain"
                 />
-                <Typography>
-                  Take Picture
-                </Typography>
+                <Typography>Take Picture</Typography>
               </View>
             </TouchableOpacity>
           )}
-
-          {/* <View
-            style={[
-              commonStyles.lineBar,
-              {
-                marginVertical: 20,
-                width: 320,
-                borderColor: theme.color.descColor,
-                borderWidth: 0.3,
-              },
-            ]}
-          /> */}
-
-          {/* <Typography
-            textType="bold"
-            size={theme.fontSize.extraLarge}
-            color={theme.color.black}
-          >
-            Or
-          </Typography> */}
-
-          {/* PDF Upload Section */}
-          {/* {selectPdf ? (
-            <View>
-              <Image
-                source={{ uri: selectPdf.uri }}
-                style={{ width: 320, height: 50 }}
-                resizeMode="contain"
-              />
-              <TouchableOpacity
-                style={styles.deleteIcon}
-                onPress={removeSelectedPdf}
-              >
-                <Image
-                  source={IMAGES.cross}
-                  style={{ width: 20, height: 20 }}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity onPress={choosePdfFromLibrary}>
-              <Image
-                source={IMAGES.upload}
-                style={{ width: 320, height: 200 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          )} */}
+        
         </View>
       </View>
-      {/* Modal for selecting image source */}
-      <Modal animationType="slide" transparent={true} visible={visible}>
-        <TouchableOpacity
-          onPress={() => setVisible(false)}
-          style={commonStyles.centerView}
-        />
-        <View style={{ position: "absolute", bottom: 20 }}>
-          <View style={commonStyles.modalStyle}>
-            <TouchableOpacity
-              style={styles.profileStyle}
-              onPress={takePhotoFromCamera}
-            >
-              <Typography style={styles.textStyle}>Take Photos</Typography>
-            </TouchableOpacity>
-            <View style={styles.lineBar} />
-            <TouchableOpacity
-              style={styles.profileStyle}
-              onPress={choosePdfFromLibrary}
-            >
-              <Typography style={styles.textStyle}>
-                Choose from Gallery (PDF)
-              </Typography>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.cancelStyle, { marginTop: 10 }]}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <Typography style={{ color: "#007bff" }}>Cancel</Typography>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -497,4 +291,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InformationIds;
+export default LicenseInfo;

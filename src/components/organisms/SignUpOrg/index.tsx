@@ -10,10 +10,14 @@ import { Typography } from "../../atoms/Typography.tsx";
 import { navigate } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
+import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
+import PassportInfo from "../../molecules/SignUpMol/PassportInfo.tsx";
 
 const steps = [
   { label: "Sign Up", progress: 0 },
-  { label: "Personal Information", progress: 0.5 },
+  { label: "", progress: 0.2 },
+  { label: "", progress: 0.4 },
+  { label: "", progress: 0.6 },
   { label: "Finish", progress: 1.0 },
 ];
 
@@ -29,7 +33,6 @@ const SignUpOrg = () => {
 
   const handleNextStep = () => {
     if (currentStep === steps.length - 1) {
-      // Navigate to the login screen when done
       navigate(SCREENS.LOGIN);
     } else {
       setCurrentStep(currentStep + 1);
@@ -94,12 +97,33 @@ const SignUpOrg = () => {
             else setValidate(-1);
           }}
         />
+      ); 
+    } 
+    else if (currentStep === 2) {
+      return (
+        <LicenseInfo
+          onValidate={(valid:any) => {
+            if (valid) setValidate(2);
+            else setValidate(-1);
+          }}
+        />
       );
-    } else {
+    }
+    else if (currentStep === 3) {
+      return (
+        <PassportInfo
+          onValidate={(valid:any) => {
+            if (valid) setValidate(3);
+            else setValidate(-1);
+          }}
+        />
+      );
+    }
+    else {
       return (
         <Uploads
           onValidate={(valid:any) => {
-            if (valid) setValidate(2);
+            if (valid) setValidate(3);
             else setValidate(-1);
           }}
         />
@@ -108,8 +132,12 @@ const SignUpOrg = () => {
   };
 
   const getButtonLabel = () => {
-    return currentStep === 2
+    return currentStep === 4
       ? "Done"
+      : currentStep == 3
+      ? "Next"
+      : currentStep == 2
+      ? "Next"
       : currentStep == 1
       ? "Next"
       : currentStep == 0

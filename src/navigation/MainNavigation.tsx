@@ -5,6 +5,7 @@ import Splash from '../containers/Splash';
 import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './AppNavigator';
 import { AuthStackNavigator } from './AuthStackNavigator';
+import SignUp from '../screens/AuthScreen/SignUp';
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const MainNavigation = () => {
   ) : (
     <>
       <NavigationContainer ref={navigationRef}>
-        {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
+        {/* {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />} */}
+        <SignUp />
       </NavigationContainer>
     </>
   );

@@ -10,7 +10,9 @@ const ProgressBarComp = ({currentStep, steps}:any) => {
   return (
       <View style={styles.container}>
         <View style={[commonStyles.innerCircle,{position:'absolute',left:20,top:18,backgroundColor:theme.color.primary}]} />
-        <View style={[commonStyles.innerCircle,{position:'absolute',alignSelf:'center', top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute', left:100, top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute', left:180, top:18,backgroundColor:theme.color.primary}]} />
+        <View style={[commonStyles.innerCircle,{position:'absolute', right:100, top:18,backgroundColor:theme.color.primary}]} />
         <View style={[commonStyles.innerCircle,{position:'absolute',right:20,top:18,backgroundColor:theme.color.primary}]} />
         <View style={styles.progressContainer}>
           <Progress.Bar
@@ -51,7 +53,6 @@ const ProgressBarComp = ({currentStep, steps}:any) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     marginVertical: 20,
   },
   progressContainer: {
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   },
   activeStep: {
     flex: 1,
+    color: theme.color.primary,
   },
   activeStepText: {
     color: theme.color.primary,
