@@ -14,8 +14,6 @@ import { verticalScale } from "react-native-size-matters";
 
 const InformationIds = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
-  const [selectImg, setSelectImg] = useState(""); 
-  const [selectPdf, setSelectPdf] = useState(""); 
   const [visible, setVisible] = useState(false);
 
   const [id, setId] = useState("");
@@ -29,6 +27,10 @@ const InformationIds = ({ onValidate }: any) => {
   const [dob, setDob] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
+  const [frontImage, setFrontImage] = useState(null);
+  const [backImage, setBackImage] = useState(null);
+  const [isTakingFront, setIsTakingFront] = useState(true);
+
   useEffect(() => {
     onValidate(!hasValidated.includes(false));
   }, [hasValidated]);
@@ -37,60 +39,6 @@ const InformationIds = ({ onValidate }: any) => {
     setDatePickerVisible(false);
   };
 
-  // Open camera and set image
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    })
-      .then((image) => {
-        setSelectImg({
-          name: image.filename || `image_${new Date().getTime()}`,
-          type: image.mime,
-          uri: image.path,
-        });
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("Error opening camera: ", error);
-        setVisible(false);
-      });
-  };
-
-  // Open gallery and only allow PDF selection
-  const choosePdfFromLibrary = () => {
-    ImagePicker.openPicker({
-      mediaType: "any", // To allow PDF selection
-      multiple: false,
-    })
-      .then((file) => {
-        if (file.mime === "application/pdf") {
-          setSelectPdf({
-            name: file.filename || `pdf_${new Date().getTime()}`,
-            type: file.mime,
-            uri: file.path,
-          });
-        } else {
-          alert("Please select a PDF file.");
-        }
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("Error selecting file: ", error);
-        setVisible(false);
-      });
-  };
-
-  // Remove selected image
-  const removeSelectedImage = () => {
-    setSelectImg(""); // Clear image state
-  };
-
-  // Remove selected PDF
-  const removeSelectedPdf = () => {
-    setSelectPdf(""); // Clear PDF state
-  };
 
   const dateFields = () => {
     return (
@@ -194,6 +142,53 @@ const InformationIds = ({ onValidate }: any) => {
       </View>
     );
   };
+  const takePhotoFromCamera = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then((image) => {
+        if (isTakingFront) {
+          setFrontImage({ uri: image.path });
+        } else {
+          setBackImage({ uri: image.path });
+        }
+        setIsTakingFront(false); // Switch to taking back image
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.log("Error opening camera: ", error);
+        setVisible(false);
+      });
+  };
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+    })
+    .then((image) => {
+      if (isTakingFront) {
+        setFrontImage({ uri: image.path });
+      } else {
+        setBackImage({ uri: image.path });
+      }
+      setIsTakingFront(false); // Switch to taking back image
+      setVisible(false);
+    })
+    .catch((error) => {
+      console.log("Error opening camera: ", error);
+      setVisible(false);
+    });
+  };
+  const removeImage = (isFront) => {
+    if (isFront) {
+      setFrontImage(null);
+      setIsTakingFront(true); // Reset to front
+    } else {
+      setBackImage(null);
+    }
+  };
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
@@ -289,108 +284,62 @@ const InformationIds = ({ onValidate }: any) => {
           </View>
         </View>
 
-        <View center marginV-20>
-          {/* Camera Icon for taking photos */}
-          {selectImg ? (
+        <View center marginV-20 >
+          {frontImage && (
             <View>
               <Image
-                source={{ uri: selectImg.uri }}
-                style={{ width: 150, height: 150, borderRadius: 10 }}
+                source={frontImage}
+                style={styles.imagePreview}
                 resizeMode="cover"
               />
               <TouchableOpacity
                 style={styles.deleteIcon}
-                onPress={removeSelectedImage}
+                onPress={() => removeImage(true)}
               >
-                <Image
-                  source={IMAGES.cross}
-                  style={{ width: 20, height: 20 }}
-                />
+                <Image source={IMAGES.cross} style={styles.deleteIconImg} />
               </TouchableOpacity>
             </View>
-          ) : (
-            <TouchableOpacity onPress={takePhotoFromCamera}>
-              <View
-                row
-                style={{
-                  backgroundColor: "#ECECEC",
-                  width: SCREEN_WIDTH * 0.9,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding:10,
-                  gap:10
-                }}
+          )}
+          {backImage && (
+            <View>
+              <Image
+                source={backImage}
+                style={styles.imagePreview}
+                resizeMode="cover"
+              />
+              <TouchableOpacity
+                style={styles.deleteIcon}
+                onPress={() => removeImage(false)}
               >
+                <Image source={IMAGES.cross} style={styles.deleteIconImg} />
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {(!frontImage || (frontImage && !backImage)) && (
+            <TouchableOpacity onPress={() => setVisible(true)}>
+              <View row style={styles.button}>
                 <Image
                   source={IMAGES.cameraIcon}
-                  style={{ width: 45, height: 45 }}
+                  style={styles.cameraIcon2}
                   resizeMode="contain"
                 />
                 <Typography>
-                  Take Picture
+                  {isTakingFront ? "Take Front Picture" : "Take Back Picture"}
                 </Typography>
               </View>
             </TouchableOpacity>
           )}
-
-          {/* <View
-            style={[
-              commonStyles.lineBar,
-              {
-                marginVertical: 20,
-                width: 320,
-                borderColor: theme.color.descColor,
-                borderWidth: 0.3,
-              },
-            ]}
-          /> */}
-
-          {/* <Typography
-            textType="bold"
-            size={theme.fontSize.extraLarge}
-            color={theme.color.black}
-          >
-            Or
-          </Typography> */}
-
-          {/* PDF Upload Section */}
-          {/* {selectPdf ? (
-            <View>
-              <Image
-                source={{ uri: selectPdf.uri }}
-                style={{ width: 320, height: 50 }}
-                resizeMode="contain"
-              />
-              <TouchableOpacity
-                style={styles.deleteIcon}
-                onPress={removeSelectedPdf}
-              >
-                <Image
-                  source={IMAGES.cross}
-                  style={{ width: 20, height: 20 }}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity onPress={choosePdfFromLibrary}>
-              <Image
-                source={IMAGES.upload}
-                style={{ width: 320, height: 200 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          )} */}
         </View>
       </View>
-      {/* Modal for selecting image source */}
+
       <Modal animationType="slide" transparent={true} visible={visible}>
         <TouchableOpacity
           onPress={() => setVisible(false)}
-          style={commonStyles.centerView}
+          style={styles.centerView}
         />
         <View style={{ position: "absolute", bottom: 20 }}>
-          <View style={commonStyles.modalStyle}>
+          <View style={styles.modalStyle}>
             <TouchableOpacity
               style={styles.profileStyle}
               onPress={takePhotoFromCamera}
@@ -400,10 +349,10 @@ const InformationIds = ({ onValidate }: any) => {
             <View style={styles.lineBar} />
             <TouchableOpacity
               style={styles.profileStyle}
-              onPress={choosePdfFromLibrary}
+              onPress={choosePhotoFromLibrary}
             >
               <Typography style={styles.textStyle}>
-                Choose from Gallery (PDF)
+                Choose from Gallery 
               </Typography>
             </TouchableOpacity>
           </View>
@@ -424,12 +373,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalStyle: {
     borderRadius: 10,
     backgroundColor: theme.color.white,
-    width: 300,
+    width: SCREEN_WIDTH * 0.95,
     marginHorizontal: 10,
     paddingVertical: 10,
   },
@@ -476,7 +425,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white,
     padding: 15,
     borderRadius: 10,
-    // ...commonStyles.boxShadow,
   },
   inputField: {
     margin: 20,
@@ -495,6 +443,41 @@ const styles = StyleSheet.create({
     padding: 5,
     zIndex: 1,
   },
+
+  icon: {
+    width: 20,
+    height: 20,
+    tintColor: theme.color.tgray,
+  },
+  imagePreview: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "#ECECEC",
+    width: SCREEN_WIDTH * 0.9,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    gap: 10,
+  },
+  cameraIcon2: {
+    width: 45,
+    height: 45,
+  },
+ 
+  deleteIconImg: {
+    width: 20,
+    height: 20,
+  },
 });
 
 export default InformationIds;
+
+
+
+
+  

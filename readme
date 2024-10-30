@@ -1,0 +1,43 @@
+//  Progress Bar code 
+
+
+    //   <View style={styles.container}>
+    //     <View style={[commonStyles.innerCircle,{position:'absolute',left:20,top:18,backgroundColor:theme.color.primary}]} />
+    //     <View style={[commonStyles.innerCircle,{position:'absolute', left:100, top:18,backgroundColor:theme.color.primary}]} />
+    //     <View style={[commonStyles.innerCircle,{position:'absolute', left:180, top:18,backgroundColor:theme.color.primary}]} />
+    //     <View style={[commonStyles.innerCircle,{position:'absolute', right:100, top:18,backgroundColor:theme.color.primary}]} />
+    //     <View style={[commonStyles.innerCircle,{position:'absolute',right:20,top:18,backgroundColor:theme.color.primary}]} />
+    //     <View style={styles.progressContainer}>
+    //       <Progress.Bar
+    //         progress={steps[currentStep].progress}
+    //         width={Platform.OS == 'ios' ? 330 : 350 }
+    //         height={5}
+    //         color={theme.color.primary}
+    //         borderWidth={0.4}
+    //         borderColor={theme.color.descColor}
+    //       />
+    //     </View>
+    //     <View style={styles.stepsContainer}>
+    //       {steps.map((step:any, index:any) => (
+    //         <View
+    //           key={index}
+    //           style={[
+    //             styles.stepItem,
+    //             { flex: index === steps.length - 0 ? -1 : 1 },
+    //             index <= currentStep && styles.activeStep,
+    //           ]}
+    //         >
+    //           <Typography color={theme.color.tgray} size={theme.fontSize.extraSmall12}
+    //             // style={[
+    //             //   styles.stepLabel,
+    //             //   index === currentStep && styles.activeStepText,
+    //             // ]}
+    //           >
+    //             {step.label}
+    //           </Typography>
+    //           {/* {index < steps.length - 1 && <View style={styles.separator} />} */}
+    //         </View>
+    //       ))}
+    //     </View>
+        
+    //   </View>

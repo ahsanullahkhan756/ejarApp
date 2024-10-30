@@ -15,9 +15,9 @@ import PassportInfo from "../../molecules/SignUpMol/PassportInfo.tsx";
 
 const steps = [
   { label: "Sign Up", progress: 0 },
-  { label: "", progress: 0.2 },
-  { label: "", progress: 0.4 },
-  { label: "", progress: 0.6 },
+  { label: "", progress: 0.25 },
+  { label: "", progress: 0.5 },
+  { label: "", progress: 0.75 },
   { label: "Finish", progress: 1.0 },
 ];
 

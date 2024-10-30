@@ -37,7 +37,6 @@ const PassportInfo = ({ onValidate }: any) => {
     setDatePickerVisible(false);
   };
 
-  // Open camera and set image
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
       width: 300,
@@ -58,29 +57,6 @@ const PassportInfo = ({ onValidate }: any) => {
       });
   };
 
-  // Open gallery and only allow PDF selection
-  const choosePdfFromLibrary = () => {
-    ImagePicker.openPicker({
-      mediaType: "any", // To allow PDF selection
-      multiple: false,
-    })
-      .then((file) => {
-        if (file.mime === "application/pdf") {
-          setSelectPdf({
-            name: file.filename || `pdf_${new Date().getTime()}`,
-            type: file.mime,
-            uri: file.path,
-          });
-        } else {
-          alert("Please select a PDF file.");
-        }
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("Error selecting file: ", error);
-        setVisible(false);
-      });
-  };
 
   // Remove selected image
   const removeSelectedImage = () => {
@@ -183,7 +159,7 @@ const PassportInfo = ({ onValidate }: any) => {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity onPress={choosePdfFromLibrary}>
+            <TouchableOpacity onPress={takePhotoFromCamera}>
               <View
                 row
                 style={{

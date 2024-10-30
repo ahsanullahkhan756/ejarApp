@@ -36,57 +36,10 @@ const LicenseInfo = ({ onValidate }: any) => {
   const hidePicker = () => {
     setDatePickerVisible(false);
   };
-
-  // Open camera and set image
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    })
-      .then((image) => {
-        setSelectImg({
-          name: image.filename || `image_${new Date().getTime()}`,
-          type: image.mime,
-          uri: image.path,
-        });
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("Error opening camera: ", error);
-        setVisible(false);
-      });
-  };
-
-  // Open gallery and only allow PDF selection
-  const choosePdfFromLibrary = () => {
-    ImagePicker.openPicker({
-      mediaType: "any", // To allow PDF selection
-      multiple: false,
-    })
-      .then((file) => {
-        if (file.mime === "application/pdf") {
-          setSelectPdf({
-            name: file.filename || `pdf_${new Date().getTime()}`,
-            type: file.mime,
-            uri: file.path,
-          });
-        } else {
-          alert("Please select a PDF file.");
-        }
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("Error selecting file: ", error);
-        setVisible(false);
-      });
-  };
-
   // Remove selected image
   const removeSelectedImage = () => {
     setSelectImg(""); // Clear image state
   };
-
   const dateFields = () => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
@@ -138,6 +91,46 @@ const LicenseInfo = ({ onValidate }: any) => {
       </View>
     );
   };
+  const takePhotoFromCamera = () => {
+    console.log("image", selectImg);
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then((images) => {
+        console.log("img", images);
+        setSelectImg({
+          name: images.filename || `image_${new Date().getDate()}`,
+          type: images.mime,
+          uri: images.path,
+        });
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setVisible(false);
+      });
+  };
+  const choosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+    })
+      .then((images) => {
+        console.log("gal", images);
+        setSelectImg({
+          name: images.filename || `image_${new Date().getDate()}`,
+          type: images.mime,
+          uri: images.path,
+        });
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setVisible(false);
+      });
+  };
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
@@ -183,7 +176,7 @@ const LicenseInfo = ({ onValidate }: any) => {
               </TouchableOpacity>
             </View>
           ) : (
-            <TouchableOpacity onPress={choosePdfFromLibrary}>
+            <TouchableOpacity onPress={takePhotoFromCamera}>
               <View
                 row
                 style={{
