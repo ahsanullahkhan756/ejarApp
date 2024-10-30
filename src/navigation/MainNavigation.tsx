@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './AppNavigator';
 import { AuthStackNavigator } from './AuthStackNavigator';
 import SignUp from '../screens/AuthScreen/SignUp';
+import Uploads from '../components/molecules/SignUpMol/Uploads';
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
