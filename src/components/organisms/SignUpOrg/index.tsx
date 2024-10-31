@@ -7,7 +7,7 @@ import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
-import { navigate } from "../../../navigation/RootNavigation.tsx";
+import { navigate, onBack } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
@@ -147,7 +147,24 @@ const SignUpOrg = () => {
 
   return (
     <>
+    {
+      currentStep != 0 && 
+      <TouchableOpacity onPress={()=>setCurrentStep(currentStep - 1)} style={{ flex: 1 }}>
+    <Image 
+         source={IMAGES.leftIcon}
+         style={{
+           width: scale(20),
+           height: verticalScale(20),
+           marginTop: 50,
+           marginLeft:20
+         }}
+         resizeMode="contain"
+        />
+        </TouchableOpacity>
+    }
+
       <View center>
+        
         <Image
           source={IMAGES.logo}
           style={{

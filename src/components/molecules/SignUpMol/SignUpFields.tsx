@@ -105,10 +105,10 @@ const SignUpFields = ({ onValidate }: any) => {
           validate={[(v) => v.length > 10]}
           validationMessage={["Phone number must be contain at least 11 chracter"]}
           onChangeText={(text: string) => setPhone(text)}
-        />
+        /> 
 
         <InputText
-          label={"Password:"}
+          label={"Password"}
           value={password}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -132,7 +132,7 @@ const SignUpFields = ({ onValidate }: any) => {
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
-      <ForgotText />
+      <ForgotText forgotPass={false}/>
     </View>
   );
 };

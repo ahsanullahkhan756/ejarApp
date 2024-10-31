@@ -123,7 +123,7 @@ const PassportInfo = ({ onValidate }: any) => {
 
       <View paddingV-20>
         <InputText
-          label={"License Number"}
+          label={"Passport Number"}
           value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {

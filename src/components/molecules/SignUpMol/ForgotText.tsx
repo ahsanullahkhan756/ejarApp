@@ -10,7 +10,7 @@ const ForgotText = (props: any) => {
   const [check, setCheck] = useState(false);
   const [status, setStatus] = useState(false);
 
-  const { termsText = true } = props;
+  const { termsText = true ,forgotPass = true} = props;
 
   return (
     <>
@@ -36,17 +36,21 @@ const ForgotText = (props: any) => {
             Remember me
           </Typography>
         </View>
-        <TouchableOpacity
-          style={{ borderBottomWidth: 0.2, borderColor: theme.color.tgray }}
-          onPress={() => navigate(SCREENS.FORGOT_PASS)}
-        >
-          <Typography
-            size={theme.fontSize.extraSmall12}
-            color={theme.color.danger}
+        {
+          forgotPass && (
+            <TouchableOpacity
+            onPress={() => navigate(SCREENS.FORGOT_PASS)}
           >
-            Forgot Password
-          </Typography>
-        </TouchableOpacity>
+            <Typography
+              size={theme.fontSize.extraSmall12}
+              color={theme.color.danger}
+            >
+              Forgot Password
+            </Typography>
+          </TouchableOpacity>
+          )
+        }
+      
       </View>
 
       {termsText && (

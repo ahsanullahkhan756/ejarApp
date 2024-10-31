@@ -18,11 +18,11 @@ const PaymentCard = () => {
       behavior={Platform.OS === "ios" ? "padding" : null}
       style={{ flex: 1 }}
     >
-      <ScrollView
+      {/* <ScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flex: 1 }}
-      >
+      > */}
         <Typography
           textType="bold"
           color={theme.color.blue}
@@ -36,13 +36,13 @@ const PaymentCard = () => {
             width={360}
             label={"Name on card"}
             value={name}
-            onValidationFailed={(isValid: boolean) => {
-              setValidated((prev) => {
-                let copy = [...prev];
-                copy[0] = isValid;
-                return copy;
-              });
-            }}
+            // onValidationFailed={(isValid: boolean) => {
+            //   setValidated((prev) => {
+            //     let copy = [...prev];
+            //     copy[0] = isValid;
+            //     return copy;
+            //   });
+            // }}
             placeholder="Enter your name"
             // validate={["name"]}
             // validationMessage={["Name is invalid"]}
@@ -53,13 +53,13 @@ const PaymentCard = () => {
              width={360}
             label={"Card Number"}
             value={card}
-            onValidationFailed={(isValid: boolean) => {
-              setValidated((prev) => {
-                let copy = [...prev];
-                copy[0] = isValid;
-                return copy;
-              });
-            }}
+            // onValidationFailed={(isValid: boolean) => {
+            //   setValidated((prev) => {
+            //     let copy = [...prev];
+            //     copy[0] = isValid;
+            //     return copy;
+            //   });
+            // }}
             placeholder="**** **** **** 1234"
             // validate={["Card"]}
             // validationMessage={["Card is invalid"]}
@@ -69,13 +69,13 @@ const PaymentCard = () => {
             <InputText
               label={"Expiration Date"}
               value={date}
-              onValidationFailed={(isValid: boolean) => {
-                setValidated((prev) => {
-                  let copy = [...prev];
-                  copy[0] = isValid;
-                  return copy;
-                });
-              }}
+              // onValidationFailed={(isValid: boolean) => {
+              //   setValidated((prev) => {
+              //     let copy = [...prev];
+              //     copy[0] = isValid;
+              //     return copy;
+              //   });
+              // }}
               placeholder="01/22"
               // validate={["email"]}
               // validationMessage={["Email is invalid"]}
@@ -87,13 +87,13 @@ const PaymentCard = () => {
             <InputText
               label={"CVV"}
               value={cvv}
-              onValidationFailed={(isValid: boolean) => {
-                setValidated((prev) => {
-                  let copy = [...prev];
-                  copy[0] = isValid;
-                  return copy;
-                });
-              }}
+              // onValidationFailed={(isValid: boolean) => {
+              //   setValidated((prev) => {
+              //     let copy = [...prev];
+              //     copy[0] = isValid;
+              //     return copy;
+              //   });
+              // }}
               placeholder="***"
               // validate={["email"]}
               // validationMessage={["Email is invalid"]}
@@ -104,7 +104,7 @@ const PaymentCard = () => {
             />
           </View>
         </View>
-      </ScrollView>
+      {/* </ScrollView> */}
     </KeyboardAvoidingView>
   );
 };

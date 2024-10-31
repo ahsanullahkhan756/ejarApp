@@ -7,6 +7,7 @@ import AppNavigator from './AppNavigator';
 import { AuthStackNavigator } from './AuthStackNavigator';
 import SignUp from '../screens/AuthScreen/SignUp';
 import Uploads from '../components/molecules/SignUpMol/Uploads';
+import MyBooking from '../screens/HomeScreen/MyBooking';
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ const MainNavigation = () => {
   ) : (
     <>
       <NavigationContainer ref={navigationRef}>
-        {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
+        {/* {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />} */}
+        <MyBooking />
       </NavigationContainer>
     </>
   );

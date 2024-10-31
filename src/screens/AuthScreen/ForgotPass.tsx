@@ -26,7 +26,7 @@ const ForgotPass = () => {
 
           <View marginV-20>
             <InputText
-              label={"Enter your email"}
+              label={"Enter your email/phone"}
               // width={350}
               value={email}
               onValidationFailed={(isValid: boolean) => {

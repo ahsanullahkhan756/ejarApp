@@ -23,11 +23,11 @@ export const data = {
         { id: '1', name: 'Sedans', icon: IMAGES.car4 },
         { id: '2', name: 'SUVs', icon: IMAGES.car5},
         { id: '3', name: 'Trucks', icon:IMAGES.car6 },
-        { id: '3', name: 'Trucks', icon:IMAGES.car7 },
-        { id: '3', name: 'Trucks', icon:IMAGES.car8 },
-        { id: '3', name: 'Trucks', icon:IMAGES.car4 },
-        { id: '3', name: 'Trucks', icon:IMAGES.car6 },
-        { id: '3', name: 'Trucks', icon:IMAGES.car7 },
+        { id: '3', name: 'Coupes', icon:IMAGES.car7 },
+        { id: '3', name: 'Convertibles', icon:IMAGES.car8 },
+        { id: '3', name: 'Hatchbacks', icon:IMAGES.car4 },
+        { id: '3', name: 'EVs', icon:IMAGES.car6 },
+        { id: '3', name: 'Sports Cars', icon:IMAGES.car7 },
         // Add more categories here
     ],
     carsForRent: [
