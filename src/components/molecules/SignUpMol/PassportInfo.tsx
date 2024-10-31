@@ -121,6 +121,28 @@ const PassportInfo = ({ onValidate }: any) => {
       Passport Information
       </Typography>
 
+      <TouchableOpacity onPress={takePhotoFromCamera}>
+              <View
+                row marginV-20
+                style={{
+                  backgroundColor: "#ECECEC",
+                  width: SCREEN_WIDTH * 0.9,
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 10,
+                  gap: 10,
+                }}
+              >
+                <Image
+                  source={IMAGES.cameraIcon}
+                  style={{ width: 45, height: 45 }}
+                  resizeMode="contain"
+                />
+                <Typography>Take Picture</Typography>
+              </View>
+            </TouchableOpacity>
+
       <View paddingV-20>
         <InputText
           label={"Passport Number"}
@@ -141,7 +163,7 @@ const PassportInfo = ({ onValidate }: any) => {
         <View marginV-10>{dateFields()}</View>
 
         <View center marginV-20>
-          {selectImg ? (
+          {selectImg && (
             <View>
               <Image
                 source={{ uri: selectImg.uri }}
@@ -158,28 +180,6 @@ const PassportInfo = ({ onValidate }: any) => {
                 />
               </TouchableOpacity>
             </View>
-          ) : (
-            <TouchableOpacity onPress={takePhotoFromCamera}>
-              <View
-                row
-                style={{
-                  backgroundColor: "#ECECEC",
-                  width: SCREEN_WIDTH * 0.9,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
-                  gap: 10,
-                }}
-              >
-                <Image
-                  source={IMAGES.cameraIcon}
-                  style={{ width: 45, height: 45 }}
-                  resizeMode="contain"
-                />
-                <Typography>Take Picture</Typography>
-              </View>
-            </TouchableOpacity>
           )}
         
         </View>

@@ -41,3 +41,40 @@
     //     </View>
         
     //   </View>
+
+
+
+
+    // MOdal Code Camera and Gallery 
+
+         {/* <Modal animationType="slide" transparent={true} visible={visible}>
+        <TouchableOpacity
+          onPress={() => setVisible(false)}
+          style={styles.centerView}
+        />
+        <View style={{ position: "absolute", bottom: 20 }}>
+          <View style={styles.modalStyle}>
+            <TouchableOpacity
+              style={styles.profileStyle}
+              onPress={takePhotoFromCamera}
+            >
+              <Typography style={styles.textStyle}>Take Photos</Typography>
+            </TouchableOpacity>
+            <View style={styles.lineBar} />
+            <TouchableOpacity
+              style={styles.profileStyle}
+              onPress={choosePhotoFromLibrary}
+            >
+              <Typography style={styles.textStyle}>
+                Choose from Gallery 
+              </Typography>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.cancelStyle, { marginTop: 10 }]}>
+            <TouchableOpacity onPress={() => setVisible(false)}>
+              <Typography style={{ color: "#007bff" }}>Cancel</Typography>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal> */}
+

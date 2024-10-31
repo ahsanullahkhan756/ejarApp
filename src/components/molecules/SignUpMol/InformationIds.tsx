@@ -39,7 +39,6 @@ const InformationIds = ({ onValidate }: any) => {
     setDatePickerVisible(false);
   };
 
-
   const dateFields = () => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
@@ -91,57 +90,6 @@ const InformationIds = ({ onValidate }: any) => {
       </View>
     );
   };
-  const dateFields2 = () => {
-    return (
-      <View row gap-30 style={{ alignItems: "center" }}>
-        <InputDateTime
-          title={"Issue Date"}
-          placeholder={"Issue Date"}
-          placeholderColor={theme.color.black}
-          mode={"date"}
-          value={issueDate2}
-          onChange={setIssueDate2}
-          onConfirm={(selectedDate: any) => {
-            console.log("Selected Date:", selectedDate);
-            setIssueDate2(selectedDate);
-            hidePicker();
-          }}
-          visible={datePickerVisible}
-          // style={{ width: 160 }}
-          rightIcon={
-            <Image
-              source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20, tintColor: theme.color.tgray }}
-              resizeMode="contain"
-            />
-          }
-        />
-
-        <InputDateTime
-          title={"Expiry Date"}
-          placeholder={"Expiry Date"}
-          placeholderColor={theme.color.black}
-          mode={"date"}
-          value={expiryDate2}
-          onChange={setExpiryDate2}
-          onConfirm={(selectedDate: any) => {
-            console.log("Selected Date:", selectedDate);
-            setExpiryDate2(selectedDate);
-            hidePicker();
-          }}
-          visible={datePickerVisible}
-          // style={{ width: 160 }}
-          rightIcon={
-            <Image
-              source={IMAGES.calendarIcon}
-              style={{ width: 20, height: 20, tintColor: theme.color.tgray }}
-              resizeMode="contain"
-            />
-          }
-        />
-      </View>
-    );
-  };
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
       width: 300,
@@ -167,19 +115,19 @@ const InformationIds = ({ onValidate }: any) => {
       width: 300,
       height: 400,
     })
-    .then((image) => {
-      if (isTakingFront) {
-        setFrontImage({ uri: image.path });
-      } else {
-        setBackImage({ uri: image.path });
-      }
-      setIsTakingFront(false); // Switch to taking back image
-      setVisible(false);
-    })
-    .catch((error) => {
-      console.log("Error opening camera: ", error);
-      setVisible(false);
-    });
+      .then((image) => {
+        if (isTakingFront) {
+          setFrontImage({ uri: image.path });
+        } else {
+          setBackImage({ uri: image.path });
+        }
+        setIsTakingFront(false); // Switch to taking back image
+        setVisible(false);
+      })
+      .catch((error) => {
+        console.log("Error opening camera: ", error);
+        setVisible(false);
+      });
   };
   const removeImage = (isFront) => {
     if (isFront) {
@@ -195,6 +143,21 @@ const InformationIds = ({ onValidate }: any) => {
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
         ID Card Information
       </Typography>
+
+      {(!frontImage || !backImage) && (
+        <TouchableOpacity onPress={takePhotoFromCamera}>
+          <View row style={styles.button}>
+            <Image
+              source={IMAGES.cameraIcon}
+              style={styles.cameraIcon2}
+              resizeMode="contain"
+            />
+            <Typography>
+              {isTakingFront ? "Take Front Picture" : "Take Back Picture"}
+            </Typography>
+          </View>
+        </TouchableOpacity>
+      )}
 
       <View paddingV-20>
         <InputText
@@ -214,23 +177,7 @@ const InformationIds = ({ onValidate }: any) => {
         />
 
         <View marginV-10>{dateFields()}</View>
-        {/* <InputText
-          label={"Passport Number"}
-          // width={350}
-          value={email}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[1] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="**** *** *******  *****"
-          // validate={["email"]}
-          // validationMessage={["Email is invalid"]}
-          onChangeText={(text: string) => setEmail(text)}
-        /> */}
-        <View marginV-10>{dateFields2()}</View>
+
         <View row gap-25 marginT-10 style={{ alignItems: "center" }}>
           <View style={{ top: -20 }}>
             <Typography size={theme.fontSize.small}>Nationality</Typography>
@@ -284,7 +231,7 @@ const InformationIds = ({ onValidate }: any) => {
           </View>
         </View>
 
-        <View center marginV-20 >
+        <View center marginV-20 row gap-20>
           {frontImage && (
             <View>
               <Image
@@ -316,8 +263,8 @@ const InformationIds = ({ onValidate }: any) => {
             </View>
           )}
 
-          {(!frontImage || (frontImage && !backImage)) && (
-            <TouchableOpacity onPress={() => setVisible(true)}>
+          {/* {(!frontImage || (frontImage && !backImage)) && (
+            <TouchableOpacity onPress={()=>takePhotoFromCamera()}>
               <View row style={styles.button}>
                 <Image
                   source={IMAGES.cameraIcon}
@@ -329,40 +276,9 @@ const InformationIds = ({ onValidate }: any) => {
                 </Typography>
               </View>
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
       </View>
-
-      <Modal animationType="slide" transparent={true} visible={visible}>
-        <TouchableOpacity
-          onPress={() => setVisible(false)}
-          style={styles.centerView}
-        />
-        <View style={{ position: "absolute", bottom: 20 }}>
-          <View style={styles.modalStyle}>
-            <TouchableOpacity
-              style={styles.profileStyle}
-              onPress={takePhotoFromCamera}
-            >
-              <Typography style={styles.textStyle}>Take Photos</Typography>
-            </TouchableOpacity>
-            <View style={styles.lineBar} />
-            <TouchableOpacity
-              style={styles.profileStyle}
-              onPress={choosePhotoFromLibrary}
-            >
-              <Typography style={styles.textStyle}>
-                Choose from Gallery 
-              </Typography>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.cancelStyle, { marginTop: 10 }]}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <Typography style={{ color: "#007bff" }}>Cancel</Typography>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -468,7 +384,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
   },
- 
+
   deleteIconImg: {
     width: 20,
     height: 20,
@@ -476,8 +392,3 @@ const styles = StyleSheet.create({
 });
 
 export default InformationIds;
-
-
-
-
-  

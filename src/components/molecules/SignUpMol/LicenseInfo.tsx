@@ -4,29 +4,17 @@ import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
-import { Image, Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
-import { DropDown } from "../../atoms/DropDown";
-import { country, gender } from "../../../containers/dummy";
 import ImagePicker from "react-native-image-crop-picker";
-import { InputField } from "../../atoms/InputField";
-import { verticalScale } from "react-native-size-matters";
 
 const LicenseInfo = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [selectImg, setSelectImg] = useState("");
-  const [selectPdf, setSelectPdf] = useState("");
   const [visible, setVisible] = useState(false);
-
   const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
   const [issueDate, setIssueDate] = useState(true);
   const [expiryDate, setExpiryDate] = useState(true);
-
-  const [issueDate2, setIssueDate2] = useState(true);
-  const [expiryDate2, setExpiryDate2] = useState(true);
-
-  const [dob, setDob] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   useEffect(() => {
@@ -36,9 +24,8 @@ const LicenseInfo = ({ onValidate }: any) => {
   const hidePicker = () => {
     setDatePickerVisible(false);
   };
-  // Remove selected image
   const removeSelectedImage = () => {
-    setSelectImg(""); // Clear image state
+    setSelectImg("");
   };
   const dateFields = () => {
     return (
@@ -112,31 +99,35 @@ const LicenseInfo = ({ onValidate }: any) => {
         setVisible(false);
       });
   };
-  const choosePhotoFromLibrary = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-    })
-      .then((images) => {
-        console.log("gal", images);
-        setSelectImg({
-          name: images.filename || `image_${new Date().getDate()}`,
-          type: images.mime,
-          uri: images.path,
-        });
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setVisible(false);
-      });
-  };
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
         License Information
       </Typography>
+
+      <TouchableOpacity onPress={takePhotoFromCamera}>
+        <View
+          row
+          marginV-20
+          style={{
+            backgroundColor: "#ECECEC",
+            width: SCREEN_WIDTH * 0.9,
+            borderRadius: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+            gap: 10,
+          }}
+        >
+          <Image
+            source={IMAGES.cameraIcon}
+            style={{ width: 45, height: 45 }}
+            resizeMode="contain"
+          />
+          <Typography>Take Picture</Typography>
+        </View>
+      </TouchableOpacity>
 
       <View paddingV-20>
         <InputText
@@ -158,7 +149,7 @@ const LicenseInfo = ({ onValidate }: any) => {
         <View marginV-10>{dateFields()}</View>
 
         <View center marginV-20>
-          {selectImg ? (
+          {selectImg && (
             <View>
               <Image
                 source={{ uri: selectImg.uri }}
@@ -175,30 +166,7 @@ const LicenseInfo = ({ onValidate }: any) => {
                 />
               </TouchableOpacity>
             </View>
-          ) : (
-            <TouchableOpacity onPress={takePhotoFromCamera}>
-              <View
-                row
-                style={{
-                  backgroundColor: "#ECECEC",
-                  width: SCREEN_WIDTH * 0.9,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
-                  gap: 10,
-                }}
-              >
-                <Image
-                  source={IMAGES.cameraIcon}
-                  style={{ width: 45, height: 45 }}
-                  resizeMode="contain"
-                />
-                <Typography>Take Picture</Typography>
-              </View>
-            </TouchableOpacity>
           )}
-        
         </View>
       </View>
     </View>
