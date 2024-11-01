@@ -21,9 +21,10 @@ import { InputDateTime } from "../../components/atoms/InputDateTime";
 import { InputDateCard } from "../../components/atoms/InputDateCard";
 const MyBooking = (props: any) => {
   const data = [
-    { label: "Item 1", value: "1" },
-    { label: "Item 2", value: "2" },
-    { label: "Item 3", value: "3" },
+    { label: "01", value: "1" },
+    { label: "02", value: "2" },
+    { label: "03", value: "3" },
+    { label: "04", value: "4" },
   ];
 
   const [name, setName] = useState("");
@@ -58,7 +59,7 @@ const MyBooking = (props: any) => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="My Booking" centerImg={false} />
+      <Header titleText="My Renting" centerImg={false} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={{ flex: 1 }}
@@ -82,7 +83,7 @@ const MyBooking = (props: any) => {
               >
                 No. of Days
               </Typography>
-              <DropDown data={data} />
+              <DropDown data={data} placeholder="01"  />
             </View>
             {/* <PaymentCard /> */}
 

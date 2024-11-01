@@ -18,6 +18,7 @@ import { commonStyles } from "../../containers/commStyles";
 import { navigate } from "../../navigation/RootNavigation";
 import { TopCarsComp } from "../../components/atoms/TopCarsComp";
 import { RentCarsComp } from "../../components/atoms/RentCarsComp";
+import Swiper from "react-native-swiper";
 
 const Home = () => {
   return (
@@ -36,33 +37,96 @@ const Home = () => {
           <SearchBar />
         </View>
         <View padding-20>
-          <FlatList
-            data={data.categories}
-            numColumns={4}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View marginH-15 style={{ alignItems: "center", marginLeft: -2 }}>
-                <Image
-                  source={item.icon}
-                  style={{ width: SCREEN_WIDTH * 0.2, height: 80, borderRadius: 10 }}
-                  resizeMode="cover"
-                />
-                <Typography size={theme.fontSize.extraSmall12}>
-                  {item.name}
-                </Typography>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-            columnWrapperStyle={{ marginBottom: 10 }}
-          />
-{/* 
-          <Image
-            source={IMAGES.slider}
-            style={{ width: 70, height: 5, alignSelf: "center" }}
-            resizeMode="contain"
-          /> */}
+        
+          <Swiper
+            style={{ height: 270 }}
+            dotStyle={[
+              styles.dotStyle,
+              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+            ]}
+            activeDotStyle={styles.dotStyle}
+          >
+            <FlatList
+              data={data.categories}
+              numColumns={4}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View
+                  marginH-15
+                  style={{ alignItems: "center", marginLeft: -2 }}
+                >
+                  <Image
+                    source={item.icon}
+                    style={{
+                      width: SCREEN_WIDTH * 0.2,
+                      height: 80,
+                      borderRadius: 10,
+                    }}
+                    resizeMode="cover"
+                  />
+                  <Typography size={theme.fontSize.extraSmall12}>
+                    {item.name}
+                  </Typography>
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              columnWrapperStyle={{ marginBottom: 10 }}
+            />
 
-          {/* Cars for Rent Section */}
+            <FlatList
+              data={data.categories}
+              numColumns={4}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View
+                  marginH-15
+                  style={{ alignItems: "center", marginLeft: -2 }}
+                >
+                  <Image
+                    source={item.icon}
+                    style={{
+                      width: SCREEN_WIDTH * 0.2,
+                      height: 80,
+                      borderRadius: 10,
+                    }}
+                    resizeMode="cover"
+                  />
+                  <Typography size={theme.fontSize.extraSmall12}>
+                    {item.name}
+                  </Typography>
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              columnWrapperStyle={{ marginBottom: 10 }}
+            />
+            <FlatList
+              data={data.categories}
+              numColumns={4}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View
+                  marginH-15
+                  style={{ alignItems: "center", marginLeft: -2 }}
+                >
+                  <Image
+                    source={item.icon}
+                    style={{
+                      width: SCREEN_WIDTH * 0.2,
+                      height: 80,
+                      borderRadius: 10,
+                    }}
+                    resizeMode="cover"
+                  />
+                  <Typography size={theme.fontSize.extraSmall12}>
+                    {item.name}
+                  </Typography>
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+              columnWrapperStyle={{ marginBottom: 10 }}
+            />
+          </Swiper>
+
           <Typography
             align="center"
             size={theme.fontSize.large}
@@ -119,18 +183,24 @@ const Home = () => {
             Top Rated Companies
           </Typography>
 
-          {/* 
-          <Image
-            source={IMAGES.compaines}
-            style={{
-              width: "100%",
-              height: 100,
-              alignSelf: "center",
-            }}
-            resizeMode="contain"
-          /> */}
+          <Swiper
+            style={{ height: 150 }}
+            dotStyle={[
+              styles.dotStyle,
+              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+            ]}
+            activeDotStyle={styles.dotStyle}
+          >
+            <Image
+              source={IMAGES.compaines}
+              style={{
+                width: "100%",
+                height: 100,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
 
-          <Carousel loop>
             <Image
               source={IMAGES.compaines}
               style={{
@@ -140,31 +210,17 @@ const Home = () => {
               }}
               resizeMode="contain"
             />
-            <Image
-              source={IMAGES.compaines}
-              style={{
-                width: "100%",
-                height: 100,
-                alignSelf: "center",
-              }}
-              resizeMode="contain"
-            />
-            <Image
-              source={IMAGES.compaines}
-              style={{
-                width: "100%",
-                height: 100,
-                alignSelf: "center",
-              }}
-              resizeMode="contain"
-            />
-          </Carousel>
 
-          <Image
-            source={IMAGES.slider}
-            style={{ width: 70, height: 5, alignSelf: "center",marginVertical:10 }}
-            resizeMode="contain"
-          />
+            <Image
+              source={IMAGES.compaines}
+              style={{
+                width: "100%",
+                height: 100,
+                alignSelf: "center",
+              }}
+              resizeMode="contain"
+            />
+          </Swiper>
 
           <View style={commonStyles.lineBar} />
           <Typography
@@ -191,23 +247,29 @@ const Home = () => {
             <Typography>4.9</Typography>
           </View>
 
-          <Carousel loop>
-            <Typography color={theme.color.descColor}>
+          <Swiper
+            style={{ height: 150 }}
+            dotStyle={[
+              styles.dotStyle,
+              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+            ]}
+            activeDotStyle={styles.dotStyle}
+          >
+            <Typography>
               “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua”.
             </Typography>
 
-            <Typography color={theme.color.descColor}>
+            <Typography>
               “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua”.
             </Typography>
-          </Carousel>
 
-          {/* <Image
-            source={IMAGES.slider}
-            style={{ width: 70, height: 5, alignSelf: "center" }}
-            resizeMode="contain"
-          /> */}
+            <Typography>
+              “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua”.
+            </Typography>
+          </Swiper>
 
           <TouchableOpacity
             style={{ marginVertical: 20 }}
@@ -237,7 +299,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
+  dotStyle: {
+    backgroundColor: theme.color.primary,
+    width: 50,
+    height: 5,
+    borderRadius: 4,
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
+    marginBottom: 3,
+  },
 });
 
 export default Home;
-

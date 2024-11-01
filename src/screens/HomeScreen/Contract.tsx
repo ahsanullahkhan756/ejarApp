@@ -95,6 +95,9 @@ const Contract = () => {
           </View>
         </ScrollView>
 
+<View style={[commonStyles.lineBar,{    width: '100%',marginVertical:20,borderColor:theme.color.descColor,borderWidth:0.3}]}/>
+        <Typography align="center">Signature</Typography>
+
         {/* Acknowledged Button */}
         <Button
           label="Acknowledged"
@@ -108,7 +111,9 @@ const Contract = () => {
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
           onPress={() => setModalVisible(false)}
-          style={commonStyles.centerView}
+          style={[commonStyles.centerView,{
+            backgroundColor: "rgba(0, 0, 0, 0.9)",
+          }]}
         >
           <View style={commonStyles.modalStyle}>
             <Image

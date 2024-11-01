@@ -13,7 +13,7 @@ import { Typography } from "../../../components/atoms/Typography";
 const UserBookingDetail = () => {
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Booking"} centerImg={false} />
+      <Header titleText={"My Renting"} centerImg={false} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ flex: 1, paddingHorizontal: 20 }}
@@ -52,7 +52,7 @@ const UserBookingDetail = () => {
         </View>
         <View marginV-10>
           <Typography size={theme.fontSize.large} textType="semiBold">
-            Booked Dates
+          Rented Dates
           </Typography>
           <Typography size={theme.fontSize.small}>
             27, 28, 29, 30 of Augest

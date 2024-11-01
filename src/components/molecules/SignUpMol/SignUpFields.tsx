@@ -84,7 +84,7 @@ const SignUpFields = ({ onValidate }: any) => {
               return copy;
             });
           }}
-          placeholder="Enter your email"
+          placeholder="loremipsum@domain.com"
           validate={["email"]}
           validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}

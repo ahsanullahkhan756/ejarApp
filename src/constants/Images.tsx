@@ -6,6 +6,7 @@ export const IMAGES = {
   logo: require("../assets/images/logo.png"),
   onBoardingImg: require("../assets/images/onBoardingImg.png"),
   tick: require("../assets/images/tick.png"),
+  gauge: require("../assets/images/gauge.png"),
 
   car1: require("../assets/images/car1.png"),
   car2: require("../assets/images/car2.png"),

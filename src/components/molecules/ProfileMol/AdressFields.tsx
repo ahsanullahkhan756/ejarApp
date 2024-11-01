@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import {  Image } from "react-native";
-import { IMAGES, theme } from "../../../constants";
+import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
 import { Typography } from "../../atoms/Typography";
 import { View } from "react-native-ui-lib";
 import { commonStyles } from "../../../containers/commStyles";
 import { DropDown } from "../../atoms/DropDown";
 import { cityData } from "../../../containers/dummy";
 import { InputText } from "../../atoms/InputText";
-import { scale } from "react-native-size-matters";
+import { scale, verticalScale } from "react-native-size-matters";
 
 const AdressFields = (props: any) => {
   return (
     <>
-      <View style={commonStyles.fieldStyle}>
+      <View style={[commonStyles.fieldStyle,{
+          height: verticalScale(45),
+           borderWidth:0.2,
+           marginVertical:20
+      }]}>
         <View row spread>
           <Typography color={theme.color.descColor}>Address</Typography>
           <Image
@@ -22,14 +26,14 @@ const AdressFields = (props: any) => {
           />
         </View>
       </View>
-      <DropDown data={cityData} width={355} height={50} placeholder={"City"} />
+      <DropDown data={cityData} width={SCREEN_WIDTH * 0.9}  height = {verticalScale(45)} placeholder={"City"} />
       <View row spread>
         <InputText
           placeholder={"Zip Code"}
-          style={{ width: scale(320), borderWidth: 0.5 }}
+          style={{ width :SCREEN_WIDTH * 0.9, borderWidth:0.2}}
         />
       </View>
-      <DropDown data={cityData} width={355} height={50} placeholder={"Country"} />
+      <DropDown data={cityData}  width={SCREEN_WIDTH * 0.9} height = {verticalScale(45)} placeholder={"Country"} />
 
     </>
   );

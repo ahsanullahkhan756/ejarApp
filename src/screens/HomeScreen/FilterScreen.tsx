@@ -53,12 +53,14 @@ const FilterScreen = () => {
               placeholder="0"
               keyboardType="number-pad"
               rightText={true}
+              maxLength={10}
             />
             <Typography color={theme.color.descColor}>to</Typography>
             <InputField
               placeholder="Any"
               keyboardType="number-pad"
               rightText={true}
+              maxLength={10}
             />
           </View>
 
@@ -250,6 +252,7 @@ const FilterScreen = () => {
               margin: 20,
               width: "50%",
               alignSelf: "center",
+              marginTop:100
             }}
           />
         </View>

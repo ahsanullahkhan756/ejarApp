@@ -42,6 +42,16 @@ const RentCars = () => {
                   {item.name}
                 </Typography>
               </View>
+              <View
+                style={[
+                  commonStyles.lineBar,
+                  {
+                    width: "100%",
+                    borderColor: theme.color.descColor,
+                    borderWidth: 0.5,
+                  },
+                ]}
+              />
               <View row spread gap-10 padding-10>
                 <View row gap-5 style={{ alignItems: "center" }}>
                   <Image
@@ -52,7 +62,18 @@ const RentCars = () => {
                   <Typography>{item.date}</Typography>
                 </View>
 
+              
                 <View row gap-5 style={{ alignItems: "center" }}>
+                  <Image
+                    source={IMAGES.gauge}
+                    style={{ width: 20, height: 20 }}
+                    resizeMode="contain"
+                  />
+                  <Typography>60,000 km</Typography>
+                </View>
+              </View>
+
+              <View row marginL-10 gap-10>
                   <Image
                     source={IMAGES.colorIcon}
                     style={{ width: 20, height: 20 }}
@@ -61,15 +82,6 @@ const RentCars = () => {
                   <Typography>{item.color}</Typography>
                 </View>
 
-                <View row gap-5 style={{ alignItems: "center" }}>
-                  <Image
-                    source={IMAGES.automatic}
-                    style={{ width: 20, height: 20 }}
-                    resizeMode="contain"
-                  />
-                  <Typography>{item.status}</Typography>
-                </View>
-              </View>
               <View
                 style={[
                   commonStyles.lineBar,

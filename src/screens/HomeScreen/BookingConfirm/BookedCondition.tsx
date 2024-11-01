@@ -37,15 +37,15 @@ const BookedCondition = (props: any) => {
           size={theme.fontSize.large20}
           color={theme.color.blue}
         >
-          Booking Conditions
+          Renting Conditions
         </Typography>
-        <TouchableOpacity onPress={()=>{onBack()}}>
+        {/* <TouchableOpacity onPress={()=>{onBack()}}>
           <Image
             source={IMAGES.pencil}
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={{ borderWidth: 0.2, borderRadius: 10 }}>
         {data.map((i) => {

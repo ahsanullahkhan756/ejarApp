@@ -31,7 +31,7 @@ const BookingConfirmation = (props: any) => {
   ];
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Booking Confirmation" centerImg={false} />
+      <Header titleText="Renting Confirmation" centerImg={false} />
       <ScrollView style={{ flex: 1, marginHorizontal: 20 }} showsVerticalScrollIndicator={false}>
         <View>
           <View gap-10 row>

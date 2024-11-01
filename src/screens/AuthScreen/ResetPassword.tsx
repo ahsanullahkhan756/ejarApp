@@ -36,7 +36,6 @@ const ResetPassword = () => {
               });
             }}
             style={{ width: "100%" }}
-            
             onPressRight={() => setPasswordVisible(!passwordVisible)}
             secureTextEntry={passwordVisible}
             rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
@@ -52,7 +51,7 @@ const ResetPassword = () => {
             validationMessage={[
               "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
             ]}
-            placeholder="New password"
+            placeholder="**********"
           />
           <InputText
             label={"Confirm password"}
@@ -76,7 +75,7 @@ const ResetPassword = () => {
             validationMessage={[
               "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
             ]}
-            placeholder="Confirm password"
+            placeholder="**********"
           />
         </View>
         <Button

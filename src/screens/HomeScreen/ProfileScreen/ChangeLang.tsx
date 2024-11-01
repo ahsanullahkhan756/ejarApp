@@ -25,19 +25,25 @@
 
 // export default ChangeLang;
 
-
-
 import React, { useState } from "react";
-import { StyleSheet, Image, I18nManager, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  I18nManager,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useTranslation } from "react-i18next";
 // import "../../i18n";
-import '../../../i18n';
+import "../../../i18n";
 import { View, Text, Button } from "react-native-ui-lib";
 import SafeAreaContainer from "../../../containers/SafeAreaContainer";
 import { IMAGES, theme } from "../../../constants";
 import { Typography } from "../../../components/atoms/Typography";
 import { onBack } from "../../../navigation/RootNavigation";
+import { DropDown } from "../../../components/atoms/DropDown";
+import { Header } from "../../../components/atoms/Header";
 
 const SelectLanguage = () => {
   const { t, i18n } = useTranslation();
@@ -55,26 +61,21 @@ const SelectLanguage = () => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <View center marginT-50>
-        <Image
-          source={IMAGES.logo}
-          style={{
-            width: scale(150),
-            height: verticalScale(50),
-          }}
-          resizeMode="contain"
+      <Header titleText="Change Language" centerImg={false} />
+      <View center margin-20 >
+        <Typography align="center" color={theme.color.descColor} style={{marginBottom:30}}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        </Typography>
+        <DropDown
+          data={language}
+          width={200}
+          height={50}
+          placeholder={"English"}
         />
       </View>
-      <View marginH-10>
-        <Typography align="center" textType='bold' size={theme.fontSize.large26}>
-        {t("Select Language")}
-        </Typography>
 
-        <Typography align="center" color={theme.color.descColor}>
-          {t("Lang Des")}
-          </Typography>
-      </View>
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <Pressable
           style={[
             styles.languageButton,
@@ -93,8 +94,8 @@ const SelectLanguage = () => {
         >
           <Text small>{t("Arabic")}</Text>
         </Pressable>
-      </View>
-     
+      </View> */}
+
       <Button
         label="Save"
         backgroundColor={theme.color.primary}
@@ -105,6 +106,11 @@ const SelectLanguage = () => {
     </SafeAreaContainer>
   );
 };
+
+const language = [
+  { label: "English", value: "1" },
+  { label: "Arabic", value: "2" },
+];
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -118,13 +124,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginHorizontal: 10,
     borderWidth: 1,
-    borderColor: "transparent", 
+    borderColor: "transparent",
     borderRadius: 5,
   },
   selectedButton: {
-    borderColor: theme.color.primary, 
+    borderColor: theme.color.primary,
     borderWidth: 1,
-    borderRadius:10
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: 16,
@@ -134,4 +140,3 @@ const styles = StyleSheet.create({
 });
 
 export default SelectLanguage;
-

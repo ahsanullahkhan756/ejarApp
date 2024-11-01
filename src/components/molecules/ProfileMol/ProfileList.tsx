@@ -34,7 +34,7 @@ const ProfileList = (props: any) => {
     },
     {
       id: 7,
-      title: "My Bookings",
+      title: "My Rentings",
       image: IMAGES.userBooking,
       navigateTo: SCREENS.USER_BOOKING,
       params: { title: "Privacy Policy" },

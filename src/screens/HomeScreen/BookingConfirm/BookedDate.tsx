@@ -29,7 +29,7 @@ const BookedDate = (props: any) => {
           size={theme.fontSize.large20}
           color={theme.color.blue}
         >
-          Booked Dates
+          Rent Dates
         </Typography>
         <TouchableOpacity onPress={()=>{onBack()}}>
           <Image

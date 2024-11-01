@@ -34,7 +34,7 @@ const LoginFields = () => {
               return copy;
             });
           }}
-          placeholder="Please enter your email"
+          placeholder="loremipsum@domain.com"
           validate={["email"]}
           validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}

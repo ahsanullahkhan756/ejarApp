@@ -55,7 +55,7 @@ const UserBooking = () => {
   };
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Booking"} centerImg={false} />
+      <Header titleText={"My Renting"} centerImg={false} />
       <View paddingH-10>
 
       <View center marginV-20>

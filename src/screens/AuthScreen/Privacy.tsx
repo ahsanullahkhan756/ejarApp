@@ -7,20 +7,21 @@ import { commonStyles } from "../../containers/commStyles";
 import { View } from "react-native-ui-lib";
 
 const Privacy = (props: any) => {
-  const [data, setData] = useState("");
-  console.log("data", data);
+const title = props?.route?.params?.type
+console.log('title',title);
+
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Privacy Policy" centerImg={false} />
+      <Header titleText={title || "Privacy Policy"} centerImg={false} />
       <View padding-20>
         <Typography
           size={22}
           textType="semiBold"
           color={theme.color.primary}
-          style={{ marginVertical: 20 }}
+          style={{ marginVertical: 0 }}
         >
-          {"Privacy Policy"}
+          {title || "Privacy Policy"}
         </Typography>
 
         <Typography color={theme.color.primary}>

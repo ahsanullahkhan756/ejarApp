@@ -30,7 +30,7 @@ const CheckCondition = (props: any) => {
           size={theme.fontSize.extraSmall12}
           style={{ marginLeft: 8 }}
         >
-          I agree to all these requirements. I am eligible to book
+         I agree to all these requirements. I am eligible to Rent
         </Typography>
       </View>
 

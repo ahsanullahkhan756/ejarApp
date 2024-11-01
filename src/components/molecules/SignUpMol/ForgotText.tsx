@@ -10,7 +10,7 @@ const ForgotText = (props: any) => {
   const [check, setCheck] = useState(false);
   const [status, setStatus] = useState(false);
 
-  const { termsText = true ,forgotPass = true} = props;
+  const { termsText = true, forgotPass = true } = props;
 
   return (
     <>
@@ -36,11 +36,8 @@ const ForgotText = (props: any) => {
             Remember me
           </Typography>
         </View>
-        {
-          forgotPass && (
-            <TouchableOpacity
-            onPress={() => navigate(SCREENS.FORGOT_PASS)}
-          >
+        {forgotPass && (
+          <TouchableOpacity onPress={() => navigate(SCREENS.FORGOT_PASS)}>
             <Typography
               size={theme.fontSize.extraSmall12}
               color={theme.color.danger}
@@ -48,9 +45,7 @@ const ForgotText = (props: any) => {
               Forgot Password
             </Typography>
           </TouchableOpacity>
-          )
-        }
-      
+        )}
       </View>
 
       {termsText && (
@@ -67,15 +62,33 @@ const ForgotText = (props: any) => {
               />
             )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate(SCREENS.PRIVACY)}>
-            <Typography
-              color={theme.color.black}
-              size={theme.fontSize.extraSmall12}
-              style={{ marginLeft: 8 }}
-            >
-              I agree with the Privacy Policy and{"\n"}Terms & Conditions
-            </Typography>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View>
+              <TouchableOpacity
+                onPress={() => navigate(SCREENS.PRIVACY, { type: "Privacy Policy" })}
+              >
+                <Typography
+                  color={theme.color.black}
+                  size={theme.fontSize.extraSmall12}
+                  style={{ marginLeft: 8 }}
+                >
+                  I agree with the Privacy Policy and
+                </Typography>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigate(SCREENS.PRIVACY, { type: "Terms & Conditions" })}
+              >
+                <Typography
+                  color={theme.color.black}
+                  size={theme.fontSize.extraSmall12}
+                  style={{ marginLeft: 8 }}
+                >
+                  Terms & Conditions
+                </Typography>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       )}
     </>

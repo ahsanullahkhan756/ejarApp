@@ -43,6 +43,7 @@
     "react-native-size-matters": "^0.4.2",
     "react-native-star-rating-widget": "^1.9.1",
     "react-native-svg": "^15.7.1",
+    "react-native-swiper": "^1.6.0",
     "react-native-ui-lib": "^7.30.0",
     "react-native-vision-camera": "4.5.3",
     "react-native-webview": "^13.12.2",
