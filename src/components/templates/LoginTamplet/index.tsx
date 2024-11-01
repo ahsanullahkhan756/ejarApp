@@ -39,7 +39,7 @@ const LoginTamplet = () => {
         <Typography size={theme.fontSize.medium}>
           Don’t have an account?{" "}
           <TouchableOpacity
-            style={{ marginTop: Platform.OS == "ios" ? 5 : 0 }}
+            style={{ marginTop: Platform.OS == "ios" ? 5 : 10 }}
             onPress={() => navigate(SCREENS.SIGNUP)}
           >
             <Typography

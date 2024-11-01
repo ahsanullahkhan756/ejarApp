@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, TouchableOpacity } from "react-native";
+import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
 import ProgressBarComp from "../../molecules/ProgressBarComp.tsx";
@@ -7,7 +7,7 @@ import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
-import { navigate, onBack } from "../../../navigation/RootNavigation.tsx";
+import { navigate } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
@@ -61,14 +61,39 @@ const SignUpOrg = () => {
             />
           ))}
         </View>
-        <View center marginV-20>
+        {/* <View center marginV-20 style={{ alignItems: "center" }}>
           <Typography>
             Don’t have an account?{" "}
-            <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}
-              style={{marginTop: Platform.OS == 'ios'? 5 : 0}}
-              >
-              <Typography semiBold small color={theme.color.primary} 
-       
+            <View style={{ display: "inline" }}>
+              <Pressable onPress={() => navigate(SCREENS.LOGIN)}>
+                <Typography
+                  bold
+                  color={theme.color.primary}
+                >
+                  Login
+                </Typography>
+              </Pressable>
+            </View>
+          </Typography>
+        </View> */}
+
+        <View
+          center
+          style={{
+            marginVertical:20,
+            alignItems: "center",
+          }}
+        >
+          <Typography size={theme.fontSize.medium}>
+            Don’t have an account?{" "}
+            <TouchableOpacity
+              style={{ marginTop: Platform.OS == "ios" ? 5 : 0 }}
+              onPress={() => navigate(SCREENS.LOGIN)}
+            >
+              <Typography
+                textType="semiBold"
+                size={theme.fontSize.extraSmall}
+                color={theme.color.primary}
               >
                 Login
               </Typography>
@@ -83,7 +108,7 @@ const SignUpOrg = () => {
     if (currentStep === 0) {
       return (
         <SignUpFields
-          onValidate={(valid:any) => {
+          onValidate={(valid: any) => {
             if (valid) setValidate(0);
             else setValidate(-1);
           }}
@@ -92,37 +117,34 @@ const SignUpOrg = () => {
     } else if (currentStep === 1) {
       return (
         <InformationIds
-          onValidate={(valid:any) => {
+          onValidate={(valid: any) => {
             if (valid) setValidate(1);
             else setValidate(-1);
           }}
         />
-      ); 
-    } 
-    else if (currentStep === 2) {
+      );
+    } else if (currentStep === 2) {
       return (
         <LicenseInfo
-          onValidate={(valid:any) => {
+          onValidate={(valid: any) => {
             if (valid) setValidate(2);
             else setValidate(-1);
           }}
         />
       );
-    }
-    else if (currentStep === 3) {
+    } else if (currentStep === 3) {
       return (
         <PassportInfo
-          onValidate={(valid:any) => {
+          onValidate={(valid: any) => {
             if (valid) setValidate(3);
             else setValidate(-1);
           }}
         />
       );
-    }
-    else {
+    } else {
       return (
         <Uploads
-          onValidate={(valid:any) => {
+          onValidate={(valid: any) => {
             if (valid) setValidate(3);
             else setValidate(-1);
           }}
@@ -147,24 +169,25 @@ const SignUpOrg = () => {
 
   return (
     <>
-    {
-      currentStep != 0 && 
-      <TouchableOpacity onPress={()=>setCurrentStep(currentStep - 1)} style={{ flex: 1 }}>
-    <Image 
-         source={IMAGES.leftIcon}
-         style={{
-           width: scale(20),
-           height: verticalScale(20),
-           marginTop: 50,
-           marginLeft:20
-         }}
-         resizeMode="contain"
-        />
+      {currentStep != 0 && (
+        <TouchableOpacity
+          onPress={() => setCurrentStep(currentStep - 1)}
+          style={{ flex: 1 }}
+        >
+          <Image
+            source={IMAGES.leftIcon}
+            style={{
+              width: scale(20),
+              height: verticalScale(20),
+              marginTop: 50,
+              marginLeft: 20,
+            }}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
-    }
+      )}
 
       <View center>
-        
         <Image
           source={IMAGES.logo}
           style={{

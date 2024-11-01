@@ -82,7 +82,7 @@ export const Header = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingTop: Platform.OS == "ios" ? 50 : 30,
+    paddingTop: 50,
     paddingBottom: 20,
   },
   headerText: {
