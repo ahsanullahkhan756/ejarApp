@@ -15,14 +15,14 @@ console.log('title',title);
     <SafeAreaContainer safeArea={false}>
       <Header titleText={title || "Privacy Policy"} centerImg={false} />
       <View padding-20>
-        <Typography
+        {/* <Typography
           size={22}
           textType="semiBold"
           color={theme.color.primary}
           style={{ marginVertical: 0 }}
         >
           {title || "Privacy Policy"}
-        </Typography>
+        </Typography> */}
 
         <Typography color={theme.color.primary}>
           Lorem ipsum dolor sit amet

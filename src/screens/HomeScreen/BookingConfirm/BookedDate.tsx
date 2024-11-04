@@ -8,7 +8,7 @@ import { onBack } from "../../../navigation/RootNavigation";
 const BookedDate = (props: any) => {
   const data = [
     {
-      title: "Booking Period",
+      title: "Renting Period",
       date: "2 Days",
     },
     {

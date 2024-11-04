@@ -69,7 +69,7 @@ const BookingConfirmation = (props: any) => {
           <View marginV-10>
             <PricingDetail />
           </View>
-          <View marginV-10>
+          <View marginV-10>  
             <BookedCondition />
           </View>
           <View marginV-20>
@@ -77,7 +77,7 @@ const BookingConfirmation = (props: any) => {
           </View>
           </View>
           <View marginV-20>
-            <Typography >Booking conditions must be agreed upon before proceeding to pay.</Typography>
+            <Typography >Renting conditions must be agreed upon before proceeding to pay.</Typography>
         </View>
         <Button
         label="Confirm and Pay"

@@ -73,7 +73,7 @@ const RentCars = () => {
                 </View>
               </View>
 
-              <View row marginL-10 gap-10>
+              <View row marginL-10 gap-5>
                   <Image
                     source={IMAGES.colorIcon}
                     style={{ width: 20, height: 20 }}

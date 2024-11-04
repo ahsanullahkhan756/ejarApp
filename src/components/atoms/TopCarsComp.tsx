@@ -17,7 +17,7 @@ export const TopCarsComp = () => {
       data={data.topRatedCars}
       numColumns={2}
       renderItem={({ item }) => {
-        const isSelected = item.id === selectedCar; // Check if the car is selected
+        const isSelected = item.id === selectedCar; 
         return (
           <TouchableOpacity style={{flex:1}} onPress={() => handleSelectCar(item.id)}>
             <View
@@ -27,7 +27,7 @@ export const TopCarsComp = () => {
                 marginVertical: 10,
                 marginRight: 10,
                 borderRadius:10,
-                borderColor: isSelected ? theme.color.blue : "#fff", // Change border color if selected
+                borderColor: isSelected ? theme.color.blue : "#fff", 
               }}
             >
               <Image
@@ -36,11 +36,11 @@ export const TopCarsComp = () => {
                 resizeMode="cover"
               />
             </View>
-            <Typography size={theme.fontSize.small} textType="semiBold">
+            <Typography style={{marginLeft:10}} size={theme.fontSize.small} textType="semiBold">
                 {item.name}
               </Typography>
 
-              <View row>
+              <View row style={{marginLeft:5}}>
                 <Image
                   source={IMAGES.starIcon}
                   style={{ width: 20, height: 20 }}
