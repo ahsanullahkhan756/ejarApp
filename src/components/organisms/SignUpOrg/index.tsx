@@ -77,7 +77,7 @@ const SignUpOrg = () => {
           </Typography>
         </View> */}
 
-        <View
+        {/* <View
           center
           style={{
             marginVertical:20,
@@ -99,6 +99,18 @@ const SignUpOrg = () => {
               </Typography>
             </TouchableOpacity>
           </Typography>
+        </View> */}
+        <View center row>
+          <Typography>Don’t have an account? </Typography>
+          <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
+            <Typography
+              textType="semiBold"
+              size={theme.fontSize.extraSmall}
+              color={theme.color.primary}
+            >
+              Login
+            </Typography>
+          </TouchableOpacity>
         </View>
       </>
     );

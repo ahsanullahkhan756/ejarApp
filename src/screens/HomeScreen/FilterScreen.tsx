@@ -4,7 +4,7 @@ import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Header } from "../../components/atoms/Header";
 import { Typography } from "../../components/atoms/Typography";
 import { Button, View } from "react-native-ui-lib";
-import { SCREENS, theme } from "../../constants";
+import { SCREENS, SCREEN_WIDTH, theme } from "../../constants";
 import { InputText } from "../../components/atoms/InputText";
 import { InputDateTime } from "../../components/atoms/InputDateTime";
 import { DropDown } from "../../components/atoms/DropDown";
@@ -48,12 +48,13 @@ const FilterScreen = () => {
             </Typography>
           </View>
 
-          <View gap-10 row style={{ alignItems: "center" }}>
+          <View gap-5 row width={'100%'} style={{ alignItems: "center" }}>
             <InputField
               placeholder="0"
               keyboardType="number-pad"
               rightText={true}
               maxLength={10}
+              width={SCREEN_WIDTH * 0.4}
             />
             <Typography color={theme.color.descColor}>to</Typography>
             <InputField
@@ -61,6 +62,7 @@ const FilterScreen = () => {
               keyboardType="number-pad"
               rightText={true}
               maxLength={10}
+              // width={SCREEN_WIDTH * 0.4}
             />
           </View>
 
@@ -93,7 +95,7 @@ const FilterScreen = () => {
                 hidePicker();
               }}
               visible={datePickerVisible}
-              // style={{ width: 150 }}
+              style={{  width: SCREEN_WIDTH * 0.4 }}
             />
             <Typography color={theme.color.descColor}>to</Typography>
             <InputDateTime
@@ -108,7 +110,7 @@ const FilterScreen = () => {
                 hidePicker();
               }}
               visible={datePickerVisible}
-              // style={{ width: 150 }}
+              // style={{  width: SCREEN_WIDTH * 0.4 }}
             />
           </View>
 
@@ -129,12 +131,15 @@ const FilterScreen = () => {
             </Typography>
           </View>
 
-          <View gap-10 row style={{ alignItems: "center" }}>
+          <View gap-5 row style={{ alignItems: "center" }}>
             <InputField
               placeholder="0"
               keyboardType="number-pad"
               rightText={true}
               rightTitle="km"
+              maxLength={10}
+              width={SCREEN_WIDTH * 0.4}
+             
             />
             <Typography color={theme.color.descColor}>to</Typography>
             <InputField
@@ -142,6 +147,9 @@ const FilterScreen = () => {
               keyboardType="number-pad"
               rightText={true}
               rightTitle=""
+              maxLength={10}
+              // width={SCREEN_WIDTH * 0.45}
+
             />
           </View>
 

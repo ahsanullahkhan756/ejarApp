@@ -29,7 +29,7 @@ const LoginTamplet = () => {
           );
         })}
       </View>
-      <View
+      {/* <View
         center
         style={{
           marginTop: Platform.OS == "ios" ? 200 : 150,
@@ -51,6 +51,24 @@ const LoginTamplet = () => {
             </Typography>
           </TouchableOpacity>
         </Typography>
+      </View> */}
+      <View
+        center
+        row
+        style={{
+          marginTop: Platform.OS == "ios" ? 180 : 150,
+        }}
+      >
+        <Typography>Don’t have an account? </Typography>
+        <TouchableOpacity onPress={() => navigate(SCREENS.SIGNUP)}>
+          <Typography
+            textType="semiBold"
+            size={theme.fontSize.extraSmall}
+            color={theme.color.primary}
+          >
+            Sign Up
+          </Typography>
+        </TouchableOpacity>
       </View>
     </View>
   );

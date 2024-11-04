@@ -28,9 +28,9 @@ const CheckCondition = (props: any) => {
           textType="semiBold"
           color={theme.color.black}
           size={theme.fontSize.extraSmall12}
-          style={{ marginLeft: 8 }}
+          style={{ marginLeft: 8, }}
         >
-         I agree to all these requirements. I am eligible to Rent
+         I agree to all these requirements. I am eligible to{'\n'}Rent
         </Typography>
       </View>
 

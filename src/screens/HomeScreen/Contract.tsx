@@ -122,7 +122,7 @@ const Contract = () => {
               style={{ width: 200, height: 200 }}
             />
             <Button
-              label="View My Booking"
+              label="View My Renting"
               backgroundColor={theme.color.primary}
               borderRadius={30}
               style={styles.button}
