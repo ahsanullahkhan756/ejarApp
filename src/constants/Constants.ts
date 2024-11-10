@@ -56,7 +56,8 @@ export const theme = {
     descColor:'#8C8C8C',
     danger:'#FB344F',
     blue:'#112C69',
-    orange :'#FBAE17'
+    orange :'#FBAE17',
+    red:"red"
   },
 };
 
@@ -71,26 +72,79 @@ export const CheckIfValid = (
   setState(copy);
 };
 
-// export const BOTTOMTABS = [
-//   {
-//     key: 0,
-//     navigateTo: SCREENS.HOME,
-//     image: IMAGES.trophy,
-//   },
-//   {
-//     key: 1,
-//     navigateTo: SCREENS.PAYMENT,
-//     image: IMAGES.euro,
-//   },
-//   {
-//     key: 2,
-//     navigateTo: SCREENS.ALL_CLUBS,
-//     image: IMAGES.club,
-//   },
-//   {
-//     key: 3,
-//     title: "Profile",
-//     navigateTo: SCREENS.PROFILE,
-//     image: IMAGES.profile,
-//   },
-// ];
+export const VARIABLES = {
+  //Common
+  GRANTED: 'granted',
+  CUSTOM: 'Custom',
+  UPCOMING: 'Upcoming',
+  CANCEL: 'Cancel',
+  COMPLETED: 'Completed',
+
+  USER_TOKEN: 'token',
+  LANGUAGE: 'user selected language',
+  IS_USER_LOGGED_IN: 'Is user logged in?',
+  IS_USER_VISITED_THE_APP:
+    "Is user visited the app so don't show onboarding screen.",
+
+  // Booleans
+  TRUE: true,
+  FALSE: false,
+
+  // Numbers
+  ZERO: 0,
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
+  FIVE: 5,
+  SIX: 6,
+  SEVEN: 7,
+  EIGHT: 8,
+  NINE: 9,
+  TEN: 10,
+  // Add more numbers as needed
+
+  // Strings
+  EMPTY_STRING: '',
+  SPACE: ' ',
+  COMMA: ',',
+  QUESTION_MARK: '?',
+  DOT: '.',
+  UNDERSCORE: '_',
+  DASH: '-',
+  // Add more strings as needed
+
+  DONE: 'done',
+  NEXT: 'next',
+  // Commonly used values
+  NULL: null,
+  UNDEFINED: undefined,
+  NAN: NaN,
+
+  // HTTP status codes
+  STATUS_OK: 200,
+  STATUS_BAD_REQUEST: 400,
+  STATUS_UNAUTHORIZED: 401,
+  STATUS_FORBIDDEN: 403,
+  STATUS_NOT_FOUND: 404,
+  STATUS_SERVER_ERROR: 500,
+
+  // Common HTTP methods
+  HTTP_GET: 'GET',
+  HTTP_POST: 'POST',
+  HTTP_PUT: 'PUT',
+  HTTP_DELETE: 'DELETE',
+
+  // Time units
+  MILLISECONDS_IN_SECOND: 1000,
+  SECONDS_IN_MINUTE: 60,
+  MINUTES_IN_HOUR: 60,
+  HOURS_IN_DAY: 24,
+  DAYS_IN_WEEK: 7,
+  // Add more time units as needed
+
+  // Common configurations
+  DEFAULT_PAGE_SIZE: 20,
+  MAX_RETRIES: 3,
+  // Add more configurations as needed
+};
