@@ -22,8 +22,6 @@ const LoginOrg = () => {
         />
       </View>
       <LoginFields />
-
-     
       <View row center marginH-20>
         <View flex height={1} backgroundColor={theme.color.black} />
         <View>

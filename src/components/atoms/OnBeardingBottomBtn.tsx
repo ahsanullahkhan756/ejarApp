@@ -9,11 +9,9 @@ import { setLoggedIn } from "../../redux/slice/user";
 
 export const OnBeardingBottomBtn = (props: any) => {
   const {onPress = ()=>{}} = props;
-  const dispatch = useDispatch();
-
   return (
     <View margin-30 row spread>
-      <TouchableOpacity  onPress={() => dispatch(setLoggedIn(true))}>
+      <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
         <View
           style={{
             borderBottomWidth: 2,

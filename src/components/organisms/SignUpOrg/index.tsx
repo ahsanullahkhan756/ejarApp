@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+
+
+import React, { useState } from "react";
 import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
@@ -23,7 +25,7 @@ const steps = [
 
 const SignUpOrg = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [validate, setValidate] = useState(-1);
+  const [validationState, setValidationState] = useState([false, false, false, false, false]);
 
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },
@@ -31,6 +33,7 @@ const SignUpOrg = () => {
     { id: 3, image: IMAGES.apple },
   ];
 
+  // Handle next step
   const handleNextStep = () => {
     if (currentStep === steps.length - 1) {
       navigate(SCREENS.LOGIN);
@@ -39,6 +42,7 @@ const SignUpOrg = () => {
     }
   };
 
+  // Render bottom social login section
   const handleBottomData = () => {
     return (
       <>
@@ -61,45 +65,6 @@ const SignUpOrg = () => {
             />
           ))}
         </View>
-        {/* <View center marginV-20 style={{ alignItems: "center" }}>
-          <Typography>
-            Don’t have an account?{" "}
-            <View style={{ display: "inline" }}>
-              <Pressable onPress={() => navigate(SCREENS.LOGIN)}>
-                <Typography
-                  bold
-                  color={theme.color.primary}
-                >
-                  Login
-                </Typography>
-              </Pressable>
-            </View>
-          </Typography>
-        </View> */}
-
-        {/* <View
-          center
-          style={{
-            marginVertical:20,
-            alignItems: "center",
-          }}
-        >
-          <Typography size={theme.fontSize.medium}>
-            Don’t have an account?{" "}
-            <TouchableOpacity
-              style={{ marginTop: Platform.OS == "ios" ? 5 : 0 }}
-              onPress={() => navigate(SCREENS.LOGIN)}
-            >
-              <Typography
-                textType="semiBold"
-                size={theme.fontSize.extraSmall}
-                color={theme.color.primary}
-              >
-                Login
-              </Typography>
-            </TouchableOpacity>
-          </Typography>
-        </View> */}
         <View center row>
           <Typography>Don’t have an account? </Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
@@ -120,45 +85,50 @@ const SignUpOrg = () => {
     if (currentStep === 0) {
       return (
         <SignUpFields
-          onValidate={(valid: any) => {
-            if (valid) setValidate(0);
-            else setValidate(-1);
+          onValidate={(valid: boolean) => {
+            const newState = [...validationState];
+            newState[0] = valid;
+            setValidationState(newState);
           }}
         />
       );
     } else if (currentStep === 1) {
       return (
         <InformationIds
-          onValidate={(valid: any) => {
-            if (valid) setValidate(1);
-            else setValidate(-1);
+          onValidate={(valid: boolean) => {
+            const newState = [...validationState];
+            newState[1] = valid;
+            setValidationState(newState);
           }}
         />
       );
     } else if (currentStep === 2) {
       return (
         <LicenseInfo
-          onValidate={(valid: any) => {
-            if (valid) setValidate(2);
-            else setValidate(-1);
+          onValidate={(valid: boolean) => {
+            const newState = [...validationState];
+            newState[2] = valid;
+            setValidationState(newState);
           }}
         />
       );
     } else if (currentStep === 3) {
       return (
         <PassportInfo
-          onValidate={(valid: any) => {
-            if (valid) setValidate(3);
-            else setValidate(-1);
+          onValidate={(valid: boolean) => {
+            const newState = [...validationState];
+            newState[3] = valid;
+            setValidationState(newState);
           }}
         />
       );
     } else {
       return (
         <Uploads
-          onValidate={(valid: any) => {
-            if (valid) setValidate(3);
-            else setValidate(-1);
+          onValidate={(valid: boolean) => {
+            const newState = [...validationState];
+            newState[4] = valid;
+            setValidationState(newState);
           }}
         />
       );
@@ -179,9 +149,12 @@ const SignUpOrg = () => {
       : "";
   };
 
+  // Check if the current step is valid
+  const isFormValid = validationState[currentStep]; 
+
   return (
     <>
-      {currentStep != 0 && (
+      {currentStep !== 0 && (
         <TouchableOpacity
           onPress={() => setCurrentStep(currentStep - 1)}
           style={{ flex: 1 }}
@@ -218,9 +191,7 @@ const SignUpOrg = () => {
         label={getButtonLabel()}
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
-        // disabled={currentStep != validate}
-        // disabled={currentStep === 0 && currentStep !== validate}
-
+        // disabled={!isFormValid}
         borderRadius={30}
         style={{ height: 50, margin: 20 }}
       />

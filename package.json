@@ -31,6 +31,7 @@
     "react-native": "0.75.2",
     "react-native-calendars": "^1.1307.0",
     "react-native-circular-progress": "^1.4.0",
+    "react-native-device-info": "^14.0.0",
     "react-native-element-dropdown": "^2.12.1",
     "react-native-gesture-handler": "^2.19.0",
     "react-native-image-crop-picker": "^0.41.2",

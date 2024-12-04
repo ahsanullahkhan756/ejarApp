@@ -20,12 +20,13 @@ interface ErrorResponse {
 }
 
 const axiosInstance = axios.create({
-  baseURL: '',
+  baseURL: 'http://10.55.62.101:4000/v1',
   timeout: 10000,
   headers: {
     Accept: 'application/json',
   },
 });
+
 
 const setAuthToken = async () => {
   try {
