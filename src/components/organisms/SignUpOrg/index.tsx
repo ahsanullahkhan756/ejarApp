@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
@@ -7,13 +5,17 @@ import { Button, View } from "react-native-ui-lib";
 import ProgressBarComp from "../../molecules/ProgressBarComp.tsx";
 import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
-import { theme } from "../../../constants/Constants.ts";
+import { VARIABLES, theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
 import { navigate } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
 import PassportInfo from "../../molecules/SignUpMol/PassportInfo.tsx";
+import { signUpApi } from "../../../api/auth.js";
+import { setItem } from "../../../utils/storage.tsx";
+import { setIsLoading, setLoggedIn } from "../../../redux/slice/user.tsx";
+import { useDispatch } from "react-redux";
 
 const steps = [
   { label: "Sign Up", progress: 0 },
@@ -24,8 +26,15 @@ const steps = [
 ];
 
 const SignUpOrg = () => {
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
-  const [validationState, setValidationState] = useState([false, false, false, false, false]);
+  const [validationState, setValidationState] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },
@@ -41,8 +50,7 @@ const SignUpOrg = () => {
       setCurrentStep(currentStep + 1);
     }
   };
-
-  // Render bottom social login section
+  
   const handleBottomData = () => {
     return (
       <>
@@ -85,6 +93,7 @@ const SignUpOrg = () => {
     if (currentStep === 0) {
       return (
         <SignUpFields
+        setCurrentStep= {setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[0] = valid;
@@ -95,6 +104,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 1) {
       return (
         <InformationIds
+        setCurrentStep= {setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[1] = valid;
@@ -105,6 +115,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 2) {
       return (
         <LicenseInfo
+        setCurrentStep= {setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[2] = valid;
@@ -115,6 +126,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 3) {
       return (
         <PassportInfo
+        setCurrentStep= {setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[3] = valid;
@@ -125,6 +137,7 @@ const SignUpOrg = () => {
     } else {
       return (
         <Uploads
+        setCurrentStep= {setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[4] = valid;
@@ -149,8 +162,7 @@ const SignUpOrg = () => {
       : "";
   };
 
-  // Check if the current step is valid
-  const isFormValid = validationState[currentStep]; 
+  const isFormValid = validationState[currentStep];
 
   return (
     <>
@@ -187,17 +199,41 @@ const SignUpOrg = () => {
 
       {handleNavigation()}
 
-      <Button
+      {/* <Button
         label={getButtonLabel()}
         backgroundColor={theme.color.primary}
-        onPress={handleNextStep}
+        onPress={async () => {
+          const data = {
+            user: {
+              firstName: "john",
+              lastName: "john",
+              email: "john1@ymail.com",
+              phone: "090078132226",
+              password: "Qwerty@123",
+            },
+            roles: ["8d3a703f-ca87-4f01-bad2-d559726818bb"],
+          };
+        
+          const res = await signUpApi({ data });
+          console.log("response api", res);
+
+          if (res != null) {
+            setItem(VARIABLES.USER_TOKEN, res?.token);
+            dispatch(setLoggedIn(true));
+            dispatch(setIsLoading(true));
+            // dispatch(setUserType("user"));
+          }
+        }}
+        // onPress={handleNextStep}
         // disabled={!isFormValid}
         borderRadius={30}
         style={{ height: 50, margin: 20 }}
-      />
+      /> */}
       {currentStep < 1 && handleBottomData()}
     </>
   );
 };
 
 export default SignUpOrg;
+
+

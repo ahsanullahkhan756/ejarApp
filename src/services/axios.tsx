@@ -20,7 +20,7 @@ interface ErrorResponse {
 }
 
 const axiosInstance = axios.create({
-  baseURL: 'http://10.55.62.101:4000/v1',
+  baseURL: 'https://backend.carejar.net/v1/',
   timeout: 10000,
   headers: {
     Accept: 'application/json',

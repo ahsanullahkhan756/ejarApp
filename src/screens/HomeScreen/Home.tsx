@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Image,
@@ -19,8 +19,42 @@ import { navigate } from "../../navigation/RootNavigation";
 import { TopCarsComp } from "../../components/atoms/TopCarsComp";
 import { RentCarsComp } from "../../components/atoms/RentCarsComp";
 import Swiper from "react-native-swiper";
+import { useDispatch, useSelector } from "react-redux";
+import { setHomeData } from "../../redux/slice/appData";
+import { setIsLoading } from "../../redux/slice/user";
+import { getHomeApi, topRatedCar } from "../../api/homeServices";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const getUser = async () => {
+    try {
+      const resp = await getHomeApi();
+      if (resp) {
+        dispatch(setHomeData(resp));
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const topRatedCarApi = async () => {
+    try {
+      const resp = await topRatedCar();
+      if (resp) {
+        dispatch(setHomeData(resp));
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    dispatch(setIsLoading(false));
+    getUser();
+    topRatedCarApi();
+  }, []);
+
+  const details = useSelector((state: any) => state?.appData?.homeData);
+
   return (
     <SafeAreaContainer safeArea={false}>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -37,7 +71,6 @@ const Home = () => {
           <SearchBar />
         </View>
         <View padding-20>
-        
           <Swiper
             style={{ height: 270 }}
             dotStyle={[
@@ -47,7 +80,7 @@ const Home = () => {
             activeDotStyle={styles.dotStyle}
           >
             <FlatList
-              data={data.categories}
+              data={data?.categories}
               numColumns={4}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
@@ -135,8 +168,97 @@ const Home = () => {
           >
             Car For Rent
           </Typography>
-          <RentCarsComp />
-          <RentCarsComp />
+          {/* <RentCarsComp /> */}
+
+          {/* CAR FOR RENT  */}
+
+          <FlatList
+            data={details?.Data}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+
+              return (
+                <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
+                  <Card
+                    style={{
+                      marginRight: 10,
+                      flex: 1,
+                      elevation: 4,
+                    }}
+                  >
+                    {/* <Image
+                      source={item.img}
+                      style={{
+                        width: "100%",
+                        height: 120,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                      }}
+                      resizeMode="cover"
+                    /> */}
+
+                    <Image
+                      source={{ uri: item.Media?.url || IMAGES.truck }} 
+                      style={{
+                        width: "100%",
+                        height: 120,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                      }}
+                      resizeMode="cover"
+                    />
+
+                    <View row spread padding-10>
+                      <Typography
+                        size={theme.fontSize.small}
+                        textType="semiBold"
+                      >
+                        {`${item?.model} ${item?.carName}`}
+                      </Typography>
+                      <Typography
+                        size={theme.fontSize.small}
+                        textType="semiBold"
+                      >
+                        {item?.rentalPrice}
+                      </Typography>
+                    </View>
+                    <View row spread gap-10 padding-10>
+                      <View row gap-5 style={{ alignItems: "center" }}>
+                        <Image
+                          source={IMAGES.calendarIcon}
+                          style={{ width: 20, height: 20 }}
+                          resizeMode="contain"
+                        />
+                        <Typography>{item?.model}</Typography>
+                      </View>
+
+                      <View row gap-5 style={{ alignItems: "center" }}>
+                        <Image
+                          source={IMAGES.colorIcon}
+                          style={{ width: 20, height: 20 }}
+                          resizeMode="contain"
+                        />
+                        <Typography>{item?.color}</Typography>
+                      </View>
+
+                      <View row gap-5 style={{ alignItems: "center" }}>
+                        <Image
+                          source={IMAGES.automatic}
+                          style={{ width: 20, height: 20 }}
+                          resizeMode="contain"
+                        />
+                        <Typography>{item.status}</Typography>
+                      </View>
+                    </View>
+                  </Card>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ marginBottom: 16 }}
+          />
+
           <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
             <Image
               source={IMAGES.viewAll}
@@ -312,3 +434,4 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+

@@ -1,57 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, Image, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux"; // Add this to use Redux state
 import { IMAGES, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
-import { data } from "../../containers/dummy";
 
 export const TopCarsComp = () => {
-  const [selectedCar, setSelectedCar] = useState(null); // State to track selected car
-
-  const handleSelectCar = (carId) => {
-    setSelectedCar(carId); // Set the selected car's ID
-  };
+  // Fetch the top-rated car data from Redux state
+  const topRatedCars = useSelector((state) => state?.appData?.homeData?.topRatedCars || []);
 
   return (
     <FlatList
-      data={data.topRatedCars}
+      data={topRatedCars}
       numColumns={2}
       renderItem={({ item }) => {
-        const isSelected = item.id === selectedCar; 
+        const isAvailable = item.status === "Available"; // Check if the car is available
         return (
-          <TouchableOpacity style={{flex:1}} onPress={() => handleSelectCar(item.id)}>
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log("Car selected:", item.carName)}>
             <View
               style={{
                 borderWidth: 2,
                 flex: 1,
                 marginVertical: 10,
                 marginRight: 10,
-                borderRadius:10,
-                borderColor: isSelected ? theme.color.blue : "#fff", 
+                borderRadius: 10,
+                borderColor: isAvailable ? theme.color.green : "#fff", // Highlight available cars differently
               }}
             >
               <Image
-                source={item.img}
+                source={{ uri: item.Media?.carPicture?.[0] || IMAGES.defaultCarImage }} // Use a fallback image if Media is null
                 style={{ width: "100%", height: 160, borderRadius: 10 }}
                 resizeMode="cover"
               />
             </View>
-            <Typography style={{marginLeft:10}} size={theme.fontSize.small} textType="semiBold">
-                {item.name}
-              </Typography>
-
-              <View row style={{marginLeft:5}}>
-                <Image
-                  source={IMAGES.starIcon}
-                  style={{ width: 20, height: 20 }}
-                  resizeMode="contain"
-                />
-                <Typography>{item.rating}</Typography>
-              </View>
+            <Typography style={{ marginLeft: 10 }} size={theme.fontSize.small} textType="semiBold">
+              {item.carName}
+            </Typography>
+            <View row style={{ marginLeft: 5 }}>
+              <Image
+                source={IMAGES.starIcon}
+                style={{ width: 20, height: 20 }}
+                resizeMode="contain"
+              />
+              <Typography>{item.rating ? item.rating : "No rating"}</Typography>
+            </View>
           </TouchableOpacity>
         );
       }}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.ID} // Use a unique key like item.ID
     />
   );
 };

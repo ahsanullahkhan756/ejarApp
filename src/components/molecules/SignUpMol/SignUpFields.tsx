@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
-import { IMAGES, theme } from "../../../constants";
+import { IMAGES, VARIABLES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import ForgotText from "./ForgotText";
+import { signUpApi } from "../../../api/auth";
+import { setItem } from "../../../utils/storage";
+import { setIsLoading, setLoggedIn } from "../../../redux/slice/user";
+import { useDispatch } from "react-redux";
 
-const SignUpFields = ({ onValidate }: any) => {
+const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(5).fill(false));
+  const dispatch = useDispatch();
 
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -20,6 +25,16 @@ const SignUpFields = ({ onValidate }: any) => {
     console.warn(hasValidated);
     onValidate(!hasValidated.includes(false));
   }, [hasValidated]);
+
+  const isFormValid = () => {
+    const emailValid = /\S+@\S+\.\S+/.test(email);
+    const passwordValid =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
+        password
+      );
+
+    return emailValid && passwordValid;
+  };
 
   return (
     <View marginH-20>
@@ -133,8 +148,47 @@ const SignUpFields = ({ onValidate }: any) => {
         />
       </View>
       <ForgotText forgotPass={false}/>
+
+      <Button
+        label={'Next'}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          // if (isFormValid()) {
+          const data = {
+            user: {
+              firstName: firstname,
+              lastName: lastname,
+              email: email,
+              phone: phone,
+              password: password,
+            },
+            roles: ["8d3a703f-ca87-4f01-bad2-d559726818bb"],
+          };
+          // }
+          const res = await signUpApi({ data });
+          console.log("response api", res);
+
+          if (res != null) {
+            setCurrentStep(1)
+            setItem(VARIABLES.USER_TOKEN, res?.token);
+            // dispatch(setLoggedIn(true));
+            dispatch(setIsLoading(true));
+            // dispatch(setUserType("user"));
+          }
+        }}
+        // disabled={!isFormValid()}
+        borderRadius={30}
+        style={{
+          // backgroundColor: isFormValid()
+          //   ? theme.color.primary
+          //   : "#999B9F",
+            height: 50, margin: 20
+        }}
+      />
     </View>
   );
 };
 
 export default SignUpFields;
+
+

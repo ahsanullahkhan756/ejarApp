@@ -1,35 +1,70 @@
-import { get, post } from "../services/axios";
+import { setIsLoading } from "../redux/slice/user";
+import { store } from "../redux/store";
+import { get, post, put } from "../services/axios";
 import { showToast } from "../utils/toast";
+
 
 export const loginApi = async ({ data }) => {
   try {
-    const res = await post({
+    store.dispatch(setIsLoading(true));
+    const response = await post({
       url: "auth/login",
       data: data,
       includeToken: false,
     });
-
-    console.log({res})
-    return res;
-  } catch (error) {
-    console.log(error)
-    showToast({ title: error?.message });
-  }
-};
-
-export const signUpApi = async ({ data }) => {
-  try {
-    const response = await post({
-      url: "register",
-      data: data,
-      includeToken: false,
-    });
-    if (response?.data) {
-      return response?.data;
+    if (response) {
+      console.log('response',response?.token);
+      return response;
     }
     return null;
   } catch (error) {
+    console.log("error",error?.message);
     showToast({ title: error?.message });
+  }finally{
+    store.dispatch(setIsLoading(false));
+
+  }
+};
+export const signUpApi = async ({ data }) => {
+  try {
+    store.dispatch(setIsLoading(true));
+    const response = await post({
+      url: "auth/register",
+      data: data,
+      includeToken: false,
+    });
+    
+    if (response) {
+      return response;
+    }
+    return null;
+  } catch (error) {
+    console.log('err',error?.message);
+    showToast({ title: error?.message });
+  }finally{
+    store.dispatch(setIsLoading(false));
+
+  }
+};
+export const updateProfile = async ({ data }) => {
+  console.log('data',data);
+  try {
+    store.dispatch(setIsLoading(true));
+    const response = await put({
+      url: "user/profile",
+      data: data,
+    });
+    
+    if (response) {
+      return response;
+    }
+    return null;
+  } catch (error) {
+    console.log('err',error?.message);
+    showToast({ title: error?.message });
+  }finally{
+    store.dispatch(setIsLoading(false));
+
   }
 };
 

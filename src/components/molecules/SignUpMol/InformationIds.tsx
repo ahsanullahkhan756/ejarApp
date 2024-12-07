@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
@@ -11,10 +11,14 @@ import { country, gender } from "../../../containers/dummy";
 import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
+import { setIsLoading } from "../../../redux/slice/user";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../../../api/auth";
 
-const InformationIds = ({ onValidate }: any) => {
+const InformationIds = ({ onValidate,setCurrentStep}: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +36,7 @@ const InformationIds = ({ onValidate }: any) => {
   const [isTakingFront, setIsTakingFront] = useState(true);
 
   useEffect(() => {
+    dispatch(setIsLoading(false));
     onValidate(!hasValidated.includes(false));
   }, [hasValidated]);
 
@@ -263,6 +268,39 @@ const InformationIds = ({ onValidate }: any) => {
             </View>
           )}
 
+<Button
+        label={'Next'}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          // if (isFormValid()) {
+          const data = {
+
+              "idcardNumber": "ID123456789",
+              "idCardIssueDate": "2015-01-01",
+              "idCardExpDate": "2030-01-01",
+              "nationality": "American",
+              "placeOfBirth": "New York",
+              "dob": "1990-01-01",
+              "gender": "Male",
+             
+          };
+          // }
+          const res = await updateProfile({ data });
+          console.log("response api", res);
+          if (res != null) {
+            setCurrentStep(2)
+            dispatch(setIsLoading(true));
+          }
+        }}
+        borderRadius={30}
+        style={{
+          // backgroundColor: isFormValid()
+          //   ? theme.color.primary
+          //   : "#999B9F",
+            height: 50, margin: 20,width:300
+        }}
+      />
+
           {/* {(!frontImage || (frontImage && !backImage)) && (
             <TouchableOpacity onPress={()=>takePhotoFromCamera()}>
               <View row style={styles.button}>
@@ -276,7 +314,8 @@ const InformationIds = ({ onValidate }: any) => {
                 </Typography>
               </View>
             </TouchableOpacity>
-          )} */}
+          )} */
+         }
         </View>
       </View>
     </View>
