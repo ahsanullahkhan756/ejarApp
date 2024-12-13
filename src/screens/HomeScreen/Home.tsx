@@ -23,11 +23,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setHomeData } from "../../redux/slice/appData";
 import { setIsLoading } from "../../redux/slice/user";
 import { getHomeApi, topRatedCar } from "../../api/homeServices";
-
+import { getFCMToken } from "../../api/auth.js";
 const Home = () => {
   const dispatch = useDispatch();
 
   const getUser = async () => {
+    const abc = await getFCMToken();
+    console.log(abc);
+
     try {
       const resp = await getHomeApi();
       if (resp) {
@@ -177,7 +180,6 @@ const Home = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
-
               return (
                 <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
                   <Card
@@ -199,7 +201,7 @@ const Home = () => {
                     /> */}
 
                     <Image
-                      source={{ uri: item.Media?.url || IMAGES.truck }} 
+                      source={{ uri: item.Media?.url || IMAGES.truck }}
                       style={{
                         width: "100%",
                         height: 120,
@@ -434,4 +436,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-

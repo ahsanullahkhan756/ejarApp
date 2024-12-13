@@ -8,24 +8,44 @@ import { Typography } from "../../atoms/Typography.tsx";
 import { navigate } from "../../../navigation/RootNavigation.tsx";
 import { SCREENS } from "../../../constants/ScreenNames.tsx";
 import LoginOrg from "../../organisms/LoginOrg/index.tsx";
+import {
+  UserGoogleLoginFunction,
+  UserAppleLoginFunction,
+} from "../../../api/auth.js";
+import { useDispatch } from "react-redux";
 
 const LoginTamplet = () => {
+  const dispatch = useDispatch();
   const SOCIAL_LOGIN = [
-    { id: 1, image: IMAGES.google },
-    { id: 1, image: IMAGES.facebook },
-    { id: 1, image: IMAGES.apple },
+    {
+      id: 1,
+      image: IMAGES.google,
+      onPress: () => UserGoogleLoginFunction(dispatch),
+    },
+    { id: 2, image: IMAGES.facebook, onPress: () => {} },
+    {
+      id: 3,
+      image: IMAGES.apple,
+      onPress: () => UserAppleLoginFunction(dispatch),
+    },
   ];
+
   return (
     <View>
       <LoginOrg />
       <View row center margin-20>
         {SOCIAL_LOGIN.map((i) => {
+          if (Platform.OS == "android" && i?.id == 3) {
+            return;
+          }
           return (
-            <Image
-              source={i.image}
-              style={{ width: 110, height: 40, marginHorizontal: 5 }}
-              resizeMode="contain"
-            />
+            <TouchableOpacity key={i?.id} onPress={i?.onPress}>
+              <Image
+                source={i.image}
+                style={{ width: 110, height: 40, marginHorizontal: 5 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
           );
         })}
       </View>
