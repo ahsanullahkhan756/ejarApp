@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { IMAGES } from "../../../constants";
-import {Image} from "react-native";
+import { Image } from "react-native";
 
-const VechileStatusItoms = () => {
+const VechileStatusItoms = ({ item }) => {
   return (
-    <View row > 
+    <View row>
       <View gap-10 paddingV-10 marginR-50>
         <View row gap-5 style={{ alignItems: "center" }}>
           <Image
@@ -14,7 +14,9 @@ const VechileStatusItoms = () => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-          <Typography>Jumeirah, Dubai</Typography>
+          <Typography numberOfLines={1}>
+            {item?.location ?? item?.description}
+          </Typography>
         </View>
 
         <View row gap-5 style={{ alignItems: "center" }}>
@@ -23,7 +25,7 @@ const VechileStatusItoms = () => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-          <Typography>2021</Typography>
+          <Typography>{item?.model}</Typography>
         </View>
       </View>
       <View gap-10 paddingV-10>
@@ -33,7 +35,7 @@ const VechileStatusItoms = () => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-          <Typography>Automatic</Typography>
+          <Typography>{item?.type}</Typography>
         </View>
 
         <View row gap-5 style={{ alignItems: "center" }}>
@@ -42,7 +44,7 @@ const VechileStatusItoms = () => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-          <Typography>60,000 km</Typography>
+          <Typography>{item?.mile} km</Typography>
         </View>
       </View>
     </View>

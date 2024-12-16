@@ -19,97 +19,74 @@ import VechileStatusItoms from "../../components/molecules/MyBookingComp/Vechile
 import { CustomCalender } from "../../components/atoms/CustomCalender";
 import Swiper from "react-native-swiper";
 
-const DetailScreen = (props: any) => {
-  console.log("preops", props);
+const DetailScreen = ({ route }) => {
+  const item = route?.params?.item;
 
   const [selectedDate, setSelectedDate] = useState("");
 
   const vehicleSpecs = [
-    { label: "Year", value: "2021" },
-    { label: "Body Type", value: "Truck" },
-    { label: "Engine Capacity", value: "2800cc" },
-    { label: "Color", value: "White" },
-    { label: "Fuel", value: "Diesel" },
+    { label: "Year", value: item?.model },
+    { label: "Body Type", value: item?.bodyType },
+    { label: "Engine Capacity", value: item?.capacity ?? 0 + " cc" },
+    { label: "Color", value: item?.color },
+    { label: "Fuel", value: item?.fuel },
   ];
   return (
     <SafeAreaContainer safeArea={false}>
       <ScrollView style={{ flex: 1 }}>
         {/* Image Carousel */}
 
-        <Swiper
-          style={{ height: 300 }}
-          dotStyle={[
-            styles.dotStyle,
-            { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
-          ]}
-          activeDotStyle={styles.dotStyle}
-        >
-          <ImageBackground
-            source={IMAGES.truck}
-            style={{ width: "100%", height: 250 }}
-          >
-            <TouchableOpacity
-              onPress={() => onBack()}
-              style={{ position: "absolute", left: 20, top: 50 }}
+        {item?.Media?.carPicture != null &&
+          item?.Media?.carPicture?.length != 0 && (
+            <Swiper
+              style={{ height: 300 }}
+              dotStyle={[
+                styles.dotStyle,
+                { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+              ]}
+              activeDotStyle={styles.dotStyle}
             >
-              <Image
-                source={IMAGES.leftIcon}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-
-          <ImageBackground
-            source={IMAGES.car2}
-            style={{ width: "100%", height: 250 }}
-          >
-            <TouchableOpacity
-              onPress={() => onBack()}
-              style={{ position: "absolute", left: 20, top: 50 }}
-            >
-              <Image
-                source={IMAGES.leftIcon}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-
-          <ImageBackground
-            source={IMAGES.car3}
-            style={{ width: "100%", height: 250 }}
-          >
-            <TouchableOpacity
-              onPress={() => onBack()}
-              style={{ position: "absolute", left: 20, top: 50 }}
-            >
-              <Image
-                source={IMAGES.leftIcon}
-                style={{ width: 30, height: 30 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-        </Swiper>
+              {item?.Media?.carPicture?.map((item) => (
+                <ImageBackground
+                  source={IMAGES.truck}
+                  style={{ width: "100%", height: 250 }}
+                >
+                  <TouchableOpacity
+                    onPress={() => onBack()}
+                    style={{ position: "absolute", left: 20, top: 50 }}
+                  >
+                    <Image
+                      source={{ uri: item?.base64 }}
+                      style={{ width: 30, height: 30 }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </ImageBackground>
+              ))}
+            </Swiper>
+          )}
 
         {/* Vehicle Details */}
         <View style={{ padding: 20 }}>
           <Typography textType="bold" size={theme.fontSize.large20}>
-            Ford Truck 2021
+            {item?.carName}
           </Typography>
-          <Typography size={theme.fontSize.small} color={theme.color.descColor}>
-            Torem ipsum dolor sit amet, consectetur{" "}
+          <Typography
+            size={theme.fontSize.small}
+            color={theme.color.descColor}
+            numberOfLines={1}
+          >
+            {item?.description}
           </Typography>
           <Typography
             textType="bold"
             size={theme.fontSize.large20}
             color={theme.color.blue}
           >
-            AED 7,200/day
+            {`AED ${item?.rentalPrice ?? 0}/day`}
           </Typography>
 
-          <VechileStatusItoms />
+          <VechileStatusItoms item={item} />
         </View>
 
         {/* Vehicle Specifications */}
@@ -140,11 +117,7 @@ const DetailScreen = (props: any) => {
             Description
           </Typography>
           <Typography color={theme.color.descColor}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. Lorem Ipsum is simply
-            dummy text of the printing and typesetting industry.
+            {item?.description}
           </Typography>
         </View>
 

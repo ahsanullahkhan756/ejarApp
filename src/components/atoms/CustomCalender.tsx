@@ -39,17 +39,15 @@
 //   },
 // });
 
-
-
-
-
 import React, { useState } from "react";
 import { StyleSheet, Platform } from "react-native";
 import { theme } from "../../constants";
 import { Calendar } from "react-native-calendars";
 
 export const CustomCalender = (props: any) => {
-  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>({});
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
+    {}
+  );
 
   const handleDayPress = (day: any) => {
     const date = day.dateString;
@@ -63,6 +61,8 @@ export const CustomCalender = (props: any) => {
         newSelectedDates[date] = {
           selected: true,
           marked: true,
+          // disableTouchEvent: true,
+
           selectedColor: theme.color.primary,
         }; // Select the date
       }
@@ -73,7 +73,24 @@ export const CustomCalender = (props: any) => {
   return (
     <Calendar
       onDayPress={handleDayPress}
-      markedDates={selectedDates} // Pass the selected dates to the calendar
+      markingType="period"
+      markedDates={{
+        "2012-05-21": {
+          startingDay: true,
+          color: "#50cebb",
+          textColor: "white",
+        },
+        "2012-05-22": { color: "#70d7c7", textColor: "white" },
+        "2012-05-23": {
+          color: "#70d7c7",
+          textColor: "white",
+          marked: true,
+          dotColor: "white",
+        },
+        "2012-05-24": { color: "#70d7c7", textColor: "white" },
+        "2012-05-25": { endingDay: true, color: "#50cebb", textColor: "white" },
+      }}
+      // markedDates={selectedDates} // Pass the selected dates to the calendar
       style={{
         borderRadius: 10,
         elevation: 4,
