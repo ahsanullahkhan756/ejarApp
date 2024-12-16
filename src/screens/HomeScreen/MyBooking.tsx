@@ -19,7 +19,10 @@ import { CustomCalender } from "../../components/atoms/CustomCalender";
 import { InputText } from "../../components/atoms/InputText";
 import { InputDateTime } from "../../components/atoms/InputDateTime";
 import { InputDateCard } from "../../components/atoms/InputDateCard";
-const MyBooking = (props: any) => {
+const MyBooking = ({ route }) => {
+  const item = route?.params?.item;
+  const bookedDates = route?.params?.bookedDates;
+
   const data = [
     { label: "01", value: "1" },
     { label: "02", value: "2" },
@@ -83,7 +86,7 @@ const MyBooking = (props: any) => {
               >
                 No. of Days
               </Typography>
-              <DropDown data={data} placeholder="01"  />
+              <DropDown data={data} placeholder="01" />
             </View>
             {/* <PaymentCard /> */}
 
@@ -133,7 +136,6 @@ const MyBooking = (props: any) => {
               />
               <View row spread flex gap-10>
                 <View style={{ marginTop: 20 }}>
-              
                   <InputDateCard
                     title={"Expiration Date"}
                     placeholder={"MM/YY"}
