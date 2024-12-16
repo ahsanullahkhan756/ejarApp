@@ -13,7 +13,7 @@ export const getHomeApi = async () => {
   } catch (error) {
     console.log(error?.message);
   }
-  finally{
+  finally {
     store.dispatch(setIsLoading(false));
 
   }
@@ -24,12 +24,29 @@ export const topRatedCar = async () => {
     const res = await get({
       url: "cars/toprated",
     });
-    console.log('top Rated res',res);
+    console.log('top Rated res', res);
     return res;
   } catch (error) {
     console.log(error?.message);
   }
-  finally{
+  finally {
+    store.dispatch(setIsLoading(false));
+
+  }
+};
+
+
+export const getBookedDatesFunction = async (id) => {
+  try {
+    const res = await get({
+      url: `booking/carbookingdates/id`,
+    });
+    console.log('top Rated res', res);
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  }
+  finally {
     store.dispatch(setIsLoading(false));
 
   }
