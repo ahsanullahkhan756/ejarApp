@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   Image,
@@ -18,12 +18,37 @@ import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import VechileStatusItoms from "../../components/molecules/MyBookingComp/VechileStatusItoms";
 import { CustomCalender } from "../../components/atoms/CustomCalender";
 import Swiper from "react-native-swiper";
+import { getBookedDatesFunction, topRatedCar } from "../../api/homeServices";
 
 const DetailScreen = ({ route }) => {
   const item = route?.params?.item;
 
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDates, setSelectedDates] = useState([]);
 
+  const getBookedDatesList = async () => {
+    // setSelectedDates(["2024-12-05", "2024-12-08", "2024-12-12"]);
+    try {
+      const response = await getBookedDatesFunction(item?.id);
+      if (response != null) {
+        setSelectedDates(response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getBookedDatesList();
+  }, []);
+
+  const formattedDates = selectedDates.reduce((acc, date) => {
+    acc[date] = {
+      selected: true,
+      disableTouchEvent: true,
+      selectedColor: theme.color.blue, // Assuming theme.color.blue is defined
+    };
+    return acc;
+  }, {});
   const vehicleSpecs = [
     { label: "Year", value: item?.model },
     { label: "Body Type", value: item?.bodyType },
@@ -128,7 +153,7 @@ const DetailScreen = ({ route }) => {
             Rent Now
           </Typography>
 
-          <CustomCalender />
+          <CustomCalender dates={formattedDates} />
         </View>
 
         {/* Rent Now Button */}
@@ -136,7 +161,12 @@ const DetailScreen = ({ route }) => {
           label="Rent Now"
           backgroundColor={theme.color.primary}
           borderRadius={30}
-          onPress={() => navigate(SCREENS.MY_BOOKING)}
+          onPress={() =>
+            navigate(SCREENS.MY_BOOKING, {
+              item: item,
+              bookedDates: formattedDates,
+            })
+          }
           style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}
         />
       </ScrollView>
