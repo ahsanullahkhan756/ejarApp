@@ -45,6 +45,8 @@ import { theme } from "../../constants";
 import { Calendar } from "react-native-calendars";
 
 export const CustomCalender = (props: any) => {
+  const isDisabled = props?.isDisabled ? false : true;
+  const dates = props?.dates;
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
     {}
   );
@@ -72,24 +74,26 @@ export const CustomCalender = (props: any) => {
 
   return (
     <Calendar
-      onDayPress={handleDayPress}
-      markingType="period"
-      markedDates={{
-        "2012-05-21": {
-          startingDay: true,
-          color: "#50cebb",
-          textColor: "white",
-        },
-        "2012-05-22": { color: "#70d7c7", textColor: "white" },
-        "2012-05-23": {
-          color: "#70d7c7",
-          textColor: "white",
-          marked: true,
-          dotColor: "white",
-        },
-        "2012-05-24": { color: "#70d7c7", textColor: "white" },
-        "2012-05-25": { endingDay: true, color: "#50cebb", textColor: "white" },
-      }}
+      onDayPress={isDisabled ? undefined : handleDayPress}
+      markedDates={dates ?? selectedDates}
+      
+      // markingType="period"
+      // markedDates={{
+      //   "2012-05-21": {
+      //     startingDay: true,
+      //     color: "#50cebb",
+      //     textColor: "white",
+      //   },
+      //   "2012-05-22": { color: "#70d7c7", textColor: "white" },
+      //   "2012-05-23": {
+      //     color: "#70d7c7",
+      //     textColor: "white",
+      //     marked: true,
+      //     dotColor: "white",
+      //   },
+      //   "2012-05-24": { color: "#70d7c7", textColor: "white" },
+      //   "2012-05-25": { endingDay: true, color: "#50cebb", textColor: "white" },
+      // }}
       // markedDates={selectedDates} // Pass the selected dates to the calendar
       style={{
         borderRadius: 10,
