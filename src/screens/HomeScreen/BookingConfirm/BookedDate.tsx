@@ -9,15 +9,15 @@ const BookedDate = (props: any) => {
   const data = [
     {
       title: "Renting Period",
-      date: "2 Days",
+      date: `${props?.daysInRange} Days`,
     },
     {
       title: "Pick up date",
-      date: "27 Aug",
+      date: props?.startEndDates?.start,
     },
     {
       title: "Return date",
-      date: "30 Aug",
+      date: props?.startEndDates?.end ?? props?.startEndDates?.start,
     },
   ];
 
@@ -31,7 +31,11 @@ const BookedDate = (props: any) => {
         >
           Rent Dates
         </Typography>
-        <TouchableOpacity onPress={()=>{onBack()}}>
+        <TouchableOpacity
+          onPress={() => {
+            onBack();
+          }}
+        >
           <Image
             source={IMAGES.pencil}
             style={{ width: 20, height: 20 }}
@@ -42,8 +46,8 @@ const BookedDate = (props: any) => {
       <View style={{ borderWidth: 0.2, borderRadius: 10 }}>
         {data.map((i) => {
           return (
-            <View row spread padding-10> 
-              <Typography >{i.title}</Typography>
+            <View row spread padding-10>
+              <Typography>{i.title}</Typography>
               <Typography>{i.date}</Typography>
             </View>
           );
