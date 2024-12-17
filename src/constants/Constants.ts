@@ -1,8 +1,8 @@
-import {ReactNode} from 'react';
-import {Dimensions} from 'react-native';
-import {SCREENS} from './ScreenNames';
-import {navigate} from '../navigation/RootNavigation';
-import {IMAGES} from '.';
+import { ReactNode } from "react";
+import { Dimensions } from "react-native";
+import { SCREENS } from "./ScreenNames";
+import { navigate } from "../navigation/RootNavigation";
+import { IMAGES } from ".";
 interface Tab {
   key: number;
   title: string;
@@ -11,19 +11,21 @@ interface Tab {
   imageActive: ReactNode;
   vector: string;
 }
-const {height, width} = Dimensions.get('screen');
+const { height, width } = Dimensions.get("screen");
 
 export const SCREEN_HEIGHT = height;
 export const SCREEN_WIDTH = width;
+export const STRIPE_KEY =
+  "pk_test_51QAfZAL6ZMRqMg2dDhexLvmFPD96cz871kzYCv9gT7ERRgARYdtkOUXlIaO8HRVxAzbKpGh7J6nb9F78asrmmsPE001X8jr0xi";
 
-const fontRegularName = 'Poppins';
+const fontRegularName = "Poppins";
 
 export const theme = {
   font: {
-    regular: fontRegularName + '-Regular',
-    semibold: fontRegularName + '-SemiBold',
-    bold: fontRegularName + '-Bold',
-    medium: fontRegularName + '-Medium',
+    regular: fontRegularName + "-Regular",
+    semibold: fontRegularName + "-SemiBold",
+    bold: fontRegularName + "-Bold",
+    medium: fontRegularName + "-Medium",
   },
   fontSize: {
     tiny: 8,
@@ -41,23 +43,23 @@ export const theme = {
     extraLarge: 28,
   },
   color: {
-    primary: '#FBAE17',
-    disable: '#FFE6BE',
-    disableTextColor: '#E1AE5F',
-    tgray: '#999B9F',
-    facebook: '#3A589B',
-    apple: '#2E2E2E',
-    divider: '#E6E8EE',
-    black: '#000',
-    white: '#fff',
-    messageColor: '#CCFFF0',
-    callColor: '#9DE4F6',
-    halfWhite: '#F9F9FC',
-    descColor:'#8C8C8C',
-    danger:'#FB344F',
-    blue:'#112C69',
-    orange :'#FBAE17',
-    red:"red"
+    primary: "#FBAE17",
+    disable: "#FFE6BE",
+    disableTextColor: "#E1AE5F",
+    tgray: "#999B9F",
+    facebook: "#3A589B",
+    apple: "#2E2E2E",
+    divider: "#E6E8EE",
+    black: "#000",
+    white: "#fff",
+    messageColor: "#CCFFF0",
+    callColor: "#9DE4F6",
+    halfWhite: "#F9F9FC",
+    descColor: "#8C8C8C",
+    danger: "#FB344F",
+    blue: "#112C69",
+    orange: "#FBAE17",
+    red: "red",
   },
 };
 
@@ -65,7 +67,7 @@ export const CheckIfValid = (
   index: number,
   isValid: boolean,
   state: boolean[],
-  setState: React.Dispatch<React.SetStateAction<boolean[]>>,
+  setState: React.Dispatch<React.SetStateAction<boolean[]>>
 ) => {
   const copy = [...state];
   copy[index] = isValid;
@@ -74,15 +76,15 @@ export const CheckIfValid = (
 
 export const VARIABLES = {
   //Common
-  GRANTED: 'granted',
-  CUSTOM: 'Custom',
-  UPCOMING: 'Upcoming',
-  CANCEL: 'Cancel',
-  COMPLETED: 'Completed',
+  GRANTED: "granted",
+  CUSTOM: "Custom",
+  UPCOMING: "Upcoming",
+  CANCEL: "Cancel",
+  COMPLETED: "Completed",
 
-  USER_TOKEN: 'token',
-  LANGUAGE: 'user selected language',
-  IS_USER_LOGGED_IN: 'Is user logged in?',
+  USER_TOKEN: "token",
+  LANGUAGE: "user selected language",
+  IS_USER_LOGGED_IN: "Is user logged in?",
   IS_USER_VISITED_THE_APP:
     "Is user visited the app so don't show onboarding screen.",
 
@@ -105,17 +107,17 @@ export const VARIABLES = {
   // Add more numbers as needed
 
   // Strings
-  EMPTY_STRING: '',
-  SPACE: ' ',
-  COMMA: ',',
-  QUESTION_MARK: '?',
-  DOT: '.',
-  UNDERSCORE: '_',
-  DASH: '-',
+  EMPTY_STRING: "",
+  SPACE: " ",
+  COMMA: ",",
+  QUESTION_MARK: "?",
+  DOT: ".",
+  UNDERSCORE: "_",
+  DASH: "-",
   // Add more strings as needed
 
-  DONE: 'done',
-  NEXT: 'next',
+  DONE: "done",
+  NEXT: "next",
   // Commonly used values
   NULL: null,
   UNDEFINED: undefined,
@@ -130,10 +132,10 @@ export const VARIABLES = {
   STATUS_SERVER_ERROR: 500,
 
   // Common HTTP methods
-  HTTP_GET: 'GET',
-  HTTP_POST: 'POST',
-  HTTP_PUT: 'PUT',
-  HTTP_DELETE: 'DELETE',
+  HTTP_GET: "GET",
+  HTTP_POST: "POST",
+  HTTP_PUT: "PUT",
+  HTTP_DELETE: "DELETE",
 
   // Time units
   MILLISECONDS_IN_SECOND: 1000,
