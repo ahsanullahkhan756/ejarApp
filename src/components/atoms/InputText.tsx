@@ -14,8 +14,9 @@ export const InputText = (props: any) => {
     validate = "email",
     leftIcon = false,
     rightText = false,
-    rightTitle = 'AED',
+    rightTitle = "AED",
     leftImage,
+    value,
     rightImage = false,
     showCharCounter = false,
     keyboardType = "default",
@@ -25,9 +26,9 @@ export const InputText = (props: any) => {
     label = true,
     multiline = false,
     onPressRight = () => {},
-    containerStyle
+    containerStyle,
   } = props;
-  
+
   return (
     <TextField
       small
@@ -36,11 +37,12 @@ export const InputText = (props: any) => {
       labelStyle={{
         fontSize: moderateScale(14),
       }}
+      value={value}
       labelColor={theme.color.black}
       placeholder={placeholder}
       placeholderTextColor={placeholderTextColor}
       onChangeText={onChangeText}
-      secureTextInput={true} 
+      secureTextInput={true}
       enableErrors
       validate={[(value: any) => value?.length > 6, ...validate]}
       validationMessage={["", ...validationMessage]}
@@ -51,7 +53,7 @@ export const InputText = (props: any) => {
       secureTextEntry={secureTextEntry}
       multiline={multiline}
       keyboardType={keyboardType}
-     containerStyle={containerStyle}
+      containerStyle={containerStyle}
       fieldStyle={{
         height: verticalScale(45),
         marginVertical: 5,
@@ -60,7 +62,7 @@ export const InputText = (props: any) => {
         borderWidth: 0.4,
         borderRadius: 10,
         borderColor: theme.color.tgray,
-        
+
         // width : width,
         ...style,
       }}
@@ -79,23 +81,23 @@ export const InputText = (props: any) => {
             ),
           }
         : null)}
-        {...(rightImage
-          ? {
-              trailingAccessory: (
-                <TouchableOpacity onPress={onPressRight}>
-                  <Image
-                    source={secureTextEntry ? IMAGES.eyeOn : IMAGES.eyeOff}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      resizeMode: "contain",
-                      tintColor: theme.color.black,
-                    }}
-                  />
-                </TouchableOpacity>
-              ),
-            }
-          : null)}
+      {...(rightImage
+        ? {
+            trailingAccessory: (
+              <TouchableOpacity onPress={onPressRight}>
+                <Image
+                  source={secureTextEntry ? IMAGES.eyeOn : IMAGES.eyeOff}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    resizeMode: "contain",
+                    tintColor: theme.color.black,
+                  }}
+                />
+              </TouchableOpacity>
+            ),
+          }
+        : null)}
     />
   );
 };
