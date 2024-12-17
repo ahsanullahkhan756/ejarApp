@@ -10,15 +10,15 @@ const PricingDetail = (props: any) => {
   const data = [
     {
       title: "Total Rent For 4 Days",
-      date: "AED30,280",
+      date: `AED ${props?.totalPrice}`,
     },
     {
       title: "Security Deposit",
-      date: "AED5000",
+      date: "AED 5000",
     },
     {
       title: "VAT 15%",
-      date: "AED3500",
+      date: "AED 3500",
     },
     {
       title: "Delivery",
@@ -36,7 +36,11 @@ const PricingDetail = (props: any) => {
         >
           Pricing Details
         </Typography>
-        <TouchableOpacity onPress={()=>{onBack()}}>
+        <TouchableOpacity
+          onPress={() => {
+            onBack();
+          }}
+        >
           <Image
             source={IMAGES.pencil}
             style={{ width: 20, height: 20 }}
@@ -48,7 +52,7 @@ const PricingDetail = (props: any) => {
         {data.map((i) => {
           return (
             <View row spread padding-10>
-              <Typography >{i.title}</Typography>
+              <Typography>{i.title}</Typography>
               <Typography>{i.date}</Typography>
             </View>
           );
@@ -63,7 +67,7 @@ const PricingDetail = (props: any) => {
         />
         <View row spread padding-10>
           <Typography textType="semiBold">Total</Typography>
-          <Typography>AED28,780</Typography>
+          <Typography>AED {props?.totalPrice}</Typography>
         </View>
       </View>
     </View>
