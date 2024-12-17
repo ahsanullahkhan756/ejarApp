@@ -13,16 +13,14 @@ import { showToast } from "../../../utils/toast";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState("john1234@ymail.com");
-  const [password, setPassword] = useState('Qwerty@123');
+  const [email, setEmail] = useState("shahid@mailinator.com");
+  const [password, setPassword] = useState("Passward123!");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   const isFormValid = () => {
     const emailValid = /\S+@\S+\.\S+/.test(email);
     const passwordValid =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-        password
-      );
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password);
 
     return emailValid && passwordValid;
   };
@@ -47,6 +45,7 @@ const LoginFields = () => {
           }}
           placeholder="loremipsum@domain.com"
           validate={["email"]}
+          keyboardType="email-address"
           validationMessage={["Email is invalid"]}
           onChangeText={(text: string) => setEmail(text)}
         />
@@ -90,24 +89,22 @@ const LoginFields = () => {
               password: password,
             };
             const res = await loginApi({ data });
+            console.log(res);
+
             if (res != null) {
-              console.log('res',res);
+              console.log("res", res);
               setItem(VARIABLES.USER_TOKEN, res?.token);
               dispatch(setLoggedIn(true));
               dispatch(setIsLoading(true));
               // dispatch(setUserType("user"));
             }
-        }
-
-      }
-      
-      }
+          }
+        }}
         disabled={!isFormValid()}
         style={{
-          backgroundColor: isFormValid()
-            ? theme.color.primary
-            : "#999B9F",
-            height: 50, margin: 20
+          backgroundColor: isFormValid() ? theme.color.primary : "#999B9F",
+          height: 50,
+          margin: 20,
         }}
       />
     </View>
