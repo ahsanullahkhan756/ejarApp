@@ -6,17 +6,16 @@ import { Typography } from "../../../components/atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 
 const CheckCondition = (props: any) => {
-  const [check, setCheck] = useState(false);
-  const [status, setStatus] = useState(false);
+
 
   return (
     <View gap-20>
       <View row style={{ alignItems: "center" }}>
         <TouchableOpacity
-          onPress={() => setCheck(!check)}
+          onPress={() => props?.setCheck(!props?.check)}
           style={commonStyles.boxStyle}
         >
-          {check && (
+          {props?.check && (
             <Image
               source={IMAGES.tick}
               style={{ width: 10, height: 10 }}
@@ -36,10 +35,10 @@ const CheckCondition = (props: any) => {
 
       <View row style={{ alignItems: "center" }}>
         <TouchableOpacity
-          onPress={() => setStatus(!status)}
+          onPress={() => props?.setStatus(!props?.status)}
           style={commonStyles.boxStyle}
         >
-          {status && (
+          {props?.status && (
             <Image
               source={IMAGES.tick}
               style={{ width: 10, height: 10 }}
