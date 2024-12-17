@@ -30,6 +30,19 @@ export const topRatedCar = async () => {
     store.dispatch(setIsLoading(false));
   }
 };
+export const getAllConditions = async (id) => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await get({
+      url: `condition/${id}`,
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
 
 export const getBookedDatesFunction = async (id) => {
   try {
