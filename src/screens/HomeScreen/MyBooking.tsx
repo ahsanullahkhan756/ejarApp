@@ -10,7 +10,7 @@ import {
 import { Carousel, Button, View } from "react-native-ui-lib";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Header } from "../../components/atoms/Header";
-import { IMAGES, SCREENS, theme } from "../../constants";
+import { IMAGES, SCREENS, STRIPE_KEY, theme } from "../../constants";
 import { Typography } from "../../components/atoms/Typography";
 import { DropDown } from "../../components/atoms/DropDown";
 import PaymentCard from "../../components/molecules/PaymentCard";
@@ -29,7 +29,7 @@ const MyBooking = ({ route }) => {
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
     {}
   );
-  const [setStartEndDates, setSetStartEndDates] = useState({
+  const [startEndDates, setStartEndDates] = useState({
     start: "",
     end: "",
   });
@@ -142,7 +142,14 @@ const MyBooking = ({ route }) => {
       });
 
       if (response?.id) {
-        navigate(SCREENS.BOOKING_CONFIRM);
+        navigate(SCREENS.BOOKING_CONFIRM, {
+          startEndDates: startEndDates,
+          item: item,
+          selectedDates: selectedDates,
+          daysInRange: daysInRange,
+          card: response,
+        });
+        dispatch(setIsLoading(false));
       }
       return null;
     } catch (error) {
@@ -170,7 +177,7 @@ const MyBooking = ({ route }) => {
             <CustomCalender
               isDisabled={true}
               setSelectedDates={setSelectedDates}
-              setSetStartEndDates={setSetStartEndDates}
+              setStartEndDates={setStartEndDates}
               selectedDates={{ ...selectedDates, ...bookedDates }}
               bookedDates={bookedDates}
             />
