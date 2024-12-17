@@ -15,8 +15,8 @@ const RentCars = () => {
   const topRatedCarApi = async () => {
     try {
       const resp = await topRatedCar();
-      if (resp != null) {
-        setList(resp);
+      if (resp?.Data != null) {
+        setList(resp?.Data);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -32,7 +32,7 @@ const RentCars = () => {
       <Header titleText="Car For Rent" centerImg={false} />
       <View flex>
         <FlatList
-          data={data.carsForRent} //TODO:REMOVE ?? data.carsForRent and list lagana h
+          data={list}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <TouchableOpacity
