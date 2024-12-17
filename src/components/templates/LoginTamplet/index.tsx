@@ -22,7 +22,7 @@ const LoginTamplet = () => {
       image: IMAGES.google,
       onPress: () => UserGoogleLoginFunction(dispatch),
     },
-    { id: 2, image: IMAGES.facebook, onPress: () => {} },
+    // { id: 2, image: IMAGES.facebook, onPress: () => {} },
     {
       id: 3,
       image: IMAGES.apple,
