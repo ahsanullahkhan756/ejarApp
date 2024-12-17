@@ -1,8 +1,8 @@
-import axios, {AxiosError, AxiosRequestConfig} from 'axios';
-import { setIsUserLoggedIn } from '../redux/slice/appSettings';
-import { store } from '../redux/store';
-import { VARIABLES } from '../constants';
-import { getItem, removeMultipleItem } from '../utils/storage';
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { setIsUserLoggedIn } from "../redux/slice/appSettings";
+import { store } from "../redux/store";
+import { VARIABLES } from "../constants";
+import { getItem, removeMultipleItem } from "../utils/storage";
 
 interface RequestOptions {
   url: string;
@@ -14,19 +14,21 @@ interface RequestOptions {
 interface ErrorResponse {
   error?: {
     messages: string[];
-  }; 
+  };
   errors?: string | string[];
   message?: string;
 }
 
 const axiosInstance = axios.create({
-  baseURL: 'https://backend.carejar.net/v1/',
-  timeout: 10000,
+  // baseURL: 'https://backend.carejar.net/v1/',
+  baseURL: "http://10.55.62.250:4000/v1/",
+  timeout: 15000,
   headers: {
-    Accept: 'application/json',
+    // "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    Accept: "application/json",
   },
 });
-
 
 const setAuthToken = async () => {
   try {
@@ -37,7 +39,7 @@ const setAuthToken = async () => {
       delete axiosInstance.defaults.headers.common.Authorization;
     }
   } catch (error) {
-    console.error('Error setting auth token:', error);
+    console.error("Error setting auth token:", error);
   }
 };
 
@@ -47,7 +49,7 @@ class HttpError extends Error {
   constructor(
     message: string | undefined,
     status: number,
-    errors?: string[] | string,
+    errors?: string[] | string
   ) {
     super(message);
     this.status = status;
@@ -68,7 +70,7 @@ class SocketError extends Error {
 }
 
 const checkUnAuth = async (error?: string) => {
-  if (error === 'Unauthenticated') {
+  if (error === "Unauthenticated") {
     store.dispatch(setIsUserLoggedIn(false));
     await removeMultipleItem([
       VARIABLES.IS_USER_LOGGED_IN,
@@ -81,12 +83,12 @@ const handleRequestError = (error: AxiosError<ErrorResponse>) => {
   if (axios.isAxiosError(error)) {
     if (!error.response) {
       // Check for network error or socket timeout
-      if (error.code === 'ECONNABORTED') {
+      if (error.code === "ECONNABORTED") {
         throw new SocketError(
-          'Socket timeout: The request took too long to complete.',
+          "Socket timeout: The request took too long to complete."
         );
       }
-      throw new NetworkError('No Internet Connection'); 
+      throw new NetworkError("No Internet Connection");
     }
     const status: number = error.response.status;
     if (status) {
@@ -107,12 +109,13 @@ const handleRequestError = (error: AxiosError<ErrorResponse>) => {
 
 const makeHttpRequest = async (
   config: AxiosRequestConfig,
-  includeToken = true,
+  includeToken = true
 ) => {
   try {
     if (includeToken) {
       await setAuthToken();
     }
+
     const response = await axiosInstance(config);
     if (response?.data?.response) {
       return response?.data?.response;
@@ -124,8 +127,12 @@ const makeHttpRequest = async (
   }
 };
 
-const get = async ({url, config = {}, includeToken = true}: RequestOptions) => {
-  return makeHttpRequest({method: 'GET', url, ...config}, includeToken);
+const get = async ({
+  url,
+  config = {},
+  includeToken = true,
+}: RequestOptions) => {
+  return makeHttpRequest({ method: "GET", url, ...config }, includeToken);
 };
 
 const post = async ({
@@ -134,7 +141,10 @@ const post = async ({
   config = {},
   includeToken = true,
 }: RequestOptions) => {
-  return makeHttpRequest({method: 'POST', url, data, ...config}, includeToken);
+  return makeHttpRequest(
+    { method: "POST", url, data, ...config },
+    includeToken
+  );
 };
 
 const put = async ({
@@ -143,7 +153,7 @@ const put = async ({
   config = {},
   includeToken = true,
 }: RequestOptions) => {
-  return makeHttpRequest({method: 'PUT', url, data, ...config}, includeToken);
+  return makeHttpRequest({ method: "PUT", url, data, ...config }, includeToken);
 };
 
 const patch = async ({
@@ -152,7 +162,10 @@ const patch = async ({
   config = {},
   includeToken = true,
 }: RequestOptions) => {
-  return makeHttpRequest({method: 'PATCH', url, data, ...config}, includeToken);
+  return makeHttpRequest(
+    { method: "PATCH", url, data, ...config },
+    includeToken
+  );
 };
 
 // const remove = async (url, config={}, includeToken = true) => {
@@ -166,12 +179,12 @@ const remove = async ({
   includeToken = true,
 }: RequestOptions) => {
   const headers = {
-    'Content-Type': 'application/json', // Set the appropriate content type
+    "Content-Type": "application/json", // Set the appropriate content type
     ...(config.headers || {}),
   };
 
   const requestOptions = {
-    method: 'DELETE',
+    method: "DELETE",
     url,
     headers,
     data: JSON.stringify(data), // Convert data to JSON string
@@ -196,15 +209,15 @@ const postWithSingleFile = async ({
 
   return makeHttpRequest(
     {
-      method: 'POST',
+      method: "POST",
       url,
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
       ...config,
     },
-    includeToken,
+    includeToken
   );
 };
 
@@ -219,19 +232,19 @@ const patchWithSingleFile = async ({
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    formData.append('_method', 'PATCH');
+    formData.append("_method", "PATCH");
   }
   return makeHttpRequest(
     {
-      method: 'POST',
+      method: "POST",
       url,
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
       ...config,
     },
-    includeToken,
+    includeToken
   );
 };
 
