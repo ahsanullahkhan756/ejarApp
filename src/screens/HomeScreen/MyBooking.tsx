@@ -19,44 +19,135 @@ import { CustomCalender } from "../../components/atoms/CustomCalender";
 import { InputText } from "../../components/atoms/InputText";
 import { InputDateTime } from "../../components/atoms/InputDateTime";
 import { InputDateCard } from "../../components/atoms/InputDateCard";
+import { setIsLoading } from "../../redux/slice/user";
+import { useDispatch } from "react-redux";
+import { post } from "../../services/axios";
+import { showToast } from "../../utils/toast";
 const MyBooking = ({ route }) => {
   const item = route?.params?.item;
   const bookedDates = route?.params?.bookedDates;
+  const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
+    {}
+  );
+  const [setStartEndDates, setSetStartEndDates] = useState({
+    start: "",
+    end: "",
+  });
+  const calculateSelectedDays = (selectedDates: any) => {
+    // Extract the start and end date from the selectedDates object
+    let startDate: string | null = null;
+    let endDate: string | null = null;
 
-  const data = [
-    { label: "01", value: "1" },
-    { label: "02", value: "2" },
-    { label: "03", value: "3" },
-    { label: "04", value: "4" },
-  ];
+    Object.keys(selectedDates).forEach((date) => {
+      if (selectedDates[date]?.startingDay) {
+        startDate = date;
+      }
+      if (selectedDates[date]?.endingDay) {
+        endDate = date;
+      }
+    });
 
+    if (startDate && !endDate) {
+      return 1;
+    }
+
+    // If either start or end date is missing, return 0
+    if (!startDate || !endDate) {
+      return 0;
+    }
+
+    // Calculate the difference in days
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // If start date is after the end date, return 0 (invalid range)
+    if (start > end) {
+      return 0;
+    }
+
+    // Calculate the number of days
+    const timeDiff = end.getTime() - start.getTime();
+    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Add 1 to include both start and end date
+
+    return dayDiff;
+  };
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [card, setCard] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [cvv, setCvv] = useState("");
 
-  const handleExpiryDateChange = (selectedDate) => {
-    console.log("Selected Date:", selectedDate);
-    let dateObj;
+  // const handleExpiryDateChange = (selectedDate) => {
+  //   console.log("Selected Date:", selectedDate);
+  //   let dateObj;
 
-    if (typeof selectedDate === "string") {
-      const parts = selectedDate.split("-");
-      if (parts.length === 3) {
-        const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10) - 1;
-        const year = parseInt(parts[2], 10);
-        dateObj = new Date(year, month, day); // Create Date object
+  //   if (typeof selectedDate === "string") {
+  //     const parts = selectedDate.split("-");
+  //     if (parts.length === 3) {
+  //       const day = parseInt(parts[0], 10);
+  //       const month = parseInt(parts[1], 10) - 1;
+  //       const year = parseInt(parts[2], 10);
+  //       dateObj = new Date(year, month, day); // Create Date object
+  //     }
+  //   } else if (selectedDate instanceof Date && !isNaN(selectedDate)) {
+  //     dateObj = selectedDate; // Use as is if it's already a Date object
+  //   }
+
+  //   if (dateObj) {
+  //     const month = dateObj.getMonth() + 1; // Month is 0-indexed
+  //     const year = dateObj.getFullYear().toString().slice(-2); // Get last two digits
+  //     setExpiryDate(`${month < 10 ? `0${month}` : month}/${year}`);
+  //   } else {
+  //     console.warn("Invalid date selected:", selectedDate);
+  //   }
+  // };
+
+  const daysInRange = calculateSelectedDays(selectedDates);
+
+  const formatCardNumber = (value: string) => {
+    return value
+      .replace(/\s/g, "")
+      .replace(/(.{4})/g, "$1 ")
+      .trim();
+  };
+
+  const CreateStripeTokenFunction = async () => {
+    const date = expiryDate.split("/");
+    const cardNumber = card.replace(/ /g, "");
+    try {
+      dispatch(setIsLoading(true));
+
+      const stripeRequestBody = {
+        // 'card[name]': "data.card_holder",
+        "card[number]": cardNumber,
+        "card[exp_month]": date[0],
+        "card[exp_year]": `20${date[1]}`,
+        "card[cvc]": cvv,
+      };
+
+      const headers = {
+        Authorization: `Bearer ${STRIPE_KEY}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+
+      const config = {
+        headers,
+      };
+
+      const response = await post({
+        url: "https://api.stripe.com/v1/tokens",
+        data: stripeRequestBody,
+        config,
+        includeToken: false,
+      });
+
+      if (response?.id) {
+        navigate(SCREENS.BOOKING_CONFIRM);
       }
-    } else if (selectedDate instanceof Date && !isNaN(selectedDate)) {
-      dateObj = selectedDate; // Use as is if it's already a Date object
-    }
-
-    if (dateObj) {
-      const month = dateObj.getMonth() + 1; // Month is 0-indexed
-      const year = dateObj.getFullYear().toString().slice(-2); // Get last two digits
-      setExpiryDate(`${month < 10 ? `0${month}` : month}/${year}`);
-    } else {
-      console.warn("Invalid date selected:", selectedDate);
+      return null;
+    } catch (error) {
+      showToast({ title: error?.message });
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -76,7 +167,13 @@ const MyBooking = ({ route }) => {
             >
               Select Date
             </Typography>
-            <CustomCalender />
+            <CustomCalender
+              isDisabled={true}
+              setSelectedDates={setSelectedDates}
+              setSetStartEndDates={setSetStartEndDates}
+              selectedDates={{ ...selectedDates, ...bookedDates }}
+              bookedDates={bookedDates}
+            />
 
             <View row spread marginV-20>
               <Typography
@@ -86,7 +183,7 @@ const MyBooking = ({ route }) => {
               >
                 No. of Days
               </Typography>
-              <DropDown data={data} placeholder="01" />
+              <DropDown data={[]} placeholder={daysInRange} />
             </View>
             {/* <PaymentCard /> */}
 
@@ -120,7 +217,8 @@ const MyBooking = ({ route }) => {
               <InputText
                 width={360}
                 label={"Card Number"}
-                value={card}
+                value={formatCardNumber(card)}
+                maxLength={19}
                 // onValidationFailed={(isValid: boolean) => {
                 //   setValidated((prev) => {
                 //     let copy = [...prev];
@@ -169,7 +267,19 @@ const MyBooking = ({ route }) => {
               label="Next"
               backgroundColor={theme.color.primary}
               borderRadius={30}
-              onPress={() => navigate(SCREENS.BOOKING_CONFIRM)}
+              onPress={() => {
+                if (
+                  card.length > 18 &&
+                  name.length > 2 &&
+                  expiryDate &&
+                  cvv?.length > 2 &&
+                  daysInRange != 0
+                ) {
+                  CreateStripeTokenFunction();
+                } else {
+                  showToast({ title: "Please fill all the feilds to proceed" });
+                }
+              }}
               style={{
                 height: 50,
                 margin: 20,
