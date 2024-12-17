@@ -47,7 +47,7 @@ import { Calendar } from "react-native-calendars";
 export const CustomCalender = (props: any) => {
   const isDisabled = props?.isDisabled ? false : true;
   const dates = props?.dates;
-  const setSetStartEndDates = props?.setSetStartEndDates;
+  const setStartEndDates = props?.setStartEndDates;
   const selectedDates = props?.selectedDates;
   const setSelectedDates = props?.setSelectedDates;
   const bookedDates = props?.bookedDates;
@@ -118,7 +118,7 @@ export const CustomCalender = (props: any) => {
         selected: true,
       };
 
-      setSetStartEndDates({
+      setStartEndDates({
         start: startDate,
         end: date,
       });
