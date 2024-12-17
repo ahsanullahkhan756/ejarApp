@@ -26,11 +26,11 @@ const DetailScreen = ({ route }) => {
   const [selectedDates, setSelectedDates] = useState([]);
 
   const getBookedDatesList = async () => {
-    // setSelectedDates(["2024-12-05", "2024-12-08", "2024-12-12"]);
     try {
-      const response = await getBookedDatesFunction(item?.id);
+      const response = await getBookedDatesFunction(item?.ID);
       if (response != null) {
-        setSelectedDates(response);
+        // setSelectedDates(response);
+        setSelectedDates(["2024-12-05", "2024-12-08", "2024-12-12"]);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -62,34 +62,56 @@ const DetailScreen = ({ route }) => {
         {/* Image Carousel */}
 
         {item?.Media?.carPicture != null &&
-          item?.Media?.carPicture?.length != 0 && (
-            <Swiper
-              style={{ height: 300 }}
-              dotStyle={[
-                styles.dotStyle,
-                { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
-              ]}
-              activeDotStyle={styles.dotStyle}
-            >
-              {item?.Media?.carPicture?.map((item) => (
-                <ImageBackground
-                  source={IMAGES.truck}
-                  style={{ width: "100%", height: 250 }}
+        item?.Media?.carPicture?.length != 0 ? (
+          <Swiper
+            style={{ height: 300 }}
+            dotStyle={[
+              styles.dotStyle,
+              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+            ]}
+            activeDotStyle={styles.dotStyle}
+          >
+            {item?.Media?.carPicture?.map((item) => (
+              <ImageBackground
+                source={{
+                  uri: item?.base64,
+                }}
+                style={{ width: "100%", height: 250 }}
+              >
+                <TouchableOpacity
+                  onPress={() => onBack()}
+                  style={{ position: "absolute", left: 20, top: 50 }}
                 >
-                  <TouchableOpacity
-                    onPress={() => onBack()}
-                    style={{ position: "absolute", left: 20, top: 50 }}
-                  >
-                    <Image
-                      source={{ uri: item?.base64 }}
-                      style={{ width: 30, height: 30 }}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                </ImageBackground>
-              ))}
-            </Swiper>
-          )}
+                  <Image
+                    source={IMAGES.leftIcon}
+                    style={{ width: 30, height: 30 }}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </ImageBackground>
+            ))}
+          </Swiper>
+        ) : (
+          <Swiper
+            style={{ height: 300 }}
+            dotStyle={[
+              styles.dotStyle,
+              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+            ]}
+            activeDotStyle={styles.dotStyle}
+          >
+            <TouchableOpacity
+              onPress={() => onBack()}
+              style={{ position: "absolute", left: 20, top: 50 }}
+            >
+              <Image
+                source={IMAGES.leftIcon}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </Swiper>
+        )}
 
         {/* Vehicle Details */}
         <View style={{ padding: 20 }}>
