@@ -10,25 +10,28 @@ export const DropDown = (props: any) => {
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  
+
   return (
     <Dropdown
-      style={[styles.dropdown,{height: height,width: width}]}
+      style={[styles.dropdown, { height: height, width: width }]}
       // placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
       data={data}
-      search
+      search={data?.length == 0 ? false : true}
       maxHeight={300}
       labelField="label"
       valueField="value"
       // placeholder={!isFocus ? "Select item" : "..."}
       placeholder={placeholder}
-      placeholderStyle={{color:theme.color.tgray,fontSize:16}}
+      placeholderStyle={{ color: theme.color.tgray, fontSize: 16 }}
       searchPlaceholder="Search..."
       value={value}
-      onFocus={() => setIsFocus(true)}
+      onFocus={() => {
+        if (data?.length == 0) return;
+        setIsFocus(true);
+      }}
       onBlur={() => setIsFocus(false)}
       onChange={(item) => {
         setValue(item?.value);
