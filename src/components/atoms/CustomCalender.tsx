@@ -48,6 +48,7 @@ export const CustomCalender = (props: any) => {
   const isDisabled = props?.isDisabled ? false : true;
   const dates = props?.dates;
   const setStartEndDates = props?.setStartEndDates;
+  const startEndDates = props?.startEndDates;
   const selectedDates = props?.selectedDates;
   const setSelectedDates = props?.setSelectedDates;
   const bookedDates = props?.bookedDates;
@@ -65,12 +66,20 @@ export const CustomCalender = (props: any) => {
           marked: true,
         },
       });
+      setStartEndDates({
+        start: date,
+        end: null,
+      });
       setEndDate(null);
     }
 
     if (!startDate) {
       // First date clicked (start date)
       setStartDate(date);
+      setStartEndDates({
+        start: date,
+        end: null,
+      });
       setSelectedDates({
         [date]: {
           startingDay: true,
@@ -81,7 +90,6 @@ export const CustomCalender = (props: any) => {
       });
     } else if (!endDate && date > startDate) {
       // Second date clicked (end date)
-      setEndDate(date);
       // Mark the range of dates between start and end as selected
       let markedDates: any = {};
       const start = new Date(startDate);
@@ -117,17 +125,20 @@ export const CustomCalender = (props: any) => {
         marked: true,
         selected: true,
       };
-
+      setEndDate(date);
       setStartEndDates({
-        start: startDate,
+        ...startEndDates,
         end: date,
       });
       setSelectedDates(markedDates);
     } else if (endDate && date < startDate) {
       // If endDate is selected and a new start date is clicked, reset
       setStartDate(date);
+      setStartEndDates({
+        start: date,
+        end: null,
+      });
       setEndDate(null);
-
       setSelectedDates({
         [date]: {
           startingDay: true,
