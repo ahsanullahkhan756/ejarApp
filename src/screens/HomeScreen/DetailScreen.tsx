@@ -121,9 +121,9 @@ const DetailScreen = ({ route }) => {
           <Typography
             size={theme.fontSize.small}
             color={theme.color.descColor}
-            numberOfLines={1}
+            numberOfLines={2}
           >
-            {item?.description}
+            {item?.shortDescription}
           </Typography>
           <Typography
             textType="bold"
