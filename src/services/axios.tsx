@@ -123,7 +123,14 @@ const makeHttpRequest = async (
       return response?.data;
     }
   } catch (error) {
-    handleRequestError(error as AxiosError<ErrorResponse>);
+    if (error?.response?.data?.error?.type === "card_error") {
+      throw new HttpError(
+        error?.response?.data?.error?.message,
+        error?.response?.data?.error?.code
+      );
+    } else {
+      handleRequestError(error as AxiosError<ErrorResponse>);
+    }
   }
 };
 
