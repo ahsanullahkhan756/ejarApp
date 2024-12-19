@@ -18,10 +18,9 @@ interface ErrorResponse {
   errors?: string | string[];
   message?: string;
 }
-
 const axiosInstance = axios.create({
   // baseURL: 'https://backend.carejar.net/v1/',
-  baseURL: "http://10.55.62.250:4000/v1/",
+  baseURL: "http://10.55.62.101:4000/v1/",
   timeout: 15000,
   headers: {
     // "Access-Control-Allow-Origin": "*",

@@ -95,30 +95,25 @@ export const updateProfile = async ({ data }) => {
 };
 
 export const forgotApi = async ({ data }) => {
-  console.log("data", data);
   try {
-    const res = await post({
-      url: "request-code",
-      data: data,
-      includeToken: false,
+    const res = await get({
+      url: `auth/forgot-password?email=${data?.email}`,
     });
     return res;
   } catch (error) {
-    console.log("error", error);
-    showToast({ title: error?.messages[0] });
+    showToast({ title: error?.message });
   }
 };
 export const otpApi = async ({ data }) => {
   console.log("data", data);
   try {
     const res = await post({
-      url: "verify-code",
+      url: "auth/verify-otp",
       data: data,
-      includeToken: false,
     });
     return res;
   } catch (error) {
-    console.log("error", error);
+    console.log('err',error);
     showToast({ title: error?.message });
   }
 };
@@ -126,9 +121,8 @@ export const resetPassword = async ({ data }) => {
   console.log("data", data);
   try {
     const res = await post({
-      url: "reset-password",
+      url: "auth/reset-password",
       data: data,
-      includeToken: false,
     });
     return res;
   } catch (error) {

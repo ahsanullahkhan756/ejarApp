@@ -15,14 +15,17 @@ import OTPTextView from "react-native-otp-textinput";
 import { SCREENS } from "../../constants/ScreenNames.tsx";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { navigate } from "../../navigation/RootNavigation.tsx";
+import { otpApi } from "../../api/auth.js";
+import { showToast } from "../../utils/toast.tsx";
 
-const OTPScreen = () => {
+const OTPScreen = (props:any) => {
+  const email = props?.route?.params?.email
+  
   const [timeLeft, setTimeLeft] = useState(45); // Initial countdown time
   const [isCounting, setIsCounting] = useState(true); // Start countdown when the screen loads
   const [otp, setOtp] = useState(""); // State to manage OTP value
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // State to manage button disable/enable
 
-  // Start countdown when the resend button is clicked or timer starts
   useEffect(() => {
     let timer;
     if (isCounting && timeLeft > 0) {
@@ -37,7 +40,7 @@ const OTPScreen = () => {
 
   // Check if the OTP is complete (5 digits) to enable the button
   useEffect(() => {
-    setIsButtonDisabled(otp.length !== 5); // Enable button when OTP length is 5
+    setIsButtonDisabled(otp.length !== 4); // Enable button when OTP length is 5
   }, [otp]);
 
   const handleResend = () => {
@@ -67,7 +70,7 @@ const OTPScreen = () => {
                 Enter 6 digits OTP
               </Typography>
               <OTPTextView
-                inputCount={5}
+                inputCount={4}
                 tintColor={theme.color.black}
                 autoFocus={true}
                 textInputStyle={{
@@ -83,9 +86,22 @@ const OTPScreen = () => {
                 label="Verify"
                 backgroundColor={theme.color.primary}
                 borderRadius={30}
-                onPress={() => navigate(SCREENS.RESET_PASS)}
+                onPress={async () => {
+                  const data = {
+                    email: email,
+                    otp:otp
+                  };
+                  const res = await otpApi({ data });
+                  if (res != null) {
+                    navigate(SCREENS.RESET_PASS,{
+                      otp:otp
+                    })
+                    showToast({ title: res});
+                  }
+                }
+              }
                 style={{ height: 50, marginVertical: 20 }}
-                disabled={isButtonDisabled} // Disable/Enable button based on OTP length
+                disabled={isButtonDisabled} 
               />
             </View>
 

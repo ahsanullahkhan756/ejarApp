@@ -7,7 +7,7 @@ export const getHomeApi = async () => {
   store.dispatch(setIsLoading(false));
   try {
     const res = await get({
-      url: "cars",
+      url: "cars/getcarsData",
     });
     return res;
   } catch (error) {

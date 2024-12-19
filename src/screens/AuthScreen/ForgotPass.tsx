@@ -9,12 +9,12 @@ import { theme } from "../../constants/Constants.ts";
 import { InputText } from "../../components/atoms/InputText.tsx";
 import { navigate, onBack } from "../../navigation/RootNavigation.tsx";
 import { SCREENS } from "../../constants/ScreenNames.tsx";
+import { forgotApi } from "../../api/auth.js";
+import { showToast } from "../../utils/toast.tsx";
 
 const ForgotPass = () => {
   const [hasValidated, setValidated] = useState(new Array(1).fill(false));
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(true);
   return (
     <SafeAreaContainer safeArea={false}>
       <Header />
@@ -47,7 +47,20 @@ const ForgotPass = () => {
               backgroundColor={theme.color.primary}
               borderRadius={30}
               disabled={hasValidated.includes(false)}
-              onPress={() => navigate(SCREENS.OTP)}
+              // onPress={() => navigate(SCREENS.OTP)}
+              onPress={async () => {
+                  const data = {
+                    email: email,
+                  };
+                  const res = await forgotApi({ data });
+                  if (res != null) {
+                    navigate(SCREENS.OTP,{
+                      email:email
+                    })
+                    showToast({ title: res?.message});
+                  }
+                }
+              }
               style={{ height: 50, marginVertical: 20 }}
             />
           </View>

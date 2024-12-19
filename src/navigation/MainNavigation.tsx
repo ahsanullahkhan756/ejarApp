@@ -27,7 +27,7 @@ const MainNavigation = () => {
   ) : (
     <>
       <NavigationContainer ref={navigationRef}>
-        {isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
+        {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
         <Toast />
         {isLoading && <Loader />}
       </NavigationContainer>
