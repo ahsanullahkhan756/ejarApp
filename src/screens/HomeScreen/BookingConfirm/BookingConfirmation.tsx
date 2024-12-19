@@ -50,10 +50,10 @@ const BookingConfirmation = ({ route }) => {
               </Typography>
               <Typography
                 size={theme.fontSize.extraSmall12}
-                numberOfLines={1}
+                numberOfLines={2}
                 color={theme.color.descColor}
               >
-                {item?.description}
+                {item?.shortDescription}
               </Typography>
               <Typography
                 textType="bold"
@@ -79,7 +79,7 @@ const BookingConfirmation = ({ route }) => {
           </View>
           <View marginV-10>
             {/* // TODO:: CHNAGE TO AGAINST USER ID */}
-            <BookedCondition id={item?.ID} />
+            <BookedCondition id={item?.createdBy} />
           </View>
           <View marginV-20>
             <CheckCondition
@@ -102,7 +102,12 @@ const BookingConfirmation = ({ route }) => {
           onPress={() => {
             if (status && check) {
               navigate(SCREENS.CONTRACT, {
+                startEndDates: startEndDates,
                 item: item,
+                selectedDates: selectedDates,
+                daysInRange: daysInRange,
+                card: card,
+                totalPrice: totalPrice,
               });
             } else {
               showToast({ title: "Please confirm the terms to proceed" });
