@@ -12,8 +12,12 @@ const BookedCondition = (props: any) => {
   const getConditions = async () => {
     try {
       const resp = await getAllConditions(props?.id);
-      if (resp?.Data != null) {
-        setList(resp?.Data);
+      if (resp != null) {
+        if (Array.isArray(resp)) {
+          setList(resp);
+        } else {
+          setList([resp]);
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
