@@ -5,7 +5,11 @@ import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, VARIABLES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import { useDispatch } from "react-redux";
-import { setIsLoading, setLoggedIn } from "../../../redux/slice/user";
+import {
+  setIsLoading,
+  setLoggedIn,
+  setUserDetails,
+} from "../../../redux/slice/user";
 import ForgotText from "../SignUpMol/ForgotText";
 import { loginApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
@@ -96,7 +100,7 @@ const LoginFields = () => {
               setItem(VARIABLES.USER_TOKEN, res?.token);
               dispatch(setLoggedIn(true));
               dispatch(setIsLoading(true));
-              // dispatch(setUserType("user"));
+              dispatch(setUserDetails(res));
             }
           }
         }}
