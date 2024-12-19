@@ -153,6 +153,8 @@ const MyBooking = ({ route }) => {
       }
       return null;
     } catch (error) {
+      console.log(error);
+
       showToast({ title: error?.message });
       dispatch(setIsLoading(false));
     }
