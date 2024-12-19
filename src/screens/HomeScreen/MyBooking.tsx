@@ -180,6 +180,7 @@ const MyBooking = ({ route }) => {
               isDisabled={true}
               setSelectedDates={setSelectedDates}
               setStartEndDates={setStartEndDates}
+              startEndDates={startEndDates}
               selectedDates={{ ...selectedDates, ...bookedDates }}
               bookedDates={bookedDates}
             />
