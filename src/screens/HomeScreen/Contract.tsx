@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -14,8 +14,18 @@ import SignatureView from "react-native-signature-canvas";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { commonStyles } from "../../containers/commStyles";
+import { useSelector } from "react-redux";
+import { getContractByOwnerId } from "../../api/homeServices";
 
-const Contract = () => {
+const Contract = ({ route }) => {
+  const startEndDates = route?.params?.startEndDates;
+  const item = route?.params?.item;
+  const selectedDates = route?.params?.selectedDates;
+  const daysInRange = route?.params?.daysInRange;
+  const card = route?.params?.card;
+  const totalPrice = route?.params?.totalPrice;
+  const userDetails = useSelector((state) => state.user?.userDetails);
+
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [isSigned, setIsSigned] = useState(false);
 
@@ -23,11 +33,38 @@ const Contract = () => {
     setIsSigned(true);
   };
 
+  const [contractData, setContractData] = useState(null);
+  const getConditions = async () => {
+    try {
+      const resp = await getContractByOwnerId(item?.createdBy);
+      if (resp != null) {
+        setContractData(resp);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const acknowledgement = async () => {
+    try {
+      // const resp = await getContractByOwnerId(item?.createdBy);
+      // if (resp != null) {
+      //   setContractData(resp);
+      // }
+      // setModalVisible(true)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getConditions();
+  }, []);
+
   const PERSONAL_DATA = [
-    { title: "First Name:", subTitle: "Fahad" },
-    { title: "Last Name:", subTitle: "Sheikh" },
-    { title: "VIN:", subTitle: "123 456 789 0" },
-    { title: "Plate Number:", subTitle: "DBI 987654" },
+    { title: "First Name:", subTitle: userDetails?.firstName },
+    { title: "Last Name:", subTitle: userDetails?.lastName },
+    { title: "VIN:", subTitle: item?.vin },
+    { title: "Plate Number:", subTitle: item?.numberPlate },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,30 +85,15 @@ const Contract = () => {
             return (
               <View row spread marginB-10>
                 <Typography style={{ flex: 1 }}>{i.title}</Typography>
-                <Typography style={{ flex: 1 }}>{i.subTitle}</Typography>
+                <Typography style={{ flex: 1, textTransform: "capitalize" }}>
+                  {i.subTitle}
+                </Typography>
                 <View />
               </View>
             );
           })}
           <Typography color={theme.color.descColor} size={theme.fontSize.small}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit{"\n"}
-            {"\n"}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit
-            {"\n"}
+            {contractData?.ContractDetail}
           </Typography>
         </View>
       </ScrollView>
@@ -95,7 +117,17 @@ const Contract = () => {
           </View>
         </ScrollView>
 
-<View style={[commonStyles.lineBar,{    width: '100%',marginVertical:20,borderColor:theme.color.descColor,borderWidth:0.3}]}/>
+        <View
+          style={[
+            commonStyles.lineBar,
+            {
+              width: "100%",
+              marginVertical: 20,
+              borderColor: theme.color.descColor,
+              borderWidth: 0.3,
+            },
+          ]}
+        />
         <Typography align="center">Signature</Typography>
 
         {/* Acknowledged Button */}
@@ -105,15 +137,20 @@ const Contract = () => {
           borderRadius={30}
           style={styles.button}
           disabled={!isSigned} // Disable the button until signature is done
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            acknowledgement();
+          }}
         />
       </View>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
           onPress={() => setModalVisible(false)}
-          style={[commonStyles.centerView,{
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
-          }]}
+          style={[
+            commonStyles.centerView,
+            {
+              backgroundColor: "rgba(0, 0, 0, 0.9)",
+            },
+          ]}
         >
           <View style={commonStyles.modalStyle}>
             <Image
@@ -127,9 +164,9 @@ const Contract = () => {
               borderRadius={30}
               style={styles.button}
               onPress={() => {
-                setModalVisible(false)
-                navigate(SCREENS.USER_BOOKING)}
-              }
+                setModalVisible(false);
+                navigate(SCREENS.USER_BOOKING);
+              }}
             />
             <Button
               label="Back to Home"
@@ -137,8 +174,8 @@ const Contract = () => {
               borderRadius={30}
               style={styles.button}
               onPress={() => {
-                setModalVisible(false)
-                navigate(SCREENS.HOME)
+                setModalVisible(false);
+                navigate(SCREENS.HOME);
               }}
             />
           </View>
