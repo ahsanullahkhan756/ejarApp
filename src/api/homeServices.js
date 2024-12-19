@@ -56,6 +56,20 @@ export const getContractByOwnerId = async (id) => {
     store.dispatch(setIsLoading(false));
   }
 };
+export const confirmBooking = async (data) => {
+  // store.dispatch(setIsLoading(false));
+  try {
+    const res = await post({
+      url: `payment/payment-intent`,
+      data: data
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
 
 export const getBookedDatesFunction = async (id) => {
   try {
