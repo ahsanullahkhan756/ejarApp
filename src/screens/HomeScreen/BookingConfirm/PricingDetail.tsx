@@ -36,7 +36,7 @@ const PricingDetail = (props: any) => {
         >
           Pricing Details
         </Typography>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             onBack();
           }}
@@ -46,7 +46,7 @@ const PricingDetail = (props: any) => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={{ borderWidth: 0.2, borderRadius: 10 }}>
         {data.map((i) => {
