@@ -15,7 +15,7 @@ const VechileStatusItoms = ({ item }) => {
             resizeMode="contain"
           />
           <Typography numberOfLines={1}>
-            {item?.location ?? item?.description}
+            {`${item?.city ?? "-"}, ${item?.country ?? "-"}`}
           </Typography>
         </View>
 
