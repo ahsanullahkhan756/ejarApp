@@ -126,12 +126,12 @@ import { resetPassword } from "../../api/auth.js";
 import { showToast } from "../../utils/toast.tsx";
 
 const ResetPassword = (props: any) => {
+  const otp = props?.route?.params?.otp
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible2, setPasswordVisible2] = useState(true);
   const [passwordVisible3, setPasswordVisible3] = useState(true);
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [confirmModal, setConfirm] = useState(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const validatePassword = (password: string) => {
@@ -145,7 +145,6 @@ const ResetPassword = (props: any) => {
     return newPassword === confirmPassword;
   };
 
-  // Function to check if both password fields are valid and match
   const validatePasswords = () => {
     const isPasswordValid = validatePassword(newPassword);
     const isConfirmPasswordValid = passwordsMatch(newPassword, confirmPassword);
@@ -154,7 +153,6 @@ const ResetPassword = (props: any) => {
     setIsButtonEnabled(isPasswordValid && isConfirmPasswordValid);
   };
 
-  // Effect to validate password fields whenever they change
   useEffect(() => {
     validatePasswords();
   }, [newPassword, confirmPassword]);
@@ -225,15 +223,13 @@ const ResetPassword = (props: any) => {
             disabled={!isButtonEnabled}
             onPress={async () => {
               const data = {
-                otp: "",
-                password: "",
+                otp: otp,
+                password: confirmPassword,
               };
               const res = await resetPassword({ data });
               if (res != null) {
-                console.log("res", res);
-
                 navigate(SCREENS.LOGIN);
-                showToast({ title: res });
+                showToast({ title: res?.message });
               }
             }}
           />
