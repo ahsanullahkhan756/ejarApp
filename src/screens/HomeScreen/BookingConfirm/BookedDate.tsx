@@ -6,6 +6,7 @@ import { Typography } from "../../../components/atoms/Typography";
 import { onBack } from "../../../navigation/RootNavigation";
 
 const BookedDate = (props: any) => {
+  
   const data = [
     {
       title: "Renting Period",

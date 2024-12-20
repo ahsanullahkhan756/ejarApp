@@ -14,8 +14,9 @@ import SignatureView from "react-native-signature-canvas";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { commonStyles } from "../../containers/commStyles";
-import { useSelector } from "react-redux";
-import { getContractByOwnerId } from "../../api/homeServices";
+import { useDispatch, useSelector } from "react-redux";
+import { confirmBooking, getContractByOwnerId } from "../../api/homeServices";
+import { setIsLoading } from "../../redux/slice/user";
 
 const Contract = ({ route }) => {
   const startEndDates = route?.params?.startEndDates;
@@ -25,7 +26,7 @@ const Contract = ({ route }) => {
   const card = route?.params?.card;
   const totalPrice = route?.params?.totalPrice;
   const userDetails = useSelector((state) => state.user?.userDetails);
-
+  const dispatch = useDispatch();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [isSigned, setIsSigned] = useState(false);
 
@@ -44,12 +45,45 @@ const Contract = ({ route }) => {
       console.error("Error fetching data:", error);
     }
   };
+
   const acknowledgement = async () => {
     try {
-      // const resp = await getContractByOwnerId(item?.createdBy);
-      // if (resp != null) {
-      //   setContractData(resp);
-      // }
+      const data = {
+        bookingData: {
+          BookCarId: item?.ID,
+          CarOwnerId: item?.createdBy,
+          StartDate: startEndDates?.start,
+          EndDate: startEndDates?.end,
+          PerDayPayment: 100,
+          Payable: 300,
+          ContractSignature: {
+            base64: "https://placehold.co/400",
+            fileName: "contract-signature.png",
+          },
+        },
+        paymentData: {
+          amount: 300,
+          toID: item?.createdBy,
+          card_secret: card?.id,
+        },
+      };
+
+      console.log(data);
+
+      const resp = await confirmBooking(data);
+      if (resp != null) {
+        console.log("booking hogai");
+        console.log("booking hogai");
+        console.log("booking hogai");
+        console.log("booking hogai");
+        console.log(resp);
+        console.log("booking hogai");
+        console.log("booking hogai");
+
+        console.log("booking hogai");
+      }
+      dispatch(setIsLoading(false));
+
       // setModalVisible(true)
     } catch (error) {
       console.error("Error fetching data:", error);
