@@ -40,6 +40,12 @@ const ProfileList = (props: any) => {
       params: { title: "Privacy Policy" },
     },
     {
+      id: 9,
+      title: "Change Password",
+      image: IMAGES.userProfile,
+      navigateTo: SCREENS.CHANGE_PASSWORD,
+    },
+    {
       id: 8,
       title: "Change Language",
       image: IMAGES.changeLang,

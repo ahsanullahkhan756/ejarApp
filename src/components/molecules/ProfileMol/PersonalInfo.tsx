@@ -4,21 +4,24 @@ import {  theme } from "../../../constants";
 import { Typography } from "../../atoms/Typography";
 import { View } from "react-native-ui-lib";
 import { commonStyles } from "../../../containers/commStyles";
+import { useSelector } from "react-redux";
 
 const PersonalInfo = (props: any) => {
+  const userdata =  useSelector((state)=>state?.user?.userDetails)
+  console.log('userdata',userdata);
 
   const DATA = [
     {
       id: 1,
-      title: "Russell Austin",
+      title: userdata?.firstName,
     },
     {
       id: 2,
-      title: "sheikh.fahad@gmail.com",
+      title: userdata?.email,
     },
     {
       id: 3,
-      title: "+971  123 456 7890",
+      title: userdata?.phone,
     },
    
   ];

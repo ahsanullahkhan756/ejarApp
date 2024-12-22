@@ -71,7 +71,7 @@ const DetailScreen = ({ route }) => {
             ]}
             activeDotStyle={styles.dotStyle}
           >
-            {item?.Media?.carPicture?.map((item) => (
+            {item?.Media?.carPicture?.map((item:any) => (
               <ImageBackground
                 source={{
                   uri: item?.base64,

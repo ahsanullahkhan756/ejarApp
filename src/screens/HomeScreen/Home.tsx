@@ -26,14 +26,13 @@ import { getHomeApi, topRatedCar } from "../../api/homeServices";
 import { getFCMToken } from "../../api/auth.js";
 const Home = () => {
   const dispatch = useDispatch();
-
   const getUser = async () => {
     const abc = await getFCMToken();
     console.log(abc);
-
     try {
       const resp = await getHomeApi();
       if (resp) {
+        console.log("homeData", resp);
         dispatch(setHomeData(resp));
       }
     } catch (error) {
@@ -57,6 +56,7 @@ const Home = () => {
   }, []);
 
   const details = useSelector((state: any) => state?.appData?.homeData);
+  // console.log("details123", details);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -83,7 +83,8 @@ const Home = () => {
             activeDotStyle={styles.dotStyle}
           >
             <FlatList
-              data={data?.categories}
+              // data={details?.categories}
+              data={data.categories}
               numColumns={4}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
@@ -92,7 +93,11 @@ const Home = () => {
                   style={{ alignItems: "center", marginLeft: -2 }}
                 >
                   <Image
-                    source={item.icon}
+                    source={
+                      item?.image?.base64
+                        ? { uri: item?.image?.base64 }
+                        : IMAGES.truck
+                    }
                     style={{
                       width: SCREEN_WIDTH * 0.2,
                       height: 80,
@@ -101,7 +106,7 @@ const Home = () => {
                     resizeMode="cover"
                   />
                   <Typography size={theme.fontSize.extraSmall12}>
-                    {item.name}
+                    {item.name || "asds"}
                   </Typography>
                 </View>
               )}
@@ -109,7 +114,7 @@ const Home = () => {
               columnWrapperStyle={{ marginBottom: 10 }}
             />
 
-            <FlatList
+            {/* <FlatList
               data={data.categories}
               numColumns={4}
               showsHorizontalScrollIndicator={false}
@@ -134,7 +139,7 @@ const Home = () => {
               )}
               keyExtractor={(item) => item.id}
               columnWrapperStyle={{ marginBottom: 10 }}
-            />
+            /> */}
             <FlatList
               data={data.categories}
               numColumns={4}
@@ -145,7 +150,9 @@ const Home = () => {
                   style={{ alignItems: "center", marginLeft: -2 }}
                 >
                   <Image
-                    source={item.icon}
+                    source={
+                      item.image?.url ? { uri: item.image?.url } : IMAGES.truck
+                    }
                     style={{
                       width: SCREEN_WIDTH * 0.2,
                       height: 80,
@@ -154,7 +161,7 @@ const Home = () => {
                     resizeMode="cover"
                   />
                   <Typography size={theme.fontSize.extraSmall12}>
-                    {item.name}
+                    {item.name || "SUVs"}
                   </Typography>
                 </View>
               )}
@@ -171,12 +178,11 @@ const Home = () => {
           >
             Car For Rent
           </Typography>
-          {/* <RentCarsComp /> */}
 
           {/* CAR FOR RENT  */}
 
           <FlatList
-            data={details?.Data}
+            data={details?.cars}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
@@ -201,7 +207,11 @@ const Home = () => {
                     /> */}
 
                     <Image
-                      source={{ uri: item.Media?.url || IMAGES.truck }}
+                      source={
+                        item.Media?.url
+                          ? { uri: item.Media?.url }
+                          : IMAGES.truck
+                      }
                       style={{
                         width: "100%",
                         height: 120,
@@ -347,15 +357,14 @@ const Home = () => {
           </Swiper>
 
           <View style={commonStyles.lineBar} />
-          <Typography
-            size={theme.fontSize.large}
-            color={theme.color.blue}
-            textType="bold"
-          >
-            Reviews
-          </Typography>
           <View row spread>
-            <Typography>Rolem Ipsum</Typography>
+            <Typography
+              size={theme.fontSize.large}
+              color={theme.color.blue}
+              textType="bold"
+            >
+              Reviews
+            </Typography>
             <Image
               source={IMAGES.colun}
               style={{ width: 70, height: 20, alignSelf: "center" }}
@@ -379,16 +388,6 @@ const Home = () => {
             ]}
             activeDotStyle={styles.dotStyle}
           >
-            <Typography>
-              “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua”.
-            </Typography>
-
-            <Typography>
-              “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua”.
-            </Typography>
-
             <Typography>
               “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua”.
@@ -436,3 +435,4 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+

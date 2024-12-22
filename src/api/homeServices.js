@@ -1,6 +1,6 @@
 import { setIsLoading } from "../redux/slice/user";
 import { store } from "../redux/store";
-import { get, post } from "../services/axios";
+import { get, post, put } from "../services/axios";
 import { showToast } from "../utils/toast";
 
 export const getHomeApi = async () => {
@@ -21,6 +21,7 @@ export const topRatedCar = async () => {
   try {
     const res = await get({
       url: "cars",
+      // url: "cars/toprated",
     });
     console.log("top Rated res", res);
     return res;
@@ -30,6 +31,20 @@ export const topRatedCar = async () => {
     store.dispatch(setIsLoading(false));
   }
 };
+// export const filterApi = async () => {
+//   store.dispatch(setIsLoading(false));
+//   try {
+//     const res = await get({
+//       url: "cars?StartDate=2024-12-21&EndDate=2024-12-22&Status=true&Sort=true&fromKM=2&toKM=3&fromPrice=22&toPrice=22&fromYear=2020&toYear=2023&fuelType=Diesel",
+//     });
+//     return res;
+//   } catch (error) {
+//     console.log(error?.message);
+//   } finally {
+//     store.dispatch(setIsLoading(false));
+//   }
+// };
+
 export const getAllConditions = async (id) => {
   store.dispatch(setIsLoading(false));
   try {
@@ -61,7 +76,7 @@ export const confirmBooking = async (data) => {
   try {
     const res = await post({
       url: `payment/payment-intent`,
-      data: data
+      data: data,
     });
     return res;
   } catch (error) {
@@ -70,13 +85,88 @@ export const confirmBooking = async (data) => {
     store.dispatch(setIsLoading(false));
   }
 };
-
 export const getBookedDatesFunction = async (id) => {
   try {
     const res = await get({
       url: `booking/carbookingdates/${id}`,
     });
     console.log("top Rated res", res);
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const filterApi = async (params) => {
+  console.log('params',params);
+  store.dispatch(setIsLoading(false));
+
+  // Build the query string dynamically
+  const queryString = new URLSearchParams(params).toString();
+
+  try {
+    const res = await get({
+      url: `cars?${queryString}`,  // Adjust the endpoint URL as needed
+    });
+    return res;
+  } catch (error) {
+    console.error("API Error:", error.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+
+export const searchCompaniesApi = async () => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await get({
+      url: "user/company",
+    });
+    console.log("Search Company ", res);
+
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const notificationApi = async () => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await get({
+      url: "notification",
+    });
+    console.log("Notification api", res);
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const changePassword = async (data) => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await post({
+      url: `auth/change-password`,
+      data: data,
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const myAdressApi = async (data) => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await put({
+      url: `user/profile`,
+      data: data,
+    });
     return res;
   } catch (error) {
     console.log(error?.message);

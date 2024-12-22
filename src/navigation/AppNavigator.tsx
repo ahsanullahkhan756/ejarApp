@@ -21,6 +21,7 @@ import RatingScreen from "../screens/HomeScreen/ProfileScreen/RatingScreen";
 import ChangeLang from "../screens/HomeScreen/ProfileScreen/ChangeLang";
 import UserBookingDetail from "../screens/HomeScreen/ProfileScreen/UserBookingDetail";
 import ViewReviews from "../screens/HomeScreen/ViewReviews";
+import ChangePassword from "../components/molecules/ProfileMol/ChangePassword";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ const AppNavigator = () => {
      <Stack.Screen name={SCREENS.CONTRACT} component={Contract} />
 
      <Stack.Screen name={SCREENS.MY_INFORMATION} component={MyInformation} />
+     <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePassword} />
      <Stack.Screen name={SCREENS.MY_ADDRESS} component={MyAddress} />
      <Stack.Screen name={SCREENS.USER_BOOKING} component={UserBooking} />
      <Stack.Screen name={SCREENS.RATING} component={RatingScreen} />

@@ -16,6 +16,7 @@ export const SCREENS = {
   VERIFY_CONTACT: "VerifyContact",
   INFO: "PersonalInfo",
   PRIVACY:'Privacy',
+  CHANGE_PASSWORD:"ChangePassword",
 
   // Bottom Screen
   HOME: "Home",

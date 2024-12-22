@@ -8,13 +8,12 @@ import { Typography } from "./Typography";
 export const TopCarsComp = () => {
   // Fetch the top-rated car data from Redux state
   const topRatedCars = useSelector((state) => state?.appData?.homeData?.topRatedCars || []);
-
   return (
     <FlatList
       data={topRatedCars}
       numColumns={2}
       renderItem={({ item }) => {
-        const isAvailable = item.status === "Available"; // Check if the car is available
+        const isAvailable = item.status === "Available"; 
         return (
           <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log("Car selected:", item.carName)}>
             <View
@@ -24,11 +23,13 @@ export const TopCarsComp = () => {
                 marginVertical: 10,
                 marginRight: 10,
                 borderRadius: 10,
-                borderColor: isAvailable ? theme.color.green : "#fff", // Highlight available cars differently
+                borderColor: isAvailable ? theme.color.blue : "#fff",
               }}
             >
               <Image
-                source={{ uri: item.Media?.carPicture?.[0] || IMAGES.defaultCarImage }} // Use a fallback image if Media is null
+                source={ item.Media?.url
+                  ? { uri: item.Media?.url }
+                  : IMAGES.truck}
                 style={{ width: "100%", height: 160, borderRadius: 10 }}
                 resizeMode="cover"
               />
@@ -47,7 +48,7 @@ export const TopCarsComp = () => {
           </TouchableOpacity>
         );
       }}
-      keyExtractor={(item) => item.ID} // Use a unique key like item.ID
+      keyExtractor={(item) => item.ID}
     />
   );
 };

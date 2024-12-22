@@ -13,11 +13,11 @@ import { IMAGES, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { Typography } from "../../components/atoms/Typography";
 import ProfileList from "../../components/molecules/ProfileMol/ProfileList";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(IMAGES.avatar); 
 
-  // Function to open image picker
   const openImagePicker = () => {
     Alert.alert(
       "Select Image",
@@ -64,18 +64,22 @@ const Profile = () => {
     );
   };
 
+  const userdata =  useSelector((state)=>state?.user?.userDetails)
+  console.log('userdata',userdata);
+  
+
   const UserData = () => {
     return (
       <View row gap-20 style={{ alignItems: "center" }}>
         <ImageBackground
-          source={avatar} // Use the updated avatar image here
+          source={avatar} 
           style={{ width: 80, height: 80 }}
-          imageStyle={{ borderRadius: 40 }} // Optional: Add border radius for rounded avatar
+          imageStyle={{ borderRadius: 40 }} 
           resizeMode="contain"
         >
           <TouchableOpacity
             style={{ position: "absolute", bottom: 0, right: 0 }}
-            onPress={openImagePicker} // Open image picker on press
+            onPress={openImagePicker}
           >
             <Image
               source={IMAGES.camera}
@@ -86,10 +90,10 @@ const Profile = () => {
         </ImageBackground>
         <View>
           <Typography textType="bold" size={theme.fontSize.large}>
-            Hi, Muhammad
+             Hi, {userdata?.firstName}
           </Typography>
           <Typography color={theme.color.descColor}>
-            +971 123 456 7890
+              {userdata?.phone}
           </Typography>
         </View>
       </View>

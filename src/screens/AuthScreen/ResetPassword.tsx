@@ -140,7 +140,6 @@ const ResetPassword = (props: any) => {
     );
   };
 
-  // Check if passwords match
   const passwordsMatch = (newPassword: string, confirmPassword: string) => {
     return newPassword === confirmPassword;
   };
@@ -173,7 +172,7 @@ const ResetPassword = (props: any) => {
         {/* New Password Input */}
         <InputText
           label={"New Password"}
-          onChangeText={setNewPassword} // Update new password
+          onChangeText={setNewPassword}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];

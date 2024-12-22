@@ -25,15 +25,14 @@ const InformationIds = ({ onValidate,setCurrentStep}: any) => {
   const [issueDate, setIssueDate] = useState(true);
   const [expiryDate, setExpiryDate] = useState(true);
 
-  const [issueDate2, setIssueDate2] = useState(true);
-  const [expiryDate2, setExpiryDate2] = useState(true);
-
   const [dob, setDob] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const [frontImage, setFrontImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
   const [isTakingFront, setIsTakingFront] = useState(true);
+
+
 
   useEffect(() => {
     dispatch(setIsLoading(false));

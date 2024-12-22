@@ -15,7 +15,6 @@ const MyInformation = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View marginH-20>
           <PersonalInfo />
-          <ChangePassword />
         </View>
         <Button
           label="Save"

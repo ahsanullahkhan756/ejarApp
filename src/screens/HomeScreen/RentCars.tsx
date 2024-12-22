@@ -49,7 +49,11 @@ const RentCars = () => {
                 }}
               >
                 <Image
-                  source={{ uri: item?.Media?.carPicture?.[0]?.base64 }}
+                  source={
+                    item?.Media?.carPicture?.[0]?.base64
+                      ? { uri: item?.Media?.carPicture?.[0]?.base64 }
+                      : IMAGES.truck
+                  }
                   style={{
                     width: "100%",
                     height: 150,
