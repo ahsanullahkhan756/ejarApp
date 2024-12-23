@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../../redux/slice/user";
 import { Typography } from "../../atoms/Typography";
 import { Button } from "react-native-ui-lib";
+import { logoutApi } from "../../../api/auth";  // Assuming this is imported
 
 const ProfileList = (props: any) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -51,8 +52,8 @@ const ProfileList = (props: any) => {
       image: IMAGES.changeLang,
       navigateTo: SCREENS.CHANGE_LANGUAGE,
     },
-    { id: 5, title: "Delete Account", image: IMAGES.delete, },
-    { id: 6, title: "Sign out", image: IMAGES.signOut, },
+    { id: 5, title: "Delete Account", image: IMAGES.delete },
+    { id: 6, title: "Sign out", image: IMAGES.signOut },
   ];
 
   const _renderItem = ({ item, index }: any) => {
@@ -89,9 +90,15 @@ const ProfileList = (props: any) => {
     setShowDeleteModal(false);
   };
 
-  const handleLogout = () => {
-    dispatch(setLoggedIn(false));
-    setShowLogoutModal(false);
+  const handleLogout = async () => {
+    try {
+      await logoutApi(); 
+      dispatch(setLoggedIn(false)); 
+      setShowLogoutModal(false); 
+      navigate(SCREENS.LOGIN); 
+    } catch (error) {
+      console.log("Error during logout:", error);
+    }
   };
 
   return (
@@ -122,13 +129,13 @@ const ProfileList = (props: any) => {
             <View row spread gap-10>
               <Button
                 label="Cancel"
-                style={{width:100}}
+                style={{ width: 100 }}
                 backgroundColor={theme.color.primary}
                 onPress={() => setShowDeleteModal(!showDeleteModal)}
               />
               <Button
                 label="Delete"
-                style={{width:100}}
+                style={{ width: 100 }}
                 backgroundColor={theme.color.blue}
                 onPress={handleDeleteAccount}
               />
@@ -155,13 +162,13 @@ const ProfileList = (props: any) => {
             <View row spread gap-10>
               <Button
                 label="Cancel"
-                style={{width:100}}
+                style={{ width: 100 }}
                 backgroundColor={theme.color.primary}
                 onPress={() => setShowLogoutModal(!showLogoutModal)}
               />
               <Button
-                label="Delete"
-                style={{width:100}}
+                label="Logout"
+                style={{ width: 100 }}
                 backgroundColor={theme.color.blue}
                 onPress={handleLogout}
               />

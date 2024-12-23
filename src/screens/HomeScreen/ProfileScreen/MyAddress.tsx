@@ -11,11 +11,11 @@ import { verticalScale } from "react-native-size-matters";
 import { commonStyles } from "../../../containers/commStyles";
 import { Typography } from "../../../components/atoms/Typography";
 import { DropDown } from "../../../components/atoms/DropDown";
-import { cityData } from "../../../containers/dummy"; // Assuming cityData is an array of city options
-import { InputText } from "../../../components/atoms/InputText"; // Assuming this is your text input component
+import { cityData } from "../../../containers/dummy";
+import { InputText } from "../../../components/atoms/InputText";
 
 const MyAddress = () => {
-  // State to capture form values
+
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");

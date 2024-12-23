@@ -99,15 +99,15 @@ export const getBookedDatesFunction = async (id) => {
   }
 };
 export const filterApi = async (params) => {
-  console.log('params',params);
+  console.log("params", params);
   store.dispatch(setIsLoading(false));
 
-  // Build the query string dynamically
   const queryString = new URLSearchParams(params).toString();
-
+  const url = `cars?${queryString}`;
+  console.log(url);
   try {
     const res = await get({
-      url: `cars?${queryString}`,  // Adjust the endpoint URL as needed
+      url: url,
     });
     return res;
   } catch (error) {

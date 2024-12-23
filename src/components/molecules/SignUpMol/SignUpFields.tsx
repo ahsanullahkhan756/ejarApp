@@ -7,7 +7,7 @@ import { InputText } from "../../atoms/InputText";
 import ForgotText from "./ForgotText";
 import { signUpApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
-import { setIsLoading, setLoggedIn } from "../../../redux/slice/user";
+import { setIsLoading, setLoggedIn, setUserDetails } from "../../../redux/slice/user";
 import { useDispatch } from "react-redux";
 
 const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
@@ -173,15 +173,16 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
             setItem(VARIABLES.USER_TOKEN, res?.token);
             // dispatch(setLoggedIn(true));
             dispatch(setIsLoading(true));
+            dispatch(setUserDetails(res));
             // dispatch(setUserType("user"));
           }
         }}
-        // disabled={!isFormValid()}
+        disabled={!isFormValid()}
         borderRadius={30}
         style={{
-          // backgroundColor: isFormValid()
-          //   ? theme.color.primary
-          //   : "#999B9F",
+          backgroundColor: isFormValid()
+            ? theme.color.primary
+            : "#999B9F",
             height: 50, margin: 20
         }}
       />

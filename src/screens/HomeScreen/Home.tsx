@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -20,43 +20,53 @@ import { TopCarsComp } from "../../components/atoms/TopCarsComp";
 import { RentCarsComp } from "../../components/atoms/RentCarsComp";
 import Swiper from "react-native-swiper";
 import { useDispatch, useSelector } from "react-redux";
-import { setHomeData } from "../../redux/slice/appData";
+import { setFilterData, setHomeData } from "../../redux/slice/appData";
 import { setIsLoading } from "../../redux/slice/user";
 import { getHomeApi, topRatedCar } from "../../api/homeServices";
 import { getFCMToken } from "../../api/auth.js";
+
 const Home = () => {
   const dispatch = useDispatch();
+  const details = useSelector((state: any) => state?.appData?.homeData);
+  const filterData = useSelector((state: any) => state?.appData?.filterData);
+  const [rentCars, setRentCars] = useState([]);
   const getUser = async () => {
-    const abc = await getFCMToken();
-    console.log(abc);
     try {
       const resp = await getHomeApi();
       if (resp) {
+        dispatch(setFilterData([]));
         console.log("homeData", resp);
         dispatch(setHomeData(resp));
+        setRentCars(resp?.cars);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  const topRatedCarApi = async () => {
-    try {
-      const resp = await topRatedCar();
-      if (resp) {
-        dispatch(setHomeData(resp));
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+
+  // const topRatedCarApi = async () => {
+  //   try {
+  //     const resp = await topRatedCar();
+  //     if (resp) {
+  //       dispatch(setHomeData(resp));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
   useEffect(() => {
     dispatch(setIsLoading(false));
-    getUser();
-    topRatedCarApi();
+    // topRatedCarApi();
   }, []);
 
-  const details = useSelector((state: any) => state?.appData?.homeData);
-  // console.log("details123", details);
+  useEffect(() => {
+    if (filterData != null) {
+      setRentCars(filterData);
+    } else {
+      getUser();
+    }
+  }, [filterData]);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -82,67 +92,11 @@ const Home = () => {
             ]}
             activeDotStyle={styles.dotStyle}
           >
-            <FlatList
-              // data={details?.categories}
-              data={data.categories}
-              numColumns={4}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <View
-                  marginH-15
-                  style={{ alignItems: "center", marginLeft: -2 }}
-                >
-                  <Image
-                    source={
-                      item?.image?.base64
-                        ? { uri: item?.image?.base64 }
-                        : IMAGES.truck
-                    }
-                    style={{
-                      width: SCREEN_WIDTH * 0.2,
-                      height: 80,
-                      borderRadius: 10,
-                    }}
-                    resizeMode="cover"
-                  />
-                  <Typography size={theme.fontSize.extraSmall12}>
-                    {item.name || "asds"}
-                  </Typography>
-                </View>
-              )}
-              keyExtractor={(item) => item.id}
-              columnWrapperStyle={{ marginBottom: 10 }}
-            />
-
-            {/* <FlatList
-              data={data.categories}
-              numColumns={4}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <View
-                  marginH-15
-                  style={{ alignItems: "center", marginLeft: -2 }}
-                >
-                  <Image
-                    source={item.icon}
-                    style={{
-                      width: SCREEN_WIDTH * 0.2,
-                      height: 80,
-                      borderRadius: 10,
-                    }}
-                    resizeMode="cover"
-                  />
-                  <Typography size={theme.fontSize.extraSmall12}>
-                    {item.name}
-                  </Typography>
-                </View>
-              )}
-              keyExtractor={(item) => item.id}
-              columnWrapperStyle={{ marginBottom: 10 }}
-            /> */}
+            {/* Categories Carousel */}
             <FlatList
               data={data.categories}
               numColumns={4}
+              // scrollEnabled={false}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
                 <View
@@ -158,7 +112,7 @@ const Home = () => {
                       height: 80,
                       borderRadius: 10,
                     }}
-                    resizeMode="cover"
+                    resizeMode='stretch'
                   />
                   <Typography size={theme.fontSize.extraSmall12}>
                     {item.name || "SUVs"}
@@ -174,15 +128,14 @@ const Home = () => {
             align="center"
             size={theme.fontSize.large}
             textType="bold"
-            style={{ marginVertical: 20 }}
+            style={{ marginBottom: 10 }}
           >
             Car For Rent
           </Typography>
 
           {/* CAR FOR RENT  */}
-
           <FlatList
-            data={details?.cars}
+            data={rentCars}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
@@ -195,17 +148,6 @@ const Home = () => {
                       elevation: 4,
                     }}
                   >
-                    {/* <Image
-                      source={item.img}
-                      style={{
-                        width: "100%",
-                        height: 120,
-                        borderTopLeftRadius: 20,
-                        borderTopRightRadius: 20,
-                      }}
-                      resizeMode="cover"
-                    /> */}
-
                     <Image
                       source={
                         item.Media?.url
@@ -371,13 +313,18 @@ const Home = () => {
               resizeMode="contain"
             />
           </View>
+
           <View row>
-            <Image
-              source={IMAGES.starIcon}
-              style={{ width: 20, height: 20 }}
-              resizeMode="contain"
-            />
-            <Typography>4.9</Typography>
+            {details?.rating ? (
+              <>
+                <Image
+                  source={IMAGES.starIcon}
+                  style={{ width: 20, height: 20 }}
+                  resizeMode="contain"
+                />
+                <Typography>{details?.rating}</Typography>
+              </>
+            ) : null}
           </View>
 
           <Swiper
@@ -435,4 +382,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-

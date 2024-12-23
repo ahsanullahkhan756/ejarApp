@@ -6,7 +6,7 @@ import { IMAGES, theme } from "../../constants";
 import { Calendar } from "react-native-calendars";
 import { Dropdown } from "react-native-element-dropdown";
 export const DropDown = (props: any) => {
-  const { data, height = 50, width = 150, placeholder = "Select item" } = props;
+  const { data, height = 50, width = 150, placeholder = "Select item",onSelect } = props;
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -36,6 +36,9 @@ export const DropDown = (props: any) => {
       onChange={(item) => {
         setValue(item?.value);
         setIsFocus(false);
+        if (onSelect) {
+          onSelect(item?.value)
+        }
       }}
     />
   );

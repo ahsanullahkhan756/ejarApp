@@ -65,33 +65,31 @@ export const NOTIFICATION_DATA = [
     },
   ];
   export const spaceData = [
-    { label: "GCC", value: "1" },
-    { label: "GCC", value: "2" },
-    { label: "ACC", value: "3" },
-    { label: "BCC", value: "4" },
+    { label: "GCC", value: "GCC" },
+    { label: "GCC", value: "GCC" },
+    { label: "ACC", value: "ACC" },
+    { label: "BCC", value: "BCC" },
   ];
   export const fuekData = [
-    { label: "Diesel", value: "1" },
-    { label: "Petrol", value: "2" },
-    { label: "Diesel", value: "3" },
+    { label: "Diesel", value: "Diesel" },
+    { label: "Petrol", value: "Petrol" },
+    { label: "Diesel", value: "Diesel" },
   ];
   export const munalData = [
-    { label: "Manual", value: "1" },
-    { label: "Automatic", value: "2" },
+    { label: "Manual", value: "Manual" },
+    { label: "Automatic", value: "Automatic" },
   ];
   export const userData = [
-    { label: "User", value: "1" },
-    { label: "UnUser", value: "2" },
+    { label: "User", value: "User" },
   ];
   export const dealData = [
-    { label: "Fair Dea", value: "1" },
-    { label: "Fair Dea", value: "2" },
+    { label: "Fair Dea", value: "Fair Dea" },
   ];
   export const cityData = [
-    { label: "Dubai", value: "1" },
-    { label: "Abu Dhabi", value: "2" },
-    { label: "Sharjah", value: "2" },
-    { label: "Ras Al Khaimah", value: "2" },
+    { label: "Dubai", value: "Dubai" },
+    { label: "Abu Dhabi", value: "Abu Dhabi" },
+    { label: "Sharjah", value: "Sharjah" },
+    { label: "Ras Al Khaimah", value: "Ras Al Khaimah" },
   ];
   export const country = [
     { label: "Dubai", value: "1" },

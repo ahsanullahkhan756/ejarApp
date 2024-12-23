@@ -1,6 +1,6 @@
 import { setIsLoading } from "../redux/slice/user";
 import { store } from "../redux/store";
-import { get, post, put } from "../services/axios";
+import { get, post, put, remove } from "../services/axios";
 import { showToast } from "../utils/toast";
 import {
   GoogleSignin,
@@ -93,7 +93,6 @@ export const updateProfile = async ({ data }) => {
     store.dispatch(setIsLoading(false));
   }
 };
-
 export const forgotApi = async ({ data }) => {
   try {
     const res = await get({
@@ -134,11 +133,23 @@ export const resetPassword = async ({ data }) => {
 export const getUserDetailApi = async () => {
   try {
     const res = await get({
-      url: "user/profile",
+      url: "auth/me",
     });
     return res;
   } catch (error) {
     console.log(error?.message);
+  }
+};
+
+export const getPrivacyApi = async () => {
+  try {
+    const res = await get({
+      url: "privacy-policy",
+    });
+    return res;
+  } catch (error) {
+    console.log("API error:", error?.message);
+    throw error; 
   }
 };
 
@@ -337,5 +348,18 @@ export const signOutApple = async () => {
     await appleAuth.Operation.LOGOUT;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const logoutApi = async () => {
+  try {
+    const response = await remove({ url: "auth/logout" });
+    if (response) {
+      return response;
+    } else {
+      showToast({ title: "Logout failed" });
+    }
+  } catch (error) {
+    showToast({ title: error?.message });
   }
 };

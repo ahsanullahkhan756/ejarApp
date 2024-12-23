@@ -7,7 +7,6 @@ import useFirebaseMessaging from "./src/hooks/useNotifications";
 
 const App = () => {
   useFirebaseMessaging();
-
   return (
     <Provider store={store}>
       <MainNavigation />

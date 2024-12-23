@@ -17,8 +17,8 @@ import { showToast } from "../../../utils/toast";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState("john12@ymail.com");
-  const [password, setPassword] = useState("Qwerty@123");
+  const [email, setEmail] = useState(__DEV__ ? "john123@mailinator.com" : "");
+  const [password, setPassword] = useState(__DEV__ ? "Qwerty@123" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   const isFormValid = () => {

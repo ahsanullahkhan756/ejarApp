@@ -1,40 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Typography } from "../../components/atoms/Typography";
 import { Header } from "../../components/atoms/Header";
 import { theme } from "../../constants";
-import { commonStyles } from "../../containers/commStyles";
 import { View } from "react-native-ui-lib";
+import { getPrivacyApi } from "../../api/auth";
+import { setIsLoading } from "../../redux/slice/user";
+import { useDispatch } from "react-redux";
 
 const Privacy = (props: any) => {
-const title = props?.route?.params?.type
-console.log('title',title);
+  const title = props?.route?.params?.type || "Privacy Policy";
+  const dispatch = useDispatch();
+  const [data, setData] = useState<string>("");
 
+  const handleApi = async () => {
+    try {
+      const resp = await getPrivacyApi();
+      console.log('API Response:', resp);
+
+      if (resp && resp.description) {
+        setData(resp.description);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setIsLoading(false));
+    handleApi();
+  }, []);
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={title || "Privacy Policy"} centerImg={false} />
+      <Header titleText={title} centerImg={false} />
       <View padding-20>
-        {/* <Typography
-          size={22}
-          textType="semiBold"
-          color={theme.color.primary}
-          style={{ marginVertical: 0 }}
-        >
-          {title || "Privacy Policy"}
-        </Typography> */}
-
         <Typography color={theme.color.primary}>
-          Lorem ipsum dolor sit amet
+          {title}
         </Typography>
 
         <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehe
-          nderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui"
+          {data || "Loading..."}
         </Typography>
       </View>
     </SafeAreaContainer>
