@@ -13,7 +13,7 @@ export const TopCarsComp = () => {
       data={topRatedCars}
       numColumns={2}
       renderItem={({ item }) => {
-        const isAvailable = item.status === "Available"; 
+        const isAvailable = item.status == "Available"; 
         return (
           <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log("Car selected:", item.carName)}>
             <View

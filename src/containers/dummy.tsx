@@ -73,7 +73,6 @@ export const NOTIFICATION_DATA = [
   export const fuekData = [
     { label: "Diesel", value: "Diesel" },
     { label: "Petrol", value: "Petrol" },
-    { label: "Diesel", value: "Diesel" },
   ];
   export const munalData = [
     { label: "Manual", value: "Manual" },
@@ -83,7 +82,7 @@ export const NOTIFICATION_DATA = [
     { label: "User", value: "User" },
   ];
   export const dealData = [
-    { label: "Fair Dea", value: "Fair Dea" },
+    { label: "Fair Deal", value: "Fair Deal" },
   ];
   export const cityData = [
     { label: "Dubai", value: "Dubai" },

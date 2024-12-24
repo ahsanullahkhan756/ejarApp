@@ -265,6 +265,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             backgroundColor={theme.color.primary}
             onPress={async () => {
               const data = {
+                ID:'d7faf5ae-af1c-4e90-baa7-52327a96cfbc',
                 idCardNumber: idCardNumber,
                 idCardIssueDate: issueDate,
                 idCardExpDate: expiryDate,

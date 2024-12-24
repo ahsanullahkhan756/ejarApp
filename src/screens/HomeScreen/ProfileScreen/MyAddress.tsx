@@ -52,7 +52,8 @@ const MyAddress = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View marginH-20>
           {/* Address Text Input */}
-          {/* <View
+
+          <View
             style={[
               commonStyles.fieldStyle,
               {
@@ -70,19 +71,19 @@ const MyAddress = () => {
                 resizeMode="contain"
               />
             </View>
-          </View> */}
+          </View>
 
-          <InputText
+          {/* <InputText
           label={"Address"}
             placeholder={"Enter Address"}
             value={address}
             onChangeText={setAddress}
             style={{ width: SCREEN_WIDTH * 0.9, borderWidth: 0.2 }}
-          />
+          /> */}
 
           {/* City Dropdown */}
           <View style={{ marginVertical: 10 }}>
-            <Typography color={theme.color.descColor}>City</Typography>
+            {/* <Typography color={theme.color.descColor}>City</Typography> */}
             <DropDown
               data={cityData} // Assuming cityData is an array of cities
               value={city}
@@ -95,7 +96,7 @@ const MyAddress = () => {
 
           {/* Zip Code Input */}
             <InputText
-              label={"Zip Code"}
+              // label={"Zip Code"}
               labelStyle={{color:'red'}}
               placeholder={"Enter Zip Code"}
               value={zip}
@@ -106,9 +107,9 @@ const MyAddress = () => {
 
           {/* Country Dropdown */}
           <View style={{ marginVertical: 10 }}>
-            <Typography color={theme.color.descColor}>Country</Typography>
+            {/* <Typography color={theme.color.descColor}>Country</Typography> */}
             <DropDown
-              data={cityData} // Assuming cityData has country data too
+              data={cityData}
               value={country}
               width={SCREEN_WIDTH * 0.9}
               height={verticalScale(45)}

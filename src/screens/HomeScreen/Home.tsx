@@ -30,6 +30,8 @@ const Home = () => {
   const details = useSelector((state: any) => state?.appData?.homeData);
   const filterData = useSelector((state: any) => state?.appData?.filterData);
   const [rentCars, setRentCars] = useState([]);
+  console.log("details", details);
+
   const getUser = async () => {
     try {
       const resp = await getHomeApi();
@@ -85,7 +87,7 @@ const Home = () => {
         </View>
         <View padding-20>
           <Swiper
-            style={{ height: 270 }}
+            style={{ height: 100 }}
             dotStyle={[
               styles.dotStyle,
               { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
@@ -95,7 +97,8 @@ const Home = () => {
             {/* Categories Carousel */}
             <FlatList
               data={data.categories}
-              numColumns={4}
+              horizontal
+              // numColumns={4}
               // scrollEnabled={false}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
@@ -112,7 +115,7 @@ const Home = () => {
                       height: 80,
                       borderRadius: 10,
                     }}
-                    resizeMode='stretch'
+                    resizeMode="stretch"
                   />
                   <Typography size={theme.fontSize.extraSmall12}>
                     {item.name || "SUVs"}
@@ -120,7 +123,7 @@ const Home = () => {
                 </View>
               )}
               keyExtractor={(item) => item.id}
-              columnWrapperStyle={{ marginBottom: 10 }}
+              // columnWrapperStyle={{ marginBottom: 10 }}
             />
           </Swiper>
 
@@ -128,7 +131,7 @@ const Home = () => {
             align="center"
             size={theme.fontSize.large}
             textType="bold"
-            style={{ marginBottom: 10 }}
+            style={{ marginVertical: 10 }}
           >
             Car For Rent
           </Typography>
@@ -327,22 +330,39 @@ const Home = () => {
             ) : null}
           </View>
 
-          <Swiper
-            style={{ height: 150 }}
+          {/* <Swiper
+            style={{ height: 100 }}
             dotStyle={[
               styles.dotStyle,
               { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
             ]}
             activeDotStyle={styles.dotStyle}
           >
+
+          
             <Typography>
               “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua”.
             </Typography>
-          </Swiper>
+          </Swiper> */}
+
+          <FlatList
+            data={details?.reviews}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              return (
+                <>
+                  <Typography>{item?.comment || "asdas"}</Typography>
+                </>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ marginBottom: 16 }}
+          />
 
           <TouchableOpacity
-            style={{ marginVertical: 20 }}
+            style={{ marginVertical: 0 }}
             onPress={() => navigate(SCREENS.VIEW_REVIEWS)}
           >
             <Image
