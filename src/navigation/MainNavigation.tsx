@@ -14,19 +14,26 @@ import { getItem } from "../utils/storage";
 import { getUserDetailApi } from "../api/auth";
 import { setLoggedIn, setUserDetails } from "../redux/slice/user";
 import { VARIABLES } from "../constants";
+import SignUpOrg from "../components/organisms/SignUpOrg";
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
   const [isloading, setIsLoadings] = useState(true);
   const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
+  const [userNotActive, setUserNotActive] = useState(null);
   useEffect(() => {
     const getUser = async () => {
       const token = await getItem(VARIABLES.USER_TOKEN);
+
       if (token) {
         const resp = await getUserDetailApi();
         if (resp) {
-          dispatch(setUserDetails(resp));
-          dispatch(setLoggedIn(true));
+          if (resp?.IsActive) {
+            dispatch(setLoggedIn(true));
+            dispatch(setUserDetails(resp));
+          } else {
+            setUserNotActive(resp);
+          }
         }
       }
     };
@@ -37,6 +44,10 @@ const MainNavigation = () => {
     return () => clearTimeout(timer);
     1;
   }, []);
+
+  if (userNotActive) {
+    return <SignUpOrg isNotVerifiedStep={1} user={userNotActive} />;
+  }
 
   return isloading ? (
     <Splash />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
@@ -25,7 +25,13 @@ const steps = [
   { label: "Finish", progress: 1.0 },
 ];
 
-const SignUpOrg = () => {
+const SignUpOrg = ({
+  isNotVerifiedStep,
+  user,
+}: {
+  isNotVerifiedStep?: number;
+  user?: {};
+}) => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
   const [validationState, setValidationState] = useState([
@@ -35,6 +41,12 @@ const SignUpOrg = () => {
     false,
     false,
   ]);
+
+  useEffect(() => {
+    if (isNotVerifiedStep) {
+      setCurrentStep(isNotVerifiedStep);
+    }
+  }, [isNotVerifiedStep]);
 
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },
@@ -50,7 +62,7 @@ const SignUpOrg = () => {
       setCurrentStep(currentStep + 1);
     }
   };
-  
+
   const handleBottomData = () => {
     return (
       <>
@@ -93,7 +105,7 @@ const SignUpOrg = () => {
     if (currentStep === 0) {
       return (
         <SignUpFields
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[0] = valid;
@@ -104,7 +116,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 1) {
       return (
         <InformationIds
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[1] = valid;
@@ -115,7 +127,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 2) {
       return (
         <LicenseInfo
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[2] = valid;
@@ -126,7 +138,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 3) {
       return (
         <PassportInfo
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[3] = valid;
@@ -137,7 +149,7 @@ const SignUpOrg = () => {
     } else {
       return (
         <Uploads
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[4] = valid;
@@ -235,5 +247,3 @@ const SignUpOrg = () => {
 };
 
 export default SignUpOrg;
-
-

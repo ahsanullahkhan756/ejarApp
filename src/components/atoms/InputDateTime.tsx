@@ -90,7 +90,7 @@ export const InputDateTime = (props: any) => {
           onConfirm={(e: any) => {
             onChange(
               moment(new Date(e)).format(
-                mode == "date" ? "DD-MM-YYYY" : "hh:mm A"
+                mode == "date" ? "YYYY-MM-DD" : "hh:mm A"
               )
             );
             setVisible(false);
