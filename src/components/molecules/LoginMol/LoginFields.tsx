@@ -14,6 +14,9 @@ import ForgotText from "../SignUpMol/ForgotText";
 import { getFCMToken, loginApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
 import { showToast } from "../../../utils/toast";
+import { COMMON_TEXT, EJAR } from "../../../constants/screens";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
@@ -21,6 +24,8 @@ const LoginFields = () => {
   const [password, setPassword] = useState(__DEV__ ? "Passward123!" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const isFormValid = () => {
     const emailValid = /\S+@\S+\.\S+/.test(email);
     const passwordValid =
@@ -33,12 +38,12 @@ const LoginFields = () => {
     <View marginH-20>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
-        Hi, Welcome Back!
+        {EJAR.HI_WELCOME_BACK}
       </Typography>
 
       <View marginV-20>
         <InputText
-          label={"Email"}
+          label={COMMON_TEXT.EMAIL}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -47,15 +52,15 @@ const LoginFields = () => {
               return copy;
             });
           }}
-          placeholder="loremipsum@domain.com"
+          placeholder={COMMON_TEXT.ENTER_YOUR_EMAIL}
           validate={["email"]}
           keyboardType="email-address"
-          validationMessage={["Email is invalid"]}
+          validationMessage={[VALIDATION_MESSAGES.INVALID_EMAIL_FORMAT]}
           onChangeText={(text: string) => setEmail(text)}
         />
 
         <InputText
-          label={"Password"}
+          label={COMMON_TEXT.PASSWORD}
           // width={350}
           value={password}
           onValidationFailed={(isValid: boolean) => {
@@ -68,20 +73,18 @@ const LoginFields = () => {
           onPressRight={() => setPasswordVisible(!passwordVisible)}
           secureTextEntry={passwordVisible}
           rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
-          placeholder="Please enter your password"
+          placeholder={COMMON_TEXT.ENTER_YOUR_PASSWORD}
           validate={[
             (v) =>
               /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),
           ]}
-          validationMessage={[
-            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-          ]}
+          validationMessage={[VALIDATION_MESSAGES.PASSWORD_MUST_CONTAIN]}
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
       <ForgotText termsText={false} />
       <Button
-        label="Sign In"
+        label={t(COMMON_TEXT.SIGN_IN)}
         backgroundColor={theme.color.primary}
         borderRadius={30}
         // disabled={hasValidated.includes(false)}
