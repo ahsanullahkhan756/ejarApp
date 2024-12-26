@@ -1,6 +1,7 @@
 import React from "react";
 import { theme } from "../../constants";
 import { Text } from "react-native-ui-lib";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export const Typography = (props: any) => {
   const {
@@ -11,12 +12,14 @@ export const Typography = (props: any) => {
     style = {},
     numberOfLines = undefined,
   } = props;
+  const { t, isLangRTL } = useTranslation();
 
   let textStyle = {
     lineHeight: size * 1.6,
     fontSize: size,
     color: color,
     textAlign: align,
+    writingDirection: isLangRTL ? "rtl" : "ltr",
     ...style,
   };
 
@@ -37,7 +40,7 @@ export const Typography = (props: any) => {
 
   return (
     <Text color={color} style={textStyle} numberOfLines={numberOfLines}>
-      {props.children}
+      {t(props.children)}
     </Text>
   );
 };
