@@ -1,26 +1,34 @@
 import React, { useState } from "react";
 import { StyleSheet, Image, I18nManager, Pressable } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, SCREENS, theme } from "../../constants";
+import { IMAGES, SCREENS, theme, VARIABLES } from "../../constants";
 import { scale, verticalScale } from "react-native-size-matters";
-import { useTranslation } from "react-i18next";
 import "../../i18n";
 import { View, Text } from "react-native-ui-lib";
 import { Typography } from "../../components/atoms/Typography";
-import { navigate } from "../../navigation/RootNavigation";
+import { navigate, replace } from "../../navigation/RootNavigation";
+import { LANGUAGES, useTranslation } from "../../hooks/useTranslation";
+import { useDispatch } from "react-redux";
+import { setAppLanguage } from "../../redux/slice/appSettings";
+import { setItem } from "../../utils/storage";
+import { COMMON_TEXT, TEMPORARY_TEXT } from "../../constants/screens";
 
 const SelectLanguage = () => {
-  const { t, i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState<string>("en");
-
-  const changeLanguage = (lng: string) => {
-    setSelectedLang(lng); // Set selected language
-    i18n?.changeLanguage(lng);
-    if (lng === "ar") {
-      I18nManager.forceRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
-    }
+  const { t, changeLanguage } = useTranslation();
+  const [selectedLang, setSelectedLang] = useState<string>(LANGUAGES.ENGLISH);
+  const dispatch = useDispatch();
+  const changeAppLanguage = (selectedLanguage: string) => {
+    // setSelectedLang(lng); // Set selected language
+    // i18n?.changeAppLanguage(lng);
+    // if (lng === "ar") {
+    //   I18nManager.forceRTL(true);
+    // } else {
+    //   I18nManager.forceRTL(false);
+    // }
+    changeLanguage(selectedLanguage);
+    dispatch(setAppLanguage(selectedLanguage));
+    setItem(VARIABLES.LANGUAGE, selectedLanguage);
+    replace(SCREENS.ONBOARDING);
   };
 
   return (
@@ -36,38 +44,42 @@ const SelectLanguage = () => {
         />
       </View>
       <View marginH-10>
-        <Typography align="center" textType='bold' size={theme.fontSize.large26}>
-        {t("Select Language")}
+        <Typography
+          align="center"
+          textType="bold"
+          size={theme.fontSize.large26}
+        >
+          {COMMON_TEXT.CHOOSE_LANGUAGE}
         </Typography>
 
         <Typography align="center" color={theme.color.descColor}>
-          {t("Lang Des")}
-          </Typography>
+          {TEMPORARY_TEXT.LORUM_IPSUM}
+        </Typography>
       </View>
       <View style={styles.buttonContainer}>
         <Pressable
           style={[
             styles.languageButton,
-            selectedLang === "en" && styles.selectedButton,
+            selectedLang === LANGUAGES.ENGLISH && styles.selectedButton,
           ]}
-          onPress={() => 
-            navigate(SCREENS.ONBOARDING)
-            // changeLanguage("en")
-          }
+          onPress={() => changeAppLanguage(LANGUAGES.ENGLISH)}
         >
-          <Text small>{t("English")}</Text>
+          {/* <Text small>{t("English")}</Text> */}
+
+          <Typography style={{ textTransform: "capitalize" }}>
+            {LANGUAGES.ENGLISH}
+          </Typography>
         </Pressable>
         <Pressable
           style={[
             styles.languageButton,
-            selectedLang === "ar" && styles.selectedButton,
+            selectedLang === LANGUAGES.ARABIC && styles.selectedButton,
           ]}
-          onPress={() => 
-            navigate(SCREENS.ONBOARDING)
-            // changeLanguage("ar")
-          }
+          onPress={() => changeAppLanguage(LANGUAGES.ARABIC)}
         >
-          <Text small>{t("Arabic")}</Text>
+          <Typography style={{ textTransform: "capitalize" }}>
+            {LANGUAGES.ARABIC}
+          </Typography>
         </Pressable>
       </View>
       <View center marginT-50>
@@ -96,13 +108,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginHorizontal: 10,
     borderWidth: 1,
-    borderColor: "transparent", 
+    borderColor: "transparent",
     borderRadius: 5,
   },
   selectedButton: {
-    borderColor: theme.color.primary, 
+    borderColor: theme.color.primary,
     borderWidth: 1,
-    borderRadius:10
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: 16,
