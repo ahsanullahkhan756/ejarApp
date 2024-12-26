@@ -6,6 +6,7 @@ import { IMAGES } from "../../../constants/index.tsx";
 import { theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
 import LoginFields from "../../molecules/LoginMol/LoginFields.tsx";
+import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
 
 const LoginOrg = () => { 
   return (
@@ -26,7 +27,7 @@ const LoginOrg = () => {
         <View flex height={1} backgroundColor={theme.color.black} />
         <View>
           <Typography style={{ width: 100, textAlign: "center" }}>
-            Or with
+            {COMMON_TEXT.OR_CONTINUE_WITH}
           </Typography>
         </View>
         <View flex height={1} backgroundColor={theme.color.black} />
