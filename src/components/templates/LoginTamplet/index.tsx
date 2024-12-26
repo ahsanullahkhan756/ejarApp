@@ -13,6 +13,7 @@ import {
   UserAppleLoginFunction,
 } from "../../../api/auth.js";
 import { useDispatch } from "react-redux";
+import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
 
 const LoginTamplet = () => {
   const dispatch = useDispatch();
@@ -53,17 +54,17 @@ const LoginTamplet = () => {
         center
         row
         style={{
-          marginTop: Platform.OS == "ios" ? 180 : 150,
+          marginTop: 140,
         }}
       >
-        <Typography>Don’t have an account? </Typography>
+        <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT} </Typography>
         <TouchableOpacity onPress={() => navigate(SCREENS.SIGNUP)}>
           <Typography
             textType="semiBold"
             size={theme.fontSize.extraSmall}
             color={theme.color.primary}
           >
-            Sign Up
+            {COMMON_TEXT.SIGN_UP}
           </Typography>
         </TouchableOpacity>
       </View>
