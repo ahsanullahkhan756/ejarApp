@@ -3,6 +3,7 @@ import { useState } from "react";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { Platform } from "react-native";
 import { IMAGES, theme } from "../../constants";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export const InputText = (props: any) => {
   const {
@@ -28,24 +29,24 @@ export const InputText = (props: any) => {
     onPressRight = () => {},
     containerStyle,
   } = props;
-
+  const { t } = useTranslation();
   return (
     <TextField
       small
       allowFontScaling={false}
-      label={label}
+      label={t(label)}
       labelStyle={{
         fontSize: moderateScale(14),
       }}
       value={value}
       labelColor={theme.color.black}
-      placeholder={placeholder}
+      placeholder={t(placeholder)}
       placeholderTextColor={placeholderTextColor}
       onChangeText={onChangeText}
       secureTextInput={true}
       enableErrors
       validate={[(value: any) => value?.length > 6, ...validate]}
-      validationMessage={["", ...validationMessage]}
+      validationMessage={["", t(...validationMessage)]}
       showCharCounter={showCharCounter}
       validateOnChange
       onChangeValidity={onValidationFailed}
