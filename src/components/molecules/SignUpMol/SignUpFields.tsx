@@ -13,11 +13,14 @@ import {
   setUserDetails,
 } from "../../../redux/slice/user";
 import { useDispatch } from "react-redux";
+import { COMMON_TEXT } from "../../../constants/screens";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(5).fill(false));
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -42,13 +45,13 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
     <View marginH-20>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
-        Create an Account
+        {COMMON_TEXT.CREATE_AN_ACCOUNT}
       </Typography>
 
       <View marginV-20>
         <View row flex gap-30>
           <InputText
-            label={"First Name"}
+            label={COMMON_TEXT.FIRST_NAME}
             value={firstname}
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
@@ -57,9 +60,9 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
                 return copy;
               });
             }}
-            placeholder="Lorem"
+            placeholder={COMMON_TEXT.ENTER_FIRST_NAME}
             validate={["name"]}
-            validationMessage={["Name field is invalid"]}
+            validationMessage={[VALIDATION_MESSAGES.THIS_FEILD_IS_REQUIRED]}
             onChangeText={(text: string) => setFirstName(text)}
             containerStyle={{
               flex: 1,
@@ -67,7 +70,7 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
             maxLength={20}
           />
           <InputText
-            label={"Last Name"}
+            label={COMMON_TEXT.LAST_NAME}
             value={lastname}
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
@@ -76,9 +79,9 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
                 return copy;
               });
             }}
-            placeholder="Ipsum"
+            placeholder={COMMON_TEXT.ENTER_LAST_NAME}
             validate={["name"]}
-            validationMessage={["Name field is invalid"]}
+            validationMessage={[VALIDATION_MESSAGES.THIS_FEILD_IS_REQUIRED]}
             onChangeText={(text: string) => setLastName(text)}
             containerStyle={{
               flex: 1,
@@ -87,7 +90,7 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
           />
         </View>
         <InputText
-          label={"Email"}
+          label={COMMON_TEXT.EMAIL}
           value={email}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -96,14 +99,14 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
               return copy;
             });
           }}
-          placeholder="loremipsum@domain.com"
+          placeholder={COMMON_TEXT.ENTER_YOUR_EMAIL}
           validate={["email"]}
-          validationMessage={["Email is invalid"]}
+          validationMessage={[VALIDATION_MESSAGES.INVALID_EMAIL_FORMAT]}
           onChangeText={(text: string) => setEmail(text)}
         />
 
         <InputText
-          label={"Phone Number"}
+          label={COMMON_TEXT.PHONE_NUMBER}
           value={phone}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -113,16 +116,14 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
             });
           }}
           keyboardType="phone-pad"
-          placeholder="Please enter your number"
+          placeholder={COMMON_TEXT.ENTER_YOUR_PHONE_NUMBER}
           validate={[(v) => v.length > 10]}
-          validationMessage={[
-            "Phone number must be contain at least 11 chracter",
-          ]}
+          validationMessage={[VALIDATION_MESSAGES.WRONG_PHONE_NUMBER]}
           onChangeText={(text: string) => setPhone(text)}
         />
 
         <InputText
-          label={"Password"}
+          label={COMMON_TEXT.PASSWORD}
           value={password}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -134,21 +135,19 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
           onPressRight={() => setPasswordVisible(!passwordVisible)}
           secureTextEntry={passwordVisible}
           rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
-          placeholder="Enter your password"
+          placeholder={COMMON_TEXT.ENTER_YOUR_PASSWORD}
           validate={[
             (v) =>
               /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(v),
           ]}
-          validationMessage={[
-            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-          ]}
+          validationMessage={[VALIDATION_MESSAGES.PASSWORD_MUST_CONTAIN]}
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
       <ForgotText forgotPass={false} />
 
       <Button
-        label={"Next"}
+        label={t(COMMON_TEXT.NEXT)}
         backgroundColor={theme.color.primary}
         onPress={async () => {
           // if (isFormValid()) {
