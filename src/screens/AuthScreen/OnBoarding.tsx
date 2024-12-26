@@ -1,9 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  StyleSheet,
-  FlatList,
-  Dimensions
-} from "react-native";
+import { StyleSheet, FlatList, Dimensions } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { OnBoardingTamplet } from "../../components/templates";
 import { ONBOARDING_DATA } from "../../containers/dummy";
@@ -11,6 +7,7 @@ import { OnBeardingBottomBtn } from "../../components/atoms/OnBeardingBottomBtn"
 import { View } from "react-native-ui-lib";
 import { navigate } from "../../navigation/RootNavigation";
 import { SCREENS, theme } from "../../constants";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const { width } = Dimensions.get("window");
 
@@ -35,8 +32,8 @@ const OnBoarding = () => {
       setCurrentIndex(nextIndex);
     } else {
       const lastInd = currentIndex;
-      if(lastInd == currentIndex){
-        navigate(SCREENS.LOGIN)
+      if (lastInd == currentIndex) {
+        navigate(SCREENS.LOGIN);
       }
     }
   };
@@ -68,7 +65,7 @@ const OnBoarding = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:theme.color.white
+    backgroundColor: theme.color.white,
   },
 });
 
