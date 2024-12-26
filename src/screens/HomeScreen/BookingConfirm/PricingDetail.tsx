@@ -9,21 +9,25 @@ import { onBack } from "../../../navigation/RootNavigation";
 const PricingDetail = (props: any) => {
   const data = [
     {
-      title: "Total Rent For 4 Days",
-      date: `AED ${props?.totalPrice}`,
+      title: `Total Rent For ${props?.daysInRange} Days`,
+      date: `AED ${props?.price}`,
     },
-    {
-      title: "Security Deposit",
-      date: "AED 5000",
-    },
-    {
-      title: "VAT 15%",
-      date: "AED 3500",
-    },
-    {
-      title: "Delivery",
-      date: "Free",
-    },
+    ...(props?.item?.securityDeposit
+      ? [
+          {
+            title: "Security Deposit",
+            date: `AED ${props?.item?.securityDeposit}`,
+          },
+        ]
+      : []),
+    ...(props?.item?.tax
+      ? [
+          {
+            title: `VAT ${props?.item?.tax}%`,
+            date: `AED ${props?.item?.tax}`,
+          },
+        ]
+      : []),
   ];
 
   return (

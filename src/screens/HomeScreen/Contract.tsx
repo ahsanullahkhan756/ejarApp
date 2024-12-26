@@ -9,7 +9,12 @@ import {
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../components/atoms/Typography";
-import { navigate, onBack } from "../../navigation/RootNavigation";
+import {
+  navigate,
+  onBack,
+  replace,
+  reset,
+} from "../../navigation/RootNavigation";
 import SignatureView from "react-native-signature-canvas";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
@@ -48,21 +53,22 @@ const Contract = ({ route }) => {
 
   const acknowledgement = async () => {
     try {
+      dispatch(setIsLoading(true));
       const data = {
         bookingData: {
           BookCarId: item?.ID,
           CarOwnerId: item?.createdBy,
           StartDate: startEndDates?.start,
-          EndDate: startEndDates?.end,
-          PerDayPayment: 100,
-          Payable: 300,
+          EndDate: startEndDates?.end ?? startEndDates?.start,
+          PerDayPayment: item?.rentalPrice,
+          Payable: totalPrice,
           ContractSignature: {
             base64: "https://placehold.co/400",
             fileName: "contract-signature.png",
           },
         },
         paymentData: {
-          amount: 300,
+          amount: totalPrice,
           toID: item?.createdBy,
           card_secret: card?.id,
         },
@@ -71,22 +77,13 @@ const Contract = ({ route }) => {
       console.log(data);
 
       const resp = await confirmBooking(data);
-      if (resp != null) {
-        console.log("booking hogai");
-        console.log("booking hogai");
-        console.log("booking hogai");
-        console.log("booking hogai");
-        console.log(resp);
-        console.log("booking hogai");
-        console.log("booking hogai");
-
-        console.log("booking hogai");
+      if (resp?.result != null) {
+        setModalVisible(true);
       }
       dispatch(setIsLoading(false));
-
-      // setModalVisible(true)
     } catch (error) {
       console.error("Error fetching data:", error);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -97,8 +94,15 @@ const Contract = ({ route }) => {
   const PERSONAL_DATA = [
     { title: "First Name:", subTitle: userDetails?.firstName },
     { title: "Last Name:", subTitle: userDetails?.lastName },
+    { title: "Car Name:", subTitle: item?.carName },
+    { title: "Email:", subTitle: item?.email },
+    { title: "Nationality:", subTitle: item?.nationality },
+    { title: "Address:", subTitle: item?.address },
+    { title: "Date of birth:", subTitle: item?.dob },
+    { title: "Passport Id:", subTitle: item?.passportId },
     { title: "VIN:", subTitle: item?.vin },
     { title: "Plate Number:", subTitle: item?.numberPlate },
+    { title: "Total Amount:", subTitle: totalPrice + " AED" },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -117,11 +121,9 @@ const Contract = ({ route }) => {
         <View padding-20>
           {PERSONAL_DATA.map((i) => {
             return (
-              <View row spread marginB-10>
+              <View row spread marginB-2>
                 <Typography style={{ flex: 1 }}>{i.title}</Typography>
-                <Typography style={{ flex: 1, textTransform: "capitalize" }}>
-                  {i.subTitle}
-                </Typography>
+                <Typography style={{ flex: 1 }}>{i.subTitle}</Typography>
                 <View />
               </View>
             );
@@ -164,9 +166,10 @@ const Contract = ({ route }) => {
         />
         <Typography align="center">Signature</Typography>
 
-        {/* Acknowledged Button */}
+        <Typography>Note: I agree to all the conditions above.</Typography>
+
         <Button
-          label="Acknowledged"
+          label="Pay"
           backgroundColor={theme.color.primary}
           borderRadius={30}
           style={styles.button}
@@ -199,7 +202,9 @@ const Contract = ({ route }) => {
               style={styles.button}
               onPress={() => {
                 setModalVisible(false);
-                navigate(SCREENS.USER_BOOKING);
+                replace(SCREENS.USER_BOOKING, {
+                  isFormBooking: true,
+                });
               }}
             />
             <Button
@@ -209,7 +214,7 @@ const Contract = ({ route }) => {
               style={styles.button}
               onPress={() => {
                 setModalVisible(false);
-                navigate(SCREENS.HOME);
+                reset(SCREENS.HOME);
               }}
             />
           </View>
@@ -231,6 +236,7 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: "50%",
+    fontSize: 10,
     alignSelf: "center",
     marginTop: 20,
   },

@@ -295,9 +295,18 @@ const MyBooking = ({ route }) => {
                 margin: 20,
                 width: "50%",
                 alignSelf: "center",
-                marginVertical: 50,
+                marginTop: 0,
               }}
             />
+          </View>
+          <View style={{ marginHorizontal: 10, marginBottom: 30 }}>
+            <Typography
+              textType="bold"
+              size={theme.fontSize.small}
+              color={theme.color.blue}
+            >
+              Note: Payment will be charged after the contract signed by you .
+            </Typography>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -16,6 +16,21 @@ export const getHomeApi = async () => {
     store.dispatch(setIsLoading(false));
   }
 };
+export const getBookingsListApi = async (activeTab) => {
+  store.dispatch(setIsLoading(true));
+  try {
+    console.log( `booking?status=${activeTab?.toLowerCase()}`);
+    
+    const res = await get({
+      url: `booking?status=${activeTab?.toLowerCase()}`,
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
 export const topRatedCar = async () => {
   store.dispatch(setIsLoading(false));
   try {
@@ -76,6 +91,20 @@ export const confirmBooking = async (data) => {
   try {
     const res = await post({
       url: `payment/payment-intent`,
+      data: data,
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const giveRating = async (data) => {
+  store.dispatch(setIsLoading(true));
+  try {
+    const res = await post({
+      url: `review`,
       data: data,
     });
     return res;

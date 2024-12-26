@@ -28,6 +28,26 @@ const BookingConfirmation = ({ route }) => {
 
   const totalPrice = item?.rentalPrice * daysInRange;
 
+  const calculateTotal = () => {
+    // Initialize total price with the rent value
+    let total = totalPrice || 0;
+
+    // Add security deposit if available
+    if (item?.securityDeposit) {
+      total += parseInt(item?.securityDeposit);
+    }
+
+    // Add VAT (tax) if available
+    if (item?.tax) {
+      const calculateTax = (totalPrice * parseInt(item?.tax)) / 100;
+      console.log(calculateTax);
+
+      total += parseInt(calculateTax);
+    }
+
+    return total;
+  };
+
   const [check, setCheck] = useState(false);
   const [status, setStatus] = useState(false);
   return (
@@ -75,7 +95,12 @@ const BookingConfirmation = ({ route }) => {
             />
           </View>
           <View marginV-10>
-            <PricingDetail item={item} totalPrice={totalPrice} />
+            <PricingDetail
+              item={item}
+              price={totalPrice}
+              totalPrice={calculateTotal()}
+              daysInRange={daysInRange}
+            />
           </View>
           <View marginV-10>
             {/* // TODO:: CHNAGE TO AGAINST USER ID */}
@@ -96,7 +121,7 @@ const BookingConfirmation = ({ route }) => {
           </Typography>
         </View>
         <Button
-          label="Confirm and Pay"
+          label="Next"
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={() => {
@@ -107,7 +132,7 @@ const BookingConfirmation = ({ route }) => {
                 selectedDates: selectedDates,
                 daysInRange: daysInRange,
                 card: card,
-                totalPrice: totalPrice,
+                totalPrice: calculateTotal(),
               });
             } else {
               showToast({ title: "Please confirm the terms to proceed" });

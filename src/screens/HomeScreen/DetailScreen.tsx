@@ -29,8 +29,7 @@ const DetailScreen = ({ route }) => {
     try {
       const response = await getBookedDatesFunction(item?.ID);
       if (response != null) {
-        // setSelectedDates(response);
-        setSelectedDates(["2024-12-05", "2024-12-08", "2024-12-12"]);
+        setSelectedDates(response);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -41,12 +40,38 @@ const DetailScreen = ({ route }) => {
     getBookedDatesList();
   }, []);
 
-  const formattedDates = selectedDates.reduce((acc, date) => {
-    acc[date] = {
-      selected: true,
-      disableTouchEvent: true,
-      selectedColor: theme.color.blue, // Assuming theme.color.blue is defined
-    };
+  // const formattedDates = selectedDates.reduce((acc, date) => {
+  //   acc[date] = {
+  //     selected: true,
+  //     disableTouchEvent: true,
+  //     selectedColor: theme.color.blue, // Assuming theme.color.blue is defined
+  //   };
+  //   return acc;
+  // }, {});
+
+  const formattedDates = selectedDates.reduce((acc, dateRange) => {
+    const { StartDate, EndDate } = dateRange;
+
+    // Convert the dates to string format (e.g., 'YYYY-MM-DD')
+    const startDate = new Date(StartDate).toISOString().split("T")[0];
+    const endDate = new Date(EndDate).toISOString().split("T")[0];
+
+    // Add each date between StartDate and EndDate
+    let currentDate = new Date(startDate);
+    const end = new Date(endDate);
+
+    while (currentDate <= end) {
+      const formattedDate = currentDate.toISOString().split("T")[0];
+
+      acc[formattedDate] = {
+        selected: true,
+        disableTouchEvent: true,
+        selectedColor: theme.color.blue, // Assuming theme.color.blue is defined
+      };
+
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+
     return acc;
   }, {});
   const vehicleSpecs = [
@@ -71,7 +96,7 @@ const DetailScreen = ({ route }) => {
             ]}
             activeDotStyle={styles.dotStyle}
           >
-            {item?.Media?.carPicture?.map((item:any) => (
+            {item?.Media?.carPicture?.map((item: any) => (
               <ImageBackground
                 source={{
                   uri: item?.base64,

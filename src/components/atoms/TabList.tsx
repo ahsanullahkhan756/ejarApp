@@ -4,7 +4,12 @@ import { Text, View } from "react-native-ui-lib";
 import { theme } from "../../constants";
 
 const TabList = (props: any) => {
-  const { data = [], onSelect = () => {}, selected = 0 } = props;
+  const {
+    data = [],
+    onSelect = () => {},
+    selected = 0,
+    isFrombookList = false,
+  } = props;
   return (
     <View style={styles.tabView}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -15,11 +20,17 @@ const TabList = (props: any) => {
               styles.activeTabText,
               {
                 backgroundColor:
-                  selected == i ? theme.color.primary : theme.color.blue,
+                  item?.label == selected
+                    ? theme.color.primary
+                    : theme.color.blue,
               },
             ]}
             onPress={() => {
-              onSelect(i);
+              if (isFrombookList) {
+                onSelect(item.label);
+              } else {
+                onSelect(i);
+              }
             }}
           >
             <Text extraSmall12 semibold color={"#fff"}>

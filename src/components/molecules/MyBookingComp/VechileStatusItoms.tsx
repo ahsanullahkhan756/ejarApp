@@ -5,6 +5,7 @@ import { IMAGES } from "../../../constants";
 import { Image } from "react-native";
 
 const VechileStatusItoms = ({ item }) => {
+
   return (
     <View row>
       <View gap-10 paddingV-10 marginR-50>

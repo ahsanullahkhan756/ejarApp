@@ -24,6 +24,7 @@ import { setFilterData, setHomeData } from "../../redux/slice/appData";
 import { setIsLoading } from "../../redux/slice/user";
 import { getHomeApi, topRatedCar } from "../../api/homeServices";
 import { getFCMToken } from "../../api/auth.js";
+import { useIsFocused } from "@react-navigation/native";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -31,13 +32,11 @@ const Home = () => {
   const filterData = useSelector((state: any) => state?.appData?.filterData);
   const [rentCars, setRentCars] = useState([]);
   console.log("details", details);
-
+  const isFocused = useIsFocused();
   const getUser = async () => {
     try {
       const resp = await getHomeApi();
       if (resp) {
-        dispatch(setFilterData([]));
-        console.log("homeData", resp);
         dispatch(setHomeData(resp));
         setRentCars(resp?.cars);
       }
@@ -68,7 +67,7 @@ const Home = () => {
     } else {
       getUser();
     }
-  }, [filterData]);
+  }, [filterData, isFocused]);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -143,7 +142,15 @@ const Home = () => {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(item);
+
+                    navigate(SCREENS.DETAIL_SCREEN, {
+                      item: item,
+                    });
+                  }}
+                >
                   <Card
                     style={{
                       marginRight: 10,

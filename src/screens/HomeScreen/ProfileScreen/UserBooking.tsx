@@ -1,50 +1,77 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { BackHandler, StyleSheet } from "react-native";
 import { View } from "react-native-ui-lib";
 import SafeAreaContainer from "../../../containers/SafeAreaContainer";
 import { Header } from "../../../components/atoms/Header";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import TabList from "../../../components/atoms/TabList";
 import ActiveBooking from "../../../components/molecules/MyBookingComp/ActiveBooking";
-import UpcomingBooking from "../../../components/molecules/MyBookingComp/UpcomingBooking";
 import CompletedBooking from "../../../components/molecules/MyBookingComp/CompletedBooking";
+import { onBack, reset } from "../../../navigation/RootNavigation";
+import { SCREENS } from "../../../constants";
+import { getBookingsListApi } from "../../../api/homeServices";
 
-const UserBooking = () => {
-  const [activeTab, setActiveTab] = useState(0);
+const UserBooking = ({ route }: any) => {
+  const isFromBooking = route?.params?.isFormBooking;
+  const [activeTab, setActiveTab] = useState("Active");
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    const getBookingsList = async () => {
+      try {
+        const response = await getBookingsListApi(activeTab);
+        if (response?.Data) {
+          setData(response?.Data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getBookingsList();
+    const onBackPress = () => {
+      if (isFromBooking) {
+        reset(SCREENS.HOME);
+      }
+      return true;
+    };
+    BackHandler.addEventListener("hardwareBackPress", () => onBackPress());
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", () => onBackPress());
+    };
+    // }, [isFocused]);
+  }, [activeTab, isFocused]);
+
   const renderTab = () => {
     switch (activeTab) {
-      case 0:
+      case "Active":
         return (
           <ActiveBooking
+            data={data}
             onSubmit={() => {
-              setActiveTab(1);
+              setActiveTab("Active");
             }}
           />
         );
 
-      case 1:
+      case "Upcoming":
         return (
-          // <UpcomingBooking
-          //   onSubmit={() => {
-          //     setActiveTab(2);
-          //   }}
-          // />
-
           <ActiveBooking
+            data={data}
             onSubmit={() => {
-              setActiveTab(1);
+              setActiveTab("Upcoming");
             }}
           />
         );
 
-      case 2:
+      case "Completed":
         return (
           <CompletedBooking
+            data={data}
             onSubmit={() => {
-              setActiveTab(3);
+              setActiveTab("Completed");
             }}
           />
         );
@@ -53,13 +80,24 @@ const UserBooking = () => {
         break;
     }
   };
+
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Renting"} centerImg={false} />
+      <Header
+        onPressLeft={() => {
+          if (isFromBooking) {
+            reset(SCREENS.HOME);
+          } else {
+            onBack();
+          }
+        }}
+        titleText={"My Renting"}
+        centerImg={false}
+      />
       <View paddingH-10>
-
-      <View center marginV-20>
+        <View center marginV-20>
           <TabList
+            isFrombookList={true}
             data={[
               {
                 id: 1,
@@ -79,7 +117,6 @@ const UserBooking = () => {
           />
         </View>
         <View>{renderTab()}</View>
-
       </View>
     </SafeAreaContainer>
   );

@@ -11,14 +11,14 @@ import {
   setUserDetails,
 } from "../../../redux/slice/user";
 import ForgotText from "../SignUpMol/ForgotText";
-import { loginApi } from "../../../api/auth";
+import { getFCMToken, loginApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
 import { showToast } from "../../../utils/toast";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState(__DEV__ ? "john123@mailinator.com" : "");
-  const [password, setPassword] = useState(__DEV__ ? "Qwerty@123" : "");
+  const [email, setEmail] = useState(__DEV__ ? "shahid@mailinator.com" : "");
+  const [password, setPassword] = useState(__DEV__ ? "Passward123!" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   const isFormValid = () => {
@@ -91,6 +91,7 @@ const LoginFields = () => {
             const data = {
               email: email,
               password: password,
+              fcmToken: await getFCMToken(),
             };
             const res = await loginApi({ data });
             console.log(res);

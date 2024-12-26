@@ -5,12 +5,16 @@ import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, VARIABLES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import ForgotText from "./ForgotText";
-import { signUpApi } from "../../../api/auth";
+import { getFCMToken, signUpApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
-import { setIsLoading, setLoggedIn, setUserDetails } from "../../../redux/slice/user";
+import {
+  setIsLoading,
+  setLoggedIn,
+  setUserDetails,
+} from "../../../redux/slice/user";
 import { useDispatch } from "react-redux";
 
-const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
+const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(5).fill(false));
   const dispatch = useDispatch();
 
@@ -18,7 +22,7 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   useEffect(() => {
@@ -29,9 +33,7 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
   const isFormValid = () => {
     const emailValid = /\S+@\S+\.\S+/.test(email);
     const passwordValid =
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
-        password
-      );
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password);
 
     return emailValid && passwordValid;
   };
@@ -45,49 +47,44 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
 
       <View marginV-20>
         <View row flex gap-30>
-        <InputText
-          label={"First Name"}
-          value={firstname}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[0] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="Lorem"
-          validate={["name"]}
-          validationMessage={["Name field is invalid"]}
-          onChangeText={(text: string) => setFirstName(text)}
-          containerStyle={
-            {
-             flex:1
-            }
-          }
-          maxLength={20}
-        />
           <InputText
-          label={"Last Name"}
-          value={lastname}
-          onValidationFailed={(isValid: boolean) => {
-            setValidated((prev) => {
-              let copy = [...prev];
-              copy[1] = isValid;
-              return copy;
-            });
-          }}
-          placeholder="Ipsum"
-          validate={["name"]}
-          validationMessage={["Name field is invalid"]}
-          onChangeText={(text: string) => setLastName(text)}
-          containerStyle={
-            {
-             flex:1
-            }
-          }
-          maxLength={20}
-
-        />
+            label={"First Name"}
+            value={firstname}
+            onValidationFailed={(isValid: boolean) => {
+              setValidated((prev) => {
+                let copy = [...prev];
+                copy[0] = isValid;
+                return copy;
+              });
+            }}
+            placeholder="Lorem"
+            validate={["name"]}
+            validationMessage={["Name field is invalid"]}
+            onChangeText={(text: string) => setFirstName(text)}
+            containerStyle={{
+              flex: 1,
+            }}
+            maxLength={20}
+          />
+          <InputText
+            label={"Last Name"}
+            value={lastname}
+            onValidationFailed={(isValid: boolean) => {
+              setValidated((prev) => {
+                let copy = [...prev];
+                copy[1] = isValid;
+                return copy;
+              });
+            }}
+            placeholder="Ipsum"
+            validate={["name"]}
+            validationMessage={["Name field is invalid"]}
+            onChangeText={(text: string) => setLastName(text)}
+            containerStyle={{
+              flex: 1,
+            }}
+            maxLength={20}
+          />
         </View>
         <InputText
           label={"Email"}
@@ -118,9 +115,11 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
           keyboardType="phone-pad"
           placeholder="Please enter your number"
           validate={[(v) => v.length > 10]}
-          validationMessage={["Phone number must be contain at least 11 chracter"]}
+          validationMessage={[
+            "Phone number must be contain at least 11 chracter",
+          ]}
           onChangeText={(text: string) => setPhone(text)}
-        /> 
+        />
 
         <InputText
           label={"Password"}
@@ -132,7 +131,6 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
               return copy;
             });
           }}
-
           onPressRight={() => setPasswordVisible(!passwordVisible)}
           secureTextEntry={passwordVisible}
           rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
@@ -147,10 +145,10 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
-      <ForgotText forgotPass={false}/>
+      <ForgotText forgotPass={false} />
 
       <Button
-        label={'Next'}
+        label={"Next"}
         backgroundColor={theme.color.primary}
         onPress={async () => {
           // if (isFormValid()) {
@@ -160,6 +158,7 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
               lastName: lastname,
               email: email,
               phone: phone,
+              fcmToken: await getFCMToken(),
               password: password,
             },
             roles: ["8d3a703f-ca87-4f01-bad2-d559726818bb"],
@@ -169,7 +168,7 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
           console.log("response api", res);
 
           if (res != null) {
-            setCurrentStep(1)
+            setCurrentStep(1);
             setItem(VARIABLES.USER_TOKEN, res?.token);
             // dispatch(setLoggedIn(true));
             dispatch(setIsLoading(true));
@@ -180,10 +179,9 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
         disabled={!isFormValid()}
         borderRadius={30}
         style={{
-          backgroundColor: isFormValid()
-            ? theme.color.primary
-            : "#999B9F",
-            height: 50, margin: 20
+          backgroundColor: isFormValid() ? theme.color.primary : "#999B9F",
+          height: 50,
+          margin: 20,
         }}
       />
     </View>
@@ -191,5 +189,3 @@ const SignUpFields = ({ onValidate,setCurrentStep }: any) => {
 };
 
 export default SignUpFields;
-
-

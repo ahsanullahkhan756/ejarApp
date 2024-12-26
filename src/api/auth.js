@@ -41,8 +41,8 @@ export const loginApi = async ({ data }) => {
       data: data,
       includeToken: false,
     });
+
     if (response) {
-      console.log("response", response?.token);
       return response;
     }
     return null;
@@ -112,7 +112,7 @@ export const otpApi = async ({ data }) => {
     });
     return res;
   } catch (error) {
-    console.log('err',error);
+    console.log('err', error);
     showToast({ title: error?.message });
   }
 };
@@ -149,7 +149,7 @@ export const getPrivacyApi = async () => {
     return res;
   } catch (error) {
     console.log("API error:", error?.message);
-    throw error; 
+    throw error;
   }
 };
 
@@ -214,28 +214,28 @@ export const UserAppleLoginFunction = async (dispatch) => {
       const token = await getFCMToken();
       const data = user?.email
         ? {
-            name: user?.name ?? user?.email?.split("@")[0],
-            email: user?.email,
-            username: user?.name
-              ? user?.name + new Date().getUTCMilliseconds()
-              : user?.email?.split("@")[0] + new Date().getUTCMilliseconds(),
-            social_id: user?.id,
-            // fcm_token: token,
-            udid: await getUniqueId(),
-            device_token: await getFCMToken(),
-            device_type: Platform.OS,
-            device_brand: getBrand(),
-            device_os: getSystemVersion(),
-            app_version: getVersion(),
+          name: user?.name ?? user?.email?.split("@")[0],
+          email: user?.email,
+          username: user?.name
+            ? user?.name + new Date().getUTCMilliseconds()
+            : user?.email?.split("@")[0] + new Date().getUTCMilliseconds(),
+          social_id: user?.id,
+          // fcm_token: token,
+          udid: await getUniqueId(),
+          device_token: await getFCMToken(),
+          device_type: Platform.OS,
+          device_brand: getBrand(),
+          device_os: getSystemVersion(),
+          app_version: getVersion(),
 
-            picture: user?.picture,
-          }
+          picture: user?.picture,
+        }
         : {
-            social_id: user?.id,
-            fcm_token: token,
-            device_type: Platform.OS,
-            udid: await getUniqueId(),
-          };
+          social_id: user?.id,
+          fcm_token: token,
+          device_type: Platform.OS,
+          udid: await getUniqueId(),
+        };
       const url = API_URL.LOGIN + "/apple";
       const responseData = await post({
         url,
@@ -304,14 +304,14 @@ export const AppleSignUp = async () => {
         id: appleAuthRequestResponse?.user,
         name: appleAuthRequestResponse?.fullName?.givenName
           ? appleAuthRequestResponse?.fullName?.givenName +
-            " " +
-            appleAuthRequestResponse?.fullName?.familyName
+          " " +
+          appleAuthRequestResponse?.fullName?.familyName
           : null,
         email: appleAuthRequestResponse?.email,
       });
 
       console.log(userData);
-      
+
       return userData;
     }
     console.log(userData);
