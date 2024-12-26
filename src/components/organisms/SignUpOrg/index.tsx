@@ -16,13 +16,14 @@ import { signUpApi } from "../../../api/auth.js";
 import { setItem } from "../../../utils/storage.tsx";
 import { setIsLoading, setLoggedIn } from "../../../redux/slice/user.tsx";
 import { useDispatch } from "react-redux";
+import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
 
 const steps = [
-  { label: "Sign Up", progress: 0 },
+  { label: COMMON_TEXT.SIGN_UP, progress: 0 },
   { label: "", progress: 0.25 },
   { label: "", progress: 0.5 },
   { label: "", progress: 0.75 },
-  { label: "Finish", progress: 1.0 },
+  { label: COMMON_TEXT.FINISH, progress: 1.0 },
 ];
 
 const SignUpOrg = () => {
@@ -50,7 +51,7 @@ const SignUpOrg = () => {
       setCurrentStep(currentStep + 1);
     }
   };
-  
+
   const handleBottomData = () => {
     return (
       <>
@@ -58,7 +59,7 @@ const SignUpOrg = () => {
           <View flex height={1} backgroundColor={theme.color.black} />
           <View>
             <Typography style={{ width: 100, textAlign: "center" }}>
-              Or with
+              {COMMON_TEXT.OR_CONTINUE_WITH}
             </Typography>
           </View>
           <View flex height={1} backgroundColor={theme.color.black} />
@@ -74,14 +75,14 @@ const SignUpOrg = () => {
           ))}
         </View>
         <View center row>
-          <Typography>Don’t have an account? </Typography>
+          <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT}</Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
             <Typography
               textType="semiBold"
               size={theme.fontSize.extraSmall}
               color={theme.color.primary}
             >
-              Login
+              {COMMON_TEXT.LOGIN}
             </Typography>
           </TouchableOpacity>
         </View>
@@ -93,7 +94,7 @@ const SignUpOrg = () => {
     if (currentStep === 0) {
       return (
         <SignUpFields
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[0] = valid;
@@ -104,7 +105,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 1) {
       return (
         <InformationIds
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[1] = valid;
@@ -115,7 +116,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 2) {
       return (
         <LicenseInfo
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[2] = valid;
@@ -126,7 +127,7 @@ const SignUpOrg = () => {
     } else if (currentStep === 3) {
       return (
         <PassportInfo
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[3] = valid;
@@ -137,7 +138,7 @@ const SignUpOrg = () => {
     } else {
       return (
         <Uploads
-        setCurrentStep= {setCurrentStep}
+          setCurrentStep={setCurrentStep}
           onValidate={(valid: boolean) => {
             const newState = [...validationState];
             newState[4] = valid;
@@ -235,5 +236,3 @@ const SignUpOrg = () => {
 };
 
 export default SignUpOrg;
-
-
