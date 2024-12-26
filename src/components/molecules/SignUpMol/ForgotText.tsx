@@ -5,6 +5,7 @@ import { IMAGES, SCREENS, theme } from "../../../constants";
 import { Typography } from "../../atoms/Typography";
 import { navigate } from "../../../navigation/RootNavigation";
 import { commonStyles } from "../../../containers/commStyles";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const ForgotText = (props: any) => {
   const [check, setCheck] = useState(false);
@@ -33,7 +34,7 @@ const ForgotText = (props: any) => {
             size={theme.fontSize.extraSmall12}
             style={{ marginLeft: 8 }}
           >
-            Remember me
+            {COMMON_TEXT.REMEMBER_ME}
           </Typography>
         </View>
         {forgotPass && (
@@ -42,7 +43,7 @@ const ForgotText = (props: any) => {
               size={theme.fontSize.extraSmall12}
               color={theme.color.danger}
             >
-              Forgot Password
+              {COMMON_TEXT.FORGOT_PASSWORD}
             </Typography>
           </TouchableOpacity>
         )}
@@ -65,26 +66,34 @@ const ForgotText = (props: any) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View>
               <TouchableOpacity
-                onPress={() => navigate(SCREENS.PRIVACY, { type: "Privacy Policy" })}
+                onPress={() =>
+                  navigate(SCREENS.PRIVACY, {
+                    type: COMMON_TEXT.PRIVACY_POLICY,
+                  })
+                }
               >
                 <Typography
                   color={theme.color.black}
                   size={theme.fontSize.extraSmall12}
                   style={{ marginLeft: 8 }}
                 >
-                  I agree with the Privacy Policy and
+                  {COMMON_TEXT.I_AGREE_WITH_THE_PRIVACY_POLICY}
                 </Typography>
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={() => navigate(SCREENS.PRIVACY, { type: "Terms & Conditions" })}
+                onPress={() =>
+                  navigate(SCREENS.PRIVACY, {
+                    type: COMMON_TEXT.TERMS_AND_CONDITIONS,
+                  })
+                }
               >
                 <Typography
                   color={theme.color.black}
                   size={theme.fontSize.extraSmall12}
                   style={{ marginLeft: 8 }}
                 >
-                  Terms & Conditions
+                  {COMMON_TEXT.TERMS_AND_CONDITIONS}
                 </Typography>
               </TouchableOpacity>
             </View>
