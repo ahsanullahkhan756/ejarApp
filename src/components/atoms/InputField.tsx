@@ -4,6 +4,7 @@ import { moderateScale, verticalScale } from "react-native-size-matters";
 import { Platform } from "react-native";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../constants";
 import { Typography } from "./Typography";
+import { useTranslation } from "react-i18next";
 
 export const InputField = (props: any) => {
   const {
@@ -15,7 +16,7 @@ export const InputField = (props: any) => {
     validate = "email",
     leftIcon = false,
     rightText = false,
-    rightTitle = 'AED',
+    rightTitle = "AED",
     leftImage,
     rightImage = false,
     showCharCounter = false,
@@ -26,22 +27,22 @@ export const InputField = (props: any) => {
     label = true,
     multiline = false,
     onPressRight = () => {},
-    width=  170 
+    width = 170,
   } = props;
-
+  const { t } = useTranslation();
   return (
     <TextField
       small
       allowFontScaling={false}
-      label={label}
+      label={t(label)}
       labelStyle={{
         fontSize: moderateScale(14),
       }}
       labelColor={theme.color.black}
-      placeholder={placeholder}
+      placeholder={t(placeholder)}
       placeholderTextColor={placeholderTextColor}
       onChangeText={onChangeText}
-      secureTextInput={true} 
+      secureTextInput={true}
       enableErrors
       validate={[(value: any) => value.length > 6, ...validate]}
       validationMessage={["", ...validationMessage]}
@@ -60,9 +61,9 @@ export const InputField = (props: any) => {
         borderWidth: 0.4,
         borderRadius: 10,
         borderColor: theme.color.descColor,
-        width : width,
+        width: width,
         // paddingRight:65,
-        
+
         ...style,
       }}
       {...(leftIcon
@@ -91,7 +92,7 @@ export const InputField = (props: any) => {
                     marginRight: 10,
                   }}
                 >
-                 {rightTitle}
+                  {rightTitle}
                 </Typography>
               </TouchableOpacity>
             ),
