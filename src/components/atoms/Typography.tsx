@@ -15,7 +15,7 @@ export const Typography = (props: any) => {
   const { t, isLangRTL } = useTranslation();
 
   let textStyle = {
-    lineHeight: size * 1.6,
+    lineHeight: isLangRTL ? size * 2.2 : size * 1.6,
     fontSize: size,
     color: color,
     textAlign: align,
