@@ -29,13 +29,14 @@ export const InputText = (props: any) => {
     onPressRight = () => {},
     containerStyle,
   } = props;
-  const { t } = useTranslation();
+  const { t, isLangRTL } = useTranslation();
   return (
     <TextField
       small
       allowFontScaling={false}
       label={t(label)}
       labelStyle={{
+        writingDirection: isLangRTL ? "rtl" : "ltr",
         fontSize: moderateScale(14),
       }}
       value={value}
