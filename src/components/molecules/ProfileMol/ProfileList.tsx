@@ -13,47 +13,50 @@ import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../../redux/slice/user";
 import { Typography } from "../../atoms/Typography";
 import { Button } from "react-native-ui-lib";
-import { logoutApi } from "../../../api/auth";  // Assuming this is imported
+import { logoutApi } from "../../../api/auth"; // Assuming this is imported
+import { COMMON_TEXT } from "../../../constants/screens";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const ProfileList = (props: any) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const DATA = [
     {
       id: 1,
-      title: "My Information",
+      title: COMMON_TEXT.MY_INFORMATION,
       image: IMAGES.userProfile,
       navigateTo: SCREENS.MY_INFORMATION,
     },
     {
       id: 2,
-      title: "My Address",
+      title: COMMON_TEXT.MY_ADDRESS,
       image: IMAGES.map,
       navigateTo: SCREENS.MY_ADDRESS,
     },
     {
       id: 7,
-      title: "My Rentings",
+      title: COMMON_TEXT.MY_RENTINGS,
       image: IMAGES.userBooking,
       navigateTo: SCREENS.USER_BOOKING,
-      params: { title: "Privacy Policy" },
+      params: { title: COMMON_TEXT.PRIVACY_POLICY },
     },
     {
       id: 9,
-      title: "Change Password",
+      title: COMMON_TEXT.CHANGE_PASSWORD,
       image: IMAGES.userProfile,
       navigateTo: SCREENS.CHANGE_PASSWORD,
     },
     {
       id: 8,
-      title: "Change Language",
+      title: COMMON_TEXT.CHANGE_LANGUAGE,
       image: IMAGES.changeLang,
       navigateTo: SCREENS.CHANGE_LANGUAGE,
     },
-    { id: 5, title: "Delete Account", image: IMAGES.delete },
-    { id: 6, title: "Sign out", image: IMAGES.signOut },
+    { id: 5, title: COMMON_TEXT.DELETE_ACCOUNT, image: IMAGES.delete },
+    { id: 6, title: COMMON_TEXT.LOGOUT, image: IMAGES.signOut },
   ];
 
   const _renderItem = ({ item, index }: any) => {
@@ -92,10 +95,10 @@ const ProfileList = (props: any) => {
 
   const handleLogout = async () => {
     try {
-      await logoutApi(); 
-      dispatch(setLoggedIn(false)); 
-      setShowLogoutModal(false); 
-      navigate(SCREENS.LOGIN); 
+      await logoutApi();
+      dispatch(setLoggedIn(false));
+      setShowLogoutModal(false);
+      navigate(SCREENS.LOGIN);
     } catch (error) {
       console.log("Error during logout:", error);
     }
@@ -121,20 +124,20 @@ const ProfileList = (props: any) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Typography size={theme.fontSize.large20} textType="bold">
-              Delete Account
+              {COMMON_TEXT.DELETE_ACCOUNT}
             </Typography>
             <Typography style={styles.modalText}>
-              Are you sure you want to delete your account?
+              {COMMON_TEXT.ARE_YOU_SURE_YOU_WANT_TO_DELETE_YOUR_ACCOUNT}
             </Typography>
             <View row spread gap-10>
               <Button
-                label="Cancel"
+                label={t(COMMON_TEXT.CANCEL)}
                 style={{ width: 100 }}
                 backgroundColor={theme.color.primary}
                 onPress={() => setShowDeleteModal(!showDeleteModal)}
               />
               <Button
-                label="Delete"
+                label={t(COMMON_TEXT.DELETE)}
                 style={{ width: 100 }}
                 backgroundColor={theme.color.blue}
                 onPress={handleDeleteAccount}
@@ -154,20 +157,20 @@ const ProfileList = (props: any) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Typography size={theme.fontSize.large20} textType="bold">
-              Logout
+              {COMMON_TEXT.LOGOUT}
             </Typography>
             <Typography style={styles.modalText}>
-              Do you want to logout from your account?
+              {COMMON_TEXT.ARE_YOU_SURE_YOU_WANT_TO_LOGOUT_YOUR_ACCOUNT}
             </Typography>
             <View row spread gap-10>
               <Button
-                label="Cancel"
+                label={t(COMMON_TEXT.CANCEL)}
                 style={{ width: 100 }}
                 backgroundColor={theme.color.primary}
                 onPress={() => setShowLogoutModal(!showLogoutModal)}
               />
               <Button
-                label="Logout"
+                label={t(COMMON_TEXT.LOGOUT)}
                 style={{ width: 100 }}
                 backgroundColor={theme.color.blue}
                 onPress={handleLogout}
