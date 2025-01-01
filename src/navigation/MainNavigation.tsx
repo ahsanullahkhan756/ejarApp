@@ -14,13 +14,22 @@ import { getItem } from "../utils/storage";
 import { getUserDetailApi } from "../api/auth";
 import { setLoggedIn, setUserDetails } from "../redux/slice/user";
 import { VARIABLES } from "../constants";
+import { useTranslation } from "../hooks/useTranslation";
+import { setAppLanguage } from "../redux/slice/appSettings";
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
   const [isloading, setIsLoadings] = useState(true);
   const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
+  const { changeLanguage } = useTranslation();
+
   useEffect(() => {
     const getUser = async () => {
+      const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
+      if (userSelectedLanguage) {
+        changeLanguage(userSelectedLanguage);
+        dispatch(setAppLanguage(userSelectedLanguage));
+      }
       const token = await getItem(VARIABLES.USER_TOKEN);
       if (token) {
         const resp = await getUserDetailApi();
