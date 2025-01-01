@@ -5,11 +5,20 @@ import { useNavigation } from "@react-navigation/native";
 import { IMAGES, theme } from "../../constants";
 import { Calendar } from "react-native-calendars";
 import { Dropdown } from "react-native-element-dropdown";
+import { useTranslation } from "../../hooks/useTranslation";
+import { COMMON_TEXT } from "../../constants/screens";
 export const DropDown = (props: any) => {
-  const { data, height = 50, width = 150, placeholder = "Select item",onSelect } = props;
+  const {
+    data,
+    height = 50,
+    width = 150,
+    placeholder = COMMON_TEXT.SELECT_ITEM,
+    onSelect,
+  } = props;
 
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <Dropdown
@@ -21,12 +30,12 @@ export const DropDown = (props: any) => {
       data={data}
       search={data?.length == 0 ? false : true}
       maxHeight={300}
-      labelField="label"
+      labelField={COMMON_TEXT.LABEL}
       valueField="value"
       // placeholder={!isFocus ? "Select item" : "..."}
-      placeholder={placeholder}
+      placeholder={t(placeholder)}
       placeholderStyle={{ color: theme.color.tgray, fontSize: 16 }}
-      searchPlaceholder="Search..."
+      searchPlaceholder={t(COMMON_TEXT.SEARCH)}
       value={value}
       onFocus={() => {
         if (data?.length == 0) return;
@@ -37,7 +46,7 @@ export const DropDown = (props: any) => {
         setValue(item?.value);
         setIsFocus(false);
         if (onSelect) {
-          onSelect(item?.value)
+          onSelect(item?.value);
         }
       }}
     />
