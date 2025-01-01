@@ -10,6 +10,7 @@ import {
   useCameraDevices,
   useCameraPermission,
 } from "react-native-vision-camera";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const Uploads = ({ onValidate }: any) => {
   const camera = useRef(null);
@@ -96,7 +97,7 @@ const Uploads = ({ onValidate }: any) => {
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
-        Face Verification
+        {COMMON_TEXT.FACE_VERIFICATION}
       </Typography>
 
       <View style={styles.circleContainer}>
