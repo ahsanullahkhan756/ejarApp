@@ -11,6 +11,7 @@ import { country, gender } from "../../../containers/dummy";
 import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const PassportInfo = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
@@ -57,7 +58,6 @@ const PassportInfo = ({ onValidate }: any) => {
       });
   };
 
-
   // Remove selected image
   const removeSelectedImage = () => {
     setSelectImg(""); // Clear image state
@@ -67,8 +67,8 @@ const PassportInfo = ({ onValidate }: any) => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
-          title={"Issue Date"}
-          placeholder={"Issue Date"}
+          title={COMMON_TEXT.ISSUE_DATE}
+          placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={issueDate}
@@ -90,8 +90,8 @@ const PassportInfo = ({ onValidate }: any) => {
         />
 
         <InputDateTime
-          title={"Expiry Date"}
-          placeholder={"Expiry Date"}
+          title={COMMON_TEXT.EXPIRY_DATE}
+          placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={expiryDate}
@@ -118,34 +118,35 @@ const PassportInfo = ({ onValidate }: any) => {
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
-      Passport Information
+        {COMMON_TEXT.PASSPORT_INFORMATION}
       </Typography>
 
       <TouchableOpacity onPress={takePhotoFromCamera}>
-              <View
-                row marginV-20
-                style={{
-                  backgroundColor: "#ECECEC",
-                  width: SCREEN_WIDTH * 0.9,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 10,
-                  gap: 10,
-                }}
-              >
-                <Image
-                  source={IMAGES.cameraIcon}
-                  style={{ width: 45, height: 45 }}
-                  resizeMode="contain"
-                />
-                <Typography>Take Picture</Typography>
-              </View>
-            </TouchableOpacity>
+        <View
+          row
+          marginV-20
+          style={{
+            backgroundColor: "#ECECEC",
+            width: SCREEN_WIDTH * 0.9,
+            borderRadius: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+            gap: 10,
+          }}
+        >
+          <Image
+            source={IMAGES.cameraIcon}
+            style={{ width: 45, height: 45 }}
+            resizeMode="contain"
+          />
+          <Typography>{COMMON_TEXT.TAKE_PICTURE}</Typography>
+        </View>
+      </TouchableOpacity>
 
       <View paddingV-20>
         <InputText
-          label={"Passport Number"}
+          label={COMMON_TEXT.PASSPORT_NUMBER}
           value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -154,7 +155,7 @@ const PassportInfo = ({ onValidate }: any) => {
               return copy;
             });
           }}
-          placeholder="123 456 7890"
+          placeholder={COMMON_TEXT.PASSPORT_NUMBER}
           // validate={[(v) => v.length > 10]}
           // validationMessage={["Card Numver is "]}
           onChangeText={(text: string) => setId(text)}
@@ -181,7 +182,6 @@ const PassportInfo = ({ onValidate }: any) => {
               </TouchableOpacity>
             </View>
           )}
-        
         </View>
       </View>
     </View>
