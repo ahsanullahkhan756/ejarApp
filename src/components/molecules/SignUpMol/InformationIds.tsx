@@ -13,11 +13,14 @@ import { verticalScale } from "react-native-size-matters";
 import { setIsLoading } from "../../../redux/slice/user";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../../../api/auth";
+import { COMMON_TEXT, EJAR } from "../../../constants/screens";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const InformationIds = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [idCardNumber, setIdCardNumber] = useState("");
   const [placeOfBirth, setPlaceOfBirth] = useState("");
@@ -45,8 +48,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
-          title={"Issue Date"}
-          placeholder={"Issue Date"}
+          title={COMMON_TEXT.ISSUE_DATE}
+          placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={issueDate}
@@ -66,8 +69,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
         />
 
         <InputDateTime
-          title={"Expiry Date"}
-          placeholder={"Expiry Date"}
+          title={COMMON_TEXT.EXPIRY_DATE}
+          placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={expiryDate}
@@ -142,7 +145,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
-        ID Card Information
+        {EJAR.ID_CARD_INFORMATION}
       </Typography>
 
       {(!frontImage || !backImage) && (
@@ -154,7 +157,9 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               resizeMode="contain"
             />
             <Typography>
-              {isTakingFront ? "Take Front Picture" : "Take Back Picture"}
+              {isTakingFront
+                ? COMMON_TEXT.TAKE_FRONT_PICTURE
+                : COMMON_TEXT.TAKE_BACK_PICTURE}
             </Typography>
           </View>
         </TouchableOpacity>
@@ -162,7 +167,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
 
       <View paddingV-20>
         <InputText
-          label={"ID Number"}
+          label={COMMON_TEXT.ID_NUMBER}
           value={idCardNumber}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -179,7 +184,9 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
 
         <View row gap-25 marginT-10 style={{ alignItems: "center" }}>
           <View style={{ top: -20 }}>
-            <Typography size={theme.fontSize.small}>Nationality</Typography>
+            <Typography size={theme.fontSize.small}>
+              {COMMON_TEXT.NATIONALITY}
+            </Typography>
             <DropDown
               data={country}
               width={170}
@@ -189,17 +196,17 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
           </View>
           <InputField
             style={{ marginBottom: 20 }}
-            label={"Place Of Birth"}
+            label={COMMON_TEXT.PLACE_OF_BIRTH}
             value={placeOfBirth}
-            placeholder="Place Of Birth"
+            placeholder={COMMON_TEXT.PLACE_OF_BIRTH}
             onChangeText={(text: string) => setPlaceOfBirth(text)}
           />
         </View>
 
         <View row gap-30 marginV-0 style={{ alignItems: "center" }}>
           <InputDateTime
-            title={"Date of Birth"}
-            placeholder={"Date of Birth"}
+            title={COMMON_TEXT.DATE_OF_BIRTH}
+            placeholder={COMMON_TEXT.DATE_OF_BIRTH}
             placeholderColor={theme.color.black}
             mode={"date"}
             value={dob}
@@ -218,7 +225,9 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             }
           />
           <View style={{ top: -10 }}>
-            <Typography size={theme.fontSize.small}>Sex</Typography>
+            <Typography size={theme.fontSize.small}>
+              {COMMON_TEXT.SEX}
+            </Typography>
             <DropDown
               data={gender}
               width={170}
@@ -261,11 +270,11 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
           )}
 
           <Button
-            label={"Next"}
+            label={t(COMMON_TEXT.NEXT)}
             backgroundColor={theme.color.primary}
             onPress={async () => {
               const data = {
-                ID:'d7faf5ae-af1c-4e90-baa7-52327a96cfbc',
+                ID: "d7faf5ae-af1c-4e90-baa7-52327a96cfbc",
                 idCardNumber: idCardNumber,
                 idCardIssueDate: issueDate,
                 idCardExpDate: expiryDate,
