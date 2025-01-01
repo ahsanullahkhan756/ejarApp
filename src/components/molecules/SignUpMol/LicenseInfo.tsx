@@ -7,6 +7,7 @@ import { InputText } from "../../atoms/InputText";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
 import ImagePicker from "react-native-image-crop-picker";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const LicenseInfo = ({ onValidate }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
@@ -31,8 +32,8 @@ const LicenseInfo = ({ onValidate }: any) => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
-          title={"Issue Date"}
-          placeholder={"Issue Date"}
+          title={COMMON_TEXT.ISSUE_DATE}
+          placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={issueDate}
@@ -54,8 +55,8 @@ const LicenseInfo = ({ onValidate }: any) => {
         />
 
         <InputDateTime
-          title={"Expiry Date"}
-          placeholder={"Expiry Date"}
+          title={COMMON_TEXT.EXPIRY_DATE}
+          placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={expiryDate}
@@ -103,7 +104,7 @@ const LicenseInfo = ({ onValidate }: any) => {
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
-        License Information
+        {COMMON_TEXT.LICENSE_INFORMATION}
       </Typography>
 
       <TouchableOpacity onPress={takePhotoFromCamera}>
@@ -125,13 +126,13 @@ const LicenseInfo = ({ onValidate }: any) => {
             style={{ width: 45, height: 45 }}
             resizeMode="contain"
           />
-          <Typography>Take Picture</Typography>
+          <Typography>{COMMON_TEXT.TAKE_PICTURE}</Typography>
         </View>
       </TouchableOpacity>
 
       <View paddingV-20>
         <InputText
-          label={"License Number"}
+          label={COMMON_TEXT.LICENSE_NUMBER}
           value={id}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -140,7 +141,7 @@ const LicenseInfo = ({ onValidate }: any) => {
               return copy;
             });
           }}
-          placeholder="123 456 7890"
+          placeholder={COMMON_TEXT.LICENSE_NUMBER}
           // validate={[(v) => v.length > 10]}
           // validationMessage={["Card Numver is "]}
           onChangeText={(text: string) => setId(text)}
