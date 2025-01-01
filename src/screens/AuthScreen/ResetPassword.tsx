@@ -124,15 +124,19 @@ import { navigate, onBack } from "../../navigation/RootNavigation";
 import { commonStyles } from "../../containers/commStyles";
 import { resetPassword } from "../../api/auth.js";
 import { showToast } from "../../utils/toast.tsx";
+import { COMMON_TEXT } from "../../constants/screens/index.tsx";
+import { VALIDATION_MESSAGES } from "../../validationMessages/index.tsx";
+import { useTranslation } from "../../hooks/useTranslation.tsx";
 
 const ResetPassword = (props: any) => {
-  const otp = props?.route?.params?.otp
+  const otp = props?.route?.params?.otp;
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible2, setPasswordVisible2] = useState(true);
   const [passwordVisible3, setPasswordVisible3] = useState(true);
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const { t } = useTranslation();
 
   const validatePassword = (password: string) => {
     return /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(
@@ -158,7 +162,7 @@ const ResetPassword = (props: any) => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"New Password"} rightIcon={false} />
+      <Header titleText={COMMON_TEXT.NEW_PASSWORD} rightIcon={false} />
       <View padding-20>
         <View style={commonStyles.lineBar} />
         <Typography
@@ -166,12 +170,12 @@ const ResetPassword = (props: any) => {
           textType="bold"
           size={theme.fontSize.large24}
         >
-          OTP Verification
+          {COMMON_TEXT.OTP_VERIFICATION}
         </Typography>
 
         {/* New Password Input */}
         <InputText
-          label={"New Password"}
+          label={COMMON_TEXT.ENTER_NEW_PASSWORD}
           onChangeText={setNewPassword}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -185,15 +189,13 @@ const ResetPassword = (props: any) => {
           secureTextEntry={passwordVisible2}
           rightImage={!passwordVisible2 ? IMAGES.eyeOn : IMAGES.eyeOff}
           validate={[(v) => validatePassword(v)]}
-          validationMessage={[
-            "Password must contain at least one number, one special character",
-          ]}
-          placeholder="New password"
+          validationMessage={[VALIDATION_MESSAGES.PASSWORD_MUST_CONTAIN]}
+          placeholder={COMMON_TEXT.NEW_PASSWORD}
         />
 
         {/* Confirm Password Input */}
         <InputText
-          label={"Confirm Password"}
+          label={COMMON_TEXT.CONFIRM_PASSWORD}
           onChangeText={setConfirmPassword} // Update confirm password
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
@@ -207,14 +209,14 @@ const ResetPassword = (props: any) => {
           secureTextEntry={passwordVisible3}
           rightImage={!passwordVisible3 ? IMAGES.eyeOn : IMAGES.eyeOff}
           validate={[(v) => passwordsMatch(newPassword, v)]}
-          validationMessage={["Passwords must match."]}
-          placeholder="Confirm password"
+          validationMessage={[VALIDATION_MESSAGES.PASSWORDS_MUST_MATCH]}
+          placeholder={COMMON_TEXT.CONFIRM_PASSWORD}
         />
 
         {/* Confirm Button */}
         <View marginV-100>
           <Button
-            label={"Reset Password"}
+            label={t(COMMON_TEXT.RESET_PASSWORD)}
             backgroundColor={
               isButtonEnabled ? theme.color.primary : theme.color.descColor
             }
