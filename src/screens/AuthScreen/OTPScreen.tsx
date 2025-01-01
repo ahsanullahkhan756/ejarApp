@@ -17,14 +17,18 @@ import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { navigate } from "../../navigation/RootNavigation.tsx";
 import { otpApi } from "../../api/auth.js";
 import { showToast } from "../../utils/toast.tsx";
+import { useTranslation } from "../../hooks/useTranslation.tsx";
+import { COMMON_TEXT } from "../../constants/screens/index.tsx";
+import { getArabicNumbers } from "../../utils/helper.tsx";
 
-const OTPScreen = (props:any) => {
-  const email = props?.route?.params?.email
-  
+const OTPScreen = (props: any) => {
+  const email = props?.route?.params?.email;
+
   const [timeLeft, setTimeLeft] = useState(45); // Initial countdown time
   const [isCounting, setIsCounting] = useState(true); // Start countdown when the screen loads
   const [otp, setOtp] = useState(""); // State to manage OTP value
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // State to manage button disable/enable
+  const { t } = useTranslation();
 
   useEffect(() => {
     let timer;
@@ -64,10 +68,10 @@ const OTPScreen = (props:any) => {
             <View>
               <View style={commonStyles.lineBar} />
               <Typography textType="bold" size={theme.fontSize.large24}>
-                OTP Verification
+                {COMMON_TEXT.OTP_VERIFICATION}
               </Typography>
               <Typography size={theme.fontSize.small}>
-                Enter 6 digits OTP
+                {COMMON_TEXT.ENTER_SIX_DIGIT_CODE}
               </Typography>
               <OTPTextView
                 inputCount={4}
@@ -83,25 +87,24 @@ const OTPScreen = (props:any) => {
               />
 
               <Button
-                label="Verify"
+                label={t(COMMON_TEXT.VERIFY)}
                 backgroundColor={theme.color.primary}
                 borderRadius={30}
                 onPress={async () => {
                   const data = {
                     email: email,
-                    otp:otp
+                    otp: otp,
                   };
                   const res = await otpApi({ data });
                   if (res != null) {
-                    navigate(SCREENS.RESET_PASS,{
-                      otp:otp
-                    })
-                    showToast({ title: res});
+                    navigate(SCREENS.RESET_PASS, {
+                      otp: otp,
+                    });
+                    showToast({ title: res });
                   }
-                }
-              }
+                }}
                 style={{ height: 50, marginVertical: 20 }}
-                disabled={isButtonDisabled} 
+                disabled={isButtonDisabled}
               />
             </View>
 
@@ -115,7 +118,9 @@ const OTPScreen = (props:any) => {
               >
                 {() => (
                   <Typography textType="bold" size={theme.fontSize.extraLarge}>
-                    {`00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`}
+                    {getArabicNumbers(
+                      `00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`
+                    )}
                   </Typography>
                 )}
               </AnimatedCircularProgress>
@@ -123,10 +128,12 @@ const OTPScreen = (props:any) => {
 
             <View row center>
               <Typography size={theme.fontSize.small}>
-                Didn’t receive the OTP?{" "}
+                {COMMON_TEXT.DIDNT_RECIEVE_THE_OTP}
               </Typography>
               <TouchableOpacity onPress={handleResend}>
-                <Typography color={theme.color.primary}>Resend</Typography>
+                <Typography color={theme.color.primary}>
+                  {COMMON_TEXT.RESEND}
+                </Typography>
               </TouchableOpacity>
             </View>
           </View>
