@@ -7,24 +7,27 @@ import {
   Alert,
 } from "react-native";
 import { View } from "react-native-ui-lib";
-import ImagePicker from "react-native-image-crop-picker"; 
+import ImagePicker from "react-native-image-crop-picker";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { IMAGES, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { Typography } from "../../components/atoms/Typography";
 import ProfileList from "../../components/molecules/ProfileMol/ProfileList";
 import { useSelector } from "react-redux";
+import { useTranslation } from "../../hooks/useTranslation";
+import { COMMON_TEXT } from "../../constants/screens";
 
 const Profile = () => {
-  const [avatar, setAvatar] = useState(IMAGES.avatar); 
+  const [avatar, setAvatar] = useState(IMAGES.avatar);
+  const { t } = useTranslation();
 
   const openImagePicker = () => {
     Alert.alert(
-      "Select Image",
-      "Choose an option",
+      t(COMMON_TEXT.SELECT_IMAGE),
+      t(COMMON_TEXT.CHOOSE_AN_OPTION),
       [
         {
-          text: "Camera",
+          text: t(COMMON_TEXT.CAMERA),
           onPress: () => {
             ImagePicker.openCamera({
               width: 300,
@@ -32,7 +35,7 @@ const Profile = () => {
               cropping: true,
             })
               .then((image) => {
-                setAvatar({ uri: image.path }); 
+                setAvatar({ uri: image.path });
               })
               .catch((error) => {
                 console.log("Error opening camera: ", error);
@@ -40,7 +43,7 @@ const Profile = () => {
           },
         },
         {
-          text: "Gallery",
+          text: t(COMMON_TEXT.GALLERY),
           onPress: () => {
             ImagePicker.openPicker({
               width: 300,
@@ -56,7 +59,7 @@ const Profile = () => {
           },
         },
         {
-          text: "Cancel",
+          text: t(COMMON_TEXT.CANCEL),
           style: "cancel",
         },
       ],
@@ -64,17 +67,16 @@ const Profile = () => {
     );
   };
 
-  const userdata =  useSelector((state)=>state?.user?.userDetails)
-  console.log('userdata',userdata);
-  
+  const userdata = useSelector((state) => state?.user?.userDetails);
+  console.log("userdata", userdata);
 
   const UserData = () => {
     return (
       <View row gap-20 style={{ alignItems: "center" }}>
         <ImageBackground
-          source={avatar} 
+          source={avatar}
           style={{ width: 80, height: 80 }}
-          imageStyle={{ borderRadius: 40 }} 
+          imageStyle={{ borderRadius: 40 }}
           resizeMode="contain"
         >
           <TouchableOpacity
@@ -89,11 +91,23 @@ const Profile = () => {
           </TouchableOpacity>
         </ImageBackground>
         <View>
-          <Typography textType="bold" size={theme.fontSize.large}>
-             Hi, {userdata?.firstName}
-          </Typography>
+          <View
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "row",
+              gap: 10,
+            }}
+          >
+            <Typography textType="bold" size={theme.fontSize.large}>
+              {COMMON_TEXT.HI}
+            </Typography>
+            <Typography textType="bold" size={theme.fontSize.large}>
+              {userdata?.firstName}
+            </Typography>
+          </View>
           <Typography color={theme.color.descColor}>
-              {userdata?.phone}
+            {userdata?.phone}
           </Typography>
         </View>
       </View>
@@ -110,6 +124,5 @@ const Profile = () => {
     </SafeAreaContainer>
   );
 };
-
 
 export default Profile;
