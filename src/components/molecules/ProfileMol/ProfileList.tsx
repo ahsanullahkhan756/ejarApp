@@ -25,7 +25,10 @@ const ProfileList = (props: any) => {
 
 
 
+
   
+
+
   const DATA = [
     {
       id: 1,
