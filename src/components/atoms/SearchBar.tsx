@@ -1,9 +1,17 @@
 import React, { useContext } from "react";
-import { StyleSheet, TouchableOpacity, TextInput, Image, Platform } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Platform,
+} from "react-native";
 import { navigate } from "../../navigation/RootNavigation";
 import { IMAGES, SCREENS, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
 import { scale } from "react-native-size-matters";
+import { COMMON_TEXT } from "../../constants/screens";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export const SearchBar = (props: any) => {
   const {
@@ -11,6 +19,8 @@ export const SearchBar = (props: any) => {
     widthContaner = scale(200),
     onPress = () => navigate(SCREENS.FILTER_SCREEN),
   } = props;
+  const { t } = useTranslation();
+
   return (
     <View marginB-30 row gap-10 spread style={{ alignItems: "center" }}>
       <View
@@ -22,11 +32,11 @@ export const SearchBar = (props: any) => {
       >
         <Image
           source={IMAGES.searchIcon}
-          style={{ height: 30, width: 30}}
+          style={{ height: 30, width: 30 }}
           resizeMode="contain"
         />
         <TextInput
-          placeholder="Search keywords.."
+          placeholder={t(COMMON_TEXT.SEARCH)}
           placeholderTextColor={theme.color.white}
           style={{ width: widthContaner, color: theme.color.white }}
         />
@@ -51,7 +61,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    padding:   Platform.OS == 'ios'? 10 : 8,
+    padding: Platform.OS == "ios" ? 10 : 8,
     borderColor: theme.color.orange,
   },
   headerText: {
