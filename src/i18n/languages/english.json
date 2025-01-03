@@ -1,5 +1,10 @@
 {
   "COMMON": {
+    "TO": "To",
+    "KILOMETERS": "Kilometers",
+    "CLEAR_FILTERS": "Clear Filters",
+    "APPLY": "Apply",
+    "NO_RATINGS_FOUND": "No Rating Found",
     "EMAIL": "Email",
     "PASSWORD": "Password",
     "FORGOT_PASSWORD": "Forgot Password",
@@ -7,10 +12,16 @@
     "SIGN_UP": "Sign Up",
     "LOGIN": "Login",
     "SIGN_IN": "Sign In",
+    "CONTRACT": "Contract",
     "FINISH": "Finish",
+    "YEAR": "Year",
+    "SELECT_DATE": "Select Date",
     "VERIFY": "Verify",
     "SEX": "Sex",
     "ISSUE_DATE": "Issue Date",
+    "TOTAL_AMOUNT": "Total Amount",
+    "ADDRESS": "Address",
+    "BACK_TO_HOME": "Back to Home",
     "TAKE_BACK_PICTURE": "Take Back Picture",
     "TAKE_FRONT_PICTURE": "Take Front Picture",
     "OTP_VERIFICATION": "Otp Verification",
@@ -418,7 +429,26 @@
 
   "EJAR": {
     "HI_WELCOME_BACK": "Hi! Welcome Back",
-    "ID_CARD_INFORMATION": "ID Card Information"
+    "ID_CARD_INFORMATION": "ID Card Information",
+    "CAR_FOR_RENT": "Car For Rent",
+    "TOP_RATED_CARS": "Top Rated Cars",
+    "TOP_RATED_COMPANIES": "Top Rated Companies",
+    "AGREE_TO_ALL_CONDITIONS": "Note: I agree to all the conditions above.",
+    "VIN": "Vin",
+    "ANY": "Any",
+    "KM": "KM",
+    "TRUE": "TRUE",
+    "PLATE_NUMBER": "Plate Number",
+    "CAR_NAME": "Car Name",
+    "VIEW_MY_EARNINGS": "View My Renting",
+    "SET_YOUR_DESIRED_PRICE_RANGE": "Set your desired price Range",
+    "SET_YOUR_DESIRED_YEAR_RANGE": "Set your desired year Range",
+    "ERROR_APPLYING_FILTERS": "Error applying filters. Please try again later.",
+    "SET_YOUR_DESIRED_KILOMETERS_RANGE": "Set your desired Kilometers Range",
+    "FUEL_TYPE": "Feul Type",
+    "SET_YOUR_DESIRED_FUEL_TYPE": "Set your desired fuel type",
+    "TRANSMISSION_TYPE": "Transmission Type",
+    "SET_YOUR_DESIRED_TRANSMISSION_TYPE": "Set your desired transmission type"
   },
 
   "TEMPORARY_TEXT": {
