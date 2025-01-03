@@ -20,6 +20,8 @@ import { onBack } from "../../navigation/RootNavigation";
 import { filterApi } from "../../api/homeServices"; // API call function
 import { useDispatch } from "react-redux";
 import { setFilterData } from "../../redux/slice/appData";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const FilterScreen = () => {
   // State management for filters
@@ -37,6 +39,7 @@ const FilterScreen = () => {
   const [date2, setDate2] = useState(null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   // Handle closing date picker
   const hidePicker = () => {
@@ -46,7 +49,6 @@ const FilterScreen = () => {
   const handleApplyFilters = async () => {
     try {
       const filterParams = {};
-
       if (fromPrice) filterParams.fromPrice = fromPrice;
       if (toPrice) filterParams.toPrice = toPrice;
       if (fromYear) filterParams.fromYear = fromYear;
@@ -68,15 +70,15 @@ const FilterScreen = () => {
       }
     } catch (error) {
       showToast({
-        title: "Error applying filters. Please try again.",
-        type: "error",
+        title: t(EJAR.ERROR_APPLYING_FILTERS),
+        isError: true,
       });
     }
   };
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Filters" centerImg={false} />
+      <Header titleText={COMMON_TEXT.FILTERS} centerImg={false} />
       <ScrollView bounces={false}>
         <View padding-20>
           {/* Price Field */}
@@ -85,31 +87,33 @@ const FilterScreen = () => {
             size={theme.fontSize.large24}
             textType="bold"
           >
-            Price
+            {COMMON_TEXT.PRICE}
           </Typography>
           <View marginV-10>
             <Typography
               color={theme.color.descColor}
               size={theme.fontSize.small}
             >
-              Set your desired price Range
+              {EJAR.SET_YOUR_DESIRED_PRICE_RANGE}
             </Typography>
           </View>
           <View gap-5 row width={"100%"} style={{ alignItems: "center" }}>
             <InputField
-              placeholder="0"
+              placeholder={COMMON_TEXT.PRICE}
               keyboardType="number-pad"
-              rightText={true}
+              rightText={EJAR.TRUE}
               maxLength={10}
               width={SCREEN_WIDTH * 0.4}
               value={fromPrice}
               onChangeText={setFromPrice}
             />
-            <Typography color={theme.color.descColor}>to</Typography>
+            <Typography color={theme.color.descColor}>
+              {COMMON_TEXT.TO}
+            </Typography>
             <InputField
-              placeholder="Any"
+              placeholder={COMMON_TEXT.PRICE}
               keyboardType="number-pad"
-              rightText={true}
+              rightText={EJAR.TRUE}
               maxLength={10}
               value={toPrice}
               onChangeText={setToPrice}
@@ -122,29 +126,31 @@ const FilterScreen = () => {
             size={theme.fontSize.large24}
             textType="bold"
           >
-            Year
+            {COMMON_TEXT.YEAR}
           </Typography>
           <View marginV-10>
             <Typography
               color={theme.color.descColor}
               size={theme.fontSize.small}
             >
-              Set your desired year range
+              {EJAR.SET_YOUR_DESIRED_YEAR_RANGE}
             </Typography>
           </View>
           <View gap-10 row marginV-10 style={{ alignItems: "center" }}>
             <InputDateTime
-              // title={"Select Date"}
-              placeholder={"Select Date"}
+              // title={COMMON_TEXT.SELECT_DATE}
+              placeholder={COMMON_TEXT.SELECT_DATE}
               mode={"date"}
               value={date}
               onChange={setDate}
               style={{ width: SCREEN_WIDTH * 0.4 }}
             />
-            <Typography color={theme.color.descColor}>to</Typography>
+            <Typography color={theme.color.descColor}>
+              {COMMON_TEXT.TO}
+            </Typography>
             <InputDateTime
-              // title={"Select Date"}
-              placeholder={"Select Date"}
+              // title={COMMON_TEXT.SELECT_DATE}
+              placeholder={COMMON_TEXT.SELECT_DATE}
               mode={"date"}
               value={date2}
               onChange={setDate2}
@@ -157,29 +163,31 @@ const FilterScreen = () => {
             size={theme.fontSize.large24}
             textType="bold"
           >
-            Kilometers
+            {COMMON_TEXT.KILOMETERS}
           </Typography>
 
           <Typography color={theme.color.descColor} size={theme.fontSize.small}>
-            Set your desired kilometers range
+            {EJAR.SET_YOUR_DESIRED_KILOMETERS_RANGE}
           </Typography>
 
           <View gap-5 row style={{ alignItems: "center" }}>
             <InputField
               placeholder="0"
               keyboardType="number-pad"
-              rightText={true}
-              rightTitle="km"
+              rightText={EJAR.TRUE}
+              rightTitle={EJAR.KM}
               maxLength={10}
               width={SCREEN_WIDTH * 0.4}
               value={fromKM}
               onChangeText={setFromKM}
             />
-            <Typography color={theme.color.descColor}>to</Typography>
+            <Typography color={theme.color.descColor}>
+              {COMMON_TEXT.TO}
+            </Typography>
             <InputField
-              placeholder="Any"
+              placeholder={EJAR.ANY}
               keyboardType="number-pad"
-              rightText={true}
+              rightText={EJAR.TRUE}
               value={toKM}
               onChangeText={setToKM}
             />
@@ -191,13 +199,13 @@ const FilterScreen = () => {
               size={theme.fontSize.large24}
               textType="bold"
             >
-              Fuel Type
+              {EJAR.FUEL_TYPE}
             </Typography>
             <Typography
               color={theme.color.descColor}
               size={theme.fontSize.small}
             >
-              Set your desired fuel type
+              {EJAR.SET_YOUR_DESIRED_FUEL_TYPE}
             </Typography>
           </View>
           <DropDown
@@ -214,13 +222,13 @@ const FilterScreen = () => {
               size={theme.fontSize.large24}
               textType="bold"
             >
-              Transmission Type
+              {EJAR.TRANSMISSION_TYPE}
             </Typography>
             <Typography
               color={theme.color.descColor}
               size={theme.fontSize.small}
             >
-              Set your desired transmission type
+              {EJAR.SET_YOUR_DESIRED_TRANSMISSION_TYPE}
             </Typography>
           </View>
           <DropDown
@@ -232,7 +240,7 @@ const FilterScreen = () => {
           />
 
           {/* User Type Field */}
-          <View marginV-20>
+          {/* <View marginV-20>
             <Typography
               color={theme.color.blue}
               size={theme.fontSize.large24}
@@ -255,7 +263,6 @@ const FilterScreen = () => {
             />
           </View>
           <View marginV-20>
-            {/* Deal Type Field */}
             <Typography
               color={theme.color.blue}
               size={theme.fontSize.large24}
@@ -276,7 +283,7 @@ const FilterScreen = () => {
               value={dealType}
               onChange={setDealType}
             />
-          </View>
+          </View> */}
           {/* Apply Button */}
           <View
             style={{
@@ -288,12 +295,12 @@ const FilterScreen = () => {
             }}
           >
             <Button
-              label="Clear Filters"
+              label={t(COMMON_TEXT.CLEAR_FILTERS)}
               backgroundColor={theme.color.tgray}
               borderRadius={30}
               onPress={() => {
                 dispatch(setFilterData(null));
-                onBack()
+                onBack();
               }}
               style={{
                 height: 50,
@@ -302,7 +309,7 @@ const FilterScreen = () => {
               }}
             />
             <Button
-              label="Apply"
+              label={t(COMMON_TEXT.APPLY)}
               backgroundColor={theme.color.primary}
               borderRadius={30}
               onPress={handleApplyFilters}
