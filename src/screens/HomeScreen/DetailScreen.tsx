@@ -174,9 +174,9 @@ const DetailScreen = ({ route }) => {
                   index % 2 === 0 ? theme.color.divider : theme.color.white,
               }}
             >
-              <Typography>{item.label}</Typography>
+              <Typography>{item?.label}</Typography>
 
-              <Typography>{item.value}</Typography>
+              <Typography>{item?.value}</Typography>
             </View>
           )}
           keyExtractor={(item) => item.label}
