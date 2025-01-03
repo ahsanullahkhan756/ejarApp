@@ -7,13 +7,14 @@ import { data } from "../../containers/dummy";
 import { View } from "react-native-ui-lib";
 import { Typography } from "../../components/atoms/Typography";
 import { useSelector } from "react-redux";
+import { EJAR } from "../../constants/screens";
 
 const TopCars = () => {
   const details = useSelector((state: any) => state?.appData?.homeData);
   console.log("Top Rated", details?.topRatedCars);
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Top Rated Cars" centerImg={false} />
+      <Header titleText={EJAR.TOP_RATED_CARS} centerImg={false} />
       <FlatList
         data={details?.topRatedCars}
         numColumns={3}
