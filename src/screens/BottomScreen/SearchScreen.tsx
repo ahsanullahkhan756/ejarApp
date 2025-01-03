@@ -10,6 +10,7 @@ import { commonStyles } from "../../containers/commStyles";
 import { searchCompaniesApi } from "../../api/homeServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../../redux/slice/user";
+import { COMMON_TEXT } from "../../constants/screens";
 
 const SearchScreen = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const SearchScreen = () => {
     try {
       const resp = await searchCompaniesApi();
       if (resp) {
-        setCompanies(resp); 
+        setCompanies(resp);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -35,7 +36,9 @@ const SearchScreen = () => {
   }, []);
 
   const renderCompanyItem = ({ item }: any) => {
-    const companyLogo = item.companyLogo?.base64 ? { uri: item.companyLogo.base64 } : IMAGES.searchCompanies;
+    const companyLogo = item.companyLogo?.base64
+      ? { uri: item.companyLogo.base64 }
+      : IMAGES.searchCompanies;
 
     return (
       <View style={commonStyles.cardWithShadow}>
@@ -51,7 +54,7 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Search" centerImg={false} />
+      <Header titleText={COMMON_TEXT.SEARCH} centerImg={false} />
       <View marginH-10>
         <SearchBar
           backgroundColor={theme.color.blue}
@@ -63,7 +66,7 @@ const SearchScreen = () => {
         <ActivityIndicator size="large" color={theme.color.primary} />
       ) : companies.length === 0 ? (
         <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>No companies found</Text>
+          <Text style={styles.noResultsText}>{COMMON_TEXT.NO_ITEM_FOUND}</Text>
         </View>
       ) : (
         <FlatList
