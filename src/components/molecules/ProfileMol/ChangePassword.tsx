@@ -9,12 +9,16 @@ import { Header } from "../../atoms/Header";
 import { ScrollView } from "react-native";
 import { changePassword } from "../../../api/homeServices";
 import { showToast } from "../../../utils/toast";
+import { COMMON_TEXT } from "../../../constants/screens";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const ChangePassword = (props: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(false)); // for 3 inputs
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [passwordVisible2, setPasswordVisible2] = useState(true);
   const [passwordVisible3, setPasswordVisible3] = useState(true);
+  const { t } = useTranslation();
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -23,17 +27,18 @@ const ChangePassword = (props: any) => {
   const validatePassword = () => {
     // Ensure both new and confirm password match
     if (newPassword !== confirmPassword) {
-      showToast({ title: "New password and confirm password must match" });
+      showToast({ title: t(VALIDATION_MESSAGES.PASSWORDS_NOT_MATCH) });
       return false;
     }
     // Validate passwords with the regex
-    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    const passwordRegex =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     if (
       !passwordRegex.test(newPassword) ||
       !passwordRegex.test(confirmPassword)
     ) {
       showToast({
-        title: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        title: t(VALIDATION_MESSAGES.PASSWORD_MUST_CONTAIN),
       });
       return false;
     }
@@ -58,10 +63,10 @@ const ChangePassword = (props: any) => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"Change Password"} centerImg={false} />
+      <Header titleText={COMMON_TEXT.CHANGE_PASSWORD} centerImg={false} />
 
       <View margin-20>
-        <Typography>Change Password</Typography>
+        <Typography>{COMMON_TEXT.CHANGE_PASSWORD}</Typography>
 
         {/* Current Password */}
         <InputText
@@ -71,7 +76,7 @@ const ChangePassword = (props: any) => {
           secureTextEntry={passwordVisible}
           rightImage={!passwordVisible ? IMAGES.eyeOn : IMAGES.eyeOff}
           value={currentPassword}
-          placeholder="Current password"
+          placeholder={COMMON_TEXT.CURRENT_PASSWORD}
         />
 
         {/* New Password */}
@@ -82,7 +87,7 @@ const ChangePassword = (props: any) => {
           secureTextEntry={passwordVisible2}
           rightImage={!passwordVisible2 ? IMAGES.eyeOn : IMAGES.eyeOff}
           value={newPassword}
-          placeholder="New password"
+          placeholder={COMMON_TEXT.NEW_PASSWORD}
         />
 
         {/* Confirm Password */}
@@ -93,12 +98,12 @@ const ChangePassword = (props: any) => {
           secureTextEntry={passwordVisible3}
           rightImage={!passwordVisible3 ? IMAGES.eyeOn : IMAGES.eyeOff}
           value={confirmPassword}
-          placeholder="Confirm password"
+          placeholder={COMMON_TEXT.CONFIRM_PASSWORD}
         />
 
         {/* Save Button */}
         <Button
-          label="Save"
+          label={t(COMMON_TEXT.SAVE)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={handleChangePassword}
@@ -110,4 +115,3 @@ const ChangePassword = (props: any) => {
 };
 
 export default ChangePassword;
-
