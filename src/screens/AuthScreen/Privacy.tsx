@@ -37,7 +37,6 @@ const Privacy = (props: any) => {
       <Header titleText={title} centerImg={false} />
       <View padding-20>
         <Typography color={theme.color.primary}>{title}</Typography>
-
         <Typography>{data || COMMON_TEXT.LOADING}</Typography>
       </View>
     </SafeAreaContainer>
