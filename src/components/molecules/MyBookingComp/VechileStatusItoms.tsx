@@ -5,7 +5,6 @@ import { IMAGES } from "../../../constants";
 import { Image } from "react-native";
 
 const VechileStatusItoms = ({ item }) => {
-
   return (
     <View row>
       <View gap-10 paddingV-10 marginR-50>
@@ -45,7 +44,7 @@ const VechileStatusItoms = ({ item }) => {
             style={{ width: 20, height: 20 }}
             resizeMode="contain"
           />
-          <Typography>{item?.mile} km</Typography>
+          <Typography>{item?.mile + " km"}</Typography>
         </View>
       </View>
     </View>
