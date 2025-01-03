@@ -29,3 +29,4 @@ export const getArabicNumbers = (value: any): string => {
     return value;
   }
 };
+
