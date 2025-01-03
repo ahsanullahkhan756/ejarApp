@@ -25,6 +25,7 @@ import { setIsLoading } from "../../redux/slice/user";
 import { getHomeApi, topRatedCar } from "../../api/homeServices";
 import { getFCMToken } from "../../api/auth.js";
 import { useIsFocused } from "@react-navigation/native";
+import { COMMON_TEXT, EJAR } from "../../constants/screens/index";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -117,7 +118,7 @@ const Home = () => {
                     resizeMode="stretch"
                   />
                   <Typography size={theme.fontSize.extraSmall12}>
-                    {item.name || "SUVs"}
+                    {item?.name}
                   </Typography>
                 </View>
               )}
@@ -132,7 +133,7 @@ const Home = () => {
             textType="bold"
             style={{ marginVertical: 10 }}
           >
-            Car For Rent
+            {EJAR.CAR_FOR_RENT}
           </Typography>
 
           {/* CAR FOR RENT  */}
@@ -224,15 +225,17 @@ const Home = () => {
           />
 
           <TouchableOpacity onPress={() => navigate(SCREENS.RENT_CARS)}>
-            <Image
-              source={IMAGES.viewAll}
+            <Typography
+              size={theme.fontSize.large}
+              color={theme.color.blue}
+              textType="bold"
               style={{
-                width: scale(60),
-                height: 30,
-                alignSelf: "center",
+                textAlign: "center",
+                textDecorationLine: "underline",
               }}
-              resizeMode="contain"
-            />
+            >
+              {COMMON_TEXT.VIEW_MORE}
+            </Typography>
           </TouchableOpacity>
 
           <Typography
@@ -241,7 +244,7 @@ const Home = () => {
             textType="bold"
             style={{ marginVertical: 20 }}
           >
-            Top Rated Cars
+            {EJAR.TOP_RATED_CARS}
           </Typography>
           <TopCarsComp />
 
@@ -249,15 +252,17 @@ const Home = () => {
             onPress={() => navigate(SCREENS.TOP_CARS)}
             style={{ marginVertical: 10 }}
           >
-            <Image
-              source={IMAGES.viewAll}
+            <Typography
+              size={theme.fontSize.large}
+              color={theme.color.blue}
+              textType="bold"
               style={{
-                width: scale(60),
-                height: 30,
-                alignSelf: "center",
+                textAlign: "center",
+                textDecorationLine: "underline",
               }}
-              resizeMode="contain"
-            />
+            >
+              {COMMON_TEXT.VIEW_MORE}
+            </Typography>
           </TouchableOpacity>
 
           <View style={commonStyles.lineBar} />
@@ -266,7 +271,7 @@ const Home = () => {
             color={theme.color.blue}
             textType="bold"
           >
-            Top Rated Companies
+            {EJAR.TOP_RATED_COMPANIES}
           </Typography>
 
           <Swiper
@@ -315,7 +320,7 @@ const Home = () => {
               color={theme.color.blue}
               textType="bold"
             >
-              Reviews
+              {COMMON_TEXT.REVIEWS}
             </Typography>
             <Image
               source={IMAGES.colun}
@@ -355,12 +360,11 @@ const Home = () => {
 
           <FlatList
             data={details?.reviews}
-            horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
               return (
                 <>
-                  <Typography>{item?.comment || "asdas"}</Typography>
+                  <Typography>{item?.comment}</Typography>
                 </>
               );
             }}
@@ -372,7 +376,18 @@ const Home = () => {
             style={{ marginVertical: 0 }}
             onPress={() => navigate(SCREENS.VIEW_REVIEWS)}
           >
-            <Image
+            <Typography
+              size={theme.fontSize.large}
+              color={theme.color.blue}
+              textType="bold"
+              style={{
+                textAlign: "center",
+                textDecorationLine: "underline",
+              }}
+            >
+              {COMMON_TEXT.VIEW_MORE}
+            </Typography>
+            {/* <Image
               source={IMAGES.viewAll}
               style={{
                 width: scale(60),
@@ -380,7 +395,7 @@ const Home = () => {
                 alignSelf: "center",
               }}
               resizeMode="contain"
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       </ScrollView>
