@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"; // Add this to use Redux state
 import { IMAGES, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
+import { COMMON_TEXT } from "../../constants/screens";
 
 export const TopCarsComp = () => {
   // Fetch the top-rated car data from Redux state
@@ -43,7 +44,7 @@ export const TopCarsComp = () => {
                 style={{ width: 20, height: 20 }}
                 resizeMode="contain"
               />
-              <Typography>{item.rating ? item.rating : "No rating"}</Typography>
+              <Typography>{item.rating ? item.rating : COMMON_TEXT.NO_RATINGS_FOUND}</Typography>
             </View>
           </TouchableOpacity>
         );
