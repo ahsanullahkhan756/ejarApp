@@ -18,19 +18,16 @@ const SelectLanguage = () => {
   const [selectedLang, setSelectedLang] = useState<string>(LANGUAGES.ENGLISH);
   const dispatch = useDispatch();
   const changeAppLanguage = (selectedLanguage: string) => {
-    // setSelectedLang(lng); // Set selected language
-    // i18n?.changeAppLanguage(lng);
-    // if (lng === "ar") {
-    //   I18nManager.forceRTL(true);
-    // } else {
-    //   I18nManager.forceRTL(false);
-    // }
+    if (selectedLanguage == LANGUAGES.ARABIC) {
+      I18nManager.forceRTL(true);
+    } else {
+      I18nManager.forceRTL(false);
+    }
     changeLanguage(selectedLanguage);
     dispatch(setAppLanguage(selectedLanguage));
     setItem(VARIABLES.LANGUAGE, selectedLanguage);
     replace(SCREENS.ONBOARDING);
   };
-
   return (
     <SafeAreaContainer safeArea={false}>
       <View center marginT-50>
