@@ -22,6 +22,8 @@ import { commonStyles } from "../../containers/commStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmBooking, getContractByOwnerId } from "../../api/homeServices";
 import { setIsLoading } from "../../redux/slice/user";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const Contract = ({ route }) => {
   const startEndDates = route?.params?.startEndDates;
@@ -34,6 +36,7 @@ const Contract = ({ route }) => {
   const dispatch = useDispatch();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [isSigned, setIsSigned] = useState(false);
+  const { t } = useTranslation();
 
   const handleSignature = (signature: any) => {
     setIsSigned(true);
@@ -92,17 +95,17 @@ const Contract = ({ route }) => {
   }, []);
 
   const PERSONAL_DATA = [
-    { title: "First Name:", subTitle: userDetails?.firstName },
-    { title: "Last Name:", subTitle: userDetails?.lastName },
-    { title: "Car Name:", subTitle: item?.carName },
-    { title: "Email:", subTitle: item?.email },
-    { title: "Nationality:", subTitle: item?.nationality },
-    { title: "Address:", subTitle: item?.address },
-    { title: "Date of birth:", subTitle: item?.dob },
-    { title: "Passport Id:", subTitle: item?.passportId },
-    { title: "VIN:", subTitle: item?.vin },
-    { title: "Plate Number:", subTitle: item?.numberPlate },
-    { title: "Total Amount:", subTitle: totalPrice + " AED" },
+    { title: COMMON_TEXT.FIRST_NAME, subTitle: userDetails?.firstName },
+    { title: COMMON_TEXT.LAST_NAME, subTitle: userDetails?.lastName },
+    { title: EJAR.CAR_NAME, subTitle: item?.carName },
+    { title: COMMON_TEXT.EMAIL, subTitle: item?.email },
+    { title: COMMON_TEXT.NATIONALITY, subTitle: item?.nationality },
+    { title: COMMON_TEXT.ADDRESS, subTitle: item?.address },
+    { title: COMMON_TEXT.DATE_OF_BIRTH, subTitle: item?.dob },
+    { title: COMMON_TEXT.PASSPORT_NUMBER, subTitle: item?.passportId },
+    { title: EJAR.VIN, subTitle: item?.vin },
+    { title: EJAR.PLATE_NUMBER, subTitle: item?.numberPlate },
+    { title: COMMON_TEXT.TOTAL_AMOUNT, subTitle: totalPrice + " AED" },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -110,7 +113,7 @@ const Contract = ({ route }) => {
   return (
     <SafeAreaContainer safeArea={false}>
       <View style={styles.container}>
-        <Header titleText="Contract" centerImg={false} />
+        <Header titleText={COMMON_TEXT.CONTRACT} centerImg={false} />
       </View>
 
       {/* ScrollView only contains text */}
@@ -164,12 +167,12 @@ const Contract = ({ route }) => {
             },
           ]}
         />
-        <Typography align="center">Signature</Typography>
+        <Typography align="center">{COMMON_TEXT.SIGNATURE}</Typography>
 
-        <Typography>Note: I agree to all the conditions above.</Typography>
+        <Typography>{EJAR.AGREE_TO_ALL_CONDITIONS}</Typography>
 
         <Button
-          label="Pay"
+          label={t(COMMON_TEXT.PAY)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           style={styles.button}
@@ -196,7 +199,7 @@ const Contract = ({ route }) => {
               style={{ width: 200, height: 200 }}
             />
             <Button
-              label="View My Renting"
+              label={t(EJAR.VIEW_MY_EARNINGS)}
               backgroundColor={theme.color.primary}
               borderRadius={30}
               style={styles.button}
@@ -208,7 +211,7 @@ const Contract = ({ route }) => {
               }}
             />
             <Button
-              label="Back to Home"
+              label={t(COMMON_TEXT.BACK_TO_HOME)}
               backgroundColor={theme.color.blue}
               borderRadius={30}
               style={styles.button}
