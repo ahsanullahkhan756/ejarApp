@@ -40,7 +40,7 @@ export const Typography = (props: any) => {
 
   return (
     <Text color={color} style={textStyle} numberOfLines={numberOfLines}>
-      {t(props.children)}
+      {t(props?.children ?? "")}
     </Text>
   );
 };
