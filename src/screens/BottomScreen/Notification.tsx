@@ -10,6 +10,7 @@ import { Typography } from "../../components/atoms/Typography";
 import { notificationApi } from "../../api/homeServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../../redux/slice/user";
+import { COMMON_TEXT } from "../../constants/screens";
 
 const Notification = () => {
   const dispatch = useDispatch();
@@ -40,14 +41,14 @@ const Notification = () => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Notifications" centerImg={false} />
+      <Header titleText={COMMON_TEXT.NOTIFICATIONS} centerImg={false} />
       <View margin-20>
         {isLoading ? (
           <ActivityIndicator size="large" color={theme.color.primary} />
         ) : notifications.length === 0 ? (
           <View style={styles.noResultsContainer}>
             <Typography style={styles.noResultsText}>
-              No notifications found
+              {COMMON_TEXT.NO_ITEM_FOUND}
             </Typography>
           </View>
         ) : (
@@ -58,7 +59,7 @@ const Notification = () => {
               <View style={styles.item}>
                 <Typography>{item.title}</Typography>
                 <Typography color={theme.color.descColor}>
-                  {item.body || "Lorem ipsum dolor sit amet, consectetur"}
+                  {item?.body}
                 </Typography>
               </View>
             )}
