@@ -5,6 +5,7 @@ import { Platform } from "react-native";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../constants";
 import { Typography } from "./Typography";
 import { useTranslation } from "react-i18next";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
 
 export const InputField = (props: any) => {
   const {
@@ -24,7 +25,7 @@ export const InputField = (props: any) => {
     onValidationFailed = () => {},
     secureTextEntry = false,
     style = {},
-    label = true,
+    label = EJAR.TRUE,
     multiline = false,
     onPressRight = () => {},
     width = 170,
