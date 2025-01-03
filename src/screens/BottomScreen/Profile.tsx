@@ -116,7 +116,7 @@ const Profile = () => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Profile"} centerImg={false} />
+      <Header titleText={COMMON_TEXT.PROFILE} centerImg={false} />
       <View marginH-20>
         {UserData()}
         <ProfileList />
