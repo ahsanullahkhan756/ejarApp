@@ -6,15 +6,17 @@ import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import { Image, Modal, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
-import { DropDown } from "../../atoms/DropDown"; // Make sure DropDown is imported
+import { DropDown } from "../../atoms/DropDown";
 import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
 import { setIsLoading } from "../../../redux/slice/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../api/auth";
 import { COMMON_TEXT, EJAR } from "../../../constants/screens";
 import { useTranslation } from "../../../hooks/useTranslation";
+import moment from "moment";
+import { country, gender } from "../../../containers/dummy";
 
 const InformationIds = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
@@ -24,9 +26,9 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
 
   const [idCardNumber, setIdCardNumber] = useState("");
   const [placeOfBirth, setPlaceOfBirth] = useState("");
-  const [issueDate, setIssueDate] = useState(true);
-  const [expiryDate, setExpiryDate] = useState(true);
-  const [dob, setDob] = useState(true);
+  const [issueDate, setIssueDate] = useState(null);
+  const [expiryDate, setExpiryDate] = useState(null);
+  const [dob, setDob] = useState(null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [frontImage, setFrontImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
@@ -34,6 +36,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedGender, setSelectedGender] = useState(null);
+
+  const ID = useSelector((state) => state?.user?.userDetails?.ID);
 
   useEffect(() => {
     dispatch(setIsLoading(false));
@@ -43,6 +47,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
   const hidePicker = () => {
     setDatePickerVisible(false);
   };
+  console.log(new Date(issueDate)?.toISOString().split("T")[0]);
 
   const dateFields = () => {
     return (
@@ -52,7 +57,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
           placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
-          value={issueDate}
+          value={issueDate ?? ""}
           onChange={setIssueDate}
           onConfirm={(selectedDate: any) => {
             setIssueDate(selectedDate);
@@ -73,7 +78,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
           placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
-          value={expiryDate}
+          value={expiryDate ? moment(expiryDate).format("YYYY/MM/DD") : ""}
           onChange={setExpiryDate}
           onConfirm={(selectedDate: any) => {
             setExpiryDate(selectedDate);
@@ -139,7 +144,15 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
       setBackImage(null);
     }
   };
-  console.log(selectedCountry);
+  const formatDate = (date) => {
+    const formattedDate = moment(date, "YYYY/MM/DD", true); // 'true' ensures strict parsing
+    if (formattedDate.isValid()) {
+      return formattedDate.format("YYYY/MM/DD");
+    } else {
+      console.log("Invalid date format: ", date); // Handle invalid dates here
+      return ""; // Or return a default date if needed
+    }
+  };
 
   return (
     <View marginH-20 center>
@@ -176,7 +189,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               return copy;
             });
           }}
-          placeholder="**** *** *******   *****"
+          placeholder="**** *** ******* *****"
           onChangeText={(text: string) => setIdCardNumber(text)}
         />
 
@@ -191,7 +204,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               data={country}
               width={170}
               height={verticalScale(45)}
-              onSelect={setSelectedCountry} // Pass the onSelect handler
+              onSelect={setSelectedCountry}
             />
           </View>
           <InputField
@@ -209,7 +222,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             placeholder={COMMON_TEXT.DATE_OF_BIRTH}
             placeholderColor={theme.color.black}
             mode={"date"}
-            value={dob}
+            value={dob ? moment(dob).format("YYYY/MM/DD") : ""}
             onChange={setDob}
             onConfirm={(selectedDate: any) => {
               setDob(selectedDate);
@@ -274,13 +287,13 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             backgroundColor={theme.color.primary}
             onPress={async () => {
               const data = {
-                ID: "d7faf5ae-af1c-4e90-baa7-52327a96cfbc",
+                ID: ID,
                 idCardNumber: idCardNumber,
-                idCardIssueDate: issueDate,
-                idCardExpDate: expiryDate,
+                idCardIssueDate: moment(issueDate).format("YYYY/MM/DD"),
+                idCardExpDate: moment(expiryDate).format("YYYY/MM/DD"),
                 nationality: selectedCountry,
                 placeOfBirth: placeOfBirth,
-                dob: dob,
+                dob: moment(dob).format("YYYY/MM/DD"),
                 gender: selectedGender,
                 idcardPicture: {
                   fileName: "id_card.jpg",
@@ -291,9 +304,12 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               };
 
               const res = await updateProfile({ data });
+              console.log(res);
+
               if (res != null) {
                 setCurrentStep(2);
                 dispatch(setIsLoading(true));
+                dispatch(setIsLoading(false));
               }
             }}
             borderRadius={30}
@@ -345,15 +361,3 @@ const styles = StyleSheet.create({
 });
 
 export default InformationIds;
-
-export const country = [
-  { label: "Dubai", value: "Dubai" },
-  { label: "Saudia Arabia", value: "Saudia Arabia" },
-  { label: "USA", value: "USA" },
-  { label: "UK", value: "UK" },
-];
-
-export const gender = [
-  { label: "Male", value: "Male" },
-  { label: "Female", value: "Female" },
-];

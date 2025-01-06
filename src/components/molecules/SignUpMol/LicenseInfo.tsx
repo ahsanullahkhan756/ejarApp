@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
@@ -8,8 +8,11 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
 import ImagePicker from "react-native-image-crop-picker";
 import { COMMON_TEXT } from "../../../constants/screens";
+import { setIsLoading } from "../../../redux/slice/user";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../../api/auth";
 
-const LicenseInfo = ({ onValidate }: any) => {
+const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [selectImg, setSelectImg] = useState("");
   const [visible, setVisible] = useState(false);
@@ -17,8 +20,11 @@ const LicenseInfo = ({ onValidate }: any) => {
   const [issueDate, setIssueDate] = useState(true);
   const [expiryDate, setExpiryDate] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const dispatch = useDispatch();
+  const ID = useSelector((state)=>state?.user?.userDetails?.ID)
 
   useEffect(() => {
+    dispatch(setIsLoading(false));
     onValidate(!hasValidated.includes(false));
   }, [hasValidated]);
 
@@ -170,6 +176,37 @@ const LicenseInfo = ({ onValidate }: any) => {
           )}
         </View>
       </View>
+
+      <Button
+            label={"Next"}
+            backgroundColor={theme.color.primary}
+            onPress={async () => {
+              const data = {
+                ID: ID,
+                licenseNumber:id,
+                licenseNumberIssueDate: issueDate,
+                licenseNumberExpDate:expiryDate,
+                idcardPicture: {
+                  fileName: "id_card.jpg",
+                  base64:
+                    "https://pinnacle.works/wp-content/uploads/2022/06/dummy-image.jpg",
+                  size: 0,
+                },
+              };
+
+              const res = await updateProfile({ data });
+              if (res != null) {
+                setCurrentStep(3);
+                dispatch(setIsLoading(true));
+              }
+            }}
+            borderRadius={30}
+            style={{
+              height: 50,
+              margin: 20,
+              width: 300,
+            }}
+          />
     </View>
   );
 };

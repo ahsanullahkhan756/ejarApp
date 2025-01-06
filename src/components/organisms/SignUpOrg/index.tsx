@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
@@ -26,7 +26,13 @@ const steps = [
   { label: COMMON_TEXT.FINISH, progress: 1.0 },
 ];
 
-const SignUpOrg = () => {
+const SignUpOrg = ({
+  isNotVerifiedStep,
+  user,
+}: {
+  isNotVerifiedStep?: number;
+  user?: {};
+}) => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
   const [validationState, setValidationState] = useState([
@@ -36,6 +42,12 @@ const SignUpOrg = () => {
     false,
     false,
   ]);
+
+  useEffect(() => {
+    if (isNotVerifiedStep) {
+      setCurrentStep(isNotVerifiedStep);
+    }
+  }, [isNotVerifiedStep]);
 
   const SOCIAL_LOGIN = [
     { id: 1, image: IMAGES.google },

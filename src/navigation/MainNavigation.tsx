@@ -16,6 +16,7 @@ import { setLoggedIn, setUserDetails } from "../redux/slice/user";
 import { VARIABLES } from "../constants";
 import { useTranslation } from "../hooks/useTranslation";
 import { setAppLanguage } from "../redux/slice/appSettings";
+import SignUpOrg from "../components/organisms/SignUpOrg";
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const MainNavigation = () => {
   const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
   const { changeLanguage } = useTranslation();
 
+  const [userNotActive, setUserNotActive] = useState(null);
   useEffect(() => {
     const getUser = async () => {
       const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
@@ -31,11 +33,16 @@ const MainNavigation = () => {
         dispatch(setAppLanguage(userSelectedLanguage));
       }
       const token = await getItem(VARIABLES.USER_TOKEN);
+
       if (token) {
         const resp = await getUserDetailApi();
         if (resp) {
-          dispatch(setUserDetails(resp));
-          dispatch(setLoggedIn(true));
+          if (resp?.IsActive) {
+            dispatch(setLoggedIn(true));
+            dispatch(setUserDetails(resp));
+          } else {
+            setUserNotActive(resp);
+          }
         }
       }
     };
@@ -46,6 +53,10 @@ const MainNavigation = () => {
     return () => clearTimeout(timer);
     1;
   }, []);
+
+  if (userNotActive) {
+    return <SignUpOrg isNotVerifiedStep={1} user={userNotActive} />;
+  }
 
   return isloading ? (
     <Splash />
