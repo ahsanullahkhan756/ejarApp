@@ -19,6 +19,7 @@ target 'ejarApp' do
   pod 'FirebaseCore', :modular_headers => true
   pod 'FirebaseMessagingInterop', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
+  pod 'react-native-restart', :path => '../node_modules/react-native-restart'
 
   config = use_native_modules!
 
