@@ -12,22 +12,47 @@ import { useDispatch } from "react-redux";
 import { setAppLanguage } from "../../redux/slice/appSettings";
 import { setItem } from "../../utils/storage";
 import { COMMON_TEXT, TEMPORARY_TEXT } from "../../constants/screens";
+import RNRestart from "react-native-restart"; // Import package from node modules
+import { setIsLoading } from "../../redux/slice/user";
 
 const SelectLanguage = () => {
   const { t, changeLanguage } = useTranslation();
   const [selectedLang, setSelectedLang] = useState<string>(LANGUAGES.ENGLISH);
   const dispatch = useDispatch();
+  // const changeAppLanguage = (selectedLanguage: string) => {
+  //   if (selectedLanguage == LANGUAGES.ARABIC) {
+  //     I18nManager.forceRTL(true);
+  //   } else {
+  //     I18nManager.forceRTL(false);
+  //   }
+  //   RNRestart.restart();
+  //   changeLanguage(selectedLanguage);
+  //   dispatch(setAppLanguage(selectedLanguage));
+  //   setItem(VARIABLES.LANGUAGE, selectedLanguage);
+  //   replace(SCREENS.ONBOARDING);
+  // };
+
   const changeAppLanguage = (selectedLanguage: string) => {
-    if (selectedLanguage == LANGUAGES.ARABIC) {
-      I18nManager.forceRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
+    try {
+      setSelectedLang(selectedLanguage);
+      dispatch(setIsLoading(true));
+      if (selectedLanguage == LANGUAGES.ARABIC) {
+        I18nManager.forceRTL(true);
+      } else {
+        I18nManager.forceRTL(false);
+      }
+      setTimeout(() => {
+        RNRestart.restart();
+      }, 1000);
+      changeLanguage(selectedLanguage);
+      dispatch(setAppLanguage(selectedLanguage));
+      setItem(VARIABLES.LANGUAGE, selectedLanguage);
+    } catch (error) {
+    } finally {
+      // dispatch(setIsLoading(false));
     }
-    changeLanguage(selectedLanguage);
-    dispatch(setAppLanguage(selectedLanguage));
-    setItem(VARIABLES.LANGUAGE, selectedLanguage);
-    replace(SCREENS.ONBOARDING);
   };
+
   return (
     <SafeAreaContainer safeArea={false}>
       <View center marginT-50>

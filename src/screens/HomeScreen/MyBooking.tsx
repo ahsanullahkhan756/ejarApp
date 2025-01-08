@@ -23,9 +23,13 @@ import { setIsLoading } from "../../redux/slice/user";
 import { useDispatch } from "react-redux";
 import { post } from "../../services/axios";
 import { showToast } from "../../utils/toast";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
+import { VALIDATION_MESSAGES } from "../../validationMessages";
+import { useTranslation } from "../../hooks/useTranslation";
 const MyBooking = ({ route }) => {
   const item = route?.params?.item;
   const bookedDates = route?.params?.bookedDates;
+  const { t } = useTranslation();
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: any }>(
     {}
   );
@@ -162,7 +166,7 @@ const MyBooking = ({ route }) => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="My Renting" centerImg={false} />
+      <Header titleText={COMMON_TEXT.MY_RENTINGS} centerImg={false} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={{ flex: 1 }}
@@ -174,7 +178,7 @@ const MyBooking = ({ route }) => {
               size={theme.fontSize.large20}
               color={theme.color.blue}
             >
-              Select Date
+              {COMMON_TEXT.SELECT_DATE}
             </Typography>
             <CustomCalender
               isDisabled={true}
@@ -191,7 +195,7 @@ const MyBooking = ({ route }) => {
                 size={theme.fontSize.large20}
                 color={theme.color.blue}
               >
-                No. of Days
+                {COMMON_TEXT.NO_OF_DAYS}
               </Typography>
               <DropDown data={[]} placeholder={daysInRange} />
             </View>
@@ -203,13 +207,13 @@ const MyBooking = ({ route }) => {
               color={theme.color.blue}
               size={theme.fontSize.large24}
             >
-              Add Your Card Details
+              {COMMON_TEXT.ADD_YOUR_CARD_DETAILS}
             </Typography>
 
             <View marginV-10>
               <InputText
                 width={360}
-                label={"Name on card"}
+                label={COMMON_TEXT.ENTER_YOUR_NAME}
                 value={name}
                 // onValidationFailed={(isValid: boolean) => {
                 //   setValidated((prev) => {
@@ -218,7 +222,7 @@ const MyBooking = ({ route }) => {
                 //     return copy;
                 //   });
                 // }}
-                placeholder="Enter your name"
+                placeholder={COMMON_TEXT.ENTER_YOUR_NAME}
                 // validate={["name"]}
                 // validationMessage={["Name is invalid"]}
                 onChangeText={(text: string) => setName(text)}
@@ -226,7 +230,7 @@ const MyBooking = ({ route }) => {
 
               <InputText
                 width={360}
-                label={"Card Number"}
+                label={COMMON_TEXT.CARD_NUMBER}
                 value={formatCardNumber(card)}
                 maxLength={19}
                 // onValidationFailed={(isValid: boolean) => {
@@ -237,7 +241,7 @@ const MyBooking = ({ route }) => {
                 //   });
                 // }}
                 keyboardType="number-pad"
-                placeholder="**** **** **** 1234"
+                placeholder={COMMON_TEXT.ENTER_CARD_NUMBER}
                 // validate={["Card"]}
                 // validationMessage={["Card is invalid"]}
                 onChangeText={(text: string) => setCard(text)}
@@ -245,7 +249,7 @@ const MyBooking = ({ route }) => {
               <View row spread flex gap-10>
                 <View style={{ marginTop: 20 }}>
                   <InputDateCard
-                    title={"Expiration Date"}
+                    title={COMMON_TEXT.EXPIRY_DATE}
                     placeholder={"MM/YY"}
                     value={expiryDate}
                     onChange={setExpiryDate}
@@ -253,7 +257,7 @@ const MyBooking = ({ route }) => {
                 </View>
 
                 <InputText
-                  label={"CVV"}
+                  label={COMMON_TEXT.CVV}
                   value={cvv}
                   // onValidationFailed={(isValid: boolean) => {
                   //   setValidated((prev) => {
@@ -262,7 +266,7 @@ const MyBooking = ({ route }) => {
                   //     return copy;
                   //   });
                   // }}
-                  placeholder="***"
+                  placeholder={COMMON_TEXT.ENTER_YOUR_CVV}
                   // validate={["email"]}
                   // validationMessage={["Email is invalid"]}
                   onChangeText={(text: string) => setCvv(text)}
@@ -274,7 +278,7 @@ const MyBooking = ({ route }) => {
             </View>
 
             <Button
-              label="Next"
+              label={t(COMMON_TEXT.NEXT)}
               backgroundColor={theme.color.primary}
               borderRadius={30}
               onPress={() => {
@@ -287,7 +291,9 @@ const MyBooking = ({ route }) => {
                 ) {
                   CreateStripeTokenFunction();
                 } else {
-                  showToast({ title: "Please fill all the feilds to proceed" });
+                  showToast({
+                    title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
+                  });
                 }
               }}
               style={{
@@ -305,7 +311,7 @@ const MyBooking = ({ route }) => {
               size={theme.fontSize.small}
               color={theme.color.blue}
             >
-              Note: Payment will be charged after the contract signed by you .
+              {EJAR.NOTE_THE_PAYMENT_WILL_BE_CHARGED}
             </Typography>
           </View>
         </ScrollView>

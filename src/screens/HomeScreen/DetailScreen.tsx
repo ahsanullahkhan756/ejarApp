@@ -19,9 +19,12 @@ import VechileStatusItoms from "../../components/molecules/MyBookingComp/Vechile
 import { CustomCalender } from "../../components/atoms/CustomCalender";
 import Swiper from "react-native-swiper";
 import { getBookedDatesFunction, topRatedCar } from "../../api/homeServices";
+import { useTranslation } from "../../hooks/useTranslation";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
 
 const DetailScreen = ({ route }) => {
   const item = route?.params?.item;
+  const { t, isLangRTL } = useTranslation();
 
   const [selectedDates, setSelectedDates] = useState([]);
 
@@ -75,11 +78,11 @@ const DetailScreen = ({ route }) => {
     return acc;
   }, {});
   const vehicleSpecs = [
-    { label: "Year", value: item?.model },
-    { label: "Body Type", value: item?.bodyType },
-    { label: "Engine Capacity", value: item?.capacity ?? 0 + " cc" },
-    { label: "Color", value: item?.color },
-    { label: "Fuel", value: item?.fuel },
+    { label: COMMON_TEXT.YEAR, value: item?.model },
+    { label: EJAR.BODY_TYPE, value: item?.bodyType },
+    { label: EJAR.ENGINE_CAPACITY, value: item?.capacity ?? 0 + " cc" },
+    { label: COMMON_TEXT.COLOR, value: item?.color },
+    { label: EJAR.FUEL, value: item?.fuel },
   ];
   return (
     <SafeAreaContainer safeArea={false}>
@@ -109,7 +112,11 @@ const DetailScreen = ({ route }) => {
                 >
                   <Image
                     source={IMAGES.leftIcon}
-                    style={{ width: 30, height: 30 }}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      transform: [{ scaleX: isLangRTL ? -1 : 1 }],
+                    }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -186,7 +193,7 @@ const DetailScreen = ({ route }) => {
         <View style={{ padding: 20 }}>
           <View style={commonStyles.lineBar} />
           <Typography textType="bold" size={theme.fontSize.large20}>
-            Description
+            {COMMON_TEXT.DESCRIPTION}
           </Typography>
           <Typography color={theme.color.descColor}>
             {item?.description}
@@ -197,7 +204,7 @@ const DetailScreen = ({ route }) => {
         <View style={{ padding: 20 }}>
           <View style={commonStyles.lineBar} />
           <Typography textType="bold" size={theme.fontSize.large20}>
-            Rent Now
+            {EJAR.RENT_NOW}
           </Typography>
 
           <CustomCalender dates={formattedDates} />
@@ -205,7 +212,7 @@ const DetailScreen = ({ route }) => {
 
         {/* Rent Now Button */}
         <Button
-          label="Rent Now"
+          label={t(EJAR.RENT_NOW)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={() =>

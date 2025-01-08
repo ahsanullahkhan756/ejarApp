@@ -8,15 +8,16 @@ import TabList from "../../../components/atoms/TabList";
 import ActiveBooking from "../../../components/molecules/MyBookingComp/ActiveBooking";
 import CompletedBooking from "../../../components/molecules/MyBookingComp/CompletedBooking";
 import { onBack, reset } from "../../../navigation/RootNavigation";
-import { SCREENS } from "../../../constants";
+import { SCREENS, VARIABLES } from "../../../constants";
 import { getBookingsListApi } from "../../../api/homeServices";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const UserBooking = ({ route }: any) => {
   const isFromBooking = route?.params?.isFormBooking;
-  const [activeTab, setActiveTab] = useState("Active");
+  const [activeTab, setActiveTab] = useState(VARIABLES.ACTIVE);
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const getBookingsList = async () => {
@@ -46,32 +47,32 @@ const UserBooking = ({ route }: any) => {
 
   const renderTab = () => {
     switch (activeTab) {
-      case "Active":
+      case VARIABLES.ACTIVE:
         return (
           <ActiveBooking
             data={data}
             onSubmit={() => {
-              setActiveTab("Active");
+              setActiveTab(VARIABLES.ACTIVE);
             }}
           />
         );
 
-      case "Upcoming":
+      case VARIABLES.UPCOMING:
         return (
           <ActiveBooking
             data={data}
             onSubmit={() => {
-              setActiveTab("Upcoming");
+              setActiveTab(VARIABLES.UPCOMING);
             }}
           />
         );
 
-      case "Completed":
+      case VARIABLES.COMPLETED:
         return (
           <CompletedBooking
             data={data}
             onSubmit={() => {
-              setActiveTab("Completed");
+              setActiveTab(VARIABLES.COMPLETED);
             }}
           />
         );
@@ -91,7 +92,7 @@ const UserBooking = ({ route }: any) => {
             onBack();
           }
         }}
-        titleText={"My Renting"}
+        titleText={COMMON_TEXT.MY_RENTINGS}
         centerImg={false}
       />
       <View paddingH-10>
@@ -101,15 +102,18 @@ const UserBooking = ({ route }: any) => {
             data={[
               {
                 id: 1,
-                label: "Active",
+                name: COMMON_TEXT.ACTIVE,
+                label: VARIABLES.ACTIVE,
               },
               {
                 id: 2,
-                label: "Upcoming",
+                name: VARIABLES.UPCOMING,
+                label: VARIABLES.UPCOMING,
               },
               {
                 id: 3,
-                label: "Completed",
+                name: VARIABLES.COMPLETED,
+                label: VARIABLES.COMPLETED,
               },
             ]}
             onSelect={setActiveTab}

@@ -13,9 +13,12 @@ import { Typography } from "../../../components/atoms/Typography";
 import { DropDown } from "../../../components/atoms/DropDown";
 import { cityData } from "../../../containers/dummy";
 import { InputText } from "../../../components/atoms/InputText";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { COMMON_TEXT, EJAR } from "../../../constants/screens";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
 
 const MyAddress = () => {
-
+  const { t } = useTranslation();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
@@ -25,7 +28,7 @@ const MyAddress = () => {
   const handleSave = async () => {
     // Validate form fields
     if (!address || !city || !zip || !country) {
-      showToast({ title: "Please fill all fields." });
+      showToast({ title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS) });
       return;
     }
 
@@ -42,17 +45,15 @@ const MyAddress = () => {
       showToast({ title: res.message });
       onBack(); // Go back on success
     } else {
-      showToast({ title: "Failed to update address." });
+      showToast({ title: t(EJAR.FAILED_TO_UPDATE_ADDRESS) });
     }
   };
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Address"} centerImg={false} />
+      <Header titleText={COMMON_TEXT.MY_ADDRESS} centerImg={false} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View marginH-20>
-          {/* Address Text Input */}
-
           <View
             style={[
               commonStyles.fieldStyle,
@@ -64,7 +65,9 @@ const MyAddress = () => {
             ]}
           >
             <View row spread>
-              <Typography color={theme.color.descColor}>Address</Typography>
+              <Typography color={theme.color.descColor}>
+                {COMMON_TEXT.ADDRESS}
+              </Typography>
               <Image
                 source={IMAGES.addressIcon}
                 style={{ width: 20, height: 20 }}
@@ -89,21 +92,20 @@ const MyAddress = () => {
               value={city}
               width={SCREEN_WIDTH * 0.9}
               height={verticalScale(45)}
-              placeholder={"Select City"}
+              placeholder={COMMON_TEXT.CITY}
               onChange={setCity}
             />
           </View>
 
           {/* Zip Code Input */}
-            <InputText
-              // label={"Zip Code"}
-              labelStyle={{color:'red'}}
-              placeholder={"Enter Zip Code"}
-              value={zip}
-              onChangeText={setZip}
-              style={{ width: SCREEN_WIDTH * 0.9, borderWidth: 0.2 }}
-            />
-     
+          <InputText
+            // label={"Zip Code"}
+            labelStyle={{ color: "red" }}
+            placeholder={COMMON_TEXT.ZIP_CODE}
+            value={zip}
+            onChangeText={setZip}
+            style={{ width: SCREEN_WIDTH * 0.9, borderWidth: 0.2 }}
+          />
 
           {/* Country Dropdown */}
           <View style={{ marginVertical: 10 }}>
@@ -113,7 +115,7 @@ const MyAddress = () => {
               value={country}
               width={SCREEN_WIDTH * 0.9}
               height={verticalScale(45)}
-              placeholder={"Select Country"}
+              placeholder={COMMON_TEXT.COUNTRY}
               onChange={setCountry}
             />
           </View>
@@ -121,7 +123,7 @@ const MyAddress = () => {
 
         {/* Save Button */}
         <Button
-          label="Save"
+          label={t(COMMON_TEXT.SAVE)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={handleSave} // Call save handler on press

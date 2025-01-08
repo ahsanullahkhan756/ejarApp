@@ -45,7 +45,7 @@ const Notification = () => {
       <View margin-20>
         {isLoading ? (
           <ActivityIndicator size="large" color={theme.color.primary} />
-        ) : notifications.length === 0 ? (
+        ) : notifications?.length != 0 ? (
           <View style={styles.noResultsContainer}>
             <Typography style={styles.noResultsText}>
               {COMMON_TEXT.NO_ITEM_FOUND}
@@ -59,7 +59,7 @@ const Notification = () => {
               <View style={styles.item}>
                 <Typography>{item.title}</Typography>
                 <Typography color={theme.color.descColor}>
-                  {item?.body}
+                  {item?.description}
                 </Typography>
               </View>
             )}

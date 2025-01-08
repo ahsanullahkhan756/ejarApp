@@ -9,9 +9,12 @@ import { Typography } from "../../components/atoms/Typography";
 import { commonStyles } from "../../containers/commStyles";
 import { navigate } from "../../navigation/RootNavigation";
 import { topRatedCar } from "../../api/homeServices";
+import { useTranslation } from "../../hooks/useTranslation";
+import { COMMON_TEXT, EJAR } from "../../constants/screens";
 
 const RentCars = () => {
   const [list, setList] = useState([]);
+  const { t } = useTranslation();
   const topRatedCarApi = async () => {
     try {
       const resp = await topRatedCar();
@@ -29,13 +32,16 @@ const RentCars = () => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Car For Rent" centerImg={false} />
+      <Header titleText={EJAR.CAR_FOR_RENT} centerImg={false} />
       <View flex>
         <FlatList
           data={list}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <TouchableOpacity
+              style={{
+                marginHorizontal: 20,
+              }}
               onPress={() =>
                 navigate(SCREENS.DETAIL_SCREEN, {
                   item: item,
@@ -93,7 +99,7 @@ const RentCars = () => {
                       style={{ width: 20, height: 20 }}
                       resizeMode="contain"
                     />
-                    <Typography>{item?.mile} km</Typography>
+                    <Typography>{item?.mile + " km"}</Typography>
                   </View>
                 </View>
 
@@ -118,7 +124,7 @@ const RentCars = () => {
                 />
                 <View row spread marginH-15 marginV-10>
                   <Typography size={theme.fontSize.small} textType="semiBold">
-                    Hourly Rate
+                    {COMMON_TEXT.PRICE}
                   </Typography>
                   <Typography size={theme.fontSize.small} textType="semiBold">
                     {`AED ${item?.rentalPrice ?? 0}/day`}
@@ -148,7 +154,7 @@ const RentCars = () => {
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ marginHorizontal: 20 }}
+          // contentContainerStyle={{ marginHorizontal: 20 }}
         />
       </View>
     </SafeAreaContainer>

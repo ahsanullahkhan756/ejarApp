@@ -6,9 +6,9 @@ import { theme } from "../../constants";
 import { commonStyles } from "../../containers/commStyles";
 import { View, Card } from "react-native-ui-lib"; // Added Card for a better layout
 import { ScrollView } from "react-native"; // For scrolling if reviews are long
+import { COMMON_TEXT } from "../../constants/screens";
 
 const ViewReviews = (props: any) => {
-
   // Sample reviews data
   const reviews = [
     {
@@ -33,18 +33,10 @@ const ViewReviews = (props: any) => {
 
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Reviews" centerImg={false} />
-      
-      <ScrollView style={{flex:1}}>
+      <Header titleText={COMMON_TEXT.REVIEWS} centerImg={false} />
+
+      <ScrollView style={{ flex: 1 }}>
         <View paddingH-20>
-          <Typography
-            size={22}
-            textType="semiBold"
-            color={theme.color.primary}
-            style={{ marginVertical: 0 }}
-          >
-            User Reviews
-          </Typography>
 
           {reviews.map((review) => (
             <Card

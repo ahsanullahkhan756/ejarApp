@@ -11,6 +11,7 @@ import { searchCompaniesApi } from "../../api/homeServices";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../../redux/slice/user";
 import { COMMON_TEXT } from "../../constants/screens";
+import { Typography } from "../../components/atoms/Typography";
 
 const SearchScreen = () => {
   const dispatch = useDispatch();
@@ -66,7 +67,9 @@ const SearchScreen = () => {
         <ActivityIndicator size="large" color={theme.color.primary} />
       ) : companies.length === 0 ? (
         <View style={styles.noResultsContainer}>
-          <Text style={styles.noResultsText}>{COMMON_TEXT.NO_ITEM_FOUND}</Text>
+          <Typography style={styles.noResultsText}>
+            {COMMON_TEXT.NO_ITEM_FOUND}
+          </Typography>
         </View>
       ) : (
         <FlatList

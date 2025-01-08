@@ -26,6 +26,7 @@ import { getHomeApi, topRatedCar } from "../../api/homeServices";
 import { getFCMToken } from "../../api/auth.js";
 import { useIsFocused } from "@react-navigation/native";
 import { COMMON_TEXT, EJAR } from "../../constants/screens/index";
+import { useTranslation } from "../../hooks/useTranslation";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Home = () => {
   const filterData = useSelector((state: any) => state?.appData?.filterData);
   const [rentCars, setRentCars] = useState([]);
   console.log("details", details);
+  const { t, isLangRTL } = useTranslation();
   const isFocused = useIsFocused();
   const getUser = async () => {
     try {
@@ -324,7 +326,12 @@ const Home = () => {
             </Typography>
             <Image
               source={IMAGES.colun}
-              style={{ width: 70, height: 20, alignSelf: "center" }}
+              style={{
+                width: 70,
+                height: 20,
+                alignSelf: "center",
+                transform: [{ scaleX: isLangRTL ? -1 : 1 }],
+              }}
               resizeMode="contain"
             />
           </View>

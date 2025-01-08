@@ -4,20 +4,20 @@ import { View } from "react-native-ui-lib";
 import { IMAGES, theme } from "../../../constants";
 import { Typography } from "../../../components/atoms/Typography";
 import { onBack } from "../../../navigation/RootNavigation";
+import { COMMON_TEXT, EJAR } from "../../../constants/screens";
 
 const BookedDate = (props: any) => {
-  
   const data = [
     {
-      title: "Renting Period",
+      title: EJAR.RENTING_PERIOD,
       date: `${props?.daysInRange} Days`,
     },
     {
-      title: "Pick up date",
+      title: EJAR.PICK_UP_DATE,
       date: props?.startEndDates?.start,
     },
     {
-      title: "Return date",
+      title: EJAR.RETURN_DATE,
       date: props?.startEndDates?.end ?? props?.startEndDates?.start,
     },
   ];
@@ -30,7 +30,7 @@ const BookedDate = (props: any) => {
           size={theme.fontSize.large20}
           color={theme.color.blue}
         >
-          Rent Dates
+          {EJAR.RENT_DATES}
         </Typography>
         {/* <TouchableOpacity
           onPress={() => {

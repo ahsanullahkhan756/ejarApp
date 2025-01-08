@@ -7,17 +7,20 @@ import PersonalInfo from "../../../components/molecules/ProfileMol/PersonalInfo"
 import ChangePassword from "../../../components/molecules/ProfileMol/ChangePassword";
 import { theme } from "../../../constants";
 import { onBack } from "../../../navigation/RootNavigation";
+import { COMMON_TEXT } from "../../../constants/screens";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const MyInformation = () => {
+  const { t } = useTranslation();
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText={"My Information"} centerImg={false} />
+      <Header titleText={COMMON_TEXT.MY_INFORMATION} centerImg={false} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View marginH-20>
           <PersonalInfo />
         </View>
         <Button
-          label="Save"
+          label={t(COMMON_TEXT.SAVE)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={() => onBack()}

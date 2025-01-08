@@ -101,7 +101,7 @@ const FilterScreen = () => {
             <InputField
               placeholder={COMMON_TEXT.PRICE}
               keyboardType="number-pad"
-              rightText={EJAR.TRUE}
+              // rightText={EJAR.TRUE}
               maxLength={10}
               width={SCREEN_WIDTH * 0.4}
               value={fromPrice}
@@ -113,7 +113,7 @@ const FilterScreen = () => {
             <InputField
               placeholder={COMMON_TEXT.PRICE}
               keyboardType="number-pad"
-              rightText={EJAR.TRUE}
+              // rightText={EJAR.TRUE}
               maxLength={10}
               value={toPrice}
               onChangeText={setToPrice}
@@ -174,7 +174,7 @@ const FilterScreen = () => {
             <InputField
               placeholder="0"
               keyboardType="number-pad"
-              rightText={EJAR.TRUE}
+              // rightText={EJAR.TRUE}
               rightTitle={EJAR.KM}
               maxLength={10}
               width={SCREEN_WIDTH * 0.4}
@@ -187,7 +187,7 @@ const FilterScreen = () => {
             <InputField
               placeholder={EJAR.ANY}
               keyboardType="number-pad"
-              rightText={EJAR.TRUE}
+              // rightText={EJAR.TRUE}
               value={toKM}
               onChangeText={setToKM}
             />

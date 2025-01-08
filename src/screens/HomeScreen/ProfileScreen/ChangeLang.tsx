@@ -34,45 +34,55 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { useTranslation } from "react-i18next";
 // import "../../i18n";
 import "../../../i18n";
 import { View, Text, Button } from "react-native-ui-lib";
 import SafeAreaContainer from "../../../containers/SafeAreaContainer";
-import { IMAGES, theme } from "../../../constants";
+import { IMAGES, theme, VARIABLES } from "../../../constants";
 import { Typography } from "../../../components/atoms/Typography";
 import { onBack } from "../../../navigation/RootNavigation";
 import { DropDown } from "../../../components/atoms/DropDown";
 import { Header } from "../../../components/atoms/Header";
-
+import { useDispatch, useSelector } from "react-redux";
+import { LANGUAGES, useTranslation } from "../../../hooks/useTranslation";
+import { setAppLanguage } from "../../../redux/slice/appSettings";
+import RNRestart from "react-native-restart"; // Import package from node modules
+import { setItem } from "../../../utils/storage";
+import { COMMON_TEXT, TEMPORARY_TEXT } from "../../../constants/screens";
+import { setIsLoading } from "../../../redux/slice/user";
 const SelectLanguage = () => {
-  const { t, i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState<string>("en");
-
-  const changeLanguage = (lng: string) => {
-    setSelectedLang(lng); // Set selected language
-    i18n?.changeLanguage(lng);
-    if (lng === "ar") {
-      I18nManager.forceRTL(true);
-    } else {
-      I18nManager.forceRTL(false);
+  const { t, changeLanguage } = useTranslation();
+  const selected = useSelector((state) => state?.app?.appLanguage);
+  console.log(selected);
+  const [selectedLang, setSelectedLang] = useState<string>(selected);
+  const dispatch = useDispatch();
+  const changeAppLanguage = (selectedLanguage: string) => {
+    try {
+      setSelectedLang(selectedLanguage);
+      dispatch(setIsLoading(true));
+      if (selectedLanguage == LANGUAGES.ARABIC) {
+        I18nManager.forceRTL(true);
+      } else {
+        I18nManager.forceRTL(false);
+      }
+      setTimeout(() => {
+        RNRestart.restart();
+      }, 1000);
+      changeLanguage(selectedLanguage);
+      dispatch(setAppLanguage(selectedLanguage));
+      setItem(VARIABLES.LANGUAGE, selectedLanguage);
+    } catch (error) {
+    } finally {
+      // dispatch(setIsLoading(false));
     }
   };
-
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Change Language" centerImg={false} />
-      <View center margin-20 >
-        <Typography align="center" color={theme.color.descColor} style={{marginBottom:30}}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      <Header titleText={COMMON_TEXT.CHOOSE_LANGUAGE} centerImg={false} />
+      <View marginH-10>
+        <Typography align="center" color={theme.color.descColor}>
+          {TEMPORARY_TEXT.LORUM_IPSUM}
         </Typography>
-        <DropDown
-          data={language}
-          width={200}
-          height={50}
-          placeholder={"English"}
-        />
       </View>
 
       {/* <View style={styles.buttonContainer}>
@@ -96,13 +106,40 @@ const SelectLanguage = () => {
         </Pressable>
       </View> */}
 
-      <Button
+      <View style={styles.buttonContainer}>
+        <Pressable
+          style={[
+            styles.languageButton,
+            selectedLang === LANGUAGES.ENGLISH && styles.selectedButton,
+          ]}
+          onPress={() => changeAppLanguage(LANGUAGES.ENGLISH)}
+        >
+          {/* <Text small>{t("English")}</Text> */}
+
+          <Typography style={{ textTransform: "capitalize" }}>
+            {LANGUAGES.ENGLISH}
+          </Typography>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.languageButton,
+            selectedLang === LANGUAGES.ARABIC && styles.selectedButton,
+          ]}
+          onPress={() => changeAppLanguage(LANGUAGES.ARABIC)}
+        >
+          <Typography style={{ textTransform: "capitalize" }}>
+            {LANGUAGES.ARABIC}
+          </Typography>
+        </Pressable>
+      </View>
+
+      {/* <Button
         label="Save"
         backgroundColor={theme.color.primary}
         borderRadius={30}
         onPress={() => onBack()}
         style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}
-      />
+      /> */}
     </SafeAreaContainer>
   );
 };

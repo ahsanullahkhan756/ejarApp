@@ -5,6 +5,7 @@ import { navigate } from "./RootNavigation";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { IMAGES, SCREENS } from "../constants";
 import { Typography } from "../components/atoms/Typography";
+import { COMMON_TEXT } from "../constants/screens";
 
 const BottomTabs = (props: any) => {
   return (
@@ -71,25 +72,25 @@ const styles = StyleSheet.create({
 export const BOTTOMTABS = [
   {
     key: 0,
-    title: "Home",
+    title: COMMON_TEXT.HOME,
     navigateTo: SCREENS.HOME,
     image: IMAGES.homeIcon,
   },
   {
     key: 1,
-    title: "Search",
+    title:COMMON_TEXT.SEARCH,
     navigateTo: SCREENS.SEARCH_SCREEN,
     image: IMAGES.searchIcon,
   },
   {
     key: 2,
-    title: "Notification",
+    title:COMMON_TEXT.NOTIFICATIONS,
     navigateTo: SCREENS.NOTIFICATION,
     image: IMAGES.notification,
   },
   {
     key: 3,
-    title: "Profile",
+    title: COMMON_TEXT.PROFILE,
     navigateTo: SCREENS.PROFILE,
     image: IMAGES.profileIcon,
   },

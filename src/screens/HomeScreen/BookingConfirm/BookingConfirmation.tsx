@@ -18,6 +18,8 @@ import BookedCondition from "./BookedCondition";
 import CheckCondition from "./CheckCondition";
 import { navigate } from "../../../navigation/RootNavigation";
 import { showToast } from "../../../utils/toast";
+import { COMMON_TEXT, EJAR } from "../../../constants/screens";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const BookingConfirmation = ({ route }) => {
   const startEndDates = route?.params?.startEndDates;
@@ -25,7 +27,7 @@ const BookingConfirmation = ({ route }) => {
   const selectedDates = route?.params?.selectedDates;
   const daysInRange = route?.params?.daysInRange;
   const card = route?.params?.card;
-
+  const { t } = useTranslation();
   const totalPrice = item?.rentalPrice * daysInRange;
 
   const calculateTotal = () => {
@@ -52,7 +54,7 @@ const BookingConfirmation = ({ route }) => {
   const [status, setStatus] = useState(false);
   return (
     <SafeAreaContainer safeArea={false}>
-      <Header titleText="Renting Confirmation" centerImg={false} />
+      <Header titleText={EJAR.RENTING_CONDITIONS} centerImg={false} />
       <ScrollView
         style={{ flex: 1, marginHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
@@ -117,11 +119,12 @@ const BookingConfirmation = ({ route }) => {
         </View>
         <View marginV-20>
           <Typography>
-            Renting conditions must be agreed upon before proceeding to pay.
+            {EJAR.RENTING_CONDITIONS_MUST_BE_AGREED}
+       
           </Typography>
         </View>
         <Button
-          label="Next"
+          label={t(COMMON_TEXT.NEXT)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
           onPress={() => {
@@ -135,7 +138,7 @@ const BookingConfirmation = ({ route }) => {
                 totalPrice: calculateTotal(),
               });
             } else {
-              showToast({ title: "Please confirm the terms to proceed" });
+              showToast({ title: EJAR.PLEASE_CONFIRM_THE_TERMS  });
             }
           }}
           style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}

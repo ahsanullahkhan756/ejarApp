@@ -2,6 +2,7 @@ import React, { Component, useContext, useMemo, useState } from "react";
 import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Text, View } from "react-native-ui-lib";
 import { theme } from "../../constants";
+import { Typography } from "./Typography";
 
 const TabList = (props: any) => {
   const {
@@ -33,9 +34,9 @@ const TabList = (props: any) => {
               }
             }}
           >
-            <Text extraSmall12 semibold color={"#fff"}>
-              {item.label}
-            </Text>
+            <Typography extraSmall12 semibold color={"#fff"}>
+              {item.name}
+            </Typography>
           </TouchableOpacity>
         ))}
       </ScrollView>

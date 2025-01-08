@@ -9,6 +9,7 @@ import ForgotPass from "../screens/AuthScreen/ForgotPass";
 import OTPScreen from "../screens/AuthScreen/OTPScreen";
 import ResetPassword from "../screens/AuthScreen/ResetPassword";
 import Privacy from "../screens/AuthScreen/Privacy";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,11 +24,25 @@ const screenOptionStyle = {
 };
 
 export const AuthStackNavigator = () => {
+  const selected = useSelector((state) => state?.app?.appLanguage);
+  
   return (
-    <Stack.Navigator initialRouteName="SelectLanguage" screenOptions={screenOptionStyle}>
+    <Stack.Navigator
+      initialRouteName={SCREENS.LOGIN}
+      screenOptions={screenOptionStyle}
+    >
+      {!selected ? (
+        <>
+          <Stack.Screen name={SCREENS.ONBOARDING} component={OnBoarding} />
+          <Stack.Screen
+            name={SCREENS.SELECT_LANGUAGE}
+            component={SelectLanguage}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <Stack.Screen name={SCREENS.LOGIN} component={Login} />
-      <Stack.Screen name={SCREENS.ONBOARDING} component={OnBoarding} />
-      <Stack.Screen name={SCREENS.SELECT_LANGUAGE} component={SelectLanguage} />
       <Stack.Screen name={SCREENS.SIGNUP} component={SignUp} />
       <Stack.Screen name={SCREENS.FORGOT_PASS} component={ForgotPass} />
       <Stack.Screen name={SCREENS.OTP} component={OTPScreen} />
@@ -36,4 +51,3 @@ export const AuthStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-
