@@ -79,8 +79,9 @@ export const VARIABLES = {
   GRANTED: "granted",
   CUSTOM: "Custom",
   UPCOMING: "Upcoming",
-  CANCEL: "Cancel",
   COMPLETED: "Completed",
+  CANCEL: "Cancel",
+  ACTIVE: "Active",
 
   USER_TOKEN: "token",
   LANGUAGE: "user selected language",
