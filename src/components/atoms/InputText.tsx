@@ -24,7 +24,7 @@ export const InputText = (props: any) => {
     onValidationFailed = () => {},
     secureTextEntry = false,
     style = {},
-    label = true,
+    label = "",
     multiline = false,
     onPressRight = () => {},
     containerStyle,

@@ -12,6 +12,7 @@ import { Image, View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
 import { scale, verticalScale } from "react-native-size-matters";
 import { commonStyles } from "../../containers/commStyles";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export const Header = (props: any) => {
   const navigation = useNavigation();
@@ -26,6 +27,7 @@ export const Header = (props: any) => {
     leftIconColor = theme.color.primary,
     titleColor = theme.color.black,
   } = props;
+  const { t, isLangRTL } = useTranslation();
   return (
     <View style={[styles.container]}>
       <View height={50} row center>
@@ -33,32 +35,36 @@ export const Header = (props: any) => {
           <TouchableOpacity onPress={onPressLeft} style={{ flex: 1 }}>
             <Image
               source={leftIcon}
-              style={{ width: 25, height: 25 }}
+              style={{
+                width: 25,
+                height: 25,
+
+                transform: [{ scaleX: isLangRTL ? -1 : 1 }],
+              }}
               color={leftIconColor}
             />
           </TouchableOpacity>
         )}
         {centerImg ? (
-          <View center> 
-          <Image
-            source={centerImg}
-            style={{ width: scale(180), height: verticalScale(45), top: 20,}}
-            resizeMode="contain"
-          />
+          <View center>
+            <Image
+              source={centerImg}
+              style={{ width: scale(180), height: verticalScale(45), top: 20 }}
+              resizeMode="contain"
+            />
           </View>
         ) : (
-
           <View center>
-            <View style={commonStyles.lineBar}/>
+            <View style={commonStyles.lineBar} />
             <Typography
-            size={theme.fontSize.large20}
-            align="center"
-            textType="semiBold"
-            color={titleColor}
-          >
-            {titleText}
-          </Typography>
-           </View> 
+              size={theme.fontSize.large20}
+              align="center"
+              textType="semiBold"
+              color={titleColor}
+            >
+              {titleText}
+            </Typography>
+          </View>
         )}
 
         <View flex>

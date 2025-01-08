@@ -25,7 +25,7 @@ export const InputField = (props: any) => {
     onValidationFailed = () => {},
     secureTextEntry = false,
     style = {},
-    label = EJAR.TRUE,
+    label = "",
     multiline = false,
     onPressRight = () => {},
     width = 170,

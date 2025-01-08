@@ -41,7 +41,7 @@ export const InputDateCard = (props: any) => {
           {title}
         </Typography>
       )}
-      <View style={{ marginVertical: 10, ...style }}>
+      <View style={{ marginVertical: 20, ...style }}>
         <TouchableOpacity
           onPress={() => setVisible(true)}
           style={{

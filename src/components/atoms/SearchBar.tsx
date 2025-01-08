@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { navigate } from "../../navigation/RootNavigation";
 import { IMAGES, SCREENS, theme } from "../../constants";
-import { View } from "react-native-ui-lib";
+import { TextField, View } from "react-native-ui-lib";
 import { scale } from "react-native-size-matters";
 import { COMMON_TEXT } from "../../constants/screens";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -35,7 +35,7 @@ export const SearchBar = (props: any) => {
           style={{ height: 30, width: 30 }}
           resizeMode="contain"
         />
-        <TextInput
+        <TextField
           placeholder={t(COMMON_TEXT.SEARCH)}
           placeholderTextColor={theme.color.white}
           style={{ width: widthContaner, color: theme.color.white }}
