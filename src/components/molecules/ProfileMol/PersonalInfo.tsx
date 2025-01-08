@@ -5,11 +5,11 @@ import { Typography } from "../../atoms/Typography";
 import { View } from "react-native-ui-lib";
 import { commonStyles } from "../../../containers/commStyles";
 import { useSelector } from "react-redux";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const PersonalInfo = (props: any) => {
   const userdata =  useSelector((state)=>state?.user?.userDetails)
-  console.log('userdata',userdata);
-
   const DATA = [
     {
       id: 1,
@@ -41,7 +41,7 @@ const PersonalInfo = (props: any) => {
       keyExtractor={(item: any) => item.id.toString()}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      ListHeaderComponent={<Typography textType="bold" >Personal Details</Typography>}
+      ListHeaderComponent={<Typography textType="bold" >{COMMON_TEXT.PERSONAL_DETAILS}</Typography>}
     />
   );
 };

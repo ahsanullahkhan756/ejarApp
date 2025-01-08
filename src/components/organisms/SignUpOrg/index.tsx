@@ -70,7 +70,7 @@ const SignUpOrg = ({
         <View row center marginH-20>
           <View flex height={1} backgroundColor={theme.color.black} />
           <View>
-            <Typography style={{ width: 100, textAlign: "center" }}>
+            <Typography style={{ width: 180, textAlign: "center" }}>
               {COMMON_TEXT.OR_CONTINUE_WITH}
             </Typography>
           </View>
@@ -86,7 +86,7 @@ const SignUpOrg = ({
             />
           ))}
         </View>
-        <View center row>
+        <View center row  gap-5>
           <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT}</Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
             <Typography

@@ -53,6 +53,7 @@ const LoginTamplet = () => {
       <View
         center
         row
+        gap-5
         style={{
           marginTop: 140,
         }}
