@@ -55,6 +55,9 @@ export const InputText = (props: any) => {
       secureTextEntry={secureTextEntry}
       multiline={multiline}
       keyboardType={keyboardType}
+      style={{
+        fontFamily: isLangRTL ? theme.arabicFont.regular : theme.font.regular,
+      }}
       containerStyle={containerStyle}
       fieldStyle={{
         height: verticalScale(45),

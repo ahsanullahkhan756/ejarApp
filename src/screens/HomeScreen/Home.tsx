@@ -98,7 +98,7 @@ const Home = () => {
           >
             {/* Categories Carousel */}
             <FlatList
-              data={data.categories}
+              data={[]}
               horizontal
               // numColumns={4}
               // scrollEnabled={false}

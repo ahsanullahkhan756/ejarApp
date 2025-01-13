@@ -3,6 +3,8 @@ import { Dimensions } from "react-native";
 import { SCREENS } from "./ScreenNames";
 import { navigate } from "../navigation/RootNavigation";
 import { IMAGES } from ".";
+import i18n from "../i18n";
+import { LANGUAGES } from "../hooks/useTranslation";
 interface Tab {
   key: number;
   title: string;
@@ -18,7 +20,9 @@ export const SCREEN_WIDTH = width;
 export const STRIPE_KEY =
   "pk_test_51QAfZAL6ZMRqMg2dDhexLvmFPD96cz871kzYCv9gT7ERRgARYdtkOUXlIaO8HRVxAzbKpGh7J6nb9F78asrmmsPE001X8jr0xi";
 
-const fontRegularName = "Poppins";
+const fontRegularName = "NotoSansArabic";
+const arabicRegularName = "NotoSansArabic";
+console.log(i18n.language);
 
 export const theme = {
   font: {
@@ -26,6 +30,13 @@ export const theme = {
     semibold: fontRegularName + "-SemiBold",
     bold: fontRegularName + "-Bold",
     medium: fontRegularName + "-Medium",
+  },
+
+  arabicFont: {
+    regular: arabicRegularName + "-Regular",
+    semibold: arabicRegularName + "-SemiBold",
+    bold: arabicRegularName + "-Bold",
+    medium: arabicRegularName + "-Medium",
   },
   fontSize: {
     tiny: 8,

@@ -25,16 +25,24 @@ export const Typography = (props: any) => {
 
   switch (textType) {
     case "bold":
-      textStyle.fontFamily = theme.font.bold;
+      textStyle.fontFamily = isLangRTL
+        ? theme.arabicFont.bold
+        : theme.font.bold;
       break;
     case "semiBold":
-      textStyle.fontFamily = theme.font.semibold;
+      textStyle.fontFamily = isLangRTL
+        ? theme.arabicFont.semibold
+        : theme.font.semibold;
       break;
     case "regular":
-      textStyle.fontFamily = theme.font.regular;
+      textStyle.fontFamily = isLangRTL
+        ? theme.arabicFont.regular
+        : theme.font.regular;
       break;
     case "medium":
-      textStyle.fontFamily = theme.font.medium;
+      textStyle.fontFamily = isLangRTL
+        ? theme.arabicFont.medium
+        : theme.font.medium;
       break;
   }
 

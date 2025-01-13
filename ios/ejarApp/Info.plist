@@ -41,7 +41,6 @@
 	<key>FacebookDisplayName</key>
 	<string>Car Ejar</string>
 	<key>GIDClientID</key>
-	
 	<string>431283448970-uru88khu33v4rhacujsa1fe33hum0ldd.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -60,7 +59,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App needs Camera Access Permission for testing</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>App needs Microphone Access Permission for testing</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -90,6 +89,11 @@
 		<string>Quicksand-Medium.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>NotoSansArabic-Black.ttf</string>
+		<string>NotoSansArabic-Bold.ttf</string>
+		<string>NotoSansArabic-Medium.ttf</string>
+		<string>NotoSansArabic-Regular.ttf</string>
+		<string>NotoSansArabic-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

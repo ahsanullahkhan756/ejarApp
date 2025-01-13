@@ -3,6 +3,8 @@ import { setIsUserLoggedIn } from "../redux/slice/appSettings";
 import { store } from "../redux/store";
 import { VARIABLES } from "../constants";
 import { getItem, removeMultipleItem } from "../utils/storage";
+import i18n from "../i18n";
+import { LANGUAGES } from "../hooks/useTranslation";
 
 interface RequestOptions {
   url: string;
@@ -27,6 +29,7 @@ const axiosInstance = axios.create({
     // "Access-Control-Allow-Origin": "*",
     // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     Accept: "application/json",
+    "Accept-Language": i18n.language == LANGUAGES.ARABIC ? "ar" : "en-US",
   },
 });
 

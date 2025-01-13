@@ -107,12 +107,12 @@ const UserBooking = ({ route }: any) => {
               },
               {
                 id: 2,
-                name: VARIABLES.UPCOMING,
+                name: COMMON_TEXT.UPCOMING,
                 label: VARIABLES.UPCOMING,
               },
               {
                 id: 3,
-                name: VARIABLES.COMPLETED,
+                name: COMMON_TEXT.COMPLETED,
                 label: VARIABLES.COMPLETED,
               },
             ]}

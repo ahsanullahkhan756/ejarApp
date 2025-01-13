@@ -58,6 +58,26 @@
       "sha1": "1943803d652750c8ec60415f1e57401c70e72d25"
     },
     {
+      "path": "src/assets/fonts/NotoSansArabic-Black.ttf",
+      "sha1": "4078282219bb19a598a91de00314595b8b148788"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansArabic-Bold.ttf",
+      "sha1": "30c10606c29ac1fdacae6805d9c55c52452718a8"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansArabic-Medium.ttf",
+      "sha1": "e03d7b6df3c0c92c32a1a002b55aaf933b30d276"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansArabic-Regular.ttf",
+      "sha1": "00e474d0683a9ddd8769196157fc1f24065ed633"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansArabic-SemiBold.ttf",
+      "sha1": "f4a2ec329ede022f532bc4bacb3ebc3067b8220d"
+    },
+    {
       "path": "src/assets/fonts/Octicons.ttf",
       "sha1": "28875874413503bcc0810ea2a44dc1b8312c665a"
     },
