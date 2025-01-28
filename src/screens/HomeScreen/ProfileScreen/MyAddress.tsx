@@ -24,9 +24,7 @@ const MyAddress = () => {
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
 
-  // Handle form submission
   const handleSave = async () => {
-    // Validate form fields
     if (!address || !city || !zip || !country) {
       showToast({ title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS) });
       return;
@@ -39,11 +37,11 @@ const MyAddress = () => {
       country,
     };
 
-    // API call to update the address
+
     const res = await myAdressApi(data);
     if (res?.message) {
       showToast({ title: res.message });
-      onBack(); // Go back on success
+      onBack();
     } else {
       showToast({ title: t(EJAR.FAILED_TO_UPDATE_ADDRESS) });
     }
@@ -52,9 +50,9 @@ const MyAddress = () => {
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={COMMON_TEXT.MY_ADDRESS} centerImg={false} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
         <View marginH-20>
-          <View
+          {/* <View
             style={[
               commonStyles.fieldStyle,
               {
@@ -74,21 +72,19 @@ const MyAddress = () => {
                 resizeMode="contain"
               />
             </View>
-          </View>
+          </View> */}
 
-          {/* <InputText
-          label={"Address"}
-            placeholder={"Enter Address"}
+          <InputText
+          // label={"Address"}
+            placeholder={  COMMON_TEXT.ADDRESS}
             value={address}
             onChangeText={setAddress}
             style={{ width: SCREEN_WIDTH * 0.9, borderWidth: 0.2 }}
-          /> */}
+          />
 
-          {/* City Dropdown */}
-          <View style={{ marginVertical: 10 }}>
-            {/* <Typography color={theme.color.descColor}>City</Typography> */}
+          <View style={{ marginBottom: 10 }}>
             <DropDown
-              data={cityData} // Assuming cityData is an array of cities
+              data={cityData} 
               value={city}
               width={SCREEN_WIDTH * 0.9}
               height={verticalScale(45)}

@@ -4,7 +4,7 @@ import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
-import { Image, Modal, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, Modal, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
 import { DropDown } from "../../atoms/DropDown";
 import ImagePicker from "react-native-image-crop-picker";
@@ -145,16 +145,17 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
     }
   };
   const formatDate = (date) => {
-    const formattedDate = moment(date, "YYYY/MM/DD", true); // 'true' ensures strict parsing
+    const formattedDate = moment(date, "YYYY/MM/DD", true); 
     if (formattedDate.isValid()) {
       return formattedDate.format("YYYY/MM/DD");
     } else {
-      console.log("Invalid date format: ", date); // Handle invalid dates here
-      return ""; // Or return a default date if needed
+      console.log("Invalid date format: ", date); 
+      return ""; 
     }
   };
 
   return (
+    <ScrollView>
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
@@ -322,6 +323,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
         </View>
       </View>
     </View>
+    </ScrollView>
+
   );
 };
 

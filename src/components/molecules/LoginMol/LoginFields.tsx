@@ -21,7 +21,7 @@ import { useTranslation } from "../../../hooks/useTranslation";
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
   const [email, setEmail] = useState(__DEV__ ? "shahid@mailinator.com" : "");
-  const [password, setPassword] = useState(__DEV__ ? "Passward123!" : "");
+  const [password, setPassword] = useState(__DEV__ ? "Qwerty@12" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   const { t } = useTranslation();

@@ -41,7 +41,9 @@ const MainNavigation = () => {
             dispatch(setLoggedIn(true));
             dispatch(setUserDetails(resp));
           } else {
-            setUserNotActive(resp);
+            // setUserNotActive(resp);
+            dispatch(setLoggedIn(true));
+            dispatch(setUserDetails(resp));
           }
         }
       }

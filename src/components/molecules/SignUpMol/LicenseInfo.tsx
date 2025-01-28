@@ -106,6 +106,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
         setVisible(false);
       });
   };
+  
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
@@ -159,7 +160,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
           {selectImg && (
             <View>
               <Image
-                source={{ uri: selectImg.uri }}
+                source={{ uri: selectImg?.uri }}
                 style={{ width: 150, height: 150, borderRadius: 10 }}
                 resizeMode="cover"
               />
