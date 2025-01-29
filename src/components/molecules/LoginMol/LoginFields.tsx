@@ -20,8 +20,8 @@ import { useTranslation } from "../../../hooks/useTranslation";
 
 const LoginFields = () => {
   const [hasValidated, setValidated] = useState(new Array(2).fill(false));
-  const [email, setEmail] = useState(__DEV__ ? "shahid@mailinator.com" : "");
-  const [password, setPassword] = useState(__DEV__ ? "Qwerty@12" : "");
+  const [email, setEmail] = useState(__DEV__ ? "az@gm.com" : "");
+  const [password, setPassword] = useState(__DEV__ ? "Qwerty@123" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -96,15 +96,17 @@ const LoginFields = () => {
               password: password,
               fcmToken: await getFCMToken(),
             };
+            console.log('data ======>', data);
+            
             const res = await loginApi({ data });
             console.log(res);
-            if (res != null) {
-              console.log("res", res);
-              setItem(VARIABLES.USER_TOKEN, res?.token);
-              dispatch(setLoggedIn(true));
-              dispatch(setIsLoading(true));
-              dispatch(setUserDetails(res));
-            }
+            // if (res != null) {
+            //   console.log("res", res);
+            //   setItem(VARIABLES.USER_TOKEN, res?.token);
+            //   dispatch(setLoggedIn(true));
+            //   dispatch(setIsLoading(true));
+            //   dispatch(setUserDetails(res));
+            // }
           }
         }}
         disabled={!isFormValid()}

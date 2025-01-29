@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, TouchableOpacity } from "react-native-ui-lib";
+import { View, TouchableOpacity, Button } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_HEIGHT, SCREEN_WIDTH, theme } from "../../../constants";
@@ -11,6 +11,9 @@ import {
   useCameraPermission,
 } from "react-native-vision-camera";
 import { COMMON_TEXT } from "../../../constants/screens";
+import { t } from "i18next";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../../redux/slice/user";
 
 const Uploads = ({ onValidate }: any) => {
   const camera = useRef(null);
@@ -24,6 +27,7 @@ const Uploads = ({ onValidate }: any) => {
   ]);
   const [selfie, setSelfie] = useState(null);
   const cameraRef = useRef(null);
+  const dispatch = useDispatch();
 
   const removeImage = (index: any) => {
     const newUploads = uploads.filter((_, i) => i !== index);
@@ -101,10 +105,16 @@ const Uploads = ({ onValidate }: any) => {
       </Typography>
 
       <View style={styles.circleContainer}>
-        {selfie ? (
+        <Image 
+        source={IMAGES.avatar}
+        style={styles.selfieImage}
+
+        />
+        {/* {selfie ? (
           <View style={styles.selfieContainer}>
             <Image
-              source={{ uri: `file://${selfie}` }}
+              // source={{ uri: `file://${selfie}` }}
+              source={IMAGES.avatar}
               style={styles.selfieImage}
             />
             <TouchableOpacity style={styles.deleteButton} onPress={clearSelfie}>
@@ -113,8 +123,19 @@ const Uploads = ({ onValidate }: any) => {
           </View>
         ) : (
           <>{renderDetectorContent()}</>
-        )}
+        )} */}
+
+        
       </View>
+      <Button 
+             label={t(COMMON_TEXT.SIGN_IN)}
+             backgroundColor={theme.color.primary}
+             borderRadius={30}
+             style={{width:'50%'}}
+             onPress={()=>{
+              dispatch(setLoggedIn(true));
+             }}
+        />
     </View>
   );
 };

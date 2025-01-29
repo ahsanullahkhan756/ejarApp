@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
@@ -12,12 +12,17 @@ import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
 import { COMMON_TEXT } from "../../../constants/screens";
+import { updateProfile } from "../../../api/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading } from "../../../redux/slice/user";
 
-const PassportInfo = ({ onValidate }: any) => {
+const PassportInfo = ({ onValidate,setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [selectImg, setSelectImg] = useState("");
   const [selectPdf, setSelectPdf] = useState("");
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+  const ID = useSelector((state)=>state?.user?.userDetails?.ID)
 
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -58,9 +63,8 @@ const PassportInfo = ({ onValidate }: any) => {
       });
   };
 
-  // Remove selected image
   const removeSelectedImage = () => {
-    setSelectImg(""); // Clear image state
+    setSelectImg("");
   };
 
   const dateFields = () => {
@@ -183,6 +187,38 @@ const PassportInfo = ({ onValidate }: any) => {
             </View>
           )}
         </View>
+
+
+        <Button
+            label={"Next"}
+            backgroundColor={theme.color.primary}
+            onPress={async () => {
+              const data = {
+                ID: '',
+                
+                idcardPicture: {
+                  fileName: "id_card.jpg",
+                  base64:
+                    "https://pinnacle.works/wp-content/uploads/2022/06/dummy-image.jpg",
+                  size: 0,
+                },
+              };
+
+              const res = await updateProfile({ data });
+              if (res != null) {
+                setCurrentStep(4);
+                dispatch(setIsLoading(true));
+                dispatch(setIsLoading(false));
+                
+              }
+            }}
+            borderRadius={30}
+            style={{
+              height: 50,
+              margin: 20,
+              width: 300,
+            }}
+          />
       </View>
     </View>
   );

@@ -170,6 +170,7 @@ export const UserGoogleLoginFunction = async (dispatch) => {
         udid: await deviceUDID(),
         picture: user?.photo,
       };
+    
       const url = API_URL.LOGIN + "/google";
       const responseData = await post({ url, data, includeToken: false });
       if (responseData?.data) {
@@ -200,6 +201,7 @@ export const UserGoogleLoginFunction = async (dispatch) => {
 export const getFCMToken = async () => {
   try {
     const token = await messaging().getToken();
+    console.log('device_token',token);
     return token;
   } catch (e) {
     console.log(e);
@@ -212,6 +214,7 @@ export const UserAppleLoginFunction = async (dispatch) => {
     const user = await AppleSignUp();
     if (user.id) {
       const token = await getFCMToken();
+      console.log('token',token);
       const data = user?.email
         ? {
           name: user?.name ?? user?.email?.split("@")[0],
@@ -227,7 +230,6 @@ export const UserAppleLoginFunction = async (dispatch) => {
           device_brand: getBrand(),
           device_os: getSystemVersion(),
           app_version: getVersion(),
-
           picture: user?.picture,
         }
         : {
@@ -242,6 +244,7 @@ export const UserAppleLoginFunction = async (dispatch) => {
         data,
         includeToken: false,
       });
+      
       if (responseData?.data) {
         await setItem(VARIABLES.USER_TOKEN, responseData?.data?.token);
         // await setItem(VARIABLES.LOGGED_IN, VARIABLES.TRUE);

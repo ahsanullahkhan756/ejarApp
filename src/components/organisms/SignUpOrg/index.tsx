@@ -67,7 +67,7 @@ const SignUpOrg = ({
   const handleBottomData = () => {
     return (
       <>
-        <View row center marginH-20>
+        {/* <View row center marginH-20>
           <View flex height={1} backgroundColor={theme.color.black} />
           <View>
             <Typography style={{ width: 180, textAlign: "center" }}>
@@ -75,8 +75,8 @@ const SignUpOrg = ({
             </Typography>
           </View>
           <View flex height={1} backgroundColor={theme.color.black} />
-        </View>
-        <View row center margin-20>
+        </View> */}
+        {/* <View row center margin-20>
           {SOCIAL_LOGIN.map((i) => (
             <Image
               key={i.id}
@@ -85,7 +85,7 @@ const SignUpOrg = ({
               resizeMode="contain"
             />
           ))}
-        </View>
+        </View> */}
         <View center row  gap-5>
           <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT}</Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>

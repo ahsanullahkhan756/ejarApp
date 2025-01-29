@@ -106,7 +106,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
         setVisible(false);
       });
   };
-  
+
   return (
     <View marginH-20 center>
       <View style={commonStyles.lineBar} />
@@ -199,6 +199,8 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
               if (res != null) {
                 setCurrentStep(3);
                 dispatch(setIsLoading(true));
+                dispatch(setIsLoading(false));
+                
               }
             }}
             borderRadius={30}

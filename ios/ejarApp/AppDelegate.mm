@@ -20,6 +20,7 @@
                            didFinishLaunchingWithOptions:launchOptions];
 
  [FIRApp configure];
+ [application registerForRemoteNotifications]; // <--- Add this Line
  
   self.moduleName = @"ejarApp";
   // You can add your custom initial props in the dictionary below.

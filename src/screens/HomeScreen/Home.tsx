@@ -39,6 +39,8 @@ const Home = () => {
   const getUser = async () => {
     try {
       const resp = await getHomeApi();
+      console.log(resp);
+      
       if (resp) {
         dispatch(setHomeData(resp));
         setRentCars(resp?.cars);
