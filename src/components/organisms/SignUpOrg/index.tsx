@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, Pressable, TouchableOpacity } from "react-native";
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { Button, View } from "react-native-ui-lib";
 import ProgressBarComp from "../../molecules/ProgressBarComp.tsx";
@@ -7,14 +14,18 @@ import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { VARIABLES, theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
-import { navigate } from "../../../navigation/RootNavigation.tsx";
+import { navigate, reset } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
 import PassportInfo from "../../molecules/SignUpMol/PassportInfo.tsx";
-import { signUpApi } from "../../../api/auth.js";
-import { setItem } from "../../../utils/storage.tsx";
-import { setIsLoading, setLoggedIn } from "../../../redux/slice/user.tsx";
+import { logoutApi, signUpApi } from "../../../api/auth.js";
+import { removeMultipleItem, setItem } from "../../../utils/storage.tsx";
+import {
+  setIsLoading,
+  setLoggedIn,
+  setUserDetails,
+} from "../../../redux/slice/user.tsx";
 import { useDispatch } from "react-redux";
 import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
 
@@ -67,7 +78,7 @@ const SignUpOrg = ({
   const handleBottomData = () => {
     return (
       <>
-        <View row center marginH-20>
+        {/* <View row center marginH-20>
           <View flex height={1} backgroundColor={theme.color.black} />
           <View>
             <Typography style={{ width: 180, textAlign: "center" }}>
@@ -75,8 +86,8 @@ const SignUpOrg = ({
             </Typography>
           </View>
           <View flex height={1} backgroundColor={theme.color.black} />
-        </View>
-        <View row center margin-20>
+        </View> */}
+        {/* <View row center margin-20>
           {SOCIAL_LOGIN.map((i) => (
             <Image
               key={i.id}
@@ -85,8 +96,15 @@ const SignUpOrg = ({
               resizeMode="contain"
             />
           ))}
-        </View>
-        <View center row  gap-5>
+        </View> */}
+        <View
+          center
+          row
+          gap-5
+          style={{
+            marginBottom: 20,
+          }}
+        >
           <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT}</Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
             <Typography
@@ -181,8 +199,31 @@ const SignUpOrg = ({
     <>
       {currentStep !== 0 && (
         <TouchableOpacity
-          onPress={() => setCurrentStep(currentStep - 1)}
-          style={{ flex: 1 }}
+          onPress={async () => {
+            console.log(currentStep);
+            if (currentStep == 1) {
+              try {
+                dispatch(setUserDetails(null));
+                await removeMultipleItem([
+                  VARIABLES.USER_TOKEN,
+                  VARIABLES.IS_USER_LOGGED_IN,
+                ]);
+                dispatch(setLoggedIn(false));
+                reset(SCREENS.LOGIN);
+              } catch (error) {
+                console.log("Error during logout:", error);
+              }
+              return;
+            }
+            setCurrentStep(currentStep - 1);
+          }}
+          style={{
+            width: 80,
+            height: 100,
+            flex: 1,
+            position: "absolute",
+            zIndex: 1,
+          }}
         >
           <Image
             source={IMAGES.leftIcon}
@@ -209,8 +250,21 @@ const SignUpOrg = ({
         />
       </View>
       <ProgressBarComp currentStep={currentStep} steps={steps} />
-
-      {handleNavigation()}
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        // style={[styles.container, {backgroundColor: }]}
+      >
+        <ScrollView
+          nestedScrollEnabled
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          style={{ marginHorizontal: 18 }}
+          bounces={false}
+        >
+          {handleNavigation()}
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       {/* <Button
         label={getButtonLabel()}

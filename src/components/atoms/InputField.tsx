@@ -26,6 +26,7 @@ export const InputField = (props: any) => {
     secureTextEntry = false,
     style = {},
     label = "",
+    value,
     multiline = false,
     onPressRight = () => {},
     width = 170,
@@ -34,6 +35,7 @@ export const InputField = (props: any) => {
   return (
     <TextField
       small
+      value={value}
       allowFontScaling={false}
       label={t(label)}
       labelStyle={{

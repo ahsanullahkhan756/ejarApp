@@ -5,7 +5,7 @@ import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, VARIABLES, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import ForgotText from "./ForgotText";
-import { getFCMToken, signUpApi } from "../../../api/auth";
+import { getFCMToken, loginApi, signUpApi } from "../../../api/auth";
 import { setItem } from "../../../utils/storage";
 import {
   setIsLoading,
@@ -16,20 +16,20 @@ import { useDispatch } from "react-redux";
 import { COMMON_TEXT } from "../../../constants/screens";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { useTranslation } from "../../../hooks/useTranslation";
+import { showToast } from "../../../utils/toast";
 
 const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(5).fill(false));
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstname, setFirstName] = useState(__DEV__ ? "shahid" : "");
+  const [lastname, setLastName] = useState(__DEV__ ? "shahid" : "");
+  const [phone, setPhone] = useState(__DEV__ ? "876675644536" : "");
+  const [email, setEmail] = useState(__DEV__ ? "shahid@mailinator.com" : "");
+  const [password, setPassword] = useState(__DEV__ ? "Passward123!" : "");
   const [passwordVisible, setPasswordVisible] = useState(true);
-
+  const [checkterms, setcheckterms] = useState(false);
   useEffect(() => {
-    console.warn(hasValidated);
     onValidate(!hasValidated.includes(false));
   }, [hasValidated]);
 
@@ -42,7 +42,7 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
   };
 
   return (
-    <View marginH-20>
+    <View>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" size={theme.fontSize.large24}>
         {COMMON_TEXT.CREATE_AN_ACCOUNT}
@@ -92,6 +92,7 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
         <InputText
           label={COMMON_TEXT.EMAIL}
           value={email}
+          keyboardType={"email-address"}
           onValidationFailed={(isValid: boolean) => {
             setValidated((prev) => {
               let copy = [...prev];
@@ -144,35 +145,48 @@ const SignUpFields = ({ onValidate, setCurrentStep }: any) => {
           onChangeText={(text: string) => setPassword(text)}
         />
       </View>
-      <ForgotText forgotPass={false} />
+      <ForgotText
+        forgotPass={false}
+        setcheckterms={setcheckterms}
+        checkterms={checkterms}
+      />
 
       <Button
         label={t(COMMON_TEXT.NEXT)}
         backgroundColor={theme.color.primary}
         onPress={async () => {
-          // if (isFormValid()) {
-          const data = {
-            user: {
-              firstName: firstname,
-              lastName: lastname,
-              email: email,
-              phone: phone,
-              fcmToken: await getFCMToken(),
-              password: password,
-            },
-            roles: ["8d3a703f-ca87-4f01-bad2-d559726818bb"],
-          };
-          // }
-          const res = await signUpApi({ data });
-          console.log("response api", res);
-
-          if (res != null) {
-            setCurrentStep(1);
-            setItem(VARIABLES.USER_TOKEN, res?.token);
-            // dispatch(setLoggedIn(true));
-            dispatch(setIsLoading(true));
-            dispatch(setUserDetails(res));
-            // dispatch(setUserType("user"));
+          if (isFormValid()) {
+            if (checkterms) {
+              const data = {
+                user: {
+                  firstName: firstname,
+                  lastName: lastname,
+                  email: email,
+                  phone: phone,
+                  fcmToken: await getFCMToken(),
+                  password: password,
+                },
+                roles: ["8d3a703f-ca87-4f01-bad2-d559726818bb"],
+              };
+              const res = await signUpApi({ data });
+              if (res != null) {
+                const data2 = {
+                  email: email,
+                  password: password,
+                  fcmToken: await getFCMToken(),
+                };
+                const response = await loginApi({ data: data2 });
+                if (response != null) {
+                  setItem(VARIABLES.USER_TOKEN, response?.token);
+                  // dispatch(setLoggedIn(true));
+                  setCurrentStep(1);
+                  dispatch(setUserDetails(response));
+                  dispatch(setIsLoading(false));
+                }
+              }
+              return;
+            }
+            showToast({ title: "Accept Terms to proceed" });
           }
         }}
         disabled={!isFormValid()}

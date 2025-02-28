@@ -1,22 +1,32 @@
 import React from "react";
 import { FlatList, Image, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux"; // Add this to use Redux state
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREENS, theme } from "../../constants";
 import { View } from "react-native-ui-lib";
 import { Typography } from "./Typography";
 import { COMMON_TEXT } from "../../constants/screens";
+import { navigate } from "../../navigation/RootNavigation";
 
 export const TopCarsComp = () => {
   // Fetch the top-rated car data from Redux state
-  const topRatedCars = useSelector((state) => state?.appData?.homeData?.topRatedCars || []);
+  const topRatedCars = useSelector(
+    (state) => state?.appData?.homeData?.topRatedCars?.slice(0, 4) || []
+  );
   return (
     <FlatList
       data={topRatedCars}
       numColumns={2}
       renderItem={({ item }) => {
-        const isAvailable = item.status == "Available"; 
+        const isAvailable = item.status == "Available";
         return (
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => console.log("Car selected:", item.carName)}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              navigate(SCREENS.DETAIL_SCREEN, {
+                item: item,
+              });
+            }}
+          >
             <View
               style={{
                 borderWidth: 2,
@@ -28,24 +38,32 @@ export const TopCarsComp = () => {
               }}
             >
               <Image
-                source={ item.Media?.url
-                  ? { uri: item.Media?.url }
-                  : IMAGES.truck}
+                source={
+                  item.Media?.carPicture?.[0]?.base64
+                    ? { uri: item.Media?.carPicture?.[0]?.base64 }
+                    : IMAGES.truck
+                }
                 style={{ width: "100%", height: 160, borderRadius: 10 }}
                 resizeMode="cover"
               />
             </View>
-            <Typography style={{ marginLeft: 10 }} size={theme.fontSize.small} textType="semiBold">
+            <Typography
+              style={{ marginLeft: 10 }}
+              size={theme.fontSize.small}
+              textType="semiBold"
+            >
               {item.carName}
             </Typography>
-            <View row style={{ marginLeft: 5 }}>
-              <Image
-                source={IMAGES.starIcon}
-                style={{ width: 20, height: 20 }}
-                resizeMode="contain"
-              />
-              <Typography>{item.rating ? item.rating : COMMON_TEXT.NO_RATINGS_FOUND}</Typography>
-            </View>
+            {item.rating && (
+              <View row style={{ marginLeft: 5 }}>
+                <Image
+                  source={IMAGES.starIcon}
+                  style={{ width: 20, height: 20 }}
+                  resizeMode="contain"
+                />
+                <Typography>{item.rating}</Typography>
+              </View>
+            )}
           </TouchableOpacity>
         );
       }}

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, SectionList, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  SectionList,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import { View } from "react-native-ui-lib";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { IMAGES, theme } from "../../constants";
@@ -45,33 +50,28 @@ const Notification = () => {
       <View margin-20>
         {isLoading ? (
           <ActivityIndicator size="large" color={theme.color.primary} />
-        ) : notifications?.length != 0 ? (
+        ) : notifications?.length == 0 ? (
           <View style={styles.noResultsContainer}>
             <Typography style={styles.noResultsText}>
               {COMMON_TEXT.NO_ITEM_FOUND}
             </Typography>
           </View>
         ) : (
-          <SectionList
-            sections={notifications}
-            keyExtractor={(item, index) => item + index}
-            renderItem={({ item }) => (
-              <View style={styles.item}>
-                <Typography>{item.title}</Typography>
-                <Typography color={theme.color.descColor}>
-                  {item?.description}
-                </Typography>
-              </View>
-            )}
-            renderSectionHeader={({ section: { title } }) => (
-              <Typography
-                textType="bold"
-                color={theme.color.blue}
-                size={theme.fontSize.large20}
-              >
-                {title}
-              </Typography>
-            )}
+          <FlatList
+            data={notifications}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.item}>
+                  <Typography>{item?.title}</Typography>
+                  <Typography color={theme.color.descColor}>
+                    {item?.description}
+                  </Typography>
+                </View>
+              );
+            }}
+            keyExtractor={(item) => item?.title}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           />
         )}
       </View>
@@ -82,7 +82,7 @@ const Notification = () => {
 const styles = StyleSheet.create({
   item: {
     padding: 10,
-    marginVertical: 8,
+    marginBottom: 8,
     borderWidth: 0.4,
     borderRadius: 10,
     borderColor: theme.color.descColor,

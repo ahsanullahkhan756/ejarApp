@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, TouchableOpacity } from "react-native-ui-lib";
+import { View, TouchableOpacity, Button } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_HEIGHT, SCREEN_WIDTH, theme } from "../../../constants";
@@ -11,6 +11,15 @@ import {
   useCameraPermission,
 } from "react-native-vision-camera";
 import { COMMON_TEXT } from "../../../constants/screens";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../../../api/auth";
+import {
+  setIsLoading,
+  setLoggedIn,
+  setUserDetails,
+} from "../../../redux/slice/user";
+import { sendPicturetoS3 } from "../../../services/axios";
 
 const Uploads = ({ onValidate }: any) => {
   const camera = useRef(null);
@@ -24,7 +33,7 @@ const Uploads = ({ onValidate }: any) => {
   ]);
   const [selfie, setSelfie] = useState(null);
   const cameraRef = useRef(null);
-
+  const { t } = useTranslation();
   const removeImage = (index: any) => {
     const newUploads = uploads.filter((_, i) => i !== index);
     setUploads(newUploads);
@@ -37,7 +46,7 @@ const Uploads = ({ onValidate }: any) => {
       setSelfie(data.uri);
     }
   };
-
+  const dispatch = useDispatch();
   const clearSelfie = () => {
     setSelfie(null);
   };
@@ -56,8 +65,20 @@ const Uploads = ({ onValidate }: any) => {
   const capturePhoto = async () => {
     if (camera.current !== null) {
       try {
+        dispatch(setIsLoading(true));
         const photo = await camera.current.takePhoto({});
-        setSelfie(photo.path);
+        const normalizeUri = (uri) => uri.replace("file://", ""); // Remove "file://" prefix if needed
+
+        // const normalizeUri = (uri) =>
+        //   uri.startsWith("file://") ? uri : `file://${uri}`;
+        const image = {
+          mime: "image/jpeg",
+          path: normalizeUri(photo?.path),
+        };
+        const response = await sendPicturetoS3(image);
+        if (response) {
+          setSelfie(response);
+        }
       } catch (error) {
         console.error("Error taking photo:", error);
       }
@@ -65,6 +86,7 @@ const Uploads = ({ onValidate }: any) => {
       console.warn("Camera ref is null.");
     }
   };
+  const ID = useSelector((state) => state?.user?.userDetails?.ID);
 
   const renderDetectorContent = () => {
     if (cameraDevice && hasPermission) {
@@ -103,10 +125,7 @@ const Uploads = ({ onValidate }: any) => {
       <View style={styles.circleContainer}>
         {selfie ? (
           <View style={styles.selfieContainer}>
-            <Image
-              source={{ uri: `file://${selfie}` }}
-              style={styles.selfieImage}
-            />
+            <Image source={{ uri: selfie }} style={styles.selfieImage} />
             <TouchableOpacity style={styles.deleteButton} onPress={clearSelfie}>
               <Image source={IMAGES.cross} style={styles.crossIcon} />
             </TouchableOpacity>
@@ -115,6 +134,42 @@ const Uploads = ({ onValidate }: any) => {
           <>{renderDetectorContent()}</>
         )}
       </View>
+      <Button
+        label={selfie ? t(COMMON_TEXT.NEXT) : ""}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          if (selfie) {
+            const data = {
+              ID: ID,
+              profilePicture: {
+                fileName: "profile.jpg",
+                base64: selfie,
+                size: 0,
+              },
+            };
+            const res = await updateProfile({ data });
+            if (res != null) {
+              dispatch(setLoggedIn(true));
+              dispatch(setUserDetails(res));
+              dispatch(setIsLoading(true));
+            }
+            return;
+          } else {
+            capturePhoto();
+          }
+        }}
+        // borderRadius={30}
+        style={{
+          height: selfie ? 50 : 100,
+          margin: 20,
+          marginTop: 200,
+          marginBottom: 200,
+          width: selfie ? 300 : 100,
+          borderRadius: selfie ? 30 : 50,
+          borderWidth: selfie ? 0 : 15,
+          borderColor: "#D9D9D9",
+        }}
+      />
     </View>
   );
 };

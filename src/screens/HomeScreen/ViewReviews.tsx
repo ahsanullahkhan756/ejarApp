@@ -7,29 +7,15 @@ import { commonStyles } from "../../containers/commStyles";
 import { View, Card } from "react-native-ui-lib"; // Added Card for a better layout
 import { ScrollView } from "react-native"; // For scrolling if reviews are long
 import { COMMON_TEXT } from "../../constants/screens";
+import StarRating from "react-native-star-rating-widget";
 
 const ViewReviews = (props: any) => {
+  console.log();
+
   // Sample reviews data
-  const reviews = [
-    {
-      id: 1,
-      review:
-        "“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua”.",
-      reviewer: "John Doe",
-    },
-    {
-      id: 2,
-      review:
-        "“Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur”.",
-      reviewer: "Jane Smith",
-    },
-    {
-      id: 3,
-      review:
-        "“Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum”.",
-      reviewer: "Michael Brown",
-    },
-  ];
+  const reviews = props?.route?.params?.item ?? [];
+
+  console.log(props?.route?.params?.item?.[0]);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -37,13 +23,13 @@ const ViewReviews = (props: any) => {
 
       <ScrollView style={{ flex: 1 }}>
         <View paddingH-20>
-
           {reviews.map((review) => (
             <Card
-              key={review.id}
+              key={review.ID}
               style={{
                 marginBottom: 20,
                 padding: 10,
+                gap: 10,
                 backgroundColor: theme.color.white,
                 borderRadius: 10,
                 // shadowColor: "#000",
@@ -53,8 +39,26 @@ const ViewReviews = (props: any) => {
                 elevation: 2, // Android shadow
               }}
             >
-              <Typography color={theme.color.descColor}>
-                {review.review}
+              <StarRating
+                starStyle={
+                  {
+                    // marginTop: 2,
+                    // marginHorizontal: 1,
+                  }
+                }
+                rating={review?.stars}
+                onChange={() => {}}
+                enableSwiping={false}
+                color="#FEAD1D"
+                starSize={30}
+              />
+              <Typography
+                color={theme.color.descColor}
+                style={{
+                  marginLeft: 10,
+                }}
+              >
+                {review?.comment}
               </Typography>
 
               <Typography
@@ -63,7 +67,7 @@ const ViewReviews = (props: any) => {
                 color={theme.color.primary}
                 style={{ marginTop: 10 }}
               >
-                {review.reviewer}
+                {review?.reviewer}
               </Typography>
             </Card>
           ))}

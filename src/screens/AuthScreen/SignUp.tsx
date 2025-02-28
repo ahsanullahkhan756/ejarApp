@@ -6,9 +6,9 @@ import { ScrollView } from "react-native";
 const SignUp = () => {
   return (
     <SafeAreaContainer safeArea={false}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {/* <ScrollView showsVerticalScrollIndicator={false}> */}
       <SignUpTamplet />
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaContainer>
   );
 };

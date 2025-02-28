@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Appearance, Platform } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Appearance,
+  Platform,
+} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Typography } from "./Typography";
@@ -11,7 +17,7 @@ export const InputDateTime = (props: any) => {
   const {
     title = null,
     error,
-    placeholder = "asdsad",
+    placeholder = "select",
     placeholderColor = theme.color.black,
     inputRef = (input: any) => {},
     value,
@@ -21,9 +27,11 @@ export const InputDateTime = (props: any) => {
     style = {},
     inputStyle = {},
     cardStyle = {},
+    ismaxDate = true,
     rightIcon = null,
+    isOnlyYear = false,
     maximumDate = new Date(),
-    width = Platform.OS == 'ios' ? 165 : 170,
+    width = Platform.OS == "ios" ? 165 : 170,
   } = props;
 
   const [visible, setVisible] = useState(false);
@@ -63,7 +71,7 @@ export const InputDateTime = (props: any) => {
             flexDirection: "row",
             alignItems: "center",
             borderRadius: 10,
-            width:width
+            width: width,
           }}
         >
           <Typography
@@ -85,19 +93,18 @@ export const InputDateTime = (props: any) => {
           isVisible={visible}
           mode={mode}
           is24Hour={is24Hour}
-          maximumDate={maximumDate}
+          maximumDate={ismaxDate ? maximumDate : undefined}
           // maximumDate={SelectedDate ? SelectedDate : maximumDate}
           onConfirm={(e: any) => {
             onChange(
               moment(new Date(e)).format(
-                mode == "date" ? "YYYY-MM-DD" : "hh:mm A"
+                isOnlyYear ? "YYYY" : mode == "date" ? "YYYY-MM-DD" : "hh:mm A"
               )
             );
             setVisible(false);
           }}
           onCancel={() => setVisible(false)}
           // minimumDate={new Date(moment().format("YYYY-MM-DD"))}
-
         />
       </View>
     </View>

@@ -11,7 +11,6 @@ import { COMMON_TEXT } from "../../../constants/screens";
 import { useTranslation } from "../../../hooks/useTranslation";
 
 const MyInformation = () => {
-  const { t } = useTranslation();
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={COMMON_TEXT.MY_INFORMATION} centerImg={false} />
@@ -19,13 +18,6 @@ const MyInformation = () => {
         <View marginH-20>
           <PersonalInfo />
         </View>
-        <Button
-          label={t(COMMON_TEXT.SAVE)}
-          backgroundColor={theme.color.primary}
-          borderRadius={30}
-          onPress={() => onBack()}
-          style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}
-        />
       </ScrollView>
     </SafeAreaContainer>
   );

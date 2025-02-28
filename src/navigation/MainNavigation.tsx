@@ -17,14 +17,15 @@ import { VARIABLES } from "../constants";
 import { useTranslation } from "../hooks/useTranslation";
 import { setAppLanguage } from "../redux/slice/appSettings";
 import SignUpOrg from "../components/organisms/SignUpOrg";
+import { requestNotificationPermission } from "../utils/notifications";
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
   const [isloading, setIsLoadings] = useState(true);
   const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
   const { changeLanguage } = useTranslation();
-
   const [userNotActive, setUserNotActive] = useState(null);
+
   useEffect(() => {
     const getUser = async () => {
       const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
@@ -32,6 +33,7 @@ const MainNavigation = () => {
         changeLanguage(userSelectedLanguage);
         dispatch(setAppLanguage(userSelectedLanguage));
       }
+      requestNotificationPermission();
       const token = await getItem(VARIABLES.USER_TOKEN);
 
       if (token) {
@@ -41,9 +43,13 @@ const MainNavigation = () => {
             dispatch(setLoggedIn(true));
             dispatch(setUserDetails(resp));
           } else {
+            dispatch(setLoggedIn(true));
             setUserNotActive(resp);
+            dispatch(setUserDetails(resp));
           }
         }
+      } else {
+        setUserNotActive(null);
       }
     };
     getUser();
@@ -52,10 +58,49 @@ const MainNavigation = () => {
     }, 3000);
     return () => clearTimeout(timer);
     1;
-  }, []);
+  }, [isLoggedIn]);
+
+  const checkVerificationStatus = () => {
+    if (userNotActive) {
+      if (
+        userNotActive?.idcardPicture &&
+        userNotActive?.idcardPictureBack &&
+        userNotActive?.gender
+      ) {
+        if (
+          userNotActive?.licensePicture &&
+          userNotActive?.licenseNumberExpDate
+        ) {
+          if (
+            userNotActive?.passportNumber &&
+            userNotActive?.passportNumberExpDate
+          ) {
+            if (userNotActive?.profilePicture) {
+              setUserNotActive(null);
+              dispatch(setLoggedIn(true));
+              return;
+            } else {
+              return 4;
+            }
+          } else {
+            return 3;
+          }
+        } else {
+          return 2;
+        }
+      } else {
+        return 1;
+      }
+    }
+  };
 
   if (userNotActive) {
-    return <SignUpOrg isNotVerifiedStep={1} user={userNotActive} />;
+    return (
+      <SignUpOrg
+        isNotVerifiedStep={checkVerificationStatus()}
+        user={userNotActive}
+      />
+    );
   }
 
   return isloading ? (

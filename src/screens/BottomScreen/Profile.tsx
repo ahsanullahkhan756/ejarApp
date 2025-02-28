@@ -13,12 +13,17 @@ import { IMAGES, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { Typography } from "../../components/atoms/Typography";
 import ProfileList from "../../components/molecules/ProfileMol/ProfileList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "../../hooks/useTranslation";
 import { COMMON_TEXT } from "../../constants/screens";
+import { sendPicturetoS3 } from "../../services/axios";
+import { setUserDetails } from "../../redux/slice/user";
+import { updateProfile } from "../../api/auth";
 
 const Profile = () => {
-  const [avatar, setAvatar] = useState(IMAGES.avatar);
+  const userDetails = useSelector((state) => state.user?.userDetails);
+  const dispatch = useDispatch();
+  const [avatar, setAvatar] = useState(userDetails?.profilePicture?.base64);
   const { t } = useTranslation();
 
   const openImagePicker = () => {
@@ -34,8 +39,21 @@ const Profile = () => {
               height: 300,
               cropping: true,
             })
-              .then((image) => {
-                setAvatar({ uri: image.path });
+              .then(async (image) => {
+                const response = await sendPicturetoS3(image);
+                setAvatar(response);
+                const data = {
+                  ID: userDetails?.ID,
+                  profilePicture: {
+                    fileName: "profile.jpg",
+                    base64: response,
+                    size: 0,
+                  },
+                };
+                const res = await updateProfile({ data, isLoading: false });
+                if (res != null) {
+                  dispatch(setUserDetails(res));
+                }
               })
               .catch((error) => {
                 console.log("Error opening camera: ", error);
@@ -50,8 +68,21 @@ const Profile = () => {
               height: 300,
               cropping: true,
             })
-              .then((image) => {
-                setAvatar({ uri: image.path });
+              .then(async (image) => {
+                const response = await sendPicturetoS3(image);
+                setAvatar(response);
+                const data = {
+                  ID: userDetails?.ID,
+                  profilePicture: {
+                    fileName: "profile.jpg",
+                    base64: response,
+                    size: 0,
+                  },
+                };
+                const res = await updateProfile({ data, isLoading: false });
+                if (res != null) {
+                  dispatch(setUserDetails(res));
+                }
               })
               .catch((error) => {
                 console.log("Error opening gallery: ", error);
@@ -67,17 +98,14 @@ const Profile = () => {
     );
   };
 
-  const userdata = useSelector((state) => state?.user?.userDetails);
-  console.log("userdata", userdata);
-
   const UserData = () => {
     return (
       <View row gap-20 style={{ alignItems: "center" }}>
         <ImageBackground
-          source={avatar}
+          source={avatar ? { uri: avatar } : IMAGES.avatar}
           style={{ width: 80, height: 80 }}
-          imageStyle={{ borderRadius: 40 }}
-          resizeMode="contain"
+          imageStyle={{ borderRadius: 40, borderWidth: 1 }}
+          resizeMode="cover"
         >
           <TouchableOpacity
             style={{ position: "absolute", bottom: 0, right: 0 }}
@@ -103,11 +131,11 @@ const Profile = () => {
               {COMMON_TEXT.HI}
             </Typography>
             <Typography textType="bold" size={theme.fontSize.large}>
-              {userdata?.firstName}
+              {userDetails?.firstName}
             </Typography>
           </View>
           <Typography color={theme.color.descColor}>
-            {userdata?.phone}
+            {userDetails?.phone}
           </Typography>
         </View>
       </View>

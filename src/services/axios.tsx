@@ -22,7 +22,7 @@ interface ErrorResponse {
 }
 const axiosInstance = axios.create({
   // baseURL: 'https://backend.carejar.net/v1/',
-  baseURL: "http://10.55.62.250:4000/v1/",
+  baseURL: "https://backend.carejar.net/v1/",
   // baseURL: "http://192.168.0.102:4000/v1/",
   timeout: 15000,
   headers: {
@@ -95,6 +95,9 @@ const handleRequestError = (error: AxiosError<ErrorResponse>) => {
     }
     const status: number = error.response.status;
     if (status) {
+
+      // console.log(error.response);
+      
       const responseData = error.response.data;
       if (responseData.error) {
         checkUnAuth(responseData.error.messages[0]);
@@ -202,6 +205,28 @@ const remove = async ({
   };
 
   return makeHttpRequest(requestOptions, includeToken);
+};
+
+export const sendPicturetoS3 = async (image) => {
+  try {
+    let obj = {
+      name: `image${new Date().getDate()}.jpeg`,
+      type: image?.mime,
+      uri: image?.path,
+    };
+
+    const response = await postWithSingleFile({
+      url: "s3/uploadFormData",
+      data: {
+        userID: store?.getState()?.user?.userDetails?.ID,
+        file: obj,
+      },
+    });
+    
+    return response?.url;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const postWithSingleFile = async ({

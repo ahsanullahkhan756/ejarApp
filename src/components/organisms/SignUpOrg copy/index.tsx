@@ -8,6 +8,8 @@ import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { theme } from "../../../constants/Constants.ts";
 import ForgotText from "../../molecules/SignUpMol/ForgotText.tsx";
 import { Typography } from "../../atoms/Typography.tsx";
+import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
+import { useTranslation } from "../../../hooks/useTranslation.tsx";
 const steps = [
   { label: "Sign Up", progress: 0 },
   { label: "Upload License", progress: 0.5 },
@@ -21,6 +23,9 @@ const SignUpOrg = () => {
       setCurrentStep(currentStep + 1);
     }
   };
+
+  const { t } = useTranslation();
+
   return (
     <>
       <View center>
@@ -38,7 +43,15 @@ const SignUpOrg = () => {
       <SignUpFields />
 
       <Button
-        label={currentStep == 0 ? "Sign Up" : currentStep == 1 ? "Next" : currentStep == 2 ? "Done" : ""}
+        label={
+          currentStep == 0
+            ? t(COMMON_TEXT.SIGN_UP)
+            : currentStep == 1
+            ? t(COMMON_TEXT.NEXT)
+            : currentStep == 2
+            ? "Done"
+            : ""
+        }
         backgroundColor={theme.color.primary}
         onPress={handleNextStep}
         disabled={currentStep === steps.length - 1}

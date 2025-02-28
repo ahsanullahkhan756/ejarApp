@@ -189,15 +189,37 @@ const MyBooking = ({ route }) => {
               bookedDates={bookedDates}
             />
 
-            <View row spread marginV-20>
+            <View row spread>
               <Typography
                 textType="bold"
                 size={theme.fontSize.large20}
+                style={{
+                  marginVertical: 10,
+                }}
                 color={theme.color.blue}
               >
                 {COMMON_TEXT.NO_OF_DAYS}
               </Typography>
-              <DropDown data={[]} placeholder={daysInRange} />
+              <View
+                style={{
+                  borderWidth: 0.3,
+                  borderRadius: 10,
+                  borderColor: theme.color.tgray,
+                  width: 100,
+                  alignItems: "center",
+                  // paddingTop: 10,
+                }}
+              >
+                <Typography
+                  // textType="bold"
+                  color={theme.color.blue}
+                  style={{ paddingTop: 10 }}
+                  size={theme.fontSize.large24}
+                >
+                  {daysInRange}
+                </Typography>
+              </View>
+              {/* <DropDown data={[]} placeholder={daysInRange} /> */}
             </View>
             {/* <PaymentCard /> */}
 
@@ -205,6 +227,9 @@ const MyBooking = ({ route }) => {
             <Typography
               textType="bold"
               color={theme.color.blue}
+              style={{
+                marginTop: 10,
+              }}
               size={theme.fontSize.large24}
             >
               {COMMON_TEXT.ADD_YOUR_CARD_DETAILS}

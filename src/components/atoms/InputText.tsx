@@ -18,6 +18,7 @@ export const InputText = (props: any) => {
     rightTitle = "AED",
     leftImage,
     value,
+    editable,
     rightImage = false,
     showCharCounter = false,
     keyboardType = "default",
@@ -46,6 +47,7 @@ export const InputText = (props: any) => {
       onChangeText={onChangeText}
       secureTextInput={true}
       enableErrors
+      editable={editable}
       validate={[(value: any) => value?.length > 6, ...validate]}
       validationMessage={["", t(...validationMessage)]}
       showCharCounter={showCharCounter}

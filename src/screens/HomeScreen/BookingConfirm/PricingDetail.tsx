@@ -24,6 +24,10 @@ const getValidationMessageWithTranslation = (key, values) => {
 };
 
 const PricingDetail = (props: any) => {
+
+  const calculateTax = (props?.price * parseInt(props?.item?.tax)) / 100
+
+
   const data = [
     {
       title: EJAR.TOTAL_RENT_FOR_DAYS,
@@ -41,7 +45,7 @@ const PricingDetail = (props: any) => {
       ? [
           {
             title: `VAT ${props?.item?.tax}%`,
-            date: `AED ${props?.item?.tax}`,
+            date: `AED ${calculateTax}`,
           },
         ]
       : []),

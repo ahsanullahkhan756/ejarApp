@@ -116,11 +116,12 @@ export const cityData = [
   { label: "Ras Al Khaimah", value: "Ras Al Khaimah" },
 ];
 export const country = [
-  { label: "Dubai", value: "1" },
-  { label: "Saudia Arabia", value: "2" },
-  { label: "USA", value: "2" },
-  { label: "UK", value: "2" },
+  { label: "UAE", value: "UAE" },
+  { label: "Saudia", value: "Saudia" },
+  { label: "USA", value: "USA" },
+  { label: "UK", value: "UK" },
 ];
+
 export const gender = [
   { label: "Male", value: "1" },
   { label: "Female", value: "2" },

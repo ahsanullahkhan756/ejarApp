@@ -23,8 +23,8 @@ const UserBooking = ({ route }: any) => {
     const getBookingsList = async () => {
       try {
         const response = await getBookingsListApi(activeTab);
-        if (response?.Data) {
-          setData(response?.Data);
+        if (response) {
+          setData(response);
         }
       } catch (error) {
         console.error("Error fetching data:", error);

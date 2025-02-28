@@ -19,11 +19,19 @@ export const getHomeApi = async () => {
 export const getBookingsListApi = async (activeTab) => {
   store.dispatch(setIsLoading(true));
   try {
-    console.log( `booking?status=${activeTab?.toLowerCase()}`);
-    
+    console.log(`booking?status=${activeTab?.toLowerCase()}`);
+
     const res = await get({
       url: `booking?status=${activeTab?.toLowerCase()}`,
     });
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+    console.log(res);
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+    console.log("`booking?status=${activeTab?.toLowerCase()}`");
+
     return res;
   } catch (error) {
     console.log(error?.message);
@@ -162,7 +170,7 @@ export const searchCompaniesApi = async () => {
   }
 };
 export const notificationApi = async () => {
-  store.dispatch(setIsLoading(false));
+  store.dispatch(setIsLoading(true));
   try {
     const res = await get({
       url: "notification",
@@ -176,7 +184,7 @@ export const notificationApi = async () => {
   }
 };
 export const changePassword = async (data) => {
-  store.dispatch(setIsLoading(false));
+  store.dispatch(setIsLoading(true));
   try {
     const res = await post({
       url: `auth/change-password`,
@@ -190,7 +198,7 @@ export const changePassword = async (data) => {
   }
 };
 export const myAdressApi = async (data) => {
-  store.dispatch(setIsLoading(false));
+  store.dispatch(setIsLoading(true));
   try {
     const res = await put({
       url: `user/profile`,

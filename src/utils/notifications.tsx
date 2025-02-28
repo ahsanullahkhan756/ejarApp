@@ -7,7 +7,12 @@ async function displayNotification({
   androidSetting,
   customButtons,
 }) {
-  const notification = JSON.parse(notificationData?.data?.custom);
+  const notification = {
+    ...notificationData?.notification,
+    ...notificationData?.data,
+    //type: notificationData?.notification?.title,
+  };
+  console.log(notification);
 
   try {
     // Request permissions (required for iOS)
@@ -19,8 +24,8 @@ async function displayNotification({
     });
     // Create a channel (required for Android)
     const channelId = await notifee.createChannel({
-      id: notification?.type,
-      name: notification?.type,
+      id: notification?.title,
+      name: notification?.title,
       importance: AndroidImportance.HIGH,
       badge: true,
       sound: "default",
@@ -40,7 +45,7 @@ async function displayNotification({
       android: {
         channelId,
         showTimestamp: true,
-        color: "red",
+        color: "yellow",
         smallIcon: "drawable/ic_launcher",
         importance: AndroidImportance.HIGH,
         actions: customButtons,

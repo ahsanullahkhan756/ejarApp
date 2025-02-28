@@ -55,7 +55,7 @@ const LoginTamplet = () => {
         row
         gap-5
         style={{
-          marginTop: 140,
+          marginTop: 100,
         }}
       >
         <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT} </Typography>

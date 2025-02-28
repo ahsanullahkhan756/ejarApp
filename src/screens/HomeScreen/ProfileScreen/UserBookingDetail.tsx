@@ -129,7 +129,7 @@ const UserBookingDetail = ({ route }) => {
             No. of Days
           </Typography>
           <Typography size={theme.fontSize.small}>
-            {calculateDays()} Days
+            {`${calculateDays()} Days`}
           </Typography>
         </View>
         <View marginV-10>

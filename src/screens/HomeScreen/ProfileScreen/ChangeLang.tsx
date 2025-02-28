@@ -53,7 +53,6 @@ import { setIsLoading } from "../../../redux/slice/user";
 const SelectLanguage = () => {
   const { t, changeLanguage } = useTranslation();
   const selected = useSelector((state) => state?.app?.appLanguage);
-  console.log(selected);
   const [selectedLang, setSelectedLang] = useState<string>(selected);
   const dispatch = useDispatch();
   const changeAppLanguage = (selectedLanguage: string) => {
@@ -81,7 +80,12 @@ const SelectLanguage = () => {
       <Header titleText={COMMON_TEXT.CHOOSE_LANGUAGE} centerImg={false} />
       <View marginH-10>
         <Typography align="center" color={theme.color.descColor}>
-          {TEMPORARY_TEXT.LORUM_IPSUM}
+          {/* {TEMPORARY_TEXT.LORUM_IPSUM} */}
+          Switch between Arabic and English for a seamless experience.
+        </Typography>
+        <Typography align="center" color={theme.color.descColor}>
+          {/* {TEMPORARY_TEXT.LORUM_IPSUM} */}
+          التبديل بين العربية والإنجليزية لتجربة سلسة.
         </Typography>
       </View>
 

@@ -7,27 +7,25 @@ import {
   Image,
 } from "react-native";
 import { View } from "react-native-ui-lib";
-import { IMAGES, SCREENS, theme } from "../../../constants";
+import { IMAGES, SCREENS, theme, VARIABLES } from "../../../constants";
 import { navigate } from "../../../navigation/RootNavigation";
 import { useDispatch } from "react-redux";
-import { setLoggedIn } from "../../../redux/slice/user";
+import { setLoggedIn, setUserDetails } from "../../../redux/slice/user";
 import { Typography } from "../../atoms/Typography";
 import { Button } from "react-native-ui-lib";
-import { logoutApi } from "../../../api/auth"; // Assuming this is imported
+import { deleteAccountApi, logoutApi } from "../../../api/auth"; // Assuming this is imported
 import { COMMON_TEXT } from "../../../constants/screens";
 import { useTranslation } from "../../../hooks/useTranslation";
+import {
+  clearAllStorageItems,
+  removeMultipleItem,
+} from "../../../utils/storage";
 
 const ProfileList = (props: any) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-
-
-
-  
-
 
   const DATA = [
     {
@@ -94,17 +92,29 @@ const ProfileList = (props: any) => {
     );
   };
 
-  const handleDeleteAccount = () => {
-    dispatch(setLoggedIn(false));
-    setShowDeleteModal(false);
+  const handleDeleteAccount = async () => {
+    try {
+      dispatch(setLoggedIn(false));
+      await deleteAccountApi();
+      setShowDeleteModal(false);
+      await removeMultipleItem([
+        VARIABLES.USER_TOKEN,
+        VARIABLES.IS_USER_LOGGED_IN,
+      ]);
+      dispatch(setUserDetails(null));
+    } catch (error) {}
   };
 
   const handleLogout = async () => {
     try {
-      await logoutApi();
       dispatch(setLoggedIn(false));
       setShowLogoutModal(false);
-      navigate(SCREENS.LOGIN);
+      dispatch(setUserDetails(null));
+      await removeMultipleItem([
+        VARIABLES.USER_TOKEN,
+        VARIABLES.IS_USER_LOGGED_IN,
+      ]);
+      await logoutApi();
     } catch (error) {
       console.log("Error during logout:", error);
     }

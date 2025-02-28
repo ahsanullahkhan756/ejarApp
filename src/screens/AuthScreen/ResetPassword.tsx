@@ -230,7 +230,7 @@ const ResetPassword = (props: any) => {
               const res = await resetPassword({ data });
               if (res != null) {
                 navigate(SCREENS.LOGIN);
-                showToast({ title: res?.message });
+                showToast({ title: res?.message, isError: false });
               }
             }}
           />

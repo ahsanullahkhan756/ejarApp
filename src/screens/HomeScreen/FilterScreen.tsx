@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet } from "react-native";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
 import { Header } from "../../components/atoms/Header";
@@ -18,25 +18,28 @@ import {
 import { showToast } from "../../utils/toast";
 import { onBack } from "../../navigation/RootNavigation";
 import { filterApi } from "../../api/homeServices"; // API call function
-import { useDispatch } from "react-redux";
-import { setFilterData } from "../../redux/slice/appData";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilterData, setFilters } from "../../redux/slice/appData";
 import { COMMON_TEXT, EJAR } from "../../constants/screens";
 import { useTranslation } from "../../hooks/useTranslation";
 
 const FilterScreen = () => {
   // State management for filters
-  const [fromPrice, setFromPrice] = useState("");
-  const [toPrice, setToPrice] = useState("");
-  const [fromYear, setFromYear] = useState("");
-  const [toYear, setToYear] = useState("");
-  const [fromKM, setFromKM] = useState("");
-  const [toKM, setToKM] = useState("");
-  const [fuelType, setFuelType] = useState("");
-  const [transmissionType, setTransmissionType] = useState("");
-  const [userType, setUserType] = useState("");
-  const [dealType, setDealType] = useState("");
-  const [date, setDate] = useState(null);
-  const [date2, setDate2] = useState(null);
+  const filtersList = useSelector((state: any) => state?.appData?.filters);
+  const [fromPrice, setFromPrice] = useState(filtersList?.fromPrice ?? "");
+  const [toPrice, setToPrice] = useState(filtersList?.toPrice ?? "");
+  const [fromYear, setFromYear] = useState(filtersList?.fromYear ?? "");
+  const [toYear, setToYear] = useState(filtersList?.toYear ?? "");
+  const [fromKM, setFromKM] = useState(filtersList?.fromKM ?? "");
+  const [toKM, setToKM] = useState(filtersList?.toKM ?? "");
+  const [fuelType, setFuelType] = useState(filtersList?.fuelType ?? "");
+  const [transmissionType, setTransmissionType] = useState(
+    filtersList?.transmissionType ?? ""
+  );
+  const [userType, setUserType] = useState(filtersList?.userType ?? "");
+  const [dealType, setDealType] = useState(filtersList?.dealType ?? "");
+  const [date, setDate] = useState(filtersList?.date ?? null);
+  const [date2, setDate2] = useState(filtersList?.date2 ?? null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -62,9 +65,26 @@ const FilterScreen = () => {
       if (date) filterParams.date = date;
       if (date2) filterParams.date2 = date2;
 
+      dispatch(
+        setFilters({
+          fromPrice: fromPrice,
+          toPrice: toPrice,
+          fromYear: fromYear,
+          toYear: toYear,
+          fromKM: fromKM,
+          toKM: toKM,
+          fuelType: fuelType,
+          transmissionType: transmissionType,
+          userType: userType,
+          dealType: dealType,
+          date: date,
+          date2: date2,
+        })
+      );
       const filterResponse = await filterApi(filterParams);
       if (filterResponse) {
         dispatch(setFilterData(filterResponse?.Data));
+
         onBack();
         // showToast({ title: "Filters Applied Successfully" });
       }
@@ -76,11 +96,26 @@ const FilterScreen = () => {
     }
   };
 
+  useEffect(() => {
+    if (filtersList) {
+      setFromPrice(filtersList?.fromPrice);
+      setToPrice(filtersList?.toPrice);
+      setFromYear(filtersList?.fromYear);
+      setToYear(filtersList?.toYear);
+      setFromKM(filtersList?.fromKM);
+      setToKM(filtersList?.toKM);
+      setTransmissionType(filtersList?.transmissionType);
+      setFuelType(filtersList?.fuelType);
+      setDate(filtersList?.date);
+      setDate2(filtersList?.date2);
+    }
+  }, [filtersList]);
+
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={COMMON_TEXT.FILTERS} centerImg={false} />
       <ScrollView bounces={false}>
-        <View padding-20>
+        <View style={{ marginHorizontal: 15 }}>
           {/* Price Field */}
           <Typography
             color={theme.color.blue}
@@ -97,7 +132,7 @@ const FilterScreen = () => {
               {EJAR.SET_YOUR_DESIRED_PRICE_RANGE}
             </Typography>
           </View>
-          <View gap-5 row width={"100%"} style={{ alignItems: "center" }}>
+          <View gap-10 row width={"100%"} style={{ alignItems: "center" }}>
             <InputField
               placeholder={COMMON_TEXT.PRICE}
               keyboardType="number-pad"
@@ -115,6 +150,7 @@ const FilterScreen = () => {
               keyboardType="number-pad"
               // rightText={EJAR.TRUE}
               maxLength={10}
+              width={SCREEN_WIDTH * 0.4}
               value={toPrice}
               onChangeText={setToPrice}
             />
@@ -136,23 +172,28 @@ const FilterScreen = () => {
               {EJAR.SET_YOUR_DESIRED_YEAR_RANGE}
             </Typography>
           </View>
-          <View gap-10 row marginV-10 style={{ alignItems: "center" }}>
+          <View gap-20 row marginB-10 style={{ alignItems: "center" }}>
             <InputDateTime
               // title={COMMON_TEXT.SELECT_DATE}
               placeholder={COMMON_TEXT.SELECT_DATE}
               mode={"date"}
               value={date}
+              isOnlyYear={true}
               onChange={setDate}
-              style={{ width: SCREEN_WIDTH * 0.4 }}
+              // style={{ width: SCREEN_WIDTH * 0.3 }}
+              width={SCREEN_WIDTH * 0.38}
             />
             <Typography color={theme.color.descColor}>
               {COMMON_TEXT.TO}
             </Typography>
             <InputDateTime
+              isOnlyYear={true}
               // title={COMMON_TEXT.SELECT_DATE}
               placeholder={COMMON_TEXT.SELECT_DATE}
               mode={"date"}
               value={date2}
+              // style={{ width: SCREEN_WIDTH * 0.3 }}
+              width={SCREEN_WIDTH * 0.38}
               onChange={setDate2}
             />
           </View>
@@ -170,14 +211,14 @@ const FilterScreen = () => {
             {EJAR.SET_YOUR_DESIRED_KILOMETERS_RANGE}
           </Typography>
 
-          <View gap-5 row style={{ alignItems: "center" }}>
+          <View gap-20 width={"100%"} row style={{ alignItems: "center" }}>
             <InputField
               placeholder="0"
               keyboardType="number-pad"
               // rightText={EJAR.TRUE}
               rightTitle={EJAR.KM}
               maxLength={10}
-              width={SCREEN_WIDTH * 0.4}
+              width={SCREEN_WIDTH * 0.38}
               value={fromKM}
               onChangeText={setFromKM}
             />
@@ -185,15 +226,18 @@ const FilterScreen = () => {
               {COMMON_TEXT.TO}
             </Typography>
             <InputField
-              placeholder={EJAR.ANY}
+              placeholder={"0"}
               keyboardType="number-pad"
               // rightText={EJAR.TRUE}
               value={toKM}
+              width={SCREEN_WIDTH * 0.38}
               onChangeText={setToKM}
             />
           </View>
-          <View marginV-10>
-            {/* Fuel Type Field */}
+          {/* /////// OPEN  */}
+
+          {/* <View marginV-10>
+      
             <Typography
               color={theme.color.blue}
               size={theme.fontSize.large24}
@@ -207,16 +251,15 @@ const FilterScreen = () => {
             >
               {EJAR.SET_YOUR_DESIRED_FUEL_TYPE}
             </Typography>
-          </View>
-          <DropDown
+          </View> */}
+          {/* <DropDown
             data={fuekData}
             height={Platform.OS === "ios" ? 50 : 60}
             width={Platform.OS === "ios" ? 350 : 370}
             value={fuelType}
             onChange={setFuelType}
-          />
-          <View marginV-10>
-            {/* Transmission Type Field */}
+          /> */}
+          {/* <View marginV-10>
             <Typography
               color={theme.color.blue}
               size={theme.fontSize.large24}
@@ -237,8 +280,8 @@ const FilterScreen = () => {
             width={Platform.OS === "ios" ? 350 : 370}
             value={transmissionType}
             onChange={setTransmissionType}
-          />
-
+          /> */}
+  {/* /////// OPEN  */}
           {/* User Type Field */}
           {/* <View marginV-20>
             <Typography
@@ -300,6 +343,7 @@ const FilterScreen = () => {
               borderRadius={30}
               onPress={() => {
                 dispatch(setFilterData(null));
+                dispatch(setFilters(null));
                 onBack();
               }}
               style={{

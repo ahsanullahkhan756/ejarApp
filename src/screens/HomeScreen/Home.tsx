@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -27,13 +27,14 @@ import { getFCMToken } from "../../api/auth.js";
 import { useIsFocused } from "@react-navigation/native";
 import { COMMON_TEXT, EJAR } from "../../constants/screens/index";
 import { useTranslation } from "../../hooks/useTranslation";
+import StarRating from "react-native-star-rating-widget";
 
 const Home = () => {
   const dispatch = useDispatch();
   const details = useSelector((state: any) => state?.appData?.homeData);
   const filterData = useSelector((state: any) => state?.appData?.filterData);
   const [rentCars, setRentCars] = useState([]);
-  console.log("details", details);
+  const [categoriesList, setCategoriesList] = useState([]);
   const { t, isLangRTL } = useTranslation();
   const isFocused = useIsFocused();
   const getUser = async () => {
@@ -41,6 +42,7 @@ const Home = () => {
       const resp = await getHomeApi();
       if (resp) {
         dispatch(setHomeData(resp));
+        setCategoriesList(resp?.categories);
         setRentCars(resp?.cars);
       }
     } catch (error) {
@@ -71,6 +73,25 @@ const Home = () => {
       getUser();
     }
   }, [filterData, isFocused]);
+  const [search, setSearch] = useState("");
+
+  const filteredCars = useMemo(() => {
+    const trimmedSearch = search?.trim()?.toLowerCase();
+    return trimmedSearch
+      ? rentCars.filter((company) =>
+          company?.carName?.toLowerCase().includes(trimmedSearch)
+        )
+      : rentCars;
+  }, [search, rentCars]);
+
+  // const filteredTopRatedCars = useMemo(() => {
+  //   const trimmedSearch = search?.trim()?.toLowerCase();
+  //   return trimmedSearch
+  //     ? rentCars.filter((company) =>
+  //         company?.carName?.toLowerCase().includes(trimmedSearch)
+  //       )
+  //     : rentCars;
+  // }, [search, rentCars]);
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -85,50 +106,56 @@ const Home = () => {
             }}
             resizeMode="contain"
           />
-          <SearchBar />
+          <SearchBar
+            value={search}
+            onChangeText={(text: string) => {
+              setSearch(text);
+            }}
+          />
         </View>
         <View padding-20>
-          <Swiper
-            style={{ height: 100 }}
-            dotStyle={[
-              styles.dotStyle,
-              { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
-            ]}
-            activeDotStyle={styles.dotStyle}
-          >
-            {/* Categories Carousel */}
-            <FlatList
-              data={[]}
-              horizontal
-              // numColumns={4}
-              // scrollEnabled={false}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <View
-                  marginH-15
-                  style={{ alignItems: "center", marginLeft: -2 }}
-                >
-                  <Image
-                    source={
-                      item.image?.url ? { uri: item.image?.url } : IMAGES.truck
-                    }
-                    style={{
-                      width: SCREEN_WIDTH * 0.2,
-                      height: 80,
-                      borderRadius: 10,
-                    }}
-                    resizeMode="stretch"
-                  />
-                  <Typography size={theme.fontSize.extraSmall12}>
-                    {item?.name}
-                  </Typography>
-                </View>
-              )}
-              keyExtractor={(item) => item.id}
-              // columnWrapperStyle={{ marginBottom: 10 }}
-            />
-          </Swiper>
-
+          {categoriesList?.length != 0 && (
+            <Swiper
+              style={{ height: 100 }}
+              dotStyle={[
+                styles.dotStyle,
+                { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+              ]}
+              activeDotStyle={styles.dotStyle}
+            >
+              {/* Categories Carousel */}
+              <FlatList
+                data={categoriesList}
+                horizontal
+                // numColumns={4}
+                // scrollEnabled={false}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                  <View
+                    marginH-15
+                    style={{ alignItems: "center", marginLeft: -2 }}
+                  >
+                    {item.image?.[0]?.base64 && (
+                      <Image
+                        source={{ uri: item.image?.[0]?.base64 }}
+                        style={{
+                          width: SCREEN_WIDTH * 0.2,
+                          height: 80,
+                          borderRadius: 10,
+                        }}
+                        resizeMode="stretch"
+                      />
+                    )}
+                    <Typography size={theme.fontSize.extraSmall12}>
+                      {item?.name}
+                    </Typography>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+                // columnWrapperStyle={{ marginBottom: 10 }}
+              />
+            </Swiper>
+          )}
           <Typography
             align="center"
             size={theme.fontSize.large}
@@ -140,15 +167,24 @@ const Home = () => {
 
           {/* CAR FOR RENT  */}
           <FlatList
-            data={rentCars}
+            data={filteredCars}
             horizontal
             showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={() => {
+              return (
+                <View style={styles.noResultsContainer}>
+                  <Typography style={styles.noResultsText}>
+                    {search?.trim()
+                      ? COMMON_TEXT.NO_RESULTS
+                      : COMMON_TEXT.NO_ITEM_FOUND}
+                  </Typography>
+                </View>
+              );
+            }}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    console.log(item);
-
                     navigate(SCREENS.DETAIL_SCREEN, {
                       item: item,
                     });
@@ -163,8 +199,8 @@ const Home = () => {
                   >
                     <Image
                       source={
-                        item.Media?.url
-                          ? { uri: item.Media?.url }
+                        item?.Media?.carPicture?.[0]?.base64
+                          ? { uri: item?.Media?.carPicture?.[0]?.base64 }
                           : IMAGES.truck
                       }
                       style={{
@@ -191,22 +227,37 @@ const Home = () => {
                       </Typography>
                     </View>
                     <View row spread gap-10 padding-10>
-                      <View row gap-5 style={{ alignItems: "center" }}>
+                      <View
+                        row
+                        gap-5
+                        style={{
+                          alignItems: "center",
+                          //  width: 100
+                        }}
+                      >
                         <Image
                           source={IMAGES.calendarIcon}
                           style={{ width: 20, height: 20 }}
                           resizeMode="contain"
                         />
-                        <Typography>{item?.model}</Typography>
+                        <Typography numberOfLines={1}>{item?.model}</Typography>
                       </View>
 
-                      <View row gap-5 style={{ alignItems: "center" }}>
+                      <View
+                        row
+                        gap-5
+                        style={{
+                          alignItems: "center",
+
+                          // width: 100,
+                        }}
+                      >
                         <Image
                           source={IMAGES.colorIcon}
                           style={{ width: 20, height: 20 }}
                           resizeMode="contain"
                         />
-                        <Typography>{item?.color}</Typography>
+                        <Typography numberOfLines={1}>{item?.color}</Typography>
                       </View>
 
                       <View row gap-5 style={{ alignItems: "center" }}>
@@ -215,14 +266,14 @@ const Home = () => {
                           style={{ width: 20, height: 20 }}
                           resizeMode="contain"
                         />
-                        <Typography>{item.status}</Typography>
+                        <Typography>{item?.status}</Typography>
                       </View>
                     </View>
                   </Card>
                 </TouchableOpacity>
               );
             }}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item?.id}
             contentContainerStyle={{ marginBottom: 16 }}
           />
 
@@ -366,13 +417,40 @@ const Home = () => {
           </Swiper> */}
 
           <FlatList
-            data={details?.reviews}
+            data={details?.reviews?.slice(0, 3) || []}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => {
+              console.log();
+
               return (
-                <>
-                  <Typography>{item?.comment}</Typography>
-                </>
+                <View
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    borderWidth: 0.2,
+                    marginBottom: 10,
+                    gap: 15,
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    paddingHorizontal: 10,
+                    borderColor: "rgba(0,0,0,0.10)",
+                    flexDirection: "row",
+                  }}
+                >
+                  <StarRating
+                    starStyle={{
+                      marginTop: 2,
+                      marginHorizontal: 1,
+                    }}
+                    rating={item?.stars}
+                    onChange={() => {}}
+                    enableSwiping={false}
+                    color="#FEAD1D"
+                    starSize={10}
+                  />
+
+                  <Typography numberOfLines={2}>{item?.comment}</Typography>
+                </View>
               );
             }}
             keyExtractor={(item) => item.id}
@@ -381,7 +459,11 @@ const Home = () => {
 
           <TouchableOpacity
             style={{ marginVertical: 0 }}
-            onPress={() => navigate(SCREENS.VIEW_REVIEWS)}
+            onPress={() =>
+              navigate(SCREENS.VIEW_REVIEWS, {
+                item: details?.reviews,
+              })
+            }
           >
             <Typography
               size={theme.fontSize.large}
@@ -427,6 +509,21 @@ const styles = StyleSheet.create({
     marginRight: 3,
     marginTop: 3,
     marginBottom: 3,
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: scale(300),
+    height: scale(150),
+    alignItems: "center",
+    padding: 20,
+  },
+  noResultsText: {
+    fontSize: 18,
+    lineHeight: 40,
+    textAlign: "center",
+    color: theme.color.descColor,
+    fontWeight: "bold",
   },
 });
 

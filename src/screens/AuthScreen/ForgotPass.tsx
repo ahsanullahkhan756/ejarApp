@@ -34,6 +34,7 @@ const ForgotPass = () => {
             label={COMMON_TEXT.ENTER_YOUR_EMAIL}
             // width={350}
             value={email}
+            keyboardType={"email-address"}
             onValidationFailed={(isValid: boolean) => {
               setValidated((prev) => {
                 let copy = [...prev];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { StyleSheet, Image, FlatList, ActivityIndicator } from "react-native";
 import { View, Text } from "react-native-ui-lib";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
@@ -17,7 +17,7 @@ const SearchScreen = () => {
   const dispatch = useDispatch();
   const [companies, setCompanies] = useState([]);
   const isLoading = useSelector((state) => state?.user?.isLoading);
-
+  const [search, setSearch] = useState("");
   const handleSearchApi = async () => {
     dispatch(setIsLoading(true));
     try {
@@ -42,24 +42,47 @@ const SearchScreen = () => {
       : IMAGES.searchCompanies;
 
     return (
-      <View style={commonStyles.cardWithShadow}>
+      <View>
         <Image
           source={companyLogo}
           style={styles.companyLogo}
-          resizeMode="contain"
+          resizeMode="cover"
         />
-        <Text style={styles.companyName}>{item?.name}</Text>
+        <Typography
+          numberOfLines={1}
+          style={{
+            textAlign: "center",
+            marginBottom: 10,
+            maxWidth: 110,
+            marginRight: 1,
+          }}
+        >
+          {item?.name}
+        </Typography>
       </View>
     );
   };
 
+  const filteredCompanies = useMemo(() => {
+    const trimmedSearch = search?.trim()?.toLowerCase();
+    return trimmedSearch
+      ? companies.filter((company) =>
+          company?.name?.toLowerCase().includes(trimmedSearch)
+        )
+      : companies;
+  }, [search, companies]);
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={COMMON_TEXT.SEARCH} centerImg={false} />
       <View marginH-10>
         <SearchBar
+          value={search}
+          onChangeText={(text: string) => {
+            setSearch(text);
+          }}
           backgroundColor={theme.color.blue}
-          widthContaner={scale(230)}
+          hideFilter={true}
+          widthContaner={scale(270)}
         />
       </View>
 
@@ -73,10 +96,29 @@ const SearchScreen = () => {
         </View>
       ) : (
         <FlatList
-          data={companies}
-          keyExtractor={(item) => item.ID}
+          // data={
+          //   search?.trim()
+          //     ? companies.filter((company) =>
+          //         company?.name.toLowerCase().includes(search.toLowerCase())
+          //       )
+          //     : companies
+          // }
+          data={filteredCompanies}
+          numColumns={3}
+          ListEmptyComponent={() => {
+            return (
+              <View style={styles.noResultsContainer}>
+                <Typography style={styles.noResultsText}>
+                  {COMMON_TEXT.NO_RESULTS}
+                </Typography>
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item?.ID}
           renderItem={renderCompanyItem}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{
+            alignSelf: "center",
+          }}
         />
       )}
     </SafeAreaContainer>
@@ -86,7 +128,10 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   companyLogo: {
     width: 100,
-    height: 100,
+    height: 70,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 10,
     alignSelf: "center",
   },
   companyName: {
@@ -104,6 +149,7 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     fontSize: 18,
+    lineHeight: 40,
     color: theme.color.descColor,
     fontWeight: "bold",
   },

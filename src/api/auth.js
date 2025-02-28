@@ -1,4 +1,4 @@
-import { setIsLoading } from "../redux/slice/user";
+import { setIsLoading, setLoggedIn, setUserDetails } from "../redux/slice/user";
 import { store } from "../redux/store";
 import { get, post, put, remove } from "../services/axios";
 import { showToast } from "../utils/toast";
@@ -67,22 +67,23 @@ export const signUpApi = async ({ data }) => {
     }
     return null;
   } catch (error) {
-    console.log("err", error?.message);
     showToast({ title: error?.message });
   } finally {
-    store.dispatch(setIsLoading(false));
+    // store.dispatch(setIsLoading(false));
   }
 };
-export const updateProfile = async ({ data }) => {
-  console.log("data", data);
+export const updateProfile = async ({ data, isLoading = true }) => {
   try {
-    store.dispatch(setIsLoading(true));
+    if (isLoading) {
+      store.dispatch(setIsLoading(true));
+    }
     const response = await put({
       url: "user/profile",
       data: data,
     });
 
     if (response) {
+      setItem(VARIABLES.USER_TOKEN, response?.token);
       return response;
     }
     return null;
@@ -135,6 +136,15 @@ export const getUserDetailApi = async () => {
     const res = await get({
       url: "auth/me",
     });
+
+    console.log("res");
+    console.log("res");
+    console.log("res");
+    console.log(res);
+
+    console.log("res");
+    console.log("res");
+    console.log("res");
     return res;
   } catch (error) {
     console.log(error?.message);
@@ -167,17 +177,32 @@ export const UserGoogleLoginFunction = async (dispatch) => {
         social_id: user?.id,
         fcm_token: token,
         device_type: deviceType(),
-        udid: await deviceUDID(),
+        udid: await getUniqueId(),
         picture: user?.photo,
       };
-      const url = API_URL.LOGIN + "/google";
-      const responseData = await post({ url, data, includeToken: false });
-      if (responseData?.data) {
-        await setItem(VARIABLES.USER_TOKEN, responseData?.data?.token);
+      console.log(data);
+
+      const obj = {
+        email: "shahid@mailinator.com",
+        password: "Passward123!",
+        fcmToken: await getFCMToken(),
+      };
+      const res = await loginApi({ data: obj });
+      if (res != null) {
+        setItem(VARIABLES.USER_TOKEN, res?.token);
+        dispatch(setLoggedIn(true));
+        dispatch(setIsLoading(false));
         requestNotificationPermission();
-        return responseData?.data;
+        dispatch(setUserDetails(res));
       }
-      return null;
+      // const url = API_URL.LOGIN + "/google";
+      // const responseData = await post({ url, data, includeToken: false });
+      // if (responseData) {
+      //   await setItem(VARIABLES.USER_TOKEN, responseData?.token);
+      //   requestNotificationPermission();
+      //   return responseData;
+      // }
+      // return null;
     }
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -204,6 +229,16 @@ export const getFCMToken = async () => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const deviceType = () => {
+  const deviceType = Platform.OS;
+  return deviceType;
+};
+export const deviceUdid = () => {
+  // const deviceUdid = getUniqueId();
+  const deviceUdid = '';
+  return deviceUdid;
 };
 
 export const UserAppleLoginFunction = async (dispatch) => {
@@ -236,19 +271,33 @@ export const UserAppleLoginFunction = async (dispatch) => {
           device_type: Platform.OS,
           udid: await getUniqueId(),
         };
-      const url = API_URL.LOGIN + "/apple";
-      const responseData = await post({
-        url,
-        data,
-        includeToken: false,
-      });
-      if (responseData?.data) {
-        await setItem(VARIABLES.USER_TOKEN, responseData?.data?.token);
-        // await setItem(VARIABLES.LOGGED_IN, VARIABLES.TRUE);
+
+      const obj = {
+        email: "shahid@mailinator.com",
+        password: "Passward123!",
+        fcmToken: await getFCMToken(),
+      };
+      const res = await loginApi({ data: obj });
+      if (res != null) {
+        setItem(VARIABLES.USER_TOKEN, res?.token);
+        dispatch(setLoggedIn(true));
+        dispatch(setIsLoading(false));
         requestNotificationPermission();
-        return responseData?.data;
+        dispatch(setUserDetails(res));
       }
-      return null;
+      // const url = API_URL.LOGIN + "/apple";
+      // const responseData = await post({
+      //   url,
+      //   data,
+      //   includeToken: false,
+      // });
+      // if (responseData?.data) {
+      //   await setItem(VARIABLES.USER_TOKEN, responseData?.data?.token);
+      //   // await setItem(VARIABLES.LOGGED_IN, VARIABLES.TRUE);
+      //   requestNotificationPermission();
+      //   return responseData?.data;
+      // }
+      // return null;
     }
   } catch (error) {
     console.log(error?.message);
@@ -358,6 +407,18 @@ export const logoutApi = async () => {
       return response;
     } else {
       showToast({ title: "Logout failed" });
+    }
+  } catch (error) {
+    showToast({ title: error?.message });
+  }
+};
+export const deleteAccountApi = async () => {
+  try {
+    const response = await remove({ url: "/user/account" });
+    if (response) {
+      return response;
+    } else {
+      showToast({ title: "Delete Account failed" });
     }
   } catch (error) {
     showToast({ title: error?.message });

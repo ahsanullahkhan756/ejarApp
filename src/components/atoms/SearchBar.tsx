@@ -17,6 +17,9 @@ export const SearchBar = (props: any) => {
   const {
     backgroundColor = theme.color.blue,
     widthContaner = scale(200),
+    hideFilter = false,
+    value = "",
+    onChangeText = () => {},
     onPress = () => navigate(SCREENS.FILTER_SCREEN),
   } = props;
   const { t } = useTranslation();
@@ -37,20 +40,24 @@ export const SearchBar = (props: any) => {
         />
         <TextField
           placeholder={t(COMMON_TEXT.SEARCH)}
+          onChangeText={onChangeText}
+          value={value}
           placeholderTextColor={theme.color.white}
           style={{ width: widthContaner, color: theme.color.white }}
         />
       </View>
-      <TouchableOpacity
-        onPress={onPress}
-        style={{ flex: 1, alignItems: "center" }}
-      >
-        <Image
-          source={IMAGES.filter}
-          style={{ height: 50 }}
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
+      {!hideFilter && (
+        <TouchableOpacity
+          onPress={onPress}
+          style={{ flex: 1, alignItems: "center" }}
+        >
+          <Image
+            source={IMAGES.filter}
+            style={{ height: 50 }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

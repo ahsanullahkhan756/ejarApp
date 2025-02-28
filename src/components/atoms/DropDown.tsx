@@ -28,6 +28,10 @@ export const DropDown = (props: any) => {
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
       data={data}
+      itemTextStyle={{
+        color: "black",
+      }}
+      searchField={"value"}
       search={data?.length == 0 ? false : true}
       maxHeight={300}
       labelField={COMMON_TEXT.LABEL}
@@ -61,6 +65,7 @@ const styles = StyleSheet.create({
   dropdown: {
     borderColor: theme.color.descColor,
     borderWidth: 0.3,
+    color: "black",
     borderRadius: 10,
     paddingHorizontal: 10,
   },
@@ -78,9 +83,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: "black",
   },
   selectedTextStyle: {
     fontSize: 16,
+    color: "black",
   },
   iconStyle: {
     width: 20,
@@ -89,5 +96,6 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    color: "black",
   },
 });

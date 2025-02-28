@@ -8,9 +8,13 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
 import ImagePicker from "react-native-image-crop-picker";
 import { COMMON_TEXT } from "../../../constants/screens";
-import { setIsLoading } from "../../../redux/slice/user";
+import { setIsLoading, setUserDetails } from "../../../redux/slice/user";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../api/auth";
+import { sendPicturetoS3 } from "../../../services/axios";
+import { showToast } from "../../../utils/toast";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
+import { useTranslation } from "../../../hooks/useTranslation";
 
 const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
@@ -21,8 +25,8 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
   const [expiryDate, setExpiryDate] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const dispatch = useDispatch();
-  const ID = useSelector((state)=>state?.user?.userDetails?.ID)
-
+  const ID = useSelector((state) => state?.user?.userDetails?.ID);
+  const { t } = useTranslation();
   useEffect(() => {
     dispatch(setIsLoading(false));
     onValidate(!hasValidated.includes(false));
@@ -38,6 +42,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
+          width={153}
           title={COMMON_TEXT.ISSUE_DATE}
           placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
@@ -61,12 +66,14 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
         />
 
         <InputDateTime
+          width={153}
           title={COMMON_TEXT.EXPIRY_DATE}
           placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={expiryDate}
           onChange={setExpiryDate}
+          ismaxDate={false}
           onConfirm={(selectedDate: any) => {
             console.log("Selected Date:", selectedDate);
             setExpiryDate(selectedDate);
@@ -86,19 +93,24 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
     );
   };
   const takePhotoFromCamera = () => {
-    console.log("image", selectImg);
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
     })
-      .then((images) => {
-        console.log("img", images);
-        setSelectImg({
-          name: images.filename || `image_${new Date().getDate()}`,
-          type: images.mime,
-          uri: images.path,
-        });
+      .then(async (image) => {
+        console.log(image);
+
+        const response = await sendPicturetoS3(image);
+        // console.log("img", images);
+        // setSelectImg({
+        //   name: images.filename || `image_${new Date().getDate()}`,
+        //   type: images.mime,
+        //   uri: images.path,
+        // });
+        if (response) {
+          setSelectImg(response);
+        }
         setVisible(false);
       })
       .catch((error) => {
@@ -159,7 +171,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
           {selectImg && (
             <View>
               <Image
-                source={{ uri: selectImg.uri }}
+                source={{ uri: selectImg }}
                 style={{ width: 150, height: 150, borderRadius: 10 }}
                 resizeMode="cover"
               />
@@ -178,35 +190,43 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
       </View>
 
       <Button
-            label={"Next"}
-            backgroundColor={theme.color.primary}
-            onPress={async () => {
-              const data = {
-                ID: ID,
-                licenseNumber:id,
-                licenseNumberIssueDate: issueDate,
-                licenseNumberExpDate:expiryDate,
-                idcardPicture: {
-                  fileName: "id_card.jpg",
-                  base64:
-                    "https://pinnacle.works/wp-content/uploads/2022/06/dummy-image.jpg",
-                  size: 0,
-                },
-              };
-
-              const res = await updateProfile({ data });
-              if (res != null) {
-                setCurrentStep(3);
-                dispatch(setIsLoading(true));
-              }
-            }}
-            borderRadius={30}
-            style={{
-              height: 50,
-              margin: 20,
-              width: 300,
-            }}
-          />
+        label={t(COMMON_TEXT.NEXT)}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          if (selectImg && issueDate && expiryDate && id) {
+            const data = {
+              ID: ID,
+              licenseNumber: id,
+              licenseNumberIssueDate: issueDate,
+              licenseNumberExpDate: expiryDate,
+              licensePicture: {
+                fileName: "licence.jpg",
+                base64: selectImg,
+                size: 0,
+              },
+            };
+            console.log(data);
+            const res = await updateProfile({ data });
+            if (res != null) {
+              console.log(res);
+              dispatch(setUserDetails(res));
+              setCurrentStep(3);
+              dispatch(setIsLoading(true));
+            }
+            return;
+          } else {
+            showToast({
+              title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
+            });
+          }
+        }}
+        borderRadius={30}
+        style={{
+          height: 50,
+          margin: 20,
+          width: 300,
+        }}
+      />
     </View>
   );
 };

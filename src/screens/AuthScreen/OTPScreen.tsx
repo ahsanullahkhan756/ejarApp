@@ -100,7 +100,7 @@ const OTPScreen = (props: any) => {
                     navigate(SCREENS.RESET_PASS, {
                       otp: otp,
                     });
-                    showToast({ title: res });
+                    showToast({ title: res, isError: false });
                   }
                 }}
                 style={{ height: 50, marginVertical: 20 }}

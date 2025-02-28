@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native-ui-lib";
+import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
@@ -12,20 +12,28 @@ import ImagePicker from "react-native-image-crop-picker";
 import { InputField } from "../../atoms/InputField";
 import { verticalScale } from "react-native-size-matters";
 import { COMMON_TEXT } from "../../../constants/screens";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading, setUserDetails } from "../../../redux/slice/user";
+import { updateProfile } from "../../../api/auth";
+import { showToast } from "../../../utils/toast";
+import { VALIDATION_MESSAGES } from "../../../validationMessages";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { sendPicturetoS3 } from "../../../services/axios";
 
-const PassportInfo = ({ onValidate }: any) => {
+const PassportInfo = ({ onValidate, setCurrentStep }: any) => {
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [selectImg, setSelectImg] = useState("");
   const [selectPdf, setSelectPdf] = useState("");
   const [visible, setVisible] = useState(false);
-
+  const ID = useSelector((state) => state?.user?.userDetails?.ID);
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [issueDate, setIssueDate] = useState(true);
   const [expiryDate, setExpiryDate] = useState(true);
-
+  const dispatch = useDispatch();
   const [issueDate2, setIssueDate2] = useState(true);
   const [expiryDate2, setExpiryDate2] = useState(true);
+  const { t } = useTranslation();
 
   const [dob, setDob] = useState(true);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -44,12 +52,17 @@ const PassportInfo = ({ onValidate }: any) => {
       height: 400,
       cropping: true,
     })
-      .then((image) => {
-        setSelectImg({
-          name: image.filename || `image_${new Date().getTime()}`,
-          type: image.mime,
-          uri: image.path,
-        });
+      .then(async (image) => {
+        const response = await sendPicturetoS3(image);
+        // console.log("img", images);
+        // setSelectImg({
+        //   name: images.filename || `image_${new Date().getDate()}`,
+        //   type: images.mime,
+        //   uri: images.path,
+        // });
+        if (response) {
+          setSelectImg(response);
+        }
         setVisible(false);
       })
       .catch((error) => {
@@ -67,6 +80,7 @@ const PassportInfo = ({ onValidate }: any) => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
+          width={153}
           title={COMMON_TEXT.ISSUE_DATE}
           placeholder={COMMON_TEXT.ISSUE_DATE}
           placeholderColor={theme.color.black}
@@ -90,11 +104,13 @@ const PassportInfo = ({ onValidate }: any) => {
         />
 
         <InputDateTime
+          width={153}
           title={COMMON_TEXT.EXPIRY_DATE}
           placeholder={COMMON_TEXT.EXPIRY_DATE}
           placeholderColor={theme.color.black}
           mode={"date"}
           value={expiryDate}
+          ismaxDate={false}
           onChange={setExpiryDate}
           onConfirm={(selectedDate: any) => {
             console.log("Selected Date:", selectedDate);
@@ -163,11 +179,19 @@ const PassportInfo = ({ onValidate }: any) => {
 
         <View marginV-10>{dateFields()}</View>
 
-        <View center marginV-20>
+        <View
+          center
+          marginV-20
+          style={{
+            width: 150,
+            height: 150,
+            borderRadius: 10,
+          }}
+        >
           {selectImg && (
             <View>
               <Image
-                source={{ uri: selectImg.uri }}
+                source={{ uri: selectImg }}
                 style={{ width: 150, height: 150, borderRadius: 10 }}
                 resizeMode="cover"
               />
@@ -184,6 +208,44 @@ const PassportInfo = ({ onValidate }: any) => {
           )}
         </View>
       </View>
+      <Button
+        label={"Next"}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          if (selectImg && id && issueDate && expiryDate) {
+            const data = {
+              ID: ID,
+              passportNumber: id,
+              passportNumberIssueDate: issueDate,
+              passportNumberExpDate: expiryDate,
+              passportPicture: {
+                fileName: "passportPicture.jpg",
+                base64: selectImg,
+                size: 0,
+              },
+            };
+            console.log(data);
+
+            const res = await updateProfile({ data });
+            if (res != null) {
+              dispatch(setUserDetails(res));
+              setCurrentStep(4);
+              dispatch(setIsLoading(true));
+            }
+            return;
+          } else {
+            showToast({
+              title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
+            });
+          }
+        }}
+        borderRadius={30}
+        style={{
+          height: 50,
+          margin: 20,
+          width: 300,
+        }}
+      />
     </View>
   );
 };

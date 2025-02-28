@@ -11,7 +11,12 @@ const ForgotText = (props: any) => {
   const [check, setCheck] = useState(false);
   const [status, setStatus] = useState(false);
 
-  const { termsText = true, forgotPass = true } = props;
+  const {
+    termsText = true,
+    forgotPass = true,
+    setcheckterms,
+    checkterms,
+  } = props;
 
   return (
     <>
@@ -52,7 +57,10 @@ const ForgotText = (props: any) => {
       {termsText && (
         <View row marginV-20>
           <TouchableOpacity
-            onPress={() => setStatus(!status)}
+            onPress={() => {
+              setcheckterms(!checkterms);
+              setStatus(!status);
+            }}
             style={commonStyles.boxStyle}
           >
             {status && (

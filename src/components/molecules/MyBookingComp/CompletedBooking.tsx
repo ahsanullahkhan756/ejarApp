@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, View } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { IMAGES, SCREENS, theme } from "../../../constants";
-import { FlatList, Image, TouchableOpacity } from "react-native";
+import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { navigate } from "../../../navigation/RootNavigation";
+import { COMMON_TEXT } from "../../../constants/screens";
 
 const CompletedBooking = ({ data }) => {
   const _renderItem = ({ item }) => {
@@ -51,7 +52,7 @@ const CompletedBooking = ({ data }) => {
             </Typography>
           </View>
         </View>
-        {!item?.reviews && (
+        {!item?.reviews?.length != 0 && (
           <Button
             label={"Leave a Review & Rating"}
             style={{
@@ -76,6 +77,15 @@ const CompletedBooking = ({ data }) => {
       <FlatList
         data={data}
         renderItem={_renderItem}
+        ListEmptyComponent={() => {
+          return (
+            <View style={styles.noResultsContainer}>
+              <Typography style={styles.noResultsText}>
+                {COMMON_TEXT.NO_ITEM_FOUND}
+              </Typography>
+            </View>
+          );
+        }}
         style={{ marginBottom: 200 }}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 100 }} // Add padding to the bottom of the list
@@ -85,3 +95,32 @@ const CompletedBooking = ({ data }) => {
 };
 
 export default CompletedBooking;
+const styles = StyleSheet.create({
+  companyLogo: {
+    width: 100,
+    height: 70,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  companyName: {
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 10,
+    color: theme.color.primary,
+  },
+  noResultsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  noResultsText: {
+    fontSize: 18,
+    lineHeight: 40,
+    color: theme.color.descColor,
+    fontWeight: "bold",
+  },
+});

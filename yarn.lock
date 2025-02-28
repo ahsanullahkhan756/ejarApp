@@ -2904,6 +2904,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/geolocation@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@react-native-community/geolocation@npm:3.4.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 4a1a334de5b8345ee5ca9af987718a4cdd0b401b6d024268330c98736eccd0bebf45fd1d4cb396558f429a4670e5b29da0b5b7ebd4e51ca12972d4b08b55d4bc
+  languageName: node
+  linkType: hard
+
 "@react-native-firebase/app@npm:^21.3.0":
   version: 21.6.1
   resolution: "@react-native-firebase/app@npm:21.6.1"
@@ -5420,6 +5430,7 @@ __metadata:
     "@notifee/react-native": ^9.1.3
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-community/datetimepicker": ^8.2.0
+    "@react-native-community/geolocation": ^3.4.0
     "@react-native-firebase/app": ^21.3.0
     "@react-native-firebase/messaging": ^21.3.0
     "@react-native-google-signin/google-signin": ^13.1.0
@@ -5453,6 +5464,7 @@ __metadata:
     react-native-image-crop-picker: ^0.41.2
     react-native-modal-datetime-picker: ^18.0.0
     react-native-otp-textinput: ^1.1.6
+    react-native-permissions: ^5.2.5
     react-native-progress: ^5.0.1
     react-native-progress-steps: ^1.3.4
     react-native-reanimated: ^3.15.1
@@ -9975,6 +9987,20 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 8527954918677d196485562ca59e4e031f5bb3da6b91f397b8f045ce40f55e81d7840c35b63de79d930e3e0a48beef045ae1c00ac565d8fba34371516e4d374b
+  languageName: node
+  linkType: hard
+
+"react-native-permissions@npm:^5.2.5":
+  version: 5.2.5
+  resolution: "react-native-permissions@npm:5.2.5"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: d51221017070145ae16d8dee06f69ebe89419ce179e5b096cdfe8fe89309c9b2c36005aa194e2b52b9f5fabb9b411a511780ebba4523d108733218b031be222c
   languageName: node
   linkType: hard
 

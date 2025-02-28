@@ -97,9 +97,7 @@ const LoginFields = () => {
               fcmToken: await getFCMToken(),
             };
             const res = await loginApi({ data });
-            console.log(res);
             if (res != null) {
-              console.log("res", res);
               setItem(VARIABLES.USER_TOKEN, res?.token);
               dispatch(setLoggedIn(true));
               dispatch(setIsLoading(true));

@@ -118,10 +118,7 @@ const BookingConfirmation = ({ route }) => {
           </View>
         </View>
         <View marginV-20>
-          <Typography>
-            {EJAR.RENTING_CONDITIONS_MUST_BE_AGREED}
-       
-          </Typography>
+          <Typography>{EJAR.RENTING_CONDITIONS_MUST_BE_AGREED}</Typography>
         </View>
         <Button
           label={t(COMMON_TEXT.NEXT)}
@@ -138,7 +135,7 @@ const BookingConfirmation = ({ route }) => {
                 totalPrice: calculateTotal(),
               });
             } else {
-              showToast({ title: EJAR.PLEASE_CONFIRM_THE_TERMS  });
+              showToast({ title: t(EJAR.PLEASE_CONFIRM_THE_TERMS) });
             }
           }}
           style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}

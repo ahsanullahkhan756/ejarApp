@@ -24,6 +24,8 @@ import { confirmBooking, getContractByOwnerId } from "../../api/homeServices";
 import { setIsLoading } from "../../redux/slice/user";
 import { COMMON_TEXT, EJAR } from "../../constants/screens";
 import { useTranslation } from "../../hooks/useTranslation";
+import { sendPicturetoS3 } from "../../services/axios";
+import { showToast } from "../../utils/toast";
 
 const Contract = ({ route }) => {
   const startEndDates = route?.params?.startEndDates;
@@ -38,7 +40,7 @@ const Contract = ({ route }) => {
   const [isSigned, setIsSigned] = useState(false);
   const { t } = useTranslation();
 
-  const handleSignature = (signature: any) => {
+  const handleSignature = () => {
     setIsSigned(true);
   };
 
@@ -55,6 +57,9 @@ const Contract = ({ route }) => {
   };
 
   const acknowledgement = async () => {
+    if (!signature) {
+      return;
+    }
     try {
       dispatch(setIsLoading(true));
       const data = {
@@ -66,7 +71,7 @@ const Contract = ({ route }) => {
           PerDayPayment: item?.rentalPrice,
           Payable: totalPrice,
           ContractSignature: {
-            base64: "https://placehold.co/400",
+            base64: signature,
             fileName: "contract-signature.png",
           },
         },
@@ -76,9 +81,6 @@ const Contract = ({ route }) => {
           card_secret: card?.id,
         },
       };
-
-      console.log(data);
-
       const resp = await confirmBooking(data);
       if (resp?.result != null) {
         setModalVisible(true);
@@ -98,18 +100,21 @@ const Contract = ({ route }) => {
     { title: COMMON_TEXT.FIRST_NAME, subTitle: userDetails?.firstName },
     { title: COMMON_TEXT.LAST_NAME, subTitle: userDetails?.lastName },
     { title: EJAR.CAR_NAME, subTitle: item?.carName },
-    { title: COMMON_TEXT.EMAIL, subTitle: item?.email },
-    { title: COMMON_TEXT.NATIONALITY, subTitle: item?.nationality },
-    { title: COMMON_TEXT.ADDRESS, subTitle: item?.address },
-    { title: COMMON_TEXT.DATE_OF_BIRTH, subTitle: item?.dob },
-    { title: COMMON_TEXT.PASSPORT_NUMBER, subTitle: item?.passportId },
+    { title: COMMON_TEXT.EMAIL, subTitle: userDetails?.email },
+    { title: COMMON_TEXT.NATIONALITY, subTitle: userDetails?.nationality },
+    { title: COMMON_TEXT.ADDRESS, subTitle: userDetails?.address },
+    { title: COMMON_TEXT.DATE_OF_BIRTH, subTitle: userDetails?.dob },
+    {
+      title: COMMON_TEXT.PASSPORT_NUMBER,
+      subTitle: userDetails?.passportNumber,
+    },
     { title: EJAR.VIN, subTitle: item?.vin },
     { title: EJAR.PLATE_NUMBER, subTitle: item?.numberPlate },
     { title: COMMON_TEXT.TOTAL_AMOUNT, subTitle: totalPrice + " AED" },
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [signature, setSignature] = useState("");
   return (
     <SafeAreaContainer safeArea={false}>
       <View style={styles.container}>
@@ -135,56 +140,84 @@ const Contract = ({ route }) => {
             {contractData?.ContractDetail}
           </Typography>
         </View>
+        {!isSigned && (
+          <Button
+            label={t(COMMON_TEXT.SIGNATURE)}
+            backgroundColor={theme.color.primary}
+            borderRadius={30}
+            style={styles.button}
+            onPress={() => {
+              setIsSigned(true);
+            }}
+          />
+        )}
       </ScrollView>
 
       {/* Signature and Button fixed at the bottom */}
-      <View style={styles.fixedBottomContainer}>
-        <ScrollView scrollEnabled={scrollEnabled}>
-          <View style={{ height: 250 }}>
+      {isSigned && (
+        <View style={styles.fixedBottomContainer}>
+          <View style={{ height: 350 }}>
             <SignatureView
               // onOK={handleSignature}
               onBegin={() => setScrollEnabled(false)}
               onEnd={() => {
                 setScrollEnabled(true);
-                handleSignature();
+                // handleSignature();
               }}
-              descriptionText="Sign"
+              onOK={async (img) => {
+                try {
+                  const response = await sendPicturetoS3({
+                    mime: "image/jpeg",
+                    path: img,
+                  });
+                  if (response) {
+                    setSignature(response);
+                  }
+                } catch (error) {
+                  showToast({ title: "Error Uploading Signature" });
+                }
+              }}
+              descriptionText="Signature"
               clearText="Clear"
+              onClear={() => {
+                setSignature("");
+              }}
               confirmText="Save"
               imageType="image/jpeg"
             />
           </View>
-        </ScrollView>
 
-        <View
-          style={[
-            commonStyles.lineBar,
-            {
-              width: "100%",
-              marginVertical: 20,
-              borderColor: theme.color.descColor,
-              borderWidth: 0.3,
-            },
-          ]}
-        />
-        <Typography align="center">{COMMON_TEXT.SIGNATURE}</Typography>
+          <View
+            style={[
+              commonStyles.lineBar,
+              {
+                width: "100%",
+                marginVertical: 20,
+                borderColor: theme.color.descColor,
+                borderWidth: 0.3,
+              },
+            ]}
+          />
+          <Typography align="center">{COMMON_TEXT.SIGNATURE}</Typography>
 
-        <Typography>{EJAR.AGREE_TO_ALL_CONDITIONS}</Typography>
+          <Typography>{EJAR.AGREE_TO_ALL_CONDITIONS}</Typography>
 
-        <Button
-          label={t(COMMON_TEXT.PAY)}
-          backgroundColor={theme.color.primary}
-          borderRadius={30}
-          style={styles.button}
-          disabled={!isSigned} // Disable the button until signature is done
-          onPress={() => {
-            acknowledgement();
-          }}
-        />
-      </View>
+          <Button
+            label={t(COMMON_TEXT.PAY)}
+            backgroundColor={theme.color.primary}
+            borderRadius={30}
+            style={styles.button}
+            disabled={!signature} // Disable the button until signature is done
+            onPress={() => {
+              acknowledgement();
+            }}
+          />
+        </View>
+      )}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
-          onPress={() => setModalVisible(false)}
+        activeOpacity={1}
+          // onPress={() => setModalVisible(false)}
           style={[
             commonStyles.centerView,
             {

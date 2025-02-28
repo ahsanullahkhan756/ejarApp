@@ -46,18 +46,24 @@ const ChangePassword = (props: any) => {
   };
 
   const handleChangePassword = async () => {
-    if (validatePassword()) {
-      const data = {
-        currentPassword,
-        newPassword,
-      };
-
-      const res = await changePassword(data);
-      console.log(res);
-      if (res?.message) {
-        showToast({ title: res.message });
-        onBack(); // Navigate back after success
+    try {
+      if (validatePassword()) {
+        const data = {
+          currentPassword,
+          newPassword,
+        };
+        const res = await changePassword(data);
+        console.log(res);
+        if (res) {
+          showToast({
+            title: t(COMMON_TEXT.PASSWORD_CHANGED_SUCCESSFULLY),
+            isError: false,
+          });
+          onBack(); // Navigate back after success
+        }
       }
+    } catch (error) {
+      showToast({ title: error?.message });
     }
   };
 
