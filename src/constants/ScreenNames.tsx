@@ -37,6 +37,8 @@ export const SCREENS = {
   MY_ADDRESS :'MyAddress',
   USER_BOOKING:'UserBooking',
   RATING:'RatingScreen',
+  RENTING_CARS_CATEGORIES:'RentCarsCategories',
+  RENTING_CARS_COMPANY:'RentCarsCompany',
   CHANGE_LANGUAGE:'ChangeLang',
   USER_BOOKING_DETAIL : 'UserBookingDetail',
   VIEW_REVIEWS:"ViewReviews"

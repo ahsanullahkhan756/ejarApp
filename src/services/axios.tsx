@@ -5,6 +5,7 @@ import { VARIABLES } from "../constants";
 import { getItem, removeMultipleItem } from "../utils/storage";
 import i18n from "../i18n";
 import { LANGUAGES } from "../hooks/useTranslation";
+import ReactNativeBlobUtil from "react-native-blob-util";
 
 interface RequestOptions {
   url: string;
@@ -95,9 +96,8 @@ const handleRequestError = (error: AxiosError<ErrorResponse>) => {
     }
     const status: number = error.response.status;
     if (status) {
-
       // console.log(error.response);
-      
+
       const responseData = error.response.data;
       if (responseData.error) {
         checkUnAuth(responseData.error.messages[0]);
@@ -209,21 +209,59 @@ const remove = async ({
 
 export const sendPicturetoS3 = async (image) => {
   try {
+    const USER_TOKEN = await getItem(VARIABLES.USER_TOKEN);
+    const ID = store?.getState()?.user?.userDetails?.ID;
+    const endPoint = `s3/uploadFormData`;
+    let params: any = [];
+    var url;
     let obj = {
       name: `image${new Date().getDate()}.jpeg`,
       type: image?.mime,
       uri: image?.path,
     };
 
-    const response = await postWithSingleFile({
-      url: "s3/uploadFormData",
-      data: {
-        userID: store?.getState()?.user?.userDetails?.ID,
-        file: obj,
-      },
+    // const response = await postWithSingleFile({
+    //   url: "s3/uploadFormData",
+    //   data: {
+    //     userID: store?.getState()?.user?.userDetails?.ID,
+    //     file: obj,
+    //   },
+    // });\
+
+    params.push({
+      name: `userID`,
+      data: String(ID),
     });
+
+    params.push({
+      name: `file`,
+      data: ReactNativeBlobUtil.wrap(
+        image?.path.startsWith("file://")
+          ? image?.path.replace("file://", "")
+          : image?.path
+      ),
+      filename: `image${new Date().getDate()}.jpeg`,
+      type: image?.mime,
+    });
+
+    const response = await ReactNativeBlobUtil.fetch(
+      "POST",
+      "https://backend.carejar.net/v1/" + endPoint,
+      {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        Authorization: "Bearer " + USER_TOKEN,
+      },
+      params
+    ).uploadProgress((sent, total) => {
+      console.warn(sent, total);
+      // setUploadProgress((sent / total) * 100);
+    });
+    const picture = await response.json()?.url;
+
+    console.log(picture);
     
-    return response?.url;
+    return picture;
   } catch (error) {
     console.log(error);
   }

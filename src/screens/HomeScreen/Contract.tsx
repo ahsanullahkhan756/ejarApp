@@ -26,6 +26,7 @@ import { COMMON_TEXT, EJAR } from "../../constants/screens";
 import { useTranslation } from "../../hooks/useTranslation";
 import { sendPicturetoS3 } from "../../services/axios";
 import { showToast } from "../../utils/toast";
+var RNFS = require("react-native-fs");
 
 const Contract = ({ route }) => {
   const startEndDates = route?.params?.startEndDates;
@@ -166,12 +167,26 @@ const Contract = ({ route }) => {
               }}
               onOK={async (img) => {
                 try {
-                  const response = await sendPicturetoS3({
-                    mime: "image/jpeg",
-                    path: img,
-                  });
-                  if (response) {
-                    setSignature(response);
+                  if (img) {
+                    const str = `signature-booking-id-${Date.now()}`;
+                    const path = `${
+                      RNFS.DocumentDirectoryPath + "/" + str
+                    }.png`;
+                    console.log("path -- ", path);
+                    await RNFS.writeFile(
+                      path,
+                      img.replace("data:image/png;base64,", ""),
+                      "base64"
+                    );
+                    if (path) {
+                      const response = await sendPicturetoS3({
+                        mime: "image/jpeg",
+                        path: path,
+                      });
+                      if (response) {
+                        setSignature(response);
+                      }
+                    }
                   }
                 } catch (error) {
                   showToast({ title: "Error Uploading Signature" });
@@ -216,7 +231,7 @@ const Contract = ({ route }) => {
       )}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
-        activeOpacity={1}
+          activeOpacity={1}
           // onPress={() => setModalVisible(false)}
           style={[
             commonStyles.centerView,

@@ -32,6 +32,9 @@ const Uploads = ({ onValidate }: any) => {
     IMAGES.uploadLicense2,
   ]);
   const [selfie, setSelfie] = useState(null);
+
+  const { isLoading } = useSelector((state) => state?.user);
+
   const cameraRef = useRef(null);
   const { t } = useTranslation();
   const removeImage = (index: any) => {
@@ -63,12 +66,12 @@ const Uploads = ({ onValidate }: any) => {
   // }, []);
 
   const capturePhoto = async () => {
+    if (isLoading) return;
     if (camera.current !== null) {
       try {
         dispatch(setIsLoading(true));
         const photo = await camera.current.takePhoto({});
         const normalizeUri = (uri) => uri.replace("file://", ""); // Remove "file://" prefix if needed
-
         // const normalizeUri = (uri) =>
         //   uri.startsWith("file://") ? uri : `file://${uri}`;
         const image = {
@@ -81,6 +84,8 @@ const Uploads = ({ onValidate }: any) => {
         }
       } catch (error) {
         console.error("Error taking photo:", error);
+      } finally {
+        dispatch(setIsLoading(false));
       }
     } else {
       console.warn("Camera ref is null.");
@@ -151,7 +156,7 @@ const Uploads = ({ onValidate }: any) => {
             if (res != null) {
               dispatch(setLoggedIn(true));
               dispatch(setUserDetails(res));
-              dispatch(setIsLoading(true));
+              dispatch(setIsLoading(false));
             }
             return;
           } else {

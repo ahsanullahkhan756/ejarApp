@@ -413,7 +413,7 @@
   },
   "VALIDATION_MESSAGES": {
     "PLEASE_FILL_ALL_THE_FEILDS": "يرجى ملء جميع الحقول",
-    "PLEASE_FILL_IMAGES": "الرجاء إضافة الصورة الأمامية والخلفية للمتابعة",
+    "PLEASE_FILL_IMAGES": "الرجاء إضافة الصورة للمتابعة",
     "INVALID_EMAIL_FORMAT": "تنسيق البريد الإلكتروني غير صالح",
     "INVALID_PHONE_NUMBER": "حقل رقم الهاتف يجب أن يحتوي على 11 رقمًا على الأقل (بما في ذلك \"+\") في البداية",
     "WRONG_PHONE_NUMBER": "يرجى إدخال رقم هاتف صالح",

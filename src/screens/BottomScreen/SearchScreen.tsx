@@ -1,8 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { StyleSheet, Image, FlatList, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { View, Text } from "react-native-ui-lib";
 import SafeAreaContainer from "../../containers/SafeAreaContainer";
-import { IMAGES, theme } from "../../constants";
+import { IMAGES, SCREENS, theme } from "../../constants";
 import { Header } from "../../components/atoms/Header";
 import { SearchBar } from "../../components/atoms/SearchBar";
 import { scale } from "react-native-size-matters";
@@ -12,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsLoading } from "../../redux/slice/user";
 import { COMMON_TEXT } from "../../constants/screens";
 import { Typography } from "../../components/atoms/Typography";
+import { navigate } from "../../navigation/RootNavigation";
 
 const SearchScreen = () => {
   const dispatch = useDispatch();
@@ -42,7 +49,13 @@ const SearchScreen = () => {
       : IMAGES.searchCompanies;
 
     return (
-      <View>
+      <TouchableOpacity
+        onPress={() => {
+          navigate(SCREENS.RENTING_CARS_COMPANY, {
+            item: item,
+          });
+        }}
+      >
         <Image
           source={companyLogo}
           style={styles.companyLogo}
@@ -59,7 +72,7 @@ const SearchScreen = () => {
         >
           {item?.name}
         </Typography>
-      </View>
+      </TouchableOpacity>
     );
   };
 

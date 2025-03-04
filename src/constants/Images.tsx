@@ -1,5 +1,5 @@
 export const IMAGES = {
-  avatar: require("../assets/images/avatar.png"),
+  avatar: require("../assets/images/user.jpeg"),
   leftIcon: require("../assets/images/leftIcon.png"),
 
   SplashImg: require("../assets/images/SplashImg.png"),

@@ -99,7 +99,7 @@ const PricingDetail = (props: any) => {
         />
         <View row spread padding-10>
           <Typography textType="semiBold">{COMMON_TEXT.TOTAL}</Typography>
-          <Typography> {"AED" + props?.totalPrice}</Typography>
+          <Typography> {"AED " + props?.totalPrice}</Typography>
         </View>
       </View>
     </View>

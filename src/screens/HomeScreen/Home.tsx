@@ -131,9 +131,17 @@ const Home = () => {
                 // scrollEnabled={false}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
-                  <View
-                    marginH-15
-                    style={{ alignItems: "center", marginLeft: -2 }}
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigate(SCREENS.RENTING_CARS_CATEGORIES, {
+                        item: item,
+                      });
+                    }}
+                    style={{
+                      alignItems: "center",
+                      marginLeft: -2,
+                      marginHorizontal: 15,
+                    }}
                   >
                     {item.image?.[0]?.base64 && (
                       <Image
@@ -142,6 +150,7 @@ const Home = () => {
                           width: SCREEN_WIDTH * 0.2,
                           height: 80,
                           borderRadius: 10,
+                          marginBottom: 3,
                         }}
                         resizeMode="stretch"
                       />
@@ -149,7 +158,7 @@ const Home = () => {
                     <Typography size={theme.fontSize.extraSmall12}>
                       {item?.name}
                     </Typography>
-                  </View>
+                  </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id}
                 // columnWrapperStyle={{ marginBottom: 10 }}

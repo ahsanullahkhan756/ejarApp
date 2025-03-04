@@ -48,7 +48,54 @@ export const loginApi = async ({ data }) => {
     return null;
   } catch (error) {
     console.log("error", error?.message);
+    store.dispatch(setIsLoading(false));
     showToast({ title: error?.message });
+
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const sociallogin = async ({ data }) => {
+  try {
+    store.dispatch(setIsLoading(true));
+    const response = await post({
+      url: "auth/social/login",
+      data: data,
+      includeToken: false,
+    });
+
+    if (response) {
+      return response;
+    }
+    return null;
+  } catch (error) {
+    console.log("error", error?.message);
+    store.dispatch(setIsLoading(false));
+    showToast({ title: error?.message });
+
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+
+export const socialloginApi = async ({ data }) => {
+  try {
+    store.dispatch(setIsLoading(true));
+    const response = await post({
+      url: "auth/social",
+      data: data,
+      includeToken: false,
+    });
+
+    if (response) {
+      return response;
+    }
+    return null;
+  } catch (error) {
+    console.log("error", error?.message);
+    store.dispatch(setIsLoading(false));
+    showToast({ title: error?.message });
+
   } finally {
     store.dispatch(setIsLoading(false));
   }
@@ -69,7 +116,7 @@ export const signUpApi = async ({ data }) => {
   } catch (error) {
     showToast({ title: error?.message });
   } finally {
-    // store.dispatch(setIsLoading(false));
+    store.dispatch(setIsLoading(false));
   }
 };
 export const updateProfile = async ({ data, isLoading = true }) => {
@@ -92,6 +139,7 @@ export const updateProfile = async ({ data, isLoading = true }) => {
     showToast({ title: error?.message });
   } finally {
     store.dispatch(setIsLoading(false));
+
   }
 };
 export const forgotApi = async ({ data }) => {
@@ -136,15 +184,6 @@ export const getUserDetailApi = async () => {
     const res = await get({
       url: "auth/me",
     });
-
-    console.log("res");
-    console.log("res");
-    console.log("res");
-    console.log(res);
-
-    console.log("res");
-    console.log("res");
-    console.log("res");
     return res;
   } catch (error) {
     console.log(error?.message);
@@ -169,32 +208,40 @@ export const UserGoogleLoginFunction = async (dispatch) => {
     const response = await GoogleSignUp();
     const user = response?.data?.user;
     if (user) {
-      const token = await getFCMToken();
       const data = {
-        name: user?.name ?? user?.givenName + " " + user?.familyName,
+        firstName: user?.givenName,
+        lastName: user?.familyName,
         email: user?.email,
         username: user?.givenName + new Date().getUTCMilliseconds(),
-        social_id: user?.id,
-        fcm_token: token,
+        providerTokenID: user?.id,
+        fcmToken: await getFCMToken(),
         device_type: deviceType(),
         udid: await getUniqueId(),
-        picture: user?.photo,
+        profilePicture: {
+          fileName: "profile.jpg",
+          base64: user?.photo,
+          size: 0,
+        },
+        provider: "google",
+        roleID: "8d3a703f-ca87-4f01-bad2-d559726818bb",
       };
-      console.log(data);
-
-      const obj = {
-        email: "shahid@mailinator.com",
-        password: "Passward123!",
-        fcmToken: await getFCMToken(),
-      };
-      const res = await loginApi({ data: obj });
+      const res = await socialloginApi({ data });
       if (res != null) {
-        setItem(VARIABLES.USER_TOKEN, res?.token);
-        dispatch(setLoggedIn(true));
-        dispatch(setIsLoading(false));
-        requestNotificationPermission();
-        dispatch(setUserDetails(res));
+        const data2 = {
+          providerTokenID: user?.id,
+          provider: "google",
+          fcmToken: await getFCMToken(),
+        };
+        const response = await sociallogin({ data: data2 });
+        if (response != null) {
+          setItem(VARIABLES.USER_TOKEN, response?.token);
+          dispatch(setUserDetails(response));
+          dispatch(setLoggedIn(true));
+          dispatch(setIsLoading(false));
+          requestNotificationPermission();
+        }
       }
+
       // const url = API_URL.LOGIN + "/google";
       // const responseData = await post({ url, data, includeToken: false });
       // if (responseData) {
@@ -246,44 +293,54 @@ export const UserAppleLoginFunction = async (dispatch) => {
   try {
     const user = await AppleSignUp();
     if (user.id) {
-      const token = await getFCMToken();
       const data = user?.email
         ? {
-          name: user?.name ?? user?.email?.split("@")[0],
+          firstName: user?.name ?? user?.email?.split("@")[0],
+          lastName: user?.name ?? user?.email?.split("@")[0],
           email: user?.email,
           username: user?.name
             ? user?.name + new Date().getUTCMilliseconds()
             : user?.email?.split("@")[0] + new Date().getUTCMilliseconds(),
-          social_id: user?.id,
-          // fcm_token: token,
+          providerTokenID: user?.id,
+          profilePicture: {
+            fileName: "profile.jpg",
+            base64: user?.picture,
+            size: 0,
+          },
+          provider: "apple",
+          roleID: "8d3a703f-ca87-4f01-bad2-d559726818bb",
+          fcmToken: await getFCMToken(),
           udid: await getUniqueId(),
           device_token: await getFCMToken(),
           device_type: Platform.OS,
           device_brand: getBrand(),
           device_os: getSystemVersion(),
           app_version: getVersion(),
-
-          picture: user?.picture,
         }
         : {
-          social_id: user?.id,
-          fcm_token: token,
+          providerTokenID: user?.id,
+          fcmToken: await getFCMToken(),
           device_type: Platform.OS,
           udid: await getUniqueId(),
         };
 
-      const obj = {
-        email: "shahid@mailinator.com",
-        password: "Passward123!",
-        fcmToken: await getFCMToken(),
-      };
-      const res = await loginApi({ data: obj });
+        console.log(data);
+        
+      const res = await socialloginApi({ data });
       if (res != null) {
-        setItem(VARIABLES.USER_TOKEN, res?.token);
-        dispatch(setLoggedIn(true));
-        dispatch(setIsLoading(false));
-        requestNotificationPermission();
-        dispatch(setUserDetails(res));
+        const data2 = {
+          providerTokenID: user?.id,
+          provider: "apple",
+          fcmToken: await getFCMToken(),
+        };
+        const response = await sociallogin({ data: data2 });
+        if (response != null) {
+          setItem(VARIABLES.USER_TOKEN, response?.token);
+          dispatch(setUserDetails(response));
+          dispatch(setLoggedIn(true));
+          dispatch(setIsLoading(false));
+          requestNotificationPermission();
+        }
       }
       // const url = API_URL.LOGIN + "/apple";
       // const responseData = await post({
@@ -358,12 +415,8 @@ export const AppleSignUp = async () => {
           : null,
         email: appleAuthRequestResponse?.email,
       });
-
-      console.log(userData);
-
       return userData;
     }
-    console.log(userData);
     return userData;
     // } else {
     //   appleAuthAndroid.configure({

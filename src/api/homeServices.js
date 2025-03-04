@@ -19,19 +19,9 @@ export const getHomeApi = async () => {
 export const getBookingsListApi = async (activeTab) => {
   store.dispatch(setIsLoading(true));
   try {
-    console.log(`booking?status=${activeTab?.toLowerCase()}`);
-
     const res = await get({
       url: `booking?status=${activeTab?.toLowerCase()}`,
     });
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-    console.log(res);
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-    console.log("`booking?status=${activeTab?.toLowerCase()}`");
-
     return res;
   } catch (error) {
     console.log(error?.message);
@@ -47,6 +37,34 @@ export const topRatedCar = async () => {
       // url: "cars/toprated",
     });
     console.log("top Rated res", res);
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const carsByCategory = async (id) => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await get({
+      url: `cars/bycategory/${id}`,
+      // url: "cars/toprated",
+    });
+    return res;
+  } catch (error) {
+    console.log(error?.message);
+  } finally {
+    store.dispatch(setIsLoading(false));
+  }
+};
+export const carsByCompany = async (id) => {
+  store.dispatch(setIsLoading(false));
+  try {
+    const res = await get({
+      url: `cars/user/${id}`,
+      // url: "cars/toprated",
+    });
     return res;
   } catch (error) {
     console.log(error?.message);
@@ -103,6 +121,7 @@ export const confirmBooking = async (data) => {
     });
     return res;
   } catch (error) {
+    showToast({ title: error?.message })
     console.log(error?.message);
   } finally {
     store.dispatch(setIsLoading(false));

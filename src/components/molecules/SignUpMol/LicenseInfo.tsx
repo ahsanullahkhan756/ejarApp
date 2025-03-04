@@ -119,7 +119,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
       });
   };
   return (
-    <View marginH-20 center>
+    <View marginH-20 center style={{}}>
       <View style={commonStyles.lineBar} />
       <Typography textType="bold" align="center" size={theme.fontSize.large24}>
         {COMMON_TEXT.LICENSE_INFORMATION}
@@ -211,10 +211,16 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
               console.log(res);
               dispatch(setUserDetails(res));
               setCurrentStep(3);
-              dispatch(setIsLoading(true));
+              dispatch(setIsLoading(false));
             }
             return;
           } else {
+            if (!selectImg) {
+              showToast({
+                title: t(VALIDATION_MESSAGES.PLEASE_FILL_IMAGES),
+              });
+              return;
+            }
             showToast({
               title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
             });

@@ -22,34 +22,51 @@ import ChangeLang from "../screens/HomeScreen/ProfileScreen/ChangeLang";
 import UserBookingDetail from "../screens/HomeScreen/ProfileScreen/UserBookingDetail";
 import ViewReviews from "../screens/HomeScreen/ViewReviews";
 import ChangePassword from "../components/molecules/ProfileMol/ChangePassword";
+import RentCarsCategories from "../screens/HomeScreen/RentCarsCategories";
+import RentCarsCompany from "../screens/HomeScreen/RentCarsCompany";
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-  return(
-  <Stack.Navigator
+  return (
+    <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
-     <Stack.Screen name={SCREENS.HOME} component={BottomTabNavigation} />
-     <Stack.Screen name={SCREENS.DETAIL_SCREEN} component={DetailScreen} />
-     <Stack.Screen name={SCREENS.FILTER_SCREEN} component={FilterScreen} />
-     <Stack.Screen name={SCREENS.RENT_CARS} component={RentCars} />
-     <Stack.Screen name={SCREENS.MY_BOOKING} component={MyBooking} />
-     <Stack.Screen name={SCREENS.BOOKING_CONFIRM} component={BookingConfirmation} />
-     <Stack.Screen name={SCREENS.CONTRACT} component={Contract} />
+      }}
+    >
+      <Stack.Screen name={SCREENS.HOME} component={BottomTabNavigation} />
+      <Stack.Screen name={SCREENS.DETAIL_SCREEN} component={DetailScreen} />
+      <Stack.Screen name={SCREENS.FILTER_SCREEN} component={FilterScreen} />
+      <Stack.Screen name={SCREENS.RENT_CARS} component={RentCars} />
+      <Stack.Screen name={SCREENS.MY_BOOKING} component={MyBooking} />
+      <Stack.Screen
+        name={SCREENS.BOOKING_CONFIRM}
+        component={BookingConfirmation}
+      />
+      <Stack.Screen name={SCREENS.CONTRACT} component={Contract} />
 
-     <Stack.Screen name={SCREENS.MY_INFORMATION} component={MyInformation} />
-     <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePassword} />
-     <Stack.Screen name={SCREENS.MY_ADDRESS} component={MyAddress} />
-     <Stack.Screen name={SCREENS.USER_BOOKING} component={UserBooking} />
-     <Stack.Screen name={SCREENS.RATING} component={RatingScreen} />
-     <Stack.Screen name={SCREENS.CHANGE_LANGUAGE} component={ChangeLang} />
-     <Stack.Screen name={SCREENS.USER_BOOKING_DETAIL} component={UserBookingDetail} />
-     <Stack.Screen name={SCREENS.VIEW_REVIEWS} component={ViewReviews} />
-     
+      <Stack.Screen name={SCREENS.MY_INFORMATION} component={MyInformation} />
+      <Stack.Screen name={SCREENS.CHANGE_PASSWORD} component={ChangePassword} />
+      <Stack.Screen name={SCREENS.MY_ADDRESS} component={MyAddress} />
+      <Stack.Screen
+        name={SCREENS.RENTING_CARS_CATEGORIES}
+        component={RentCarsCategories}
+      />
+      <Stack.Screen
+        name={SCREENS.RENTING_CARS_COMPANY}
+        component={RentCarsCompany}
+      />
+      <Stack.Screen name={SCREENS.USER_BOOKING} component={UserBooking} />
+      <Stack.Screen name={SCREENS.RATING} component={RatingScreen} />
+      <Stack.Screen name={SCREENS.CHANGE_LANGUAGE} component={ChangeLang} />
+      <Stack.Screen
+        name={SCREENS.USER_BOOKING_DETAIL}
+        component={UserBookingDetail}
+      />
+      <Stack.Screen name={SCREENS.VIEW_REVIEWS} component={ViewReviews} />
     </Stack.Navigator>
-)}
+  );
+};
 
 const BottomTabNavigation = (props: any) => {
   const Tab = createBottomTabNavigator();
@@ -58,16 +75,15 @@ const BottomTabNavigation = (props: any) => {
     <Tab.Navigator
       initialRouteName={SCREENS.HOME}
       tabBar={(e: any) => <BottomTabs {...e} {...props} />}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen name={SCREENS.HOME} component={Home} />
       <Tab.Screen name={SCREENS.SEARCH_SCREEN} component={SearchScreen} />
       <Tab.Screen name={SCREENS.NOTIFICATION} component={Notification} />
       <Tab.Screen name={SCREENS.PROFILE} component={Profile} />
-     <Stack.Screen name={SCREENS.TOP_CARS} component={TopCars} />
-
+      <Stack.Screen name={SCREENS.TOP_CARS} component={TopCars} />
     </Tab.Navigator>
   );
 };
-
 
 export default AppNavigator;

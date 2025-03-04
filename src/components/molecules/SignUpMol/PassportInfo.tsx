@@ -224,16 +224,20 @@ const PassportInfo = ({ onValidate, setCurrentStep }: any) => {
                 size: 0,
               },
             };
-            console.log(data);
-
             const res = await updateProfile({ data });
             if (res != null) {
               dispatch(setUserDetails(res));
               setCurrentStep(4);
-              dispatch(setIsLoading(true));
+              dispatch(setIsLoading(false));
             }
             return;
           } else {
+            if (!selectImg) {
+              showToast({
+                title: t(VALIDATION_MESSAGES.PLEASE_FILL_IMAGES),
+              });
+              return;
+            }
             showToast({
               title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
             });

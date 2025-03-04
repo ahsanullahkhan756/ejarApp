@@ -78,6 +78,8 @@ const UserBookingDetail = ({ route }) => {
 
     { title: "Total Amount", subTitle: `AED ${detail?.Payable}` },
   ];
+  console.log(new Date(detail?.StartDate).toLocaleDateString());
+  console.log(new Date(detail?.EndDate).toLocaleDateString());
 
   return (
     <SafeAreaContainer safeArea={false}>
@@ -137,8 +139,9 @@ const UserBookingDetail = ({ route }) => {
             Rented Dates
           </Typography>
           <Typography size={theme.fontSize.small}>
-            {new Date(detail?.StartDate).toLocaleDateString()} {" - "}
-            {new Date(detail?.EndDate).toLocaleDateString()}
+            {`${new Date(detail?.StartDate).toLocaleDateString()} - ${new Date(
+              detail?.EndDate
+            ).toLocaleDateString()}`}
           </Typography>
         </View>
 
