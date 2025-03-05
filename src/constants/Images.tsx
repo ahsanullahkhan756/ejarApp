@@ -2,7 +2,9 @@ export const IMAGES = {
   avatar: require("../assets/images/user.jpeg"),
   leftIcon: require("../assets/images/leftIcon.png"),
 
-  SplashImg: require("../assets/images/SplashImg.png"),
+  SplashImg: require("../assets/images/spalshlogo.png"),
+  SplashButton: require("../assets/images/buttonsplash.png"),
+  SplashText: require("../assets/images/text.png"),
   logo: require("../assets/images/logo.png"),
   onBoardingImg: require("../assets/images/onBoardingImg.png"),
   tick: require("../assets/images/tick.png"),
@@ -11,6 +13,10 @@ export const IMAGES = {
   car1: require("../assets/images/car1.png"),
   car2: require("../assets/images/car2.png"),
   car3: require("../assets/images/car3.png"),
+
+  car30: require("../assets/images/car30.png"),
+  car31: require("../assets/images/car31.png"),
+  car32: require("../assets/images/car32.png"),
 
   car4: require("../assets/images/car4.png"),
   car5: require("../assets/images/car5.png"),
@@ -46,14 +52,14 @@ export const IMAGES = {
   bookingImg: require("../assets/images/bookingImg.png"),
 
   camera: require("../assets/images/camera.png"),
-  
+
   userProfile: require("../assets/images/userProfile.png"),
   map: require("../assets/images/map.png"),
   userBooking: require("../assets/images/userBooking.png"),
   changeLang: require("../assets/images/changeLang.png"),
   delete: require("../assets/images/delete.png"),
   signOut: require("../assets/images/signOut.png"),
-  
+
   addressIcon: require("../assets/images/addressIcon.png"),
   editIcon: require("../assets/images/editIcon.png"),
   cameraIcon: require("../assets/images/cameraIcon.png"),

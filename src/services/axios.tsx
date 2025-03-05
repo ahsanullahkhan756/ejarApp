@@ -215,7 +215,7 @@ export const sendPicturetoS3 = async (image) => {
     let params: any = [];
     var url;
     let obj = {
-      name: `image${new Date().getDate()}.jpeg`,
+      name: `image${new Date().getTime()}${new Date().getMilliseconds()}.jpeg`,
       type: image?.mime,
       uri: image?.path,
     };
@@ -240,7 +240,7 @@ export const sendPicturetoS3 = async (image) => {
           ? image?.path.replace("file://", "")
           : image?.path
       ),
-      filename: `image${new Date().getDate()}.jpeg`,
+      filename: `image${new Date().getTime()}${new Date().getMilliseconds()}.jpeg`,
       type: image?.mime,
     });
 
@@ -260,7 +260,7 @@ export const sendPicturetoS3 = async (image) => {
     const picture = await response.json()?.url;
 
     console.log(picture);
-    
+
     return picture;
   } catch (error) {
     console.log(error);

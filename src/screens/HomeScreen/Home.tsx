@@ -114,56 +114,57 @@ const Home = () => {
           />
         </View>
         <View padding-20>
+          {/* <Swiper
+               style={{ height: 100 }}
+               dotStyle={[
+                 styles.dotStyle,
+                 { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
+               ]}
+               activeDotStyle={styles.dotStyle}
+             >
+              Categories Carousel 
+             
+             </Swiper> */}
           {categoriesList?.length != 0 && (
-            <Swiper
-              style={{ height: 100 }}
-              dotStyle={[
-                styles.dotStyle,
-                { backgroundColor: "rgba(0,0,0,.5)", width: 20 },
-              ]}
-              activeDotStyle={styles.dotStyle}
-            >
-              {/* Categories Carousel */}
-              <FlatList
-                data={categoriesList}
-                horizontal
-                // numColumns={4}
-                // scrollEnabled={false}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigate(SCREENS.RENTING_CARS_CATEGORIES, {
-                        item: item,
-                      });
-                    }}
-                    style={{
-                      alignItems: "center",
-                      marginLeft: -2,
-                      marginHorizontal: 15,
-                    }}
-                  >
-                    {item.image?.[0]?.base64 && (
-                      <Image
-                        source={{ uri: item.image?.[0]?.base64 }}
-                        style={{
-                          width: SCREEN_WIDTH * 0.2,
-                          height: 80,
-                          borderRadius: 10,
-                          marginBottom: 3,
-                        }}
-                        resizeMode="stretch"
-                      />
-                    )}
-                    <Typography size={theme.fontSize.extraSmall12}>
-                      {item?.name}
-                    </Typography>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id}
-                // columnWrapperStyle={{ marginBottom: 10 }}
-              />
-            </Swiper>
+            <FlatList
+              data={categoriesList}
+              horizontal={true}
+              // numColumns={4}
+              scrollEnabled={true}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigate(SCREENS.RENTING_CARS_CATEGORIES, {
+                      item: item,
+                    });
+                  }}
+                  style={{
+                    alignItems: "center",
+                    marginLeft: -2,
+                    marginHorizontal: 15,
+                  }}
+                >
+                  {item.image?.[0]?.base64 && (
+                    <Image
+                      source={{ uri: item.image?.[0]?.base64 }}
+                      style={{
+                        width: SCREEN_WIDTH * 0.2,
+                        height: 80,
+                        borderRadius: 10,
+                        marginBottom: 3,
+                      }}
+                      resizeMode="cover"
+                    />
+                  )}
+                  <Typography size={theme.fontSize.extraSmall12}>
+                    {item?.name}
+                  </Typography>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id}
+              // columnWrapperStyle={{ marginBottom: 10 }}
+            />
           )}
           <Typography
             align="center"

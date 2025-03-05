@@ -1,5 +1,13 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Image,
+  PermissionsAndroid,
+  Platform,
+  ScrollView,
+  Share,
+  StyleSheet,
+} from "react-native";
 import { Button, View } from "react-native-ui-lib";
 import SafeAreaContainer from "../../../containers/SafeAreaContainer";
 import { Header } from "../../../components/atoms/Header";
@@ -9,11 +17,17 @@ import { IMAGES, theme } from "../../../constants";
 import { onBack } from "../../../navigation/RootNavigation";
 import VechileStatusItoms from "../../../components/molecules/MyBookingComp/VechileStatusItoms";
 import { Typography } from "../../../components/atoms/Typography";
+import { useTranslation } from "../../../hooks/useTranslation";
+import { COMMON_TEXT } from "../../../constants/screens";
+import RNFS from "react-native-fs";
+import { setIsLoading } from "../../../redux/slice/user";
+import { useDispatch } from "react-redux";
 
 const UserBookingDetail = ({ route }) => {
   const detail = route?.params?.detail;
   if (!detail) return;
-
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const calculateDays = () => {
     // Extract the start and end date from the selectedDates object
     let startDate: string | null = null;
@@ -78,9 +92,74 @@ const UserBookingDetail = ({ route }) => {
 
     { title: "Total Amount", subTitle: `AED ${detail?.Payable}` },
   ];
-  console.log(new Date(detail?.StartDate).toLocaleDateString());
-  console.log(new Date(detail?.EndDate).toLocaleDateString());
+  async function requestStoragePermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("Storage permission granted");
+      } else {
+        console.log("Storage permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
 
+  const downloadPDF = async () => {
+    dispatch(setIsLoading(true));
+    const pdfUrl =
+      "https://etheses.whiterose.ac.uk/id/eprint/17361/1/Official%20Saleh%20Ameer%20PhD%20thesis%20%28PDF%29.pdf"; // Replace with your PDF URL
+    const fileName = `contract_${detail?.BookCar?.carName}${detail?.BookCar?.model}.pdf`;
+    const filePath =
+      Platform.OS === "ios"
+        ? `${RNFS.DocumentDirectoryPath}/${fileName}`
+        : `${RNFS.DownloadDirectoryPath}/${fileName}`;
+
+    try {
+      if (Platform.OS === "android") {
+        if (Platform.Version < 29) {
+          // For Android 10 and below, request WRITE_EXTERNAL_STORAGE
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            {
+              title: "Storage Permission",
+              message: "App needs access to storage to download files.",
+              buttonPositive: "OK",
+            }
+          );
+          if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+            Alert.alert("Permission Denied!", "Cannot download the file.");
+            return;
+          }
+        }
+      }
+
+      const response = await RNFS.downloadFile({
+        fromUrl: pdfUrl,
+        toFile: filePath,
+      }).promise;
+      if (Platform.OS == "ios") {
+        const options = {
+          url: `file://${filePath}`,
+          type: "application/pdf",
+        };
+        await Share.share(options);
+      }
+
+      if (response.statusCode === 200) {
+        Alert.alert("Download Complete", `File saved to: ${filePath}`);
+      } else {
+        Alert.alert("Download Failed", "Please try again later.");
+      }
+      dispatch(setIsLoading(false));
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Something went wrong.");
+      dispatch(setIsLoading(false));
+    }
+  };
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={"My Renting"} centerImg={false} />
@@ -159,6 +238,21 @@ const UserBookingDetail = ({ route }) => {
             </>
           );
         })}
+        <View
+          style={{
+            alignItems: "center",
+            marginVertical: 20,
+          }}
+        >
+          <Button
+            label={t(COMMON_TEXT.DOWNLOAD_CONTRACT)}
+            style={{ width: 200 }}
+            backgroundColor={theme.color.blue}
+            onPress={() => {
+              downloadPDF();
+            }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaContainer>
   );

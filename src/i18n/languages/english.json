@@ -13,6 +13,7 @@
     "FORGOT_PASSWORD": "Forgot Password",
     "RESET_PASSWORD": "Reset Password",
     "SIGN_UP": "Sign Up",
+    "DOWNLOAD_CONTRACT": "Download Contract",
     "SECURITY_DEPOSIT": "Security Deposit",
     "LOGIN": "Login",
     "CITY": "City",
@@ -253,9 +254,9 @@
     "HEADING_1": "Endless Option",
     "HEADING_2": "Go Like A Pro",
     "HEADING_3": "Get Out Of The Ordinary",
-    "DESCRIPTION_1": "Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, a",
-    "DESCRIPTION_2": "Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, a",
-    "DESCRIPTION_3": "Forem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, a"
+    "DESCRIPTION_1": "Unlock a world of possibilities with an extensive fleet of vehicles. Seamless booking, flexible rentals, and unmatched convenience. Wherever you go, Car Ejar takes you there effortlessly.",
+    "DESCRIPTION_2": "Experience car rentals like a true professional. Fast, hassle-free booking with top-tier service at your fingertips. Drive smarter, travel smoother—Go Like A Pro with Car Ejar!",
+    "DESCRIPTION_3": "Redefine the way you travel with premium and unique car options. Break free from the usual—elevate your journey in style. Extraordinary rides, unforgettable experiences—only with Car Ejar."
   },
   "AUTH": {
     "WELCOME_BACK_LOGIN": "Hi, Welcome Back! 👋",

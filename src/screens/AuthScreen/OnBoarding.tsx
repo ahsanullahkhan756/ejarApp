@@ -33,7 +33,7 @@ const OnBoarding = () => {
     } else {
       const lastInd = currentIndex;
       if (lastInd == currentIndex) {
-        navigate(SCREENS.LOGIN);
+        navigate(SCREENS.SELECT_LANGUAGE);
       }
     }
   };
@@ -49,7 +49,7 @@ const OnBoarding = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={width}
-          pagingEnabled
+          pagingEnabled={true}
           onScrollToIndexFailed={() => {}}
           onScroll={(event) => {
             const index = Math.floor(event.nativeEvent.contentOffset.x / width);

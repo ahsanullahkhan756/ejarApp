@@ -3,17 +3,17 @@ import { COMMON_TEXT, ONBOARDING_TEXT } from "../constants/screens";
 
 export const ONBOARDING_DATA = [
   {
-    image: IMAGES.car3,
+    image: IMAGES.car30,
     title: ONBOARDING_TEXT.HEADING_1,
     description: ONBOARDING_TEXT.DESCRIPTION_1,
   },
   {
-    image: IMAGES.car3,
+    image: IMAGES.car31,
     title: ONBOARDING_TEXT.HEADING_2,
     description: ONBOARDING_TEXT.DESCRIPTION_2,
   },
   {
-    image: IMAGES.truck,
+    image: IMAGES.car32,
     title: ONBOARDING_TEXT.HEADING_3,
     description: ONBOARDING_TEXT.DESCRIPTION_3,
   },

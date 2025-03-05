@@ -53,11 +53,10 @@ const MainNavigation = () => {
       }
     };
     getUser();
-    const timer = setTimeout(() => {
-      setIsLoadings(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-    1;
+    // const timer = setTimeout(() => {
+    //   setIsLoadings(false);
+    // }, 3000);
+    // return () => clearTimeout(timer);
   }, [isLoggedIn]);
 
   const checkVerificationStatus = () => {
@@ -104,7 +103,7 @@ const MainNavigation = () => {
   }
 
   return isloading ? (
-    <Splash />
+    <Splash setIsLoadings={setIsLoadings} />
   ) : (
     <>
       <NavigationContainer ref={navigationRef}>
