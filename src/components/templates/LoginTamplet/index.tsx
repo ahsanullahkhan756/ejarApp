@@ -14,6 +14,11 @@ import {
 } from "../../../api/auth.js";
 import { useDispatch } from "react-redux";
 import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
+import {
+  setIsLoading,
+  setLoggedIn,
+  setUserDetails,
+} from "../../../redux/slice/user";
 
 const LoginTamplet = () => {
   const dispatch = useDispatch();
@@ -55,7 +60,29 @@ const LoginTamplet = () => {
         row
         gap-5
         style={{
-          marginTop: 100,
+          marginTop: 90,
+        }}
+      >
+        <Typography>{COMMON_TEXT.LOGIN_AS_A_GUEST} </Typography>
+        <TouchableOpacity onPress={() => {
+          dispatch(setLoggedIn(true));
+          dispatch(setIsLoading(false));
+        }}>
+          <Typography
+            textType="semiBold"
+            size={theme.fontSize.extraSmall}
+            color={theme.color.primary}
+          >
+            {COMMON_TEXT.LOGIN}
+          </Typography>
+        </TouchableOpacity>
+      </View>
+      <View
+        center
+        row
+        gap-5
+        style={{
+          marginVertical: 15,
         }}
       >
         <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT} </Typography>

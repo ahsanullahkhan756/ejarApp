@@ -28,6 +28,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { COMMON_TEXT, EJAR } from "../../constants/screens/index";
 import { useTranslation } from "../../hooks/useTranslation";
 import StarRating from "react-native-star-rating-widget";
+import CompanySlider from "../../components/atoms/companyswiper.js";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -337,7 +338,7 @@ const Home = () => {
             {EJAR.TOP_RATED_COMPANIES}
           </Typography>
 
-          <Swiper
+          {/* <Swiper
             style={{ height: 150 }}
             dotStyle={[
               styles.dotStyle,
@@ -374,7 +375,8 @@ const Home = () => {
               }}
               resizeMode="contain"
             />
-          </Swiper>
+          </Swiper> */}
+          {<CompanySlider items={details?.companies} />}
 
           <View style={commonStyles.lineBar} />
           <View row spread>

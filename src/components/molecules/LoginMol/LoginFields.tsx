@@ -100,7 +100,7 @@ const LoginFields = () => {
             if (res != null) {
               setItem(VARIABLES.USER_TOKEN, res?.token);
               dispatch(setLoggedIn(true));
-              dispatch(setIsLoading(true));
+              dispatch(setIsLoading(false));
               dispatch(setUserDetails(res));
             }
           }

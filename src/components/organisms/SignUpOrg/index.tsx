@@ -105,7 +105,7 @@ const SignUpOrg = ({
             marginBottom: 20,
           }}
         >
-          <Typography>{COMMON_TEXT.DONT_HAVE_AN_ACCOUNT}</Typography>
+          <Typography>{COMMON_TEXT.ALREADY_HAVE_AN_ACCOUNT}</Typography>
           <TouchableOpacity onPress={() => navigate(SCREENS.LOGIN)}>
             <Typography
               textType="semiBold"

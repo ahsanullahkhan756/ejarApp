@@ -24,6 +24,7 @@ import ViewReviews from "../screens/HomeScreen/ViewReviews";
 import ChangePassword from "../components/molecules/ProfileMol/ChangePassword";
 import RentCarsCategories from "../screens/HomeScreen/RentCarsCategories";
 import RentCarsCompany from "../screens/HomeScreen/RentCarsCompany";
+import Login from "../screens/AuthScreen/Login";
 
 const Stack = createStackNavigator();
 

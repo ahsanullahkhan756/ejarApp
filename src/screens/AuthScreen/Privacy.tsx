@@ -8,6 +8,7 @@ import { getPrivacyApi } from "../../api/auth";
 import { setIsLoading } from "../../redux/slice/user";
 import { useDispatch } from "react-redux";
 import { COMMON_TEXT } from "../../constants/screens";
+import WebView from "react-native-webview";
 
 const Privacy = (props: any) => {
   const title = props?.route?.params?.type || COMMON_TEXT.PRIVACY_POLICY;
@@ -35,10 +36,18 @@ const Privacy = (props: any) => {
   return (
     <SafeAreaContainer safeArea={false}>
       <Header titleText={title} centerImg={false} />
-      <View padding-20>
+      {/* <View padding-20>
         <Typography color={theme.color.primary}>{title}</Typography>
-        <Typography>{data || COMMON_TEXT.LOADING}</Typography>
-      </View>
+      </View> */}
+
+      <WebView
+        source={{
+          html: `<meta name="viewport" content="width=device-width, initial-scale=1.0">
+									${data || "Loading ..."}`,
+        }}
+        style={{ width: "100%", flex: 1 }}
+      />
+      {/* <Typography>{data || COMMON_TEXT.LOADING}</Typography> */}
     </SafeAreaContainer>
   );
 };

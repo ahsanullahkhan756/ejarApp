@@ -13,6 +13,8 @@
     "FORGOT_PASSWORD": "Forgot Password",
     "RESET_PASSWORD": "Reset Password",
     "SIGN_UP": "Sign Up",
+    "LOGIN_AS_A_GUEST": "Login as a guest?",
+    "PLEASE_LOGIN_TO_PERFORM": "Please login to access this feature",
     "DOWNLOAD_CONTRACT": "Download Contract",
     "SECURITY_DEPOSIT": "Security Deposit",
     "LOGIN": "Login",

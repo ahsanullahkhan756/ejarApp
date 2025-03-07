@@ -53,10 +53,10 @@ const MainNavigation = () => {
       }
     };
     getUser();
-    // const timer = setTimeout(() => {
-    //   setIsLoadings(false);
-    // }, 3000);
-    // return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      setIsLoadings(false);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [isLoggedIn]);
 
   const checkVerificationStatus = () => {

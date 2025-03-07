@@ -18,7 +18,9 @@ const { height, width } = Dimensions.get("screen");
 export const SCREEN_HEIGHT = height;
 export const SCREEN_WIDTH = width;
 export const STRIPE_KEY =
-  "pk_test_51QAfZAL6ZMRqMg2dDhexLvmFPD96cz871kzYCv9gT7ERRgARYdtkOUXlIaO8HRVxAzbKpGh7J6nb9F78asrmmsPE001X8jr0xi";
+  "pk_live_51QzhUHGXmA0JIYqvB7njiV8oeCGX9u3eV1DoTVevhYsRIpzZPZ4wNIT9nOPyXIvlYKC9SRa0bJ0miV3tdjX7TJY600DRXx2GJt";
+// export const STRIPE_KEY =
+//   "pk_test_51QAfZAL6ZMRqMg2dDhexLvmFPD96cz871kzYCv9gT7ERRgARYdtkOUXlIaO8HRVxAzbKpGh7J6nb9F78asrmmsPE001X8jr0xi";
 
 const fontRegularName = "NotoSansArabic";
 const arabicRegularName = "NotoSansArabic";

@@ -6,16 +6,29 @@ import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { IMAGES, SCREENS } from "../constants";
 import { Typography } from "../components/atoms/Typography";
 import { COMMON_TEXT } from "../constants/screens";
+import { store } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoggedIn } from "../redux/slice/user";
 
 const BottomTabs = (props: any) => {
+  const userDetails = useSelector((state) => state.user?.userDetails);
+  const dispatch = useDispatch();
+
   return (
     <View style={[styles.tabContainer]}>
       {BOTTOMTABS.map((i, index) => {
         const isActive = i.key == props.state.index;
         return (
           <TouchableOpacity
+            key={index}
             style={styles.tabView}
-            onPress={() => navigate(i.navigateTo)}
+            onPress={() => {
+              if (userDetails == null && i.key == 3) {
+                dispatch(setLoggedIn(false));
+                return;
+              }
+              navigate(i.navigateTo);
+            }}
           >
             <Image
               source={i.image}
@@ -27,15 +40,18 @@ const BottomTabs = (props: any) => {
               }}
               resizeMode="contain"
             />
-            <Typography color={isActive ? theme.color.primary : theme.color.white} size={theme.fontSize.extraVSmall}>{i.title}</Typography>
+            <Typography
+              color={isActive ? theme.color.primary : theme.color.white}
+              size={theme.fontSize.extraVSmall}
+            >
+              {userDetails == null && i.key == 3 ? COMMON_TEXT.LOGIN : i.title}
+            </Typography>
           </TouchableOpacity>
         );
       })}
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   tabContainer: {
@@ -78,13 +94,13 @@ export const BOTTOMTABS = [
   },
   {
     key: 1,
-    title:COMMON_TEXT.SEARCH,
+    title: COMMON_TEXT.SEARCH,
     navigateTo: SCREENS.SEARCH_SCREEN,
     image: IMAGES.searchIcon,
   },
   {
     key: 2,
-    title:COMMON_TEXT.NOTIFICATIONS,
+    title: COMMON_TEXT.NOTIFICATIONS,
     navigateTo: SCREENS.NOTIFICATION,
     image: IMAGES.notification,
   },
@@ -95,6 +111,5 @@ export const BOTTOMTABS = [
     image: IMAGES.profileIcon,
   },
 ];
-
 
 export default BottomTabs;

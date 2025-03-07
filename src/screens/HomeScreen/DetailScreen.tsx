@@ -21,11 +21,13 @@ import Swiper from "react-native-swiper";
 import { getBookedDatesFunction, topRatedCar } from "../../api/homeServices";
 import { useTranslation } from "../../hooks/useTranslation";
 import { COMMON_TEXT, EJAR } from "../../constants/screens";
+import { useSelector } from "react-redux";
+import { showToast } from "../../utils/toast";
 
 const DetailScreen = ({ route }) => {
   const item = route?.params?.item;
   const { t, isLangRTL } = useTranslation();
-
+  const user = useSelector((state) => state?.user?.userDetails);
   const [selectedDates, setSelectedDates] = useState([]);
 
   const getBookedDatesList = async () => {
@@ -215,12 +217,19 @@ const DetailScreen = ({ route }) => {
           label={t(EJAR.RENT_NOW)}
           backgroundColor={theme.color.primary}
           borderRadius={30}
-          onPress={() =>
+          onPress={() => {
+            if (!user) {
+              showToast({
+                title: t(COMMON_TEXT.PLEASE_LOGIN_TO_PERFORM),
+              });
+              return;
+            }
+
             navigate(SCREENS.MY_BOOKING, {
               item: item,
               bookedDates: formattedDates,
-            })
-          }
+            });
+          }}
           style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}
         />
       </ScrollView>

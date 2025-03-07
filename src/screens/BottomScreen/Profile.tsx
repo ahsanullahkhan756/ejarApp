@@ -131,7 +131,7 @@ const Profile = () => {
               {COMMON_TEXT.HI}
             </Typography>
             <Typography textType="bold" size={theme.fontSize.large}>
-              {userDetails?.firstName}
+              {userDetails?.firstName ?? "Guest"}
             </Typography>
           </View>
           <Typography color={theme.color.descColor}>

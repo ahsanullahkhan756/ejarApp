@@ -26,7 +26,6 @@ const ProfileList = (props: any) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const DATA = [
     {
       id: 1,

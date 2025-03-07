@@ -5470,6 +5470,7 @@ __metadata:
     react-native-fbsdk-next: ^13.3.0
     react-native-fs: ^2.20.0
     react-native-gesture-handler: ^2.19.0
+    react-native-html-to-pdf: ^0.12.0
     react-native-image-crop-picker: ^0.41.2
     react-native-modal-datetime-picker: ^18.0.0
     react-native-otp-textinput: ^1.1.6
@@ -5489,7 +5490,7 @@ __metadata:
     react-native-ui-lib: ^7.30.0
     react-native-video: ^6.10.2
     react-native-vision-camera: 4.5.3
-    react-native-webview: ^13.12.2
+    react-native-webview: ^13.13.2
     react-redux: ^9.1.2
     react-test-renderer: 18.3.1
     typescript: 5.0.4
@@ -9998,6 +9999,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-html-to-pdf@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "react-native-html-to-pdf@npm:0.12.0"
+  checksum: a5be594ccbfdd501d3ac626fb643f9a87631f1693029cd42679d08925658d03becef9a1dd02d1c38c64b93ef914b6a5f42646d36869dcdeed3d0f6ddcbf013ba
+  languageName: node
+  linkType: hard
+
 "react-native-image-crop-picker@npm:^0.41.2":
   version: 0.41.6
   resolution: "react-native-image-crop-picker@npm:0.41.6"
@@ -10276,16 +10284,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:^13.12.2":
-  version: 13.12.5
-  resolution: "react-native-webview@npm:13.12.5"
+"react-native-webview@npm:^13.13.2":
+  version: 13.13.2
+  resolution: "react-native-webview@npm:13.13.2"
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: e8cd5c260e41cf3434e390fbfd55934a65d4a996d56868eb3c64f4219e06e934bb2012f3520eb9d3867f5d0821333c46c96e31904460b2ec5832aaaa14f4dd62
+  checksum: 034b1ac22b32f3c9c66c1be96ec71078657b569ddd0970639a90ddf2f3849fa31bc010cff19e5b9b315ce836b9061926b196a156a72b9438f5cee24512ebc33a
   languageName: node
   linkType: hard
 
