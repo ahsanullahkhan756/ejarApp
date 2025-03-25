@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, TouchableOpacity, Button } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
-import { IMAGES, SCREEN_HEIGHT, SCREEN_WIDTH, theme } from "../../../constants";
-import { ActivityIndicator, Image, Linking, StyleSheet } from "react-native";
+import { IMAGES, SCREEN_HEIGHT, SCREEN_WIDTH, SCREENS, theme } from "../../../constants";
+import { ActivityIndicator, Image, Linking, Platform, StyleSheet } from "react-native";
 import {
   Camera,
   useCameraDevice,
@@ -20,8 +20,12 @@ import {
   setUserDetails,
 } from "../../../redux/slice/user";
 import { sendPicturetoS3 } from "../../../services/axios";
+import { navigate } from "../../../navigation/RootNavigation";
+
 
 const Uploads = ({ onValidate }: any) => {
+  const user = useSelector((state) => state?.user?.userDetails);
+
   const camera = useRef(null);
   const cameraDevice = useCameraDevice("front");
   const { hasPermission } = useCameraPermission();
@@ -31,8 +35,7 @@ const Uploads = ({ onValidate }: any) => {
     IMAGES.uploadLicense1,
     IMAGES.uploadLicense2,
   ]);
-  const [selfie, setSelfie] = useState(null);
-
+  const [selfie, setSelfie] = useState<string | null>(user?.profilePicture?.base64 ?? null); 
   const { isLoading } = useSelector((state) => state?.user);
 
   const cameraRef = useRef(null);
@@ -157,6 +160,7 @@ const Uploads = ({ onValidate }: any) => {
               dispatch(setLoggedIn(true));
               dispatch(setUserDetails(res));
               dispatch(setIsLoading(false));
+              navigate(SCREENS.HOME)
             }
             return;
           } else {

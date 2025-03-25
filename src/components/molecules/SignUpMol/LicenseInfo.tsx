@@ -15,18 +15,29 @@ import { sendPicturetoS3 } from "../../../services/axios";
 import { showToast } from "../../../utils/toast";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { useTranslation } from "../../../hooks/useTranslation";
-
+import { formatDateToTime } from "../../../utils/helper";
+// licenseNumberIssueDate
+//     "licenseNumberExpDate"
 const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
+  const user = useSelector((state) => state?.user?.userDetails);
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
-  const [selectImg, setSelectImg] = useState("");
+  // const [selectImg, setSelectImg] = useState(user?.licensePicture ?? null);
+  const [selectImg, setSelectImg] = useState(
+    user?.licensePicture?.base64 ? user.licensePicture.base64 : null
+  );
   const [visible, setVisible] = useState(false);
-  const [id, setId] = useState("");
-  const [issueDate, setIssueDate] = useState(true);
-  const [expiryDate, setExpiryDate] = useState(true);
+  const [id, setId] = useState(user?.licenseNumber ?? "");
+  const [issueDate, setIssueDate] = useState(
+    user?.licenseNumberIssueDate ? formatDateToTime(user.licenseNumberIssueDate) : null
+  );
+  const [expiryDate, setExpiryDate] = useState(
+    user?.licenseNumberExpDate ? formatDateToTime(user.licenseNumberExpDate) : null
+  );
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const dispatch = useDispatch();
   const ID = useSelector((state) => state?.user?.userDetails?.ID);
   const { t } = useTranslation();
+
   useEffect(() => {
     dispatch(setIsLoading(false));
     onValidate(!hasValidated.includes(false));
@@ -36,8 +47,10 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
     setDatePickerVisible(false);
   };
   const removeSelectedImage = () => {
-    setSelectImg("");
+    setSelectImg(null);
   };
+  console.log("Validation States:", hasValidated);
+
   const dateFields = () => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
@@ -152,13 +165,22 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
         <InputText
           label={COMMON_TEXT.LICENSE_NUMBER}
           value={id}
+          // onValidationFailed={(isValid: boolean) => {
+          //   setValidated((prev) => {
+          //     let copy = [...prev];
+          //     copy[0] = isValid;
+          //     return copy;
+          //   });
+          // }}
           onValidationFailed={(isValid: boolean) => {
+            console.log("License Number Validation:", isValid);
             setValidated((prev) => {
               let copy = [...prev];
-              copy[0] = isValid;
+              copy[0] = isValid;  // Ensure correct index
               return copy;
             });
           }}
+          
           placeholder={COMMON_TEXT.LICENSE_NUMBER}
           // validate={[(v) => v.length > 10]}
           // validationMessage={["Card Numver is "]}
@@ -231,6 +253,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
           height: 50,
           margin: 20,
           width: 300,
+          marginBottom: 100
         }}
       />
     </View>

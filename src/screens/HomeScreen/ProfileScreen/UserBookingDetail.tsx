@@ -238,7 +238,7 @@ const UserBookingDetail = ({ route }) => {
             </>
           );
         })}
-        <View
+        {/* <View
           style={{
             alignItems: "center",
             marginVertical: 20,
@@ -252,7 +252,7 @@ const UserBookingDetail = ({ route }) => {
               downloadPDF();
             }}
           />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaContainer>
   );

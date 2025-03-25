@@ -1,0 +1,33 @@
+TRIBE:
+
+[
+"Love Revolution",
+"Sports",
+"Dinner Parties",
+"Champagne",
+"Picnic",
+"Long Walks",
+"Dancing",
+"Wine",
+"Live Music",
+"Tigers",
+"Pet",
+"Camping",
+"Something else"
+]
+
+SOLO:
+[
+"Love Revolution",
+"Sports",
+"Cuisine",
+"Champagne",
+"Books",
+"Long Walks",
+"Dancing",
+"Wine",
+"Live Music",
+"Tigers",
+"Pet",
+"Something else",
+]

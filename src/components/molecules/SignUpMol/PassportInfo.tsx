@@ -19,17 +19,19 @@ import { showToast } from "../../../utils/toast";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { sendPicturetoS3 } from "../../../services/axios";
+import { formatDateToTime } from "../../../utils/helper";
 
 const PassportInfo = ({ onValidate, setCurrentStep }: any) => {
+  const user = useSelector((state) => state?.user?.userDetails);
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
-  const [selectImg, setSelectImg] = useState("");
+  const [selectImg, setSelectImg] = useState(user?.passportPicture?.base64 ?? null);
   const [selectPdf, setSelectPdf] = useState("");
   const [visible, setVisible] = useState(false);
   const ID = useSelector((state) => state?.user?.userDetails?.ID);
-  const [id, setId] = useState("");
+  const [id, setId] = useState(user?.passportNumber);
   const [email, setEmail] = useState("");
-  const [issueDate, setIssueDate] = useState(true);
-  const [expiryDate, setExpiryDate] = useState(true);
+  const [issueDate, setIssueDate] = useState(formatDateToTime(user?.passportNumberIssueDate) ?? null);
+  const [expiryDate, setExpiryDate] = useState(formatDateToTime(user?.passportNumberExpDate) ?? null);
   const dispatch = useDispatch();
   const [issueDate2, setIssueDate2] = useState(true);
   const [expiryDate2, setExpiryDate2] = useState(true);
@@ -248,6 +250,7 @@ const PassportInfo = ({ onValidate, setCurrentStep }: any) => {
           height: 50,
           margin: 20,
           width: 300,
+          marginBottom: 100
         }}
       />
     </View>

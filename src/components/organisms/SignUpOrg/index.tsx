@@ -40,12 +40,14 @@ const steps = [
 const SignUpOrg = ({
   isNotVerifiedStep,
   user,
+  step = 0,
 }: {
   isNotVerifiedStep?: number;
   user?: {};
+  step?: number
 }) => {
   const dispatch = useDispatch();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(step);
   const [validationState, setValidationState] = useState([
     false,
     false,
@@ -73,6 +75,35 @@ const SignUpOrg = ({
     } else {
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const handleBackPress = async () => {
+    console.log(currentStep);
+    
+    // If coming from Profile screen and on step 1, go back to Profile
+    if (currentStep === 1) {
+      navigate(SCREENS.PROFILE);
+      return;
+    }
+    
+    // Original logout logic for step 1
+    if (currentStep === 1) {
+      try {
+        dispatch(setUserDetails(null));
+        await removeMultipleItem([
+          VARIABLES.USER_TOKEN,
+          VARIABLES.IS_USER_LOGGED_IN,
+        ]);
+        dispatch(setLoggedIn(false));
+        reset(SCREENS.LOGIN);
+      } catch (error) {
+        console.log("Error during logout:", error);
+      }
+      return;
+    }
+    
+    // Default behavior - go to previous step
+    setCurrentStep(currentStep - 1);
   };
 
   const handleBottomData = () => {
@@ -199,24 +230,25 @@ const SignUpOrg = ({
     <>
       {currentStep !== 0 && (
         <TouchableOpacity
-          onPress={async () => {
-            console.log(currentStep);
-            if (currentStep == 1) {
-              try {
-                dispatch(setUserDetails(null));
-                await removeMultipleItem([
-                  VARIABLES.USER_TOKEN,
-                  VARIABLES.IS_USER_LOGGED_IN,
-                ]);
-                dispatch(setLoggedIn(false));
-                reset(SCREENS.LOGIN);
-              } catch (error) {
-                console.log("Error during logout:", error);
-              }
-              return;
-            }
-            setCurrentStep(currentStep - 1);
-          }}
+          // onPress={async () => {
+          //   console.log(currentStep);
+          //   if (currentStep == 1) {
+          //     try {
+          //       dispatch(setUserDetails(null));
+          //       await removeMultipleItem([
+          //         VARIABLES.USER_TOKEN,
+          //         VARIABLES.IS_USER_LOGGED_IN,
+          //       ]);
+          //       dispatch(setLoggedIn(false));
+          //       reset(SCREENS.LOGIN);
+          //     } catch (error) {
+          //       console.log("Error during logout:", error);
+          //     }
+          //     return;
+          //   }
+          //   setCurrentStep(currentStep - 1);
+          // }}
+          onPress={handleBackPress}
           style={{
             width: 80,
             height: 100,
@@ -249,7 +281,7 @@ const SignUpOrg = ({
           resizeMode="contain"
         />
       </View>
-      <ProgressBarComp currentStep={currentStep} steps={steps} />
+      <ProgressBarComp currentStep={currentStep} steps={steps} screen={SCREENS.SIGNUP} />
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         // style={[styles.container, {backgroundColor: }]}

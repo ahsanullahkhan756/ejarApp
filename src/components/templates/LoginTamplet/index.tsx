@@ -40,7 +40,7 @@ const LoginTamplet = () => {
     <View>
       <LoginOrg />
       <View row center margin-20>
-        {SOCIAL_LOGIN.map((i) => {
+        {[].map((i) => {
           if (Platform.OS == "android" && i?.id == 3) {
             return;
           }

@@ -25,6 +25,7 @@ export const SCREENS = {
   SEARCH_SCREEN:"SearchScreen",
   NOTIFICATION:"Notification",
   PROFILE:"Profile",
+  EDIT_PROFILE: "EditProfile",
 
   TOP_CARS:"TopCars",
   RENT_CARS:"RentCars",

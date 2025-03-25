@@ -30,3 +30,9 @@ export const getArabicNumbers = (value: any): string => {
   }
 };
 
+
+export const formatDateToTime = (timestamp: any) => {
+  if (!timestamp) return ""; 
+  return new Date(timestamp).toISOString().split("T")[0];
+};
+

@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, Platform } from "react-native";
 import * as Progress from "react-native-progress";
 import { View } from "react-native-ui-lib";
-import { theme } from "../../../constants";
+import { SCREENS, theme } from "../../../constants";
 import { Typography } from "../../atoms/Typography";
 import { COMMON_TEXT } from "../../../constants/screens";
 
-const ProgressBarComp = ({ currentStep, steps }: any) => {
+const ProgressBarComp = ({ currentStep, steps, screen }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.progressContainer}>
@@ -37,9 +37,14 @@ const ProgressBarComp = ({ currentStep, steps }: any) => {
         />
       </View>
       <View row spread marginH-20 marginV-10>
-        <Typography color={theme.color.descColor} size={theme.fontSize.small}>
+        {/* <Typography color={theme.color.descColor} size={theme.fontSize.small}>
           {COMMON_TEXT.SIGN_UP}
-        </Typography>
+        </Typography> */}
+         {screen !== SCREENS.PROFILE && (
+          <Typography color={theme.color.descColor} size={theme.fontSize.small}>
+            {COMMON_TEXT.SIGN_UP}
+          </Typography>
+        )}
         <Typography color={theme.color.descColor} size={theme.fontSize.small}>
           {COMMON_TEXT.FINISH}
         </Typography>

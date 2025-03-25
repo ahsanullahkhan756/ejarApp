@@ -39,6 +39,26 @@ export const InputDateTime = (props: any) => {
   const colorScheme = Appearance.getColorScheme();
   // const [day, month, year] = value?.split("-");
   // const SelectedDate = new Date(`${year}-${month}-${day}`);
+  const getDateValue = () => {
+    if (!value) return new Date(); // Default to current date if no value
+    
+    try {
+      // Handle different date formats that might come from the server
+      if (moment(value, "YYYY-MM-DD", true).isValid()) {
+        return moment(value, "YYYY-MM-DD").toDate();
+      }
+      if (moment(value, "YYYY/MM/DD", true).isValid()) {
+        return moment(value, "YYYY/MM/DD").toDate();
+      }
+      if (moment(value).isValid()) {
+        return moment(value).toDate();
+      }
+    } catch (e) {
+      console.warn("Could not parse date:", value);
+    }
+    
+    return new Date(); // Fallback to current date
+  };
   return (
     <View>
       {title && (
@@ -94,6 +114,7 @@ export const InputDateTime = (props: any) => {
           mode={mode}
           is24Hour={is24Hour}
           maximumDate={ismaxDate ? maximumDate : undefined}
+          // date={getDateValue()} // Set the initial date
           // maximumDate={SelectedDate ? SelectedDate : maximumDate}
           onConfirm={(e: any) => {
             onChange(

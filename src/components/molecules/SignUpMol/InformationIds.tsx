@@ -22,32 +22,46 @@ import { updateProfile } from "../../../api/auth";
 import { COMMON_TEXT, EJAR } from "../../../constants/screens";
 import { useTranslation } from "../../../hooks/useTranslation";
 import moment from "moment";
-import { country, gender } from "../../../containers/dummy";
+import { country, gender, userData } from '../../../containers/dummy';
 import { postWithSingleFile, sendPicturetoS3 } from "../../../services/axios";
 import { showToast } from "../../../utils/toast";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { getItem } from "../../../utils/storage";
+import { formatDateToTime } from "../../../utils/helper";
 
 const InformationIds = ({ onValidate, setCurrentStep }: any) => {
+  const user = useSelector((state) => state?.user?.userDetails);
+
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [idCardNumber, setIdCardNumber] = useState("");
-  const [placeOfBirth, setPlaceOfBirth] = useState("");
-  const [issueDate, setIssueDate] = useState(null);
-  const [expiryDate, setExpiryDate] = useState(null);
-  const [dob, setDob] = useState(null);
+  const [idCardNumber, setIdCardNumber] = useState(user?.idCardNumber ?? "");
+  const [placeOfBirth, setPlaceOfBirth] = useState(user?.placeOfBirth ?? "");
+  const [issueDate, setIssueDate] = useState(
+    user?.idCardIssueDate ? formatDateToTime(user.idCardIssueDate) : null
+  );
+  const [expiryDate, setExpiryDate] = useState(
+    user?.idCardExpDate ? formatDateToTime(user.idCardExpDate) : null
+  );
+  const [dob, setDob] = useState(
+    user?.dob ? formatDateToTime(user.dob) : null
+  );
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
+  const [frontImage, setFrontImage] = useState(
+    user?.idcardPicture?.base64 ? user.idcardPicture.base64  : null
+  );
+  const [backImage, setBackImage] = useState(
+    user?.idcardPictureBack?.base64 ? user.idcardPictureBack.base64 : null
+  );
   const [isTakingFront, setIsTakingFront] = useState(true);
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedGender, setSelectedGender] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(user?.nationality ?? null);
+  const [selectedGender, setSelectedGender] = useState(user?.gender ?? null);
 
   const ID = useSelector((state) => state?.user?.userDetails?.ID);
+
 
   useEffect(() => {
     dispatch(setIsLoading(false));
@@ -248,7 +262,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             width={153}
             style={{ marginBottom: 0 }}
             label={COMMON_TEXT.NATIONALITY}
-            value={country}
+            value={selectedCountry}
+            // value={country}
             placeholder={COMMON_TEXT.NATIONALITY}
             onChangeText={(text: string) => setSelectedCountry(text)}
           />
@@ -288,7 +303,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             width={150}
             style={{ marginBottom: 10 }}
             label={COMMON_TEXT.SEX}
-            value={gender}
+            // value={gender}
+            value={selectedGender}
             placeholder={COMMON_TEXT.SEX}
             onChangeText={(text: string) => setSelectedGender(text)}
           />
@@ -308,6 +324,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
         {frontImage && (
           <View>
             <Image
+              // source={frontImage}
               source={{ uri: frontImage }}
               style={styles.imagePreview}
               resizeMode="cover"
@@ -393,6 +410,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               height: 50,
               margin: 20,
               width: 300,
+              marginBottom: 150
             }}
           />
         </View>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
-import { theme } from "../../../constants";
+import { SCREENS, theme } from "../../../constants";
 import { Typography } from "../../atoms/Typography";
 import { Button, View } from "react-native-ui-lib";
 import { commonStyles } from "../../../containers/commStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { COMMON_TEXT } from "../../../constants/screens";
-import { onBack } from "../../../navigation/RootNavigation";
+import { navigate, onBack } from "../../../navigation/RootNavigation";
 import { updateProfile } from "../../../api/auth";
 import { InputText } from "../../atoms/InputText";
 import { setUserDetails } from "../../../redux/slice/user";
@@ -125,7 +125,8 @@ const PersonalInfo = (props: any) => {
           const res = await updateProfile({ data });
           if (res != null) {
             dispatch(setUserDetails(res));
-            onBack();
+            // onBack();
+            navigate(SCREENS.EDIT_PROFILE)
           }
         }}
         style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}

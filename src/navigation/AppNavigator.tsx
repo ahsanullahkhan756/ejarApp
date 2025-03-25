@@ -25,6 +25,7 @@ import ChangePassword from "../components/molecules/ProfileMol/ChangePassword";
 import RentCarsCategories from "../screens/HomeScreen/RentCarsCategories";
 import RentCarsCompany from "../screens/HomeScreen/RentCarsCompany";
 import Login from "../screens/AuthScreen/Login";
+import EditScreen from "../screens/HomeScreen/EditScreen";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,7 @@ const BottomTabNavigation = (props: any) => {
       <Tab.Screen name={SCREENS.SEARCH_SCREEN} component={SearchScreen} />
       <Tab.Screen name={SCREENS.NOTIFICATION} component={Notification} />
       <Tab.Screen name={SCREENS.PROFILE} component={Profile} />
+      <Tab.Screen name={SCREENS.EDIT_PROFILE} component={EditScreen} />
       <Stack.Screen name={SCREENS.TOP_CARS} component={TopCars} />
     </Tab.Navigator>
   );
