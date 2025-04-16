@@ -1,4 +1,4 @@
-package com.ejarapp
+package com.techlancers.carejar
 
 import android.app.Application
 import com.facebook.react.PackageList

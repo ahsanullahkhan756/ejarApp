@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "aab": "cd android && ./gradlew clean && ./gradlew bundleRelease",
     "reverse": "adb reverse tcp:8081 tcp:8081",
     "devices": "adb devices && adb reverse tcp:8081 tcp:8081",
     "build": "cd android && ./gradlew clean && ./gradlew assembleRelease",
@@ -62,7 +63,7 @@
     "react-native-toast-message": "^2.2.1",
     "react-native-ui-lib": "^7.30.0",
     "react-native-video": "^6.10.2",
-    "react-native-vision-camera": "4.5.3",
+    "react-native-vision-camera": "4.5.2",
     "react-native-webview": "^13.13.2",
     "react-redux": "^9.1.2"
   },

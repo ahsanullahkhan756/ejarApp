@@ -144,8 +144,10 @@ const MyBooking = ({ route }) => {
         config,
         includeToken: false,
       });
+      
 
       if (response?.id) {
+        
         navigate(SCREENS.BOOKING_CONFIRM, {
           startEndDates: startEndDates,
           item: item,
@@ -155,9 +157,10 @@ const MyBooking = ({ route }) => {
         });
         dispatch(setIsLoading(false));
       }
+
       return null;
     } catch (error) {
-      console.log(error);
+      console.log('error',error);
 
       showToast({ title: error?.message });
       dispatch(setIsLoading(false));

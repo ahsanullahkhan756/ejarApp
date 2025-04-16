@@ -52,6 +52,7 @@
     "MY_ADDRESS": "عنواني",
     "CHANGE_LANGUAGE": "تغيير اللغة",
     "MY_INFORMATION": "معلوماتي",
+    "UPLOAD_LICENSE": "تعديل المستندات",
     "DIDNT_RECIEVE_THE_OTP": "لم تستلم الرمز؟",
     "ARE_YOU_SURE_YOU_WANT_TO_DELETE_YOUR_ACCOUNT": "هل أنت متأكد أنك تريد حذف حسابك؟",
     "ARE_YOU_SURE_YOU_WANT_TO_LOGOUT_YOUR_ACCOUNT": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
@@ -442,7 +443,28 @@
     "MAX_LENGTH": "يجب أن يكون الحد الأقصى للطول ${maxLength} حرفًا",
     "IS_REQUIRED": "${name} مطلوب",
     "THIS_FEILD_IS_REQUIRED": "هذا الحقل مطلوب",
-    "PASSWORDS_MUST_MATCH": "يجب أن تتطابق كلمات المرور"
+    "PASSWORDS_MUST_MATCH": "يجب أن تتطابق كلمات المرور",
+
+
+    "PLEASE_FILL_IMAGESS": "يرجى تحميل صورتي الأمامية والخلفية لبطاقة الهوية.",
+    "ENTER_ID_NUMBER": "الرجاء إدخال رقم الهوية.",
+    "ENTER_PLACE_OF_BIRTH": "الرجاء إدخال مكان الولادة.",
+    "SELECT_GENDER": "الرجاء تحديد الجنس.",
+    "ENTER_DOB": "الرجاء إدخال تاريخ الميلاد.",
+    "SELECT_NATIONALITY": "الرجاء تحديد الجنسية.",
+    "ENTER_ISSUE_DATE": "الرجاء إدخال تاريخ إصدار الهوية.",
+    "ENTER_EXPIRY_DATEE": "الرجاء إدخال تاريخ انتهاء الهوية.",
+    "PLEASE_FILL_ALL_FIELDS": "الرجاء ملء جميع الحقول المطلوبة.",
+
+    "PLEASE_FILL_IMAGES_LICENSE": "يرجى تحميل صورة رخصة القيادة الخاصة بك.",
+    "ENTER_ID_LICENSE": "الرجاء إدخال رقم الرخصة.",
+    "ENTER_ISSUE_DATE_LICENSE": "الرجاء إدخال تاريخ إصدار الرخصة.",
+    "ENTER_EXPIRY_DATE_LICENSE": "الرجاء إدخال تاريخ انتهاء الرخصة.",
+
+    "PLEASE_FILL_IMAGES_PASSPORT": "يرجى تحميل صورة جواز السفر الخاص بك.",
+    "ENTER_ID_PASSPORT": "الرجاء إدخال رقم جواز السفر.",
+    "ENTER_ISSUE_DATE_PASSPORT": "الرجاء إدخال تاريخ إصدار جواز السفر.",
+    "ENTER_EXPIRY_DATE_PASSPORT": "الرجاء إدخال تاريخ انتهاء جواز السفر."
   },
   "EJAR": {
     "TOTAL_RENT_FOR_DAYS": "إجمالي مدة الإيجار  ${day} يومًا",

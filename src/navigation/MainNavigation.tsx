@@ -19,89 +19,183 @@ import { setAppLanguage } from "../redux/slice/appSettings";
 import SignUpOrg from "../components/organisms/SignUpOrg";
 import { requestNotificationPermission } from "../utils/notifications";
 
+// const MainNavigation = () => {
+//   const dispatch = useDispatch();
+//   const [isloading, setIsLoadings] = useState(true);
+//   const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
+//   const { changeLanguage } = useTranslation();
+//   const [userNotActive, setUserNotActive] = useState(null);
+
+//   useEffect(() => {
+//     const getUser = async () => {
+//       console.log('================>');
+      
+//       const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
+//       if (userSelectedLanguage) {
+//         changeLanguage(userSelectedLanguage);
+//         dispatch(setAppLanguage(userSelectedLanguage));
+//       }
+//       requestNotificationPermission();
+//       const token = await getItem(VARIABLES.USER_TOKEN);
+
+//       if (token) {
+//         const resp = await getUserDetailApi();
+//         if (resp) {
+//           if (resp?.IsActive) {
+//             dispatch(setLoggedIn(true));
+//             dispatch(setUserDetails(resp));
+//           } else {
+//             dispatch(setLoggedIn(true));
+//             setUserNotActive(resp);
+//             dispatch(setUserDetails(resp));
+//           }
+//         }
+//       } else {
+//         setUserNotActive(null);
+//       }
+//     };
+//     getUser();
+//     const timer = setTimeout(() => {
+//       setIsLoadings(false);
+//     }, 3000);
+//     return () => clearTimeout(timer);
+//   }, [isLoggedIn]);
+
+//   const checkVerificationStatus = () => {
+//     console.log('------++++++++++>>>>>>>>>');
+    
+//     if (userNotActive) {
+//       if (
+//         userNotActive?.idcardPicture &&
+//         userNotActive?.idcardPictureBack &&
+//         userNotActive?.gender
+//       ) {
+//         if (
+//           userNotActive?.licensePicture &&
+//           userNotActive?.licenseNumberExpDate
+//         ) {
+//           if (
+//             userNotActive?.passportNumber &&
+//             userNotActive?.passportNumberExpDate
+//           ) {
+//             if (userNotActive?.profilePicture) {
+//               setUserNotActive(null);
+//               dispatch(setLoggedIn(true));
+//               return;
+//             } else {
+//               return 4;
+//             }
+//           } else {
+//             return 3;
+//           }
+//         } else {
+//           return 2;
+//         }
+//       } else {
+//         return 1;
+//       }
+//     }
+//   };
+
+//   if (userNotActive) {
+//     return (
+//       <SignUpOrg
+//         isNotVerifiedStep={checkVerificationStatus()}
+//         user={userNotActive}
+//       />
+//     );
+//   }
+
+//   return isloading ? (
+//     <Splash setIsLoadings={setIsLoadings} />
+//   ) : (
+//     <>
+//       <NavigationContainer ref={navigationRef}>
+//         {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
+//         <Toast />
+//         {isLoading && <Loader />}
+//       </NavigationContainer>
+//     </>
+//   );
+// };
+
 const MainNavigation = () => {
   const dispatch = useDispatch();
   const [isloading, setIsLoadings] = useState(true);
-  const { isLoggedIn, isLoading } = useSelector((state) => state?.user);
+  const { isLoggedIn, isLoading, userDetails } = useSelector((state) => state?.user);
   const { changeLanguage } = useTranslation();
   const [userNotActive, setUserNotActive] = useState(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const getUser = async () => {
-      const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
-      if (userSelectedLanguage) {
-        changeLanguage(userSelectedLanguage);
-        dispatch(setAppLanguage(userSelectedLanguage));
-      }
-      requestNotificationPermission();
-      const token = await getItem(VARIABLES.USER_TOKEN);
+    const initializeApp = async () => {
+      try {
+        const userSelectedLanguage = await getItem(VARIABLES.LANGUAGE);
+        if (userSelectedLanguage) {
+          changeLanguage(userSelectedLanguage);
+          dispatch(setAppLanguage(userSelectedLanguage));
+        }
 
-      if (token) {
-        const resp = await getUserDetailApi();
-        if (resp) {
-          if (resp?.IsActive) {
-            dispatch(setLoggedIn(true));
-            dispatch(setUserDetails(resp));
-          } else {
-            dispatch(setLoggedIn(true));
-            setUserNotActive(resp);
-            dispatch(setUserDetails(resp));
+        await requestNotificationPermission();
+        const token = await getItem(VARIABLES.USER_TOKEN);
+
+        if (token) {
+          const resp = await getUserDetailApi();
+          if (resp) {
+            if (resp?.IsActive) {
+              dispatch(setLoggedIn(true));
+              dispatch(setUserDetails(resp));
+            } else {
+              dispatch(setLoggedIn(true));
+              setUserNotActive(resp);
+              dispatch(setUserDetails(resp));
+            }
           }
         }
-      } else {
-        setUserNotActive(null);
+      } catch (error) {
+        console.error('Initialization error:', error);
+      } finally {
+        setIsReady(true);
+        setIsLoadings(false);
       }
     };
-    getUser();
-    const timer = setTimeout(() => {
-      setIsLoadings(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [isLoggedIn]);
+
+    initializeApp();
+  }, []);
 
   const checkVerificationStatus = () => {
-    if (userNotActive) {
-      if (
-        userNotActive?.idcardPicture &&
-        userNotActive?.idcardPictureBack &&
-        userNotActive?.gender
-      ) {
-        if (
-          userNotActive?.licensePicture &&
-          userNotActive?.licenseNumberExpDate
-        ) {
-          if (
-            userNotActive?.passportNumber &&
-            userNotActive?.passportNumberExpDate
-          ) {
-            if (userNotActive?.profilePicture) {
-              setUserNotActive(null);
-              dispatch(setLoggedIn(true));
-              return;
-            } else {
-              return 4;
-            }
-          } else {
-            return 3;
-          }
-        } else {
-          return 2;
-        }
-      } else {
-        return 1;
-      }
+    if (!userDetails) return null;
+    
+    if (!userDetails?.idcardPicture || !userDetails?.idcardPictureBack || !userDetails?.gender) {
+      return 1;
     }
+    if (!userDetails?.licensePicture || !userDetails?.licenseNumberExpDate) {
+      return 2;
+    }
+    if (!userDetails?.passportNumber || !userDetails?.passportNumberExpDate) {
+      return 3;
+    }
+    if (!userDetails?.profilePicture) {
+      return 4;
+    }
+    return null;
   };
 
-  if (userNotActive) {
-    return (
-      <SignUpOrg
-        isNotVerifiedStep={checkVerificationStatus()}
-        user={userNotActive}
-      />
-    );
-  }
+  // if (!isReady) {
+  //   return <Splash setIsLoadings={setIsLoadings} />;
+  // }
 
+  if (userDetails && !userDetails?.IsActive) {
+    const verificationStep = checkVerificationStatus();
+    if (verificationStep !== null) {
+      return (
+        <SignUpOrg
+          isNotVerifiedStep={verificationStep}
+          user={userDetails}
+        />
+      );
+    }
+  }
   return isloading ? (
     <Splash setIsLoadings={setIsLoadings} />
   ) : (
@@ -113,6 +207,15 @@ const MainNavigation = () => {
       </NavigationContainer>
     </>
   );
+  // return (
+  //   <>
+  //     <NavigationContainer ref={navigationRef}>
+  //       {!isLoggedIn ? <AuthStackNavigator /> : <AppNavigator />}
+  //       <Toast />
+  //       {isLoading && <Loader />}
+  //     </NavigationContainer>
+  //   </>
+  // );
 };
 
 export default MainNavigation;

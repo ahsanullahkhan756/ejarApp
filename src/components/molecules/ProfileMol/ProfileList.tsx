@@ -34,6 +34,12 @@ const ProfileList = (props: any) => {
       navigateTo: SCREENS.MY_INFORMATION,
     },
     {
+      id: 3,
+      title: COMMON_TEXT.UPLOAD_LICENSE,
+      image: IMAGES.userProfile,
+      navigateTo: SCREENS.EDIT_PROFILE,
+    },
+    {
       id: 2,
       title: COMMON_TEXT.MY_ADDRESS,
       image: IMAGES.map,

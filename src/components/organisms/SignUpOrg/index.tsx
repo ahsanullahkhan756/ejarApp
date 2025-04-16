@@ -14,7 +14,7 @@ import { IMAGES, SCREENS } from "../../../constants";
 import SignUpFields from "../../molecules/SignUpMol/SignUpFields.tsx";
 import { VARIABLES, theme } from "../../../constants/Constants.ts";
 import { Typography } from "../../atoms/Typography.tsx";
-import { navigate, reset } from "../../../navigation/RootNavigation.tsx";
+import { navigate, onBack, reset } from "../../../navigation/RootNavigation.tsx";
 import InformationIds from "../../molecules/SignUpMol/InformationIds.tsx";
 import Uploads from "../../molecules/SignUpMol/Uploads.tsx";
 import LicenseInfo from "../../molecules/SignUpMol/LicenseInfo.tsx";
@@ -28,6 +28,7 @@ import {
 } from "../../../redux/slice/user.tsx";
 import { useDispatch } from "react-redux";
 import { COMMON_TEXT } from "../../../constants/screens/index.tsx";
+import { Screen } from "react-native-screens";
 
 const steps = [
   { label: COMMON_TEXT.SIGN_UP, progress: 0 },
@@ -41,10 +42,12 @@ const SignUpOrg = ({
   isNotVerifiedStep,
   user,
   step = 0,
+  isEditProfile = false,
 }: {
   isNotVerifiedStep?: number;
   user?: {};
-  step?: number
+  step?: number;
+  isEditProfile?: boolean;
 }) => {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(step);
@@ -79,13 +82,12 @@ const SignUpOrg = ({
 
   const handleBackPress = async () => {
     console.log(currentStep);
-    
-    // If coming from Profile screen and on step 1, go back to Profile
+
     if (currentStep === 1) {
       navigate(SCREENS.PROFILE);
       return;
     }
-    
+
     // Original logout logic for step 1
     if (currentStep === 1) {
       try {
@@ -101,8 +103,6 @@ const SignUpOrg = ({
       }
       return;
     }
-    
-    // Default behavior - go to previous step
     setCurrentStep(currentStep - 1);
   };
 
@@ -230,25 +230,28 @@ const SignUpOrg = ({
     <>
       {currentStep !== 0 && (
         <TouchableOpacity
-          // onPress={async () => {
-          //   console.log(currentStep);
-          //   if (currentStep == 1) {
-          //     try {
-          //       dispatch(setUserDetails(null));
-          //       await removeMultipleItem([
-          //         VARIABLES.USER_TOKEN,
-          //         VARIABLES.IS_USER_LOGGED_IN,
-          //       ]);
-          //       dispatch(setLoggedIn(false));
-          //       reset(SCREENS.LOGIN);
-          //     } catch (error) {
-          //       console.log("Error during logout:", error);
-          //     }
-          //     return;
-          //   }
-          //   setCurrentStep(currentStep - 1);
-          // }}
-          onPress={handleBackPress}
+          onPress={async () => {
+            console.log(currentStep);
+            if (currentStep == 1 && !isEditProfile) {
+              try {
+                dispatch(setUserDetails(null));
+                await removeMultipleItem([
+                  VARIABLES.USER_TOKEN,
+                  VARIABLES.IS_USER_LOGGED_IN,
+                ]);
+                dispatch(setLoggedIn(false));
+                reset(SCREENS.LOGIN);
+              } catch (error) {
+                console.log("Error during logout:", error);
+              }
+              return;
+            }else if (isEditProfile){
+              onBack()
+            }
+
+            setCurrentStep(currentStep - 1);
+          }}
+          // onPress={handleBackPress}
           style={{
             width: 80,
             height: 100,
@@ -281,12 +284,21 @@ const SignUpOrg = ({
           resizeMode="contain"
         />
       </View>
-      <ProgressBarComp currentStep={currentStep} steps={steps} screen={SCREENS.SIGNUP} />
+      {/* <ProgressBarComp currentStep={currentStep} steps={steps} screen={SCREENS.EDIT_PROFILE} /> */}
+      <ProgressBarComp
+        currentStep={currentStep}
+        steps={steps}
+        screen={isEditProfile ? SCREENS.EDIT_PROFILE : SCREENS.SIGNUP}
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
+        // keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+        style={{ flex: 1 }} // Add this
         // style={[styles.container, {backgroundColor: }]}
       >
         <ScrollView
+          contentContainerStyle={{ paddingBottom: 30 }} // Add this
+          keyboardShouldPersistTaps="handled" // Add this
           nestedScrollEnabled
           scrollEnabled={true}
           showsVerticalScrollIndicator={false}

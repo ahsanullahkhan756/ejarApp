@@ -2,8 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, TouchableOpacity, Button } from "react-native-ui-lib";
 import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
-import { IMAGES, SCREEN_HEIGHT, SCREEN_WIDTH, SCREENS, theme } from "../../../constants";
-import { ActivityIndicator, Image, Linking, Platform, StyleSheet } from "react-native";
+import {
+  IMAGES,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  SCREENS,
+  theme,
+} from "../../../constants";
+import {
+  ActivityIndicator,
+  Image,
+  Linking,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import {
   Camera,
   useCameraDevice,
@@ -20,12 +32,12 @@ import {
   setUserDetails,
 } from "../../../redux/slice/user";
 import { sendPicturetoS3 } from "../../../services/axios";
-import { navigate } from "../../../navigation/RootNavigation";
-
+import { navigate, navigationRef } from "../../../navigation/RootNavigation";
+import { useNavigation } from "@react-navigation/native";
 
 const Uploads = ({ onValidate }: any) => {
   const user = useSelector((state) => state?.user?.userDetails);
-
+  // const navigation = useNavigation()
   const camera = useRef(null);
   const cameraDevice = useCameraDevice("front");
   const { hasPermission } = useCameraPermission();
@@ -35,8 +47,10 @@ const Uploads = ({ onValidate }: any) => {
     IMAGES.uploadLicense1,
     IMAGES.uploadLicense2,
   ]);
-  const [selfie, setSelfie] = useState<string | null>(user?.profilePicture?.base64 ?? null); 
-  const { isLoading } = useSelector((state) => state?.user);
+  const [selfie, setSelfie] = useState<string | null>(
+    user?.profilePicture?.base64 ?? null
+  );
+  const { isLoading } = useSelector((state: any) => state?.user);
 
   const cameraRef = useRef(null);
   const { t } = useTranslation();
@@ -142,11 +156,13 @@ const Uploads = ({ onValidate }: any) => {
           <>{renderDetectorContent()}</>
         )}
       </View>
-      <Button
+      {/* <Button
         label={selfie ? t(COMMON_TEXT.NEXT) : ""}
         backgroundColor={theme.color.primary}
         onPress={async () => {
+
           if (selfie) {
+
             const data = {
               ID: ID,
               profilePicture: {
@@ -156,10 +172,15 @@ const Uploads = ({ onValidate }: any) => {
               },
             };
             const res = await updateProfile({ data });
+
+            console.log('----------------------',res)
+
             if (res != null) {
               dispatch(setLoggedIn(true));
               dispatch(setUserDetails(res));
               dispatch(setIsLoading(false));
+              // console.log('----------------------',res)
+              // navigation.navigate(SCREENS.HOME)
               navigate(SCREENS.HOME)
             }
             return;
@@ -168,6 +189,52 @@ const Uploads = ({ onValidate }: any) => {
           }
         }}
         // borderRadius={30}
+        style={{
+          height: selfie ? 50 : 100,
+          margin: 20,
+          marginTop: 200,
+          marginBottom: 200,
+          width: selfie ? 300 : 100,
+          borderRadius: selfie ? 30 : 50,
+          borderWidth: selfie ? 0 : 15,
+          borderColor: "#D9D9D9",
+        }}
+      /> */}
+      <Button
+        label={selfie ? t(COMMON_TEXT.NEXT) : ""}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          if (selfie) {
+            try {
+              dispatch(setIsLoading(true));
+              const data = {
+                ID: ID,
+                profilePicture: {
+                  fileName: "profile.jpg",
+                  base64: selfie,
+                  size: 0,
+                },
+              };
+              const res = await updateProfile({ data });
+
+              if (res) {
+                dispatch(setUserDetails(res));
+                dispatch(setLoggedIn(true));
+
+                // Ensure navigation happens after state updates
+                setTimeout(() => {
+                  navigationRef.current?.navigate(SCREENS.HOME);
+                }, 100);
+              }
+            } catch (error) {
+              console.error("Update profile error:", error);
+            } finally {
+              dispatch(setIsLoading(false));
+            }
+          } else {
+            capturePhoto();
+          }
+        }}
         style={{
           height: selfie ? 50 : 100,
           margin: 20,

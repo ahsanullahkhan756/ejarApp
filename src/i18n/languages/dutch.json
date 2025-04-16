@@ -156,7 +156,8 @@
     "GOOGLE": "Google",
     "DONT_HAVE_AN_ACCOUNT": "Geen account? ",
     "ENTER_YOUR_LOCATION": "Voer Je Locatie In",
-    "ALREADY_HAVE_AN_ACCOUNT": "Heb Je Al Een Account?"
+    "ALREADY_HAVE_AN_ACCOUNT": "Heb Je Al Een Account?",
+    "UPLOAD_LICENSE": "Licentie uploaden"
   },
   "MONTHS": {
     "JANUARY": "Januari",

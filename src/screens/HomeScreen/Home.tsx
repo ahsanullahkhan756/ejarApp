@@ -192,7 +192,7 @@ const Home = () => {
                 </View>
               );
             }}
-            renderItem={({ item }) => {
+            renderItem={({ item }) => {              
               return (
                 <TouchableOpacity
                   onPress={() => {

@@ -125,8 +125,7 @@ const PersonalInfo = (props: any) => {
           const res = await updateProfile({ data });
           if (res != null) {
             dispatch(setUserDetails(res));
-            // onBack();
-            navigate(SCREENS.EDIT_PROFILE)
+            onBack();
           }
         }}
         style={{ height: 50, margin: 20, width: "50%", alignSelf: "center" }}

@@ -72,7 +72,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
-  - FirebaseMessagingInterop (11.6.0)
+  - FirebaseMessagingInterop (11.10.0)
   - fmt (9.1.0)
   - glog (0.3.5)
   - GoogleAppMeasurement (11.5.0):
@@ -1958,11 +1958,11 @@ PODS:
     - React-Core
   - SocketRocket (0.7.0)
   - TOCropViewController (2.7.4)
-  - VisionCamera (4.5.3):
-    - VisionCamera/Core (= 4.5.3)
-    - VisionCamera/React (= 4.5.3)
-  - VisionCamera/Core (4.5.3)
-  - VisionCamera/React (4.5.3):
+  - VisionCamera (4.5.2):
+    - VisionCamera/Core (= 4.5.2)
+    - VisionCamera/React (= 4.5.2)
+  - VisionCamera/Core (4.5.2)
+  - VisionCamera/React (4.5.2):
     - React-Core
   - Yoga (0.0.0)
 
@@ -2284,7 +2284,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: f47dd28ae7782e6a4738aad3106071a8fe0af604
   FirebaseInstallations: d8063d302a426d114ac531cd82b1e335a0565745
   FirebaseMessaging: 9f4e42053241bd45ce8565c881bfdd9c1df2f7da
-  FirebaseMessagingInterop: d768073b71144b7bceadfec019d3dc49c743d53e
+  FirebaseMessagingInterop: 2fb9a3ca813c3b7b495232f1fbedd365eb60da45
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
   GoogleAppMeasurement: ee5c2d2242816773fbf79e5b0563f5355ef1c315
@@ -2377,7 +2377,7 @@ SPEC CHECKSUMS:
   RNSVG: 7ff26379b2d1871b8571e6f9bc9630de6baf9bdf
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
-  VisionCamera: cb84d0d8485b3e67c91b62931d3aa88f49747c92
+  VisionCamera: b69c637dc7388008c717b9566a006e5f9266fafe
   Yoga: 2a45d7e59592db061217551fd3bbe2dd993817ae
 
 PODFILE CHECKSUM: 7dbb56b6d2a87cbf27f27f067f9b8802ff5ed4a4

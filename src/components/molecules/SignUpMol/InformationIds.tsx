@@ -5,8 +5,11 @@ import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme, VARIABLES } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
 import {
+  Alert,
   Image,
+  Linking,
   Modal,
+  PermissionsAndroid,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -22,46 +25,46 @@ import { updateProfile } from "../../../api/auth";
 import { COMMON_TEXT, EJAR } from "../../../constants/screens";
 import { useTranslation } from "../../../hooks/useTranslation";
 import moment from "moment";
-import { country, gender, userData } from '../../../containers/dummy';
+import { country, gender, userData } from "../../../containers/dummy";
 import { postWithSingleFile, sendPicturetoS3 } from "../../../services/axios";
 import { showToast } from "../../../utils/toast";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { getItem } from "../../../utils/storage";
 import { formatDateToTime } from "../../../utils/helper";
+import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
 
 const InformationIds = ({ onValidate, setCurrentStep }: any) => {
-  const user = useSelector((state) => state?.user?.userDetails);
+  const user = useSelector((state: any) => state?.user?.userDetails);
 
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [idCardNumber, setIdCardNumber] = useState(user?.idCardNumber ?? "");
-  const [placeOfBirth, setPlaceOfBirth] = useState(user?.placeOfBirth ?? "");
+  const [idCardNumber, setIdCardNumber] = useState(user?.idCardNumber ?? null);
+  const [placeOfBirth, setPlaceOfBirth] = useState(user?.placeOfBirth ?? null);
   const [issueDate, setIssueDate] = useState(
     user?.idCardIssueDate ? formatDateToTime(user.idCardIssueDate) : null
   );
   const [expiryDate, setExpiryDate] = useState(
     user?.idCardExpDate ? formatDateToTime(user.idCardExpDate) : null
   );
-  const [dob, setDob] = useState(
-    user?.dob ? formatDateToTime(user.dob) : null
-  );
+  const [dob, setDob] = useState(user?.dob ? formatDateToTime(user.dob) : null);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [frontImage, setFrontImage] = useState(
-    user?.idcardPicture?.base64 ? user.idcardPicture.base64  : null
+    user?.idcardPicture?.base64 ? user.idcardPicture.base64 : null
   );
   const [backImage, setBackImage] = useState(
     user?.idcardPictureBack?.base64 ? user.idcardPictureBack.base64 : null
   );
   const [isTakingFront, setIsTakingFront] = useState(true);
 
-  const [selectedCountry, setSelectedCountry] = useState(user?.nationality ?? null);
+  const [selectedCountry, setSelectedCountry] = useState(
+    user?.nationality ?? null
+  );
   const [selectedGender, setSelectedGender] = useState(user?.gender ?? null);
 
-  const ID = useSelector((state) => state?.user?.userDetails?.ID);
-
+  const ID = useSelector((state: any) => state?.user?.userDetails?.ID);
 
   useEffect(() => {
     dispatch(setIsLoading(false));
@@ -71,13 +74,10 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
   const hidePicker = () => {
     setDatePickerVisible(false);
   };
-  // console.log(new Date(issueDate)?.toISOString().split("T")[0]);
-
   const dateFields = () => {
     return (
       <View row gap-30 style={{ alignItems: "center" }}>
         <InputDateTime
-          // width={Platform.OS == "ios" ? 165 : 170}
           width={150}
           title={COMMON_TEXT.ISSUE_DATE}
           placeholder={COMMON_TEXT.ISSUE_DATE}
@@ -145,7 +145,58 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
   //     console.log(error);
   //   }
   // };
-  const takePhotoFromCamera = () => {
+  // const takePhotoFromCamera = () => {
+  //   ImagePicker.openCamera({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   })
+  //     .then(async (image) => {
+  //       const response = await sendPicturetoS3(image);
+  //       if (isTakingFront) {
+  //         setFrontImage(response);
+  //       } else {
+  //         setBackImage(response);
+  //       }
+  //       setIsTakingFront(false);
+  //       setVisible(false);
+  //     })
+  //     .catch((error) => {
+  //       setVisible(false);
+  //     });
+  // };
+
+  const requestCameraPermission = async () => {
+    if (Platform.OS === "android") {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } else {
+      const result = await request(PERMISSIONS.IOS.CAMERA);
+      return result === RESULTS.GRANTED;
+    }
+  };
+
+  const openSettings = () => {
+    Alert.alert(
+      "Permission Required",
+      "Camera access is needed to take photos. Please enable it in settings.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Open Settings", onPress: () => Linking.openSettings() },
+      ]
+    );
+  };
+
+  const takePhotoFromCamera = async () => {
+    const hasPermission = await requestCameraPermission();
+
+    if (!hasPermission) {
+      openSettings();
+      return;
+    }
+
     ImagePicker.openCamera({
       width: 300,
       height: 400,
@@ -161,7 +212,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
         setIsTakingFront(false);
         setVisible(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setVisible(false);
       });
   };
@@ -185,7 +236,7 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
       });
   };
 
-  const removeImage = (isFront) => {
+  const removeImage = (isFront: any) => {
     if (isFront) {
       setFrontImage(null);
       setIsTakingFront(true);
@@ -193,13 +244,13 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
       setBackImage(null);
     }
   };
-  const formatDate = (date) => {
-    const formattedDate = moment(date, "YYYY/MM/DD", true); // 'true' ensures strict parsing
+  const formatDate = (date: any) => {
+    const formattedDate = moment(date, "YYYY/MM/DD", true);
     if (formattedDate.isValid()) {
       return formattedDate.format("YYYY/MM/DD");
     } else {
-      console.log("Invalid date format: ", date); // Handle invalid dates here
-      return ""; // Or return a default date if needed
+      console.log("Invalid date format: ", date);
+      return "";
     }
   };
 
@@ -357,6 +408,99 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
             label={t(COMMON_TEXT.NEXT)}
             backgroundColor={theme.color.primary}
             onPress={async () => {
+              const validationMessages = {
+                // PLEASE_FILL_IMAGES:
+                //   "Please upload both front and back images of your ID.",
+                // ENTER_ID_NUMBER: "Please enter your ID number.",
+                // ENTER_PLACE_OF_BIRTH: "Please enter your place of birth.",
+                // SELECT_GENDER: "Please select your gender.",
+                // ENTER_DOB: "Please enter your date of birth.",
+                // SELECT_NATIONALITY: "Please select your nationality.",
+                // ENTER_ISSUE_DATE: "Please enter the issue date of your ID.",
+                // ENTER_EXPIRY_DATE: "Please enter the expiry date of your ID.",
+                // PLEASE_FILL_ALL_FIELDS:
+                //   "Please fill in all the required fields.",
+                PLEASE_FILL_IMAGES: t(VALIDATION_MESSAGES.PLEASE_FILL_IMAGESS),
+                ENTER_ID_NUMBER: t(VALIDATION_MESSAGES.ENTER_ID_NUMBER),
+                ENTER_PLACE_OF_BIRTH: t(VALIDATION_MESSAGES.ENTER_PLACE_OF_BIRTH),
+                SELECT_GENDER: t(VALIDATION_MESSAGES.SELECT_GENDER),
+                ENTER_DOB: t(VALIDATION_MESSAGES.ENTER_DOB),
+                SELECT_NATIONALITY: t(VALIDATION_MESSAGES.SELECT_NATIONALITY),
+                ENTER_ISSUE_DATE: t(VALIDATION_MESSAGES.ENTER_ISSUE_DATE),
+                ENTER_EXPIRY_DATE: t(VALIDATION_MESSAGES.ENTER_EXPIRY_DATEE)
+                // PLEASE_FILL_ALL_FIELDS: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS)
+              };
+
+              // Validation check
+              let errorMessage = "";
+
+              if (!frontImage || !backImage) {
+                errorMessage = validationMessages.PLEASE_FILL_IMAGES;
+              } else if (!idCardNumber?.trim()) {
+                errorMessage = validationMessages.ENTER_ID_NUMBER;
+              } else if (!placeOfBirth?.trim()) {
+                errorMessage = validationMessages.ENTER_PLACE_OF_BIRTH;
+              } else if (!selectedGender) {
+                errorMessage = validationMessages.SELECT_GENDER;
+              } else if (!dob) {
+                errorMessage = validationMessages.ENTER_DOB;
+              } else if (!selectedCountry) {
+                errorMessage = validationMessages.SELECT_NATIONALITY;
+              } else if (!issueDate) {
+                errorMessage = validationMessages.ENTER_ISSUE_DATE;
+              } else if (!expiryDate) {
+                errorMessage = validationMessages.ENTER_EXPIRY_DATE;
+              }
+
+              if (errorMessage) {
+                Alert.alert(errorMessage);
+                // showToast({ title: errorMessage });
+                return;
+              }
+
+              const data = {
+                ID: ID,
+                idCardNumber: idCardNumber,
+                idCardIssueDate: moment(issueDate).format("YYYY/MM/DD"),
+                idCardExpDate: moment(expiryDate).format("YYYY/MM/DD"),
+                nationality: selectedCountry,
+                placeOfBirth: placeOfBirth,
+                dob: moment(dob).format("YYYY/MM/DD"),
+                gender: selectedGender,
+                idcardPicture: {
+                  fileName: "id_card.jpg",
+                  base64: frontImage,
+                  size: 0,
+                },
+                idcardPictureBack: {
+                  fileName: "id_card_back.jpg",
+                  base64: backImage,
+                  size: 0,
+                },
+              };
+
+              console.log("=== Submitting Data:", data);
+              const res = await updateProfile({ data });
+
+              if (res) {
+                dispatch(setUserDetails(res));
+                setCurrentStep(2);
+                dispatch(setIsLoading(false));
+              }
+            }}
+            borderRadius={30}
+            style={{
+              height: 50,
+              margin: 20,
+              width: 300,
+            }}
+          />
+
+
+          {/* <Button
+            label={t(COMMON_TEXT.NEXT)}
+            backgroundColor={theme.color.primary}
+            onPress={async () => {
               if (
                 frontImage &&
                 backImage &&
@@ -410,9 +554,8 @@ const InformationIds = ({ onValidate, setCurrentStep }: any) => {
               height: 50,
               margin: 20,
               width: 300,
-              marginBottom: 150
             }}
-          />
+          /> */}
         </View>
       </View>
     </View>

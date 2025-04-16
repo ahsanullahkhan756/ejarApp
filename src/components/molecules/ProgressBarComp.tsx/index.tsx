@@ -36,15 +36,34 @@ const ProgressBarComp = ({ currentStep, steps, screen }: any) => {
           style={styles.progressBar}
         />
       </View>
-      <View row spread marginH-20 marginV-10>
-        {/* <Typography color={theme.color.descColor} size={theme.fontSize.small}>
+      {/* <View row spread marginH-20 marginV-10>
+        <Typography color={theme.color.descColor} size={theme.fontSize.small}>
           {COMMON_TEXT.SIGN_UP}
-        </Typography> */}
-         {screen !== SCREENS.PROFILE && (
+        </Typography>
+         {screen !== SCREENS.EDIT_PROFILE && (
           <Typography color={theme.color.descColor} size={theme.fontSize.small}>
             {COMMON_TEXT.SIGN_UP}
           </Typography>
         )}
+        <Typography color={theme.color.descColor} size={theme.fontSize.small}>
+          {COMMON_TEXT.FINISH}
+        </Typography>
+      </View> */}
+      <View
+        style={{
+          flexDirection: "row",
+          marginHorizontal: 20,
+          marginVertical: 10,
+          justifyContent:
+            screen === SCREENS.EDIT_PROFILE ? "flex-end" : "space-between",
+        }}
+      >
+        {screen !== SCREENS.EDIT_PROFILE && (
+          <Typography color={theme.color.descColor} size={theme.fontSize.small}>
+            {COMMON_TEXT.SIGN_UP}
+          </Typography>
+        )}
+
         <Typography color={theme.color.descColor} size={theme.fontSize.small}>
           {COMMON_TEXT.FINISH}
         </Typography>

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431283448970:android:f7213d8b43077ef8b31173",
+        "mobilesdk_app_id": "1:431283448970:android:4cd044263aaee9c2b31173",
         "android_client_info": {
-          "package_name": "com.ejarapp"
+          "package_name": "com.techlancers.carejar"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "431283448970-n1d4p6993s3bh02d10eb7dr7jeolp5os.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "431283448970-uru88khu33v4rhacujsa1fe33hum0ldd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ejarApp"
+              }
             }
           ]
         }

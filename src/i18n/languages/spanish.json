@@ -156,7 +156,8 @@
     "GOOGLE": "Google",
     "DONT_HAVE_AN_ACCOUNT": "¿No tienes una cuenta?",
     "ENTER_YOUR_LOCATION": "Ingresa tu Ubicación",
-    "ALREADY_HAVE_AN_ACCOUNT": "¿Ya tienes una cuenta?"
+    "ALREADY_HAVE_AN_ACCOUNT": "¿Ya tienes una cuenta?",
+    "UPLOAD_LICENSE": "Subir licencia"
   },
   "MONTHS": {
     "JANUARY": "Enero",

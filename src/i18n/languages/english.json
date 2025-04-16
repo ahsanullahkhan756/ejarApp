@@ -52,6 +52,7 @@
     "MY_ADDRESS": "My Address",
     "CHANGE_LANGUAGE": "Change Language",
     "MY_INFORMATION": "My Information",
+    "UPLOAD_LICENSE": "Edit Documents",
     "DIDNT_RECIEVE_THE_OTP": "Didn’t receive the OTP?",
     "ARE_YOU_SURE_YOU_WANT_TO_DELETE_YOUR_ACCOUNT": "Are you sure you want to delete your account?",
     "ARE_YOU_SURE_YOU_WANT_TO_LOGOUT_YOUR_ACCOUNT": "Are you sure you want to Logout your account?",
@@ -442,7 +443,30 @@
     "MAX_LENGTH": "Maximum length must be ${maxLength} characters",
     "IS_REQUIRED": "${name} is required",
     "THIS_FEILD_IS_REQUIRED": "This feild is required",
-    "PASSWORDS_MUST_MATCH": "Passwords must match"
+    "PASSWORDS_MUST_MATCH": "Passwords must match",
+    
+
+    "PLEASE_FILL_IMAGESS": "Please upload both front and back images of your ID.",
+    "ENTER_ID_NUMBER": "Please enter your ID number.",
+    "ENTER_PLACE_OF_BIRTH": "Please enter your place of birth.",
+    "SELECT_GENDER": "Please select your gender.",
+    "ENTER_DOB": "Please enter your date of birth.",
+    "SELECT_NATIONALITY": "Please select your nationality.",
+    "ENTER_ISSUE_DATE": "Please enter the issue date of your ID.",
+    "ENTER_EXPIRY_DATEE": "Please enter the expiry date of your ID.",
+    "PLEASE_FILL_ALL_FIELDS": "Please fill in all the required fields.",
+
+
+
+    "PLEASE_FILL_IMAGES_LICENSE": "Please upload an image of your license.",
+    "ENTER_ID_LICENSE": "Please enter your license number.",
+    "ENTER_ISSUE_DATE_LICENSE": "Please enter the issue date of your license.",
+    "ENTER_EXPIRY_DATE_LICENSE": "Please enter the expiry date of your license.",
+
+    "PLEASE_FILL_IMAGES_PASSPORT": "Please upload an image of your passport.",
+    "ENTER_ID_PASSPORT": "Please enter your passport number.",
+    "ENTER_ISSUE_DATE_PASSPORT": "Please enter the issue date of your passport.",
+    "ENTER_EXPIRY_DATE_PASSPORT": "Please enter the expiry date of your passport."
   },
 
   "EJAR": {

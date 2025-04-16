@@ -4,7 +4,15 @@ import { Typography } from "../../atoms/Typography";
 import { commonStyles } from "../../../containers/commStyles";
 import { IMAGES, SCREEN_WIDTH, theme } from "../../../constants";
 import { InputText } from "../../atoms/InputText";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Alert,
+  Image,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { InputDateTime } from "../../atoms/InputDateTime";
 import ImagePicker from "react-native-image-crop-picker";
 import { COMMON_TEXT } from "../../../constants/screens";
@@ -16,10 +24,11 @@ import { showToast } from "../../../utils/toast";
 import { VALIDATION_MESSAGES } from "../../../validationMessages";
 import { useTranslation } from "../../../hooks/useTranslation";
 import { formatDateToTime } from "../../../utils/helper";
+import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
 // licenseNumberIssueDate
 //     "licenseNumberExpDate"
 const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
-  const user = useSelector((state) => state?.user?.userDetails);
+  const user = useSelector((state: any) => state?.user?.userDetails);
   const [hasValidated, setValidated] = useState(new Array(3).fill(true));
   // const [selectImg, setSelectImg] = useState(user?.licensePicture ?? null);
   const [selectImg, setSelectImg] = useState(
@@ -35,7 +44,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
   );
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const dispatch = useDispatch();
-  const ID = useSelector((state) => state?.user?.userDetails?.ID);
+  const ID = useSelector((state: any) => state?.user?.userDetails?.ID);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -105,32 +114,86 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
       </View>
     );
   };
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    })
-      .then(async (image) => {
-        console.log(image);
+  // const takePhotoFromCamera = () => {
+  //   ImagePicker.openCamera({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: true,
+  //   })
+  //     .then(async (image) => {
+  //       console.log(image);
 
-        const response = await sendPicturetoS3(image);
-        // console.log("img", images);
-        // setSelectImg({
-        //   name: images.filename || `image_${new Date().getDate()}`,
-        //   type: images.mime,
-        //   uri: images.path,
-        // });
-        if (response) {
-          setSelectImg(response);
-        }
-        setVisible(false);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setVisible(false);
-      });
+  //       const response = await sendPicturetoS3(image);
+  //       // console.log("img", images);
+  //   // setSelectImg({
+  //   //   name: images.filename || `image_${new Date().getDate()}`,
+  //   //   type: images.mime,
+  //   //   uri: images.path,
+  //   // });
+  //   if (response) {
+  //     setSelectImg(response);
+  //   }
+  //   setVisible(false);
+  // })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       setVisible(false);
+  //     });
+  // };
+
+  const requestCameraPermission = async () => {
+    if (Platform.OS === "android") {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } else {
+      const result = await request(PERMISSIONS.IOS.CAMERA);
+      return result === RESULTS.GRANTED;
+    }
   };
+  
+  const openSettings = () => {
+    Alert.alert(
+      "Permission Required",
+      "Camera access is needed to take photos. Please enable it in settings.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Open Settings", onPress: () => Linking.openSettings() },
+      ]
+    );
+  };
+  
+  const takePhotoFromCamera = async () => {
+    const hasPermission = await requestCameraPermission();
+  
+    if (!hasPermission) {
+      openSettings(); // Only call this if permission is permanently denied
+      return;
+    }
+  
+    try {
+      const image = await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+      });
+  
+      console.log("Captured Image:", image);
+  
+      const response = await sendPicturetoS3(image);
+      
+      if (response) {
+        setSelectImg(response);
+      }
+  
+      setVisible(false);
+    } catch (error) {
+      console.error("Error capturing image:", error);
+      setVisible(false);
+    }
+  };
+  
   return (
     <View marginH-20 center style={{}}>
       <View style={commonStyles.lineBar} />
@@ -176,11 +239,10 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
             console.log("License Number Validation:", isValid);
             setValidated((prev) => {
               let copy = [...prev];
-              copy[0] = isValid;  // Ensure correct index
+              copy[0] = isValid; // Ensure correct index
               return copy;
             });
           }}
-          
           placeholder={COMMON_TEXT.LICENSE_NUMBER}
           // validate={[(v) => v.length > 10]}
           // validationMessage={["Card Numver is "]}
@@ -211,7 +273,7 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
         </View>
       </View>
 
-      <Button
+      {/* <Button
         label={t(COMMON_TEXT.NEXT)}
         backgroundColor={theme.color.primary}
         onPress={async () => {
@@ -253,7 +315,78 @@ const LicenseInfo = ({ onValidate, setCurrentStep }: any) => {
           height: 50,
           margin: 20,
           width: 300,
-          marginBottom: 100
+          // marginBottom: 100
+        }}
+      /> */}
+
+      <Button
+        label={t(COMMON_TEXT.NEXT)}
+        backgroundColor={theme.color.primary}
+        onPress={async () => {
+          const validationMessages = {
+            PLEASE_FILL_IMAGES: t(VALIDATION_MESSAGES.PLEASE_FILL_IMAGES_LICENSE),
+            ENTER_ID: t(VALIDATION_MESSAGES.ENTER_ID_LICENSE),
+            ENTER_ISSUE_DATE: t(VALIDATION_MESSAGES.ENTER_ISSUE_DATE_LICENSE),
+            ENTER_EXPIRY_DATE: t(VALIDATION_MESSAGES.ENTER_EXPIRY_DATE_LICENSE),
+          };
+
+          let errorMessage = "";
+
+          if (!selectImg) {
+            errorMessage = validationMessages.PLEASE_FILL_IMAGES;
+          } else if (!id?.trim()) {
+            errorMessage = validationMessages.ENTER_ID;
+          } else if (!issueDate) {
+            errorMessage = validationMessages.ENTER_ISSUE_DATE;
+          } else if (!expiryDate) {
+            errorMessage = validationMessages.ENTER_EXPIRY_DATE;
+          }
+
+          if (errorMessage) {
+            Alert.alert(errorMessage);
+            // showToast({ title: errorMessage });
+            return;
+          }
+
+          if (selectImg && issueDate && expiryDate && id) {
+            const data = {
+              ID: ID,
+              licenseNumber: id,
+              licenseNumberIssueDate: issueDate,
+              licenseNumberExpDate: expiryDate,
+              licensePicture: {
+                fileName: "licence.jpg",
+                base64: selectImg,
+                size: 0,
+              },
+            };
+            console.log(data);
+            const res = await updateProfile({ data });
+            if (res != null) {
+              console.log(res);
+              dispatch(setUserDetails(res));
+              setCurrentStep(3);
+              dispatch(setIsLoading(false));
+            }
+            return;
+          } else {
+            if (!selectImg) {
+              showToast({
+                title: t(VALIDATION_MESSAGES.PLEASE_FILL_IMAGES),
+              });
+              return;
+            }
+            showToast({
+              title: t(VALIDATION_MESSAGES.PLEASE_FILL_ALL_THE_FEILDS),
+            });
+          }
+        }}
+        borderRadius={30}
+        style={{
+          height: 50,
+          margin: 20,
+          width: 300,
+          // marginBottom: 100
         }}
       />
     </View>
